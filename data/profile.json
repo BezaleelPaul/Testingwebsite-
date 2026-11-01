@@ -1,0 +1,495 @@
+{
+  "generated_at": "2026-11-01T14:37:37Z",
+  "profile": {
+    "name": "Bezaleel Paul N",
+    "alias": "BezForge",
+    "location": "Bangalore, India",
+    "role": "AI/ML · Full-Stack · Builder",
+    "status": "last pushed to file_organizer_flutter 6d ago",
+    "open_to_work": true,
+    "focus": [
+      "AI/ML",
+      "Full-Stack",
+      "Competitive Programming"
+    ],
+    "mission": "I code what motivates me — on the spot. I enjoy the arts, contemplative thought, and multi-faceted, intellectually demanding, and imaginatively rigorous projects."
+  },
+  "stats": {
+    "stars": 4,
+    "forks": 0,
+    "watchers": 4,
+    "followers": 3,
+    "following": 10,
+    "repos": 34,
+    "gists": 0,
+    "created": "2023-09-16T14:45:35Z",
+    "top_repos": [
+      {
+        "name": "BezaleelPaul",
+        "stars": 1
+      },
+      {
+        "name": "file_organizer_flutter",
+        "stars": 1
+      },
+      {
+        "name": "kana-dojo",
+        "stars": 1
+      },
+      {
+        "name": "File-Organizer",
+        "stars": 1
+      }
+    ]
+  },
+  "dashboard": {
+    "total_30d": 30,
+    "streak": 0,
+    "today": 0,
+    "avg_per_day": 1.0,
+    "best_day": 10,
+    "best_day_date": "2026-10-09",
+    "series": [
+      {
+        "date": "2026-10-03",
+        "count": 0
+      },
+      {
+        "date": "2026-10-04",
+        "count": 0
+      },
+      {
+        "date": "2026-10-05",
+        "count": 1
+      },
+      {
+        "date": "2026-10-06",
+        "count": 5
+      },
+      {
+        "date": "2026-10-07",
+        "count": 6
+      },
+      {
+        "date": "2026-10-08",
+        "count": 0
+      },
+      {
+        "date": "2026-10-09",
+        "count": 10
+      },
+      {
+        "date": "2026-10-10",
+        "count": 2
+      },
+      {
+        "date": "2026-10-11",
+        "count": 0
+      },
+      {
+        "date": "2026-10-12",
+        "count": 0
+      },
+      {
+        "date": "2026-10-13",
+        "count": 1
+      },
+      {
+        "date": "2026-10-14",
+        "count": 0
+      },
+      {
+        "date": "2026-10-15",
+        "count": 0
+      },
+      {
+        "date": "2026-10-16",
+        "count": 0
+      },
+      {
+        "date": "2026-10-17",
+        "count": 0
+      },
+      {
+        "date": "2026-10-18",
+        "count": 0
+      },
+      {
+        "date": "2026-10-19",
+        "count": 0
+      },
+      {
+        "date": "2026-10-20",
+        "count": 4
+      },
+      {
+        "date": "2026-10-21",
+        "count": 0
+      },
+      {
+        "date": "2026-10-22",
+        "count": 0
+      },
+      {
+        "date": "2026-10-23",
+        "count": 0
+      },
+      {
+        "date": "2026-10-24",
+        "count": 0
+      },
+      {
+        "date": "2026-10-25",
+        "count": 1
+      },
+      {
+        "date": "2026-10-26",
+        "count": 0
+      },
+      {
+        "date": "2026-10-27",
+        "count": 0
+      },
+      {
+        "date": "2026-10-28",
+        "count": 0
+      },
+      {
+        "date": "2026-10-29",
+        "count": 0
+      },
+      {
+        "date": "2026-10-30",
+        "count": 0
+      },
+      {
+        "date": "2026-10-31",
+        "count": 0
+      },
+      {
+        "date": "2026-11-01",
+        "count": 0
+      }
+    ]
+  },
+  "activity": [
+    {
+      "emoji": "📦",
+      "action": "Pushed 0 commit to",
+      "repo": "file_organizer_flutter",
+      "time": "6d ago"
+    },
+    {
+      "emoji": "🌿",
+      "action": "Created branch",
+      "repo": "YouTubePlaylistThumbnailGrabber",
+      "time": "11d ago"
+    },
+    {
+      "emoji": "🔀",
+      "action": "Opened PR in",
+      "repo": "YouTubePlaylistThumbnailGrabber",
+      "time": "11d ago"
+    },
+    {
+      "emoji": "🍴",
+      "action": "Forked",
+      "repo": "YouTubePlaylistThumbnailGrabber",
+      "time": "11d ago"
+    },
+    {
+      "emoji": "📦",
+      "action": "Pushed 0 commit to",
+      "repo": "Drishti-AI",
+      "time": "11d ago"
+    },
+    {
+      "emoji": "📦",
+      "action": "Pushed 0 commit to",
+      "repo": "Drishti-AI",
+      "time": "19d ago"
+    },
+    {
+      "emoji": "📦",
+      "action": "Pushed 0 commit to",
+      "repo": "file_organizer_flutter",
+      "time": "23d ago"
+    },
+    {
+      "emoji": "📦",
+      "action": "Pushed 0 commit to",
+      "repo": "file_organizer_flutter",
+      "time": "23d ago"
+    },
+    {
+      "emoji": "📦",
+      "action": "Pushed 0 commit to",
+      "repo": "file_organizer_flutter",
+      "time": "23d ago"
+    },
+    {
+      "emoji": "📦",
+      "action": "Pushed 0 commit to",
+      "repo": "file_organizer_flutter",
+      "time": "22d ago"
+    }
+  ],
+  "skills": [
+    {
+      "category": "LANGUAGES",
+      "icon": "</>",
+      "items": [
+        {
+          "name": "Python",
+          "level": 92,
+          "color": "#3776AB"
+        },
+        {
+          "name": "JavaScript",
+          "level": 82,
+          "color": "#F7DF1E"
+        },
+        {
+          "name": "TypeScript",
+          "level": 65,
+          "color": "#3178C6"
+        },
+        {
+          "name": "HTML / CSS",
+          "level": 85,
+          "color": "#E34F26"
+        },
+        {
+          "name": "C / C++",
+          "level": 55,
+          "color": "#00599C"
+        }
+      ]
+    },
+    {
+      "category": "FRAMEWORKS",
+      "icon": "⚡",
+      "items": [
+        {
+          "name": "React",
+          "level": 72,
+          "color": "#61DAFB"
+        },
+        {
+          "name": "Node.js",
+          "level": 70,
+          "color": "#339933"
+        },
+        {
+          "name": "FastAPI",
+          "level": 62,
+          "color": "#009688"
+        },
+        {
+          "name": "Flutter",
+          "level": 50,
+          "color": "#02569B"
+        },
+        {
+          "name": "Streamlit",
+          "level": 68,
+          "color": "#FF4B4B"
+        }
+      ]
+    },
+    {
+      "category": "AI / ML",
+      "icon": "🧠",
+      "items": [
+        {
+          "name": "TensorFlow",
+          "level": 58,
+          "color": "#FF6F00"
+        },
+        {
+          "name": "XGBoost",
+          "level": 65,
+          "color": "#39B54A"
+        },
+        {
+          "name": "OpenAI API",
+          "level": 62,
+          "color": "#74AA9C"
+        },
+        {
+          "name": "Scikit-learn",
+          "level": 60,
+          "color": "#F7931E"
+        }
+      ]
+    },
+    {
+      "category": "TOOLS & OPS",
+      "icon": "🛠️",
+      "items": [
+        {
+          "name": "Git & GitHub",
+          "level": 90,
+          "color": "#F05032"
+        },
+        {
+          "name": "Firebase",
+          "level": 70,
+          "color": "#FFCA28"
+        },
+        {
+          "name": "SQL / NoSQL",
+          "level": 65,
+          "color": "#4479A1"
+        },
+        {
+          "name": "Docker",
+          "level": 45,
+          "color": "#2496ED"
+        },
+        {
+          "name": "Linux CLI",
+          "level": 75,
+          "color": "#FCC624"
+        }
+      ]
+    }
+  ],
+  "cp": {
+    "codeforces": {
+      "handle": "BezaleelPaulN",
+      "rating": 959,
+      "maxRating": 959,
+      "rank": "NEWBIE",
+      "maxRank": "NEWBIE",
+      "color": "#8b949e"
+    },
+    "leetcode": {
+      "username": "BezaleelPaulN",
+      "totalSolved": 270,
+      "easy": 116,
+      "medium": 17,
+      "hard": 2,
+      "ranking": 1312900
+    }
+  },
+  "projects": [
+    {
+      "name": "NADICARE Twin Engine",
+      "status": "Active",
+      "stack": [
+        "Python",
+        "Streamlit",
+        "XGBoost"
+      ],
+      "description": "AI-driven digital twin for real-time cardiac performance modeling and stress recovery.",
+      "features": [
+        "Real-time simulation of heart rate response to exercise, stress, and recovery",
+        "XGBoost algorithms to forecast recovery windows and physiological safety limits",
+        "Dynamic Plotly dashboards comparing actual vs. predicted cardiac load"
+      ],
+      "repo": "https://github.com/BezaleelPaul/bnmit-nadicare-health",
+      "demo": null
+    },
+    {
+      "name": "File Organizer",
+      "status": "Active",
+      "stack": [
+        "Python",
+        "Tkinter"
+      ],
+      "description": "Smart GUI tool to automatically sort files by extension and user preferences.",
+      "features": [
+        "Copy or move files via toggle switch",
+        "Add custom extensions through the GUI",
+        "Dark theme with clean modern UX"
+      ],
+      "repo": "https://github.com/BezaleelPaul/File-Organizer",
+      "demo": null
+    },
+    {
+      "name": "BESCOM Calculator",
+      "status": "Active",
+      "stack": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "description": "Domestic electricity bill calculator with accurate BESCOM tariff slabs.",
+      "features": [
+        "Accurate monthly bill calculation",
+        "User-friendly interactive UI",
+        "Live hosted on GitHub Pages"
+      ],
+      "repo": "https://github.com/BezaleelPaul/BESCOM-Calculator",
+      "demo": "https://bezaleelpaul.github.io/BESCOM-Calculator/"
+    },
+    {
+      "name": "Maclaurin Visualizer",
+      "status": "Active",
+      "stack": [
+        "JavaScript",
+        "HTML",
+        "Canvas"
+      ],
+      "description": "Interactive math learning tool for visualizing Maclaurin series convergence.",
+      "features": [
+        "Real-time partial sum visualization",
+        "Slider controls for degree & function selection",
+        "Ideal for teaching calculus concepts"
+      ],
+      "repo": "https://github.com/BezaleelPaul",
+      "demo": null
+    }
+  ],
+  "socials": [
+    {
+      "name": "LinkedIn",
+      "handle": "bezaleel-paul",
+      "url": "https://www.linkedin.com/in/bezaleel-paul-7b114b307",
+      "icon": "in"
+    },
+    {
+      "name": "GitHub",
+      "handle": "@BezaleelPaul",
+      "url": "https://github.com/BezaleelPaul",
+      "icon": "gh"
+    },
+    {
+      "name": "Portfolio",
+      "handle": "bezaleelpaul.github.io",
+      "url": "https://bezaleelpaul.github.io/",
+      "icon": "pf"
+    },
+    {
+      "name": "Kaggle",
+      "handle": "bezaleelpaul",
+      "url": "https://www.kaggle.com/bezaleelpaul",
+      "icon": "kg"
+    },
+    {
+      "name": "Codeforces",
+      "handle": "BezaleelPaulN",
+      "url": "https://codeforces.com/profile/BezaleelPaulN",
+      "icon": "cf"
+    },
+    {
+      "name": "LeetCode",
+      "handle": "BezaleelPaulN",
+      "url": "https://leetcode.com/u/BezaleelPaulN/",
+      "icon": "lc"
+    },
+    {
+      "name": "CodeChef",
+      "handle": "bezaleelpauln",
+      "url": "https://www.codechef.com/users/bezaleelpauln",
+      "icon": "cc"
+    },
+    {
+      "name": "HackerRank",
+      "handle": "bezaleel321",
+      "url": "https://www.hackerrank.com/bezaleel321",
+      "icon": "hr"
+    }
+  ]
+}
