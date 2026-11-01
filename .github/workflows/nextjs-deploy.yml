@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - redesign/space-portfolio
       - space-simulation
   workflow_dispatch:
 
