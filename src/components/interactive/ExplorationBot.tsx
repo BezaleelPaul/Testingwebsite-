@@ -88,15 +88,15 @@ const JOURNEY_STEPS: JourneyStep[] = [
     skills: ['WebGL', 'Three.js', 'Astrophysics Simulation', 'REST APIs', 'GLSL']
   },
   {
-    id: 'voxel-planets',
+    id: 'procedural-planets',
     stepNumber: 6,
-    phase: 'PHASE 06: GENERATIVE VOXEL COSMOS',
-    title: 'Minecraft Procedural Voxel Planet Synthesizer',
+    phase: 'PHASE 06: PROCEDURAL PLANETARY SYNTHESIS',
+    title: 'Procedural Seed Exoplanet Engine',
     period: '2026',
-    targetSectionId: 'voxel-cosmos',
-    narration: 'Inspired by Minecraft block aesthetics and procedural world synthesis, he built an instanced voxel engine converting cryptographic seeds and GitHub repositories into interactive 3D worlds with distinct geological strata, biomes, and planetary rings.',
-    highlightStats: 'Deterministic Seed Noise · 60 FPS Instanced WebGL · Repository Worlds',
-    skills: ['Procedural Synthesis', 'InstancedMesh', 'Mulberry32 PRNG', '3D Math']
+    targetSectionId: 'procedural-planets',
+    narration: 'Inspired by deterministic seed world generation, he built a procedural exoplanet engine converting cryptographic seeds and GitHub repositories into high-fidelity 3D worlds with procedural terrain textures, cloud decks, atmospheric scattering, and rings.',
+    highlightStats: 'Deterministic Harmonic Noise · 60 FPS Procedural WebGL · Exoplanet Biomes',
+    skills: ['Procedural Shaders', 'Three.js Textures', 'Mulberry32 PRNG', 'Spherical Math']
   },
   {
     id: 'leadership',

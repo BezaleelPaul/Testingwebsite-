@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { FileText, Volume2, VolumeX, Menu, X, Lock, Box } from 'lucide-react';
+import { FileText, Volume2, VolumeX, Menu, X, Lock, Globe } from 'lucide-react';
 import { spaceAudio } from '@/lib/audio';
 
 export const Navbar: React.FC = () => {
@@ -29,7 +29,7 @@ export const Navbar: React.FC = () => {
   const navLinks = [
     { label: 'About', href: '#about' },
     { label: 'Projects', href: '#projects' },
-    { label: 'Voxel Cosmos', href: '#voxel-cosmos', highlight: true },
+    { label: 'Procedural Worlds', href: '#procedural-planets', highlight: true },
     { label: 'Experience', href: '#experience' },
     { label: 'Skills', href: '#skills' },
     { label: 'GitHub', href: '#github' },
@@ -68,11 +68,11 @@ export const Navbar: React.FC = () => {
               onClick={() => spaceAudio.playTelemetryBeep(960)}
               className={`text-xs font-mono uppercase tracking-widest transition-colors focus:outline-none ${
                 link.highlight 
-                  ? 'text-hud-cyan font-bold hover:text-cyan-300 flex items-center gap-1 bg-hud-cyan/10 px-2 py-0.5 rounded border border-hud-cyan/30'
+                  ? 'text-hud-cyan font-bold hover:text-cyan-300 flex items-center gap-1.5 bg-hud-cyan/10 px-2.5 py-1 rounded border border-hud-cyan/30'
                   : 'text-slate-300 hover:text-hud-cyan focus:text-hud-cyan'
               }`}
             >
-              {link.highlight && <Box className="w-3 h-3 text-hud-cyan" />}
+              {link.highlight && <Globe className="w-3.5 h-3.5 text-hud-cyan" />}
               <span>{link.label}</span>
             </a>
           ))}
@@ -158,7 +158,7 @@ export const Navbar: React.FC = () => {
                   link.highlight ? 'text-hud-cyan font-bold' : 'text-slate-200 hover:text-hud-cyan'
                 }`}
               >
-                {link.highlight && <Box className="w-3.5 h-3.5 text-hud-cyan" />}
+                {link.highlight && <Globe className="w-3.5 h-3.5 text-hud-cyan" />}
                 <span>{link.label}</span>
               </a>
             ))}

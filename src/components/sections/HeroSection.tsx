@@ -13,7 +13,7 @@ import {
   Radio, 
   Satellite, 
   Compass, 
-  Layers,
+  Globe,
   ChevronRight
 } from 'lucide-react';
 import { spaceAudio } from '@/lib/audio';
@@ -72,7 +72,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
 
   return (
     <section className="relative min-h-screen flex flex-col justify-between pt-28 pb-10 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* 3D Celestial Solar System Canvas (Non-blocking background) */}
+      {/* 3D Celestial Solar System Canvas (Non-blocking background with soft cinematic depth) */}
       <HeroCelestialHorizon
         selectedBodyId={selectedBody?.id}
         onSelectBody={(body) => {
@@ -148,12 +148,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
           </a>
 
           <a
-            href="#voxel-cosmos"
+            href="#procedural-planets"
             onClick={() => spaceAudio.playTelemetryBeep(1050)}
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-cyan-950/70 border border-cyan-500/40 hover:border-hud-cyan text-hud-cyan hover:text-cyan-200 font-mono text-xs uppercase tracking-wider backdrop-blur-md hover:bg-cyan-950/90 transform hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-hud-cyan"
           >
-            <Layers className="w-4 h-4 text-hud-cyan" />
-            <span>Voxel Worlds</span>
+            <Globe className="w-4 h-4 text-hud-cyan" />
+            <span>Exoplanet Engine</span>
           </a>
 
           <a

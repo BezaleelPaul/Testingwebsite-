@@ -24,18 +24,18 @@ function SolarSystemRig({ selectedBodyId, onSelectBody }: HeroCosmosProps) {
   const primaryBodies = CELESTIAL_BODIES.filter((b) => !b.parentBodyId);
   const moonBodies = CELESTIAL_BODIES.filter((b) => !!b.parentBodyId);
 
-  // References to groups for smooth direct transform updates without React state re-renders
+  // Direct group refs for 60+ FPS zero-state transform updates
   const bodyGroups = useRef<{ [id: string]: THREE.Group | null }>({});
 
   useFrame((state, delta) => {
-    // Advance simulation time smoothly
-    timeRef.current += delta * 2.2;
+    // Majestic, serene celestial time clock
+    timeRef.current += delta * 1.8;
     const t = timeRef.current;
 
     // Cache parent positions calculated mathematically
     const parentPositions: { [id: string]: THREE.Vector3 } = {};
 
-    // 1. Update primary planet positions
+    // 1. Update primary planet positions with Keplerian physics
     primaryBodies.forEach((body) => {
       const pos = calculateOrbitPosition(body, t);
       parentPositions[body.id] = pos;
@@ -45,10 +45,19 @@ function SolarSystemRig({ selectedBodyId, onSelectBody }: HeroCosmosProps) {
       }
     });
 
-    // 2. Update satellite / moon positions relative to their parent
+    // 2. Update satellite & moon positions with calibrated real-world orbital pacing
     moonBodies.forEach((moon) => {
       const parentPos = moon.parentBodyId ? parentPositions[moon.parentBodyId] : undefined;
-      const relPos = calculateOrbitPosition(moon, t);
+
+      // Realistic, serene orbital period calibration:
+      // Prevents satellites from spinning at 35 revs/second, creating graceful, physically realistic orbits
+      let calibratedPeriod = moon.orbitalPeriodDays;
+      if (moon.id === 'iss') calibratedPeriod = 24.0; // ~13s smooth visible Earth satellite pass
+      if (moon.id === 'europa') calibratedPeriod = 32.0; // ~18s smooth Jovian moon orbit
+      if (moon.id === 'jwst') calibratedPeriod = 80.0; // Serene L2 Lagrangian station-keeping
+
+      const calibratedMoon = { ...moon, orbitalPeriodDays: calibratedPeriod };
+      const relPos = calculateOrbitPosition(calibratedMoon, t);
       const absPos = parentPos ? relPos.add(parentPos) : relPos;
       const grp = bodyGroups.current[moon.id];
       if (grp) {
@@ -58,17 +67,17 @@ function SolarSystemRig({ selectedBodyId, onSelectBody }: HeroCosmosProps) {
 
     // 3. Subtle gentle camera parallax drift responding to mouse
     if (rigGroupRef.current) {
-      const mouseX = state.pointer.x * 0.14;
-      const mouseY = state.pointer.y * 0.10;
+      const mouseX = state.pointer.x * 0.12;
+      const mouseY = state.pointer.y * 0.08;
       rigGroupRef.current.rotation.y = THREE.MathUtils.lerp(
         rigGroupRef.current.rotation.y,
         mouseX + 0.12,
-        0.04
+        0.035
       );
       rigGroupRef.current.rotation.x = THREE.MathUtils.lerp(
         rigGroupRef.current.rotation.x,
-        -mouseY - 0.28,
-        0.04
+        -mouseY - 0.26,
+        0.035
       );
     }
   });
@@ -170,9 +179,13 @@ export const HeroCelestialHorizon: React.FC<HeroCosmosProps> = ({ selectedBodyId
         <SolarSystemRig selectedBodyId={selectedBodyId} onSelectBody={onSelectBody} />
       </Canvas>
 
-      {/* Atmospheric depth vignette */}
+      {/* Soft Cinematic Background Blur & Dark Vignette Scrim (Guarantees website texts are seen first with crystal clarity) */}
       <div
-        className="absolute inset-0 pointer-events-none bg-gradient-to-t from-space-950 via-transparent to-space-950/70"
+        className="absolute inset-0 pointer-events-none backdrop-blur-[3px] bg-space-950/50"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute inset-0 pointer-events-none bg-gradient-to-t from-space-950 via-space-950/30 to-space-950/80"
         aria-hidden="true"
       />
     </div>

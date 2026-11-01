@@ -41,7 +41,7 @@ export default function Home() {
         {/* Section 03: Projects - Featured Discoveries & Library */}
         <ProjectsSection projects={INITIAL_PROJECTS} />
 
-        {/* Section 03.5: Generative Voxel Cosmos - Minecraft-Style Seed Engine */}
+        {/* Section 03.5: Procedural Planetary Synthesizer - Seed-Generated Exoplanets */}
         <GenerativeCosmosSection />
 
         {/* Section 04: Experience - Expeditions & Chronological Timeline */}

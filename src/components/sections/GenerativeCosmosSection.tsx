@@ -3,23 +3,26 @@
 import React, { useState, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Float } from '@react-three/drei';
-import { GenerativeVoxelPlanet } from '@/components/canvas/GenerativeVoxelPlanet';
+import { GenerativeProceduralPlanet } from '@/components/canvas/GenerativeProceduralPlanet';
 import { 
-  Box, 
+  Globe, 
   Sparkles, 
   Shuffle, 
   Compass, 
   Layers, 
   Sliders, 
-  Globe, 
   ZoomIn,
-  ZoomOut
+  ZoomOut,
+  Orbit,
+  Flame,
+  Droplets,
+  Wind
 } from 'lucide-react';
 
 interface RepoPreset {
   name: string;
   seed: string;
-  palette: 'overworld' | 'nether' | 'aether' | 'cyber' | 'glacius';
+  palette: 'terrestrial' | 'volcanic' | 'ocean' | 'gas_giant' | 'glacius';
   description: string;
   icon: string;
 }
@@ -28,63 +31,58 @@ const REPO_PRESETS: RepoPreset[] = [
   {
     name: 'file_organizer_flutter',
     seed: 'file_organizer_flutter_v2',
-    palette: 'overworld',
-    description: 'Verdant desktop filing ecosystem with rich loam strata and emerald canopy',
-    icon: '📁',
+    palette: 'terrestrial',
+    description: 'Class-M temperate garden world with azure oceans, rich continents, and polar ice caps',
+    icon: '🌍',
   },
   {
     name: 'bnmit-nadicare-health',
     seed: 'bnmit_nadicare_biomed_heart',
-    palette: 'aether',
-    description: 'Bioluminescent wellness sanctuary powered by amethyst crystals & pristine springs',
-    icon: '🏥',
+    palette: 'ocean',
+    description: 'Bioluminescent ocean world with deep saltwater abysses and glowing coral archipelagos',
+    icon: '🌊',
   },
   {
     name: 'BESCOM-Calculator',
     seed: 'BESCOM_energy_grid_matrix_2026',
-    palette: 'nether',
-    description: 'High-voltage volcanic core charged with amber ores and molten magma channels',
-    icon: '⚡',
+    palette: 'volcanic',
+    description: 'High-energy volcanic world with incandescent magma fissures and pyroclastic plains',
+    icon: '🌋',
   },
   {
     name: 'NASA-Space-Flight',
     seed: 'NASA_JPL_Horizons_DeepSpace',
-    palette: 'cyber',
-    description: 'Synthetic titanium planetoid running live orbital telemetry algorithms',
-    icon: '🚀',
+    palette: 'gas_giant',
+    description: 'Jovian banded gas giant with atmospheric jet streams and majestic translucent rings',
+    icon: '🪐',
   },
   {
     name: 'IIT-Madras-Quantum',
     seed: 'IITM_DualDegree_DataScience_BS',
     palette: 'glacius',
-    description: 'Crystalline sub-zero frost citadel formed by academic precision & permafrost',
-    icon: '🎓',
+    description: 'Sub-zero permafrost citadel world formed by methane glaciers and sapphire ice',
+    icon: '❄️',
   },
 ];
 
 export function GenerativeCosmosSection() {
   const [seed, setSeed] = useState<string>('file_organizer_flutter_v2');
   const [inputVal, setInputVal] = useState<string>('file_organizer_flutter_v2');
-  const [roughness, setRoughness] = useState<number>(1.1);
-  const [radius, setRadius] = useState<number>(7);
+  const [roughness, setRoughness] = useState<number>(1.0);
+  const [radius, setRadius] = useState<number>(4.2);
   const [palette, setPalette] = useState<string>('auto');
   const [showRings, setShowRings] = useState<boolean>(true);
   const [zoomEnabled, setZoomEnabled] = useState<boolean>(false);
-  const [selectedBlock, setSelectedBlock] = useState<{
-    type: string;
-    position: [number, number, number];
-    biome: string;
-  } | null>(null);
 
   const handleRandomize = () => {
     const randomSeeds = [
-      'Minecraft_Alpha_Void',
+      'Kepler_452b_Prime',
       'Quantum_Singularity_X9',
-      'Flutter_Dart_CrossPlatform',
-      'IEEE_Executive_Committee',
-      'Bengaluru_Silicon_Valley',
-      'Kepler_452b_Exoplanet',
-      'Voxel_Cosmic_Odyssey',
+      'Flutter_Dart_Engine',
+      'IEEE_Global_Network',
+      'Bengaluru_Silicon_Frontier',
+      'Trappist_1e_Exoplanet',
+      'Andromeda_Spire_Odyssey',
     ];
     const picked = randomSeeds[Math.floor(Math.random() * randomSeeds.length)] + '_' + Math.floor(Math.random() * 9999);
     setSeed(picked);
@@ -99,7 +97,7 @@ export function GenerativeCosmosSection() {
   };
 
   return (
-    <section id="voxel-cosmos" className="relative py-24 bg-space-950 border-t border-space-800/60 overflow-hidden">
+    <section id="procedural-planets" className="relative py-24 bg-space-950 border-t border-space-800/60 overflow-hidden">
       {/* Background Ambience */}
       <div className="absolute inset-0 bg-radial-vignette opacity-70 pointer-events-none" />
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-hud-cyan/5 rounded-full blur-3xl pointer-events-none" />
@@ -109,15 +107,14 @@ export function GenerativeCosmosSection() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-hud-cyan/10 border border-hud-cyan/30 text-hud-cyan text-xs font-mono tracking-widest uppercase mb-4">
-            <Box className="w-3.5 h-3.5" />
-            <span>Procedural Voxel Planet Engine</span>
+            <Globe className="w-3.5 h-3.5" />
+            <span>Procedural Planetary Synthesizer</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
-            Generative Minecraft Cosmos
+            Procedural Seed Exoplanets
           </h2>
           <p className="text-space-300 text-sm sm:text-base leading-relaxed">
-            Every repository, project, and concept can be synthesized into an interactive 3D voxel celestial body.
-            Powered by deterministic mathematical noise and Three.js instancing. Type any seed below or click Bezaleel&apos;s repositories to watch the planet regenerate in real time.
+            Inspired by deterministic seed world generation. Enter any cryptographic seed or explore Bezaleel&apos;s repositories synthesized into high-fidelity 3D exoplanets featuring procedural terrain textures, dynamic cloud layers, atmospheric scattering, and planetary rings.
           </p>
         </div>
 
@@ -129,14 +126,14 @@ export function GenerativeCosmosSection() {
             <div className="absolute top-4 left-4 z-20 flex flex-wrap gap-2 pointer-events-none">
               <span className="px-2.5 py-1 rounded-md bg-space-950/80 border border-space-700 text-hud-cyan text-xs font-mono flex items-center gap-1.5 backdrop-blur-sm">
                 <Globe className="w-3.5 h-3.5" />
-                Seed: <span className="text-white font-semibold">{seed.slice(0, 18)}{seed.length > 18 ? '...' : ''}</span>
+                Seed: <span className="text-white font-semibold">{seed.slice(0, 20)}{seed.length > 20 ? '...' : ''}</span>
               </span>
               <span className="px-2.5 py-1 rounded-md bg-space-950/80 border border-space-700 text-space-300 text-xs font-mono flex items-center gap-1.5 backdrop-blur-sm">
-                <Layers className="w-3.5 h-3.5 text-hud-cyan" />
-                Radius: {radius} Voxels
+                <Orbit className="w-3.5 h-3.5 text-hud-cyan" />
+                Atmospheric Glow
               </span>
               <span className="px-2.5 py-1 rounded-md bg-space-950/80 border border-space-700 text-emerald-400 text-xs font-mono flex items-center gap-1.5 backdrop-blur-sm">
-                60 FPS Instanced
+                60 FPS Procedural
               </span>
             </div>
 
@@ -160,32 +157,31 @@ export function GenerativeCosmosSection() {
             {/* Hint Overlay */}
             <div className="absolute bottom-4 left-4 z-20 pointer-events-none hidden sm:block">
               <span className="text-[11px] font-mono text-space-400 bg-space-950/80 px-2 py-1 rounded border border-space-800">
-                🖱️ Left click + drag to rotate • Click blocks to inspect • {zoomEnabled ? 'Scroll to zoom' : 'Toggle Zoom button to zoom'}
+                🖱️ Left click + drag to rotate • {zoomEnabled ? 'Scroll to zoom' : 'Toggle Zoom button to zoom'}
               </span>
             </div>
 
             {/* 3D WebGL Canvas */}
             <div className="h-[480px] sm:h-[560px] w-full cursor-grab active:cursor-grabbing bg-space-950/90">
               <Canvas
-                camera={{ position: [0, 8, 22], fov: 45 }}
+                camera={{ position: [0, 2, 14], fov: 45 }}
                 gl={{ antialias: true, alpha: false }}
               >
                 <color attach="background" args={['#030712']} />
                 
                 {/* Lighting System */}
-                <ambientLight intensity={0.4} />
-                <directionalLight position={[18, 22, 14]} intensity={1.6} castShadow />
-                <pointLight position={[-15, -10, -15]} intensity={0.5} color="#00f0ff" />
+                <ambientLight intensity={0.25} />
+                <directionalLight position={[14, 8, 10]} intensity={2.2} castShadow />
+                <pointLight position={[-12, -6, -10]} intensity={0.4} color="#38bdf8" />
                 
                 <Suspense fallback={null}>
-                  <Float speed={1.2} rotationIntensity={0.2} floatIntensity={0.3}>
-                    <GenerativeVoxelPlanet
+                  <Float speed={1.0} rotationIntensity={0.15} floatIntensity={0.25}>
+                    <GenerativeProceduralPlanet
                       seed={seed}
                       roughness={roughness}
                       radius={radius}
                       palette={palette}
                       showRings={showRings}
-                      onBlockSelect={setSelectedBlock}
                     />
                   </Float>
                 </Suspense>
@@ -194,35 +190,12 @@ export function GenerativeCosmosSection() {
                   enableDamping
                   enableZoom={zoomEnabled}
                   dampingFactor={0.05}
-                  minDistance={10}
-                  maxDistance={45}
+                  minDistance={7}
+                  maxDistance={30}
                   maxPolarAngle={Math.PI / 1.1}
                 />
               </Canvas>
             </div>
-
-            {/* Block Inspector Modal Strip */}
-            {selectedBlock && (
-              <div className="border-t border-space-800 bg-space-950/90 px-4 py-3 flex flex-wrap items-center justify-between gap-3 text-xs font-mono animate-fadeIn">
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-sm bg-hud-cyan animate-pulse" />
-                  <span className="text-space-400">Inspected Voxel:</span>
-                  <span className="text-white font-bold uppercase tracking-wider">{selectedBlock.type}</span>
-                </div>
-                <div className="text-space-400">
-                  Coords: <span className="text-hud-cyan">[{selectedBlock.position.join(', ')}]</span>
-                </div>
-                <div className="text-space-400">
-                  Biome: <span className="text-purple-400">{selectedBlock.biome}</span>
-                </div>
-                <button
-                  onClick={() => setSelectedBlock(null)}
-                  className="text-space-500 hover:text-white transition-colors"
-                >
-                  ✕ Dismiss
-                </button>
-              </div>
-            )}
           </div>
 
           {/* Right: Interactive Configuration Dock */}
@@ -254,14 +227,14 @@ export function GenerativeCosmosSection() {
               >
                 <div>
                   <label className="block text-xs font-mono text-space-400 mb-1">
-                    Enter any text, word, or commit hash:
+                    Enter any seed, word, or concept:
                   </label>
                   <div className="relative">
                     <input
                       type="text"
                       value={inputVal}
                       onChange={(e) => setInputVal(e.target.value)}
-                      placeholder="e.g. Flutter, Minecraft, Apollo11"
+                      placeholder="e.g. Flutter, Apollo11, Quantum, Voyager"
                       className="w-full px-3.5 py-2.5 rounded-xl bg-space-950/80 border border-space-700 text-white font-mono text-sm focus:outline-none focus:border-hud-cyan focus:ring-1 focus:ring-hud-cyan transition-all"
                     />
                   </div>
@@ -271,8 +244,8 @@ export function GenerativeCosmosSection() {
                   type="submit"
                   className="w-full py-2.5 px-4 rounded-xl bg-hud-cyan text-space-950 font-semibold text-sm hover:bg-cyan-300 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-lg shadow-hud-cyan/20"
                 >
-                  <Box className="w-4 h-4" />
-                  Generate Voxel World
+                  <Globe className="w-4 h-4" />
+                  Synthesize Exoplanet
                 </button>
               </form>
             </div>
@@ -284,7 +257,7 @@ export function GenerativeCosmosSection() {
                 Repository Seeds (Bezaleel Paul)
               </h3>
               <p className="text-xs text-space-300 mb-4">
-                Click any of Bezaleel&apos;s verified software projects to observe its procedural biome manifestation:
+                Click any of Bezaleel&apos;s verified software repositories to synthesize its procedural planetary manifestation:
               </p>
 
               <div className="space-y-2.5">
@@ -307,10 +280,10 @@ export function GenerativeCosmosSection() {
                             {preset.name}
                           </span>
                           <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono uppercase ${
-                            preset.palette === 'overworld' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :
-                            preset.palette === 'nether' ? 'bg-red-950 text-red-400 border border-red-800' :
-                            preset.palette === 'aether' ? 'bg-cyan-950 text-cyan-400 border border-cyan-800' :
-                            preset.palette === 'cyber' ? 'bg-purple-950 text-purple-400 border border-purple-800' :
+                            preset.palette === 'terrestrial' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :
+                            preset.palette === 'volcanic' ? 'bg-red-950 text-red-400 border border-red-800' :
+                            preset.palette === 'ocean' ? 'bg-cyan-950 text-cyan-400 border border-cyan-800' :
+                            preset.palette === 'gas_giant' ? 'bg-amber-950 text-amber-400 border border-amber-800' :
                             'bg-blue-950 text-blue-400 border border-blue-800'
                           }`}>
                             {preset.palette}
@@ -336,13 +309,13 @@ export function GenerativeCosmosSection() {
               {/* Roughness Slider */}
               <div>
                 <div className="flex justify-between text-xs font-mono text-space-300 mb-1">
-                  <span>Terrain Roughness:</span>
+                  <span>Terrain Relief:</span>
                   <span className="text-hud-cyan font-bold">{roughness.toFixed(1)}x</span>
                 </div>
                 <input
                   type="range"
                   min="0.4"
-                  max="2.2"
+                  max="2.0"
                   step="0.1"
                   value={roughness}
                   onChange={(e) => setRoughness(parseFloat(e.target.value))}
@@ -353,23 +326,23 @@ export function GenerativeCosmosSection() {
               {/* Radius Slider */}
               <div>
                 <div className="flex justify-between text-xs font-mono text-space-300 mb-1">
-                  <span>Core Size (Radius):</span>
-                  <span className="text-hud-cyan font-bold">{radius} voxels</span>
+                  <span>Planetary Radius:</span>
+                  <span className="text-hud-cyan font-bold">{radius.toFixed(1)} units</span>
                 </div>
                 <input
                   type="range"
-                  min="5"
-                  max="9"
-                  step="1"
+                  min="3.0"
+                  max="5.5"
+                  step="0.2"
                   value={radius}
-                  onChange={(e) => setRadius(parseInt(e.target.value))}
+                  onChange={(e) => setRadius(parseFloat(e.target.value))}
                   className="w-full accent-hud-cyan cursor-pointer"
                 />
               </div>
 
               {/* Ring Toggle */}
               <div className="pt-2 flex items-center justify-between">
-                <span className="text-xs font-mono text-space-300">Orbiting Debris Rings:</span>
+                <span className="text-xs font-mono text-space-300">Planetary Ring System:</span>
                 <button
                   type="button"
                   onClick={() => setShowRings(!showRings)}
@@ -385,9 +358,9 @@ export function GenerativeCosmosSection() {
 
               {/* Biome Palette Override */}
               <div className="pt-2">
-                <span className="block text-xs font-mono text-space-400 mb-2">Biome Climate:</span>
+                <span className="block text-xs font-mono text-space-400 mb-2">Climate Classification:</span>
                 <div className="grid grid-cols-3 gap-1.5 text-[11px] font-mono">
-                  {['auto', 'overworld', 'nether', 'aether', 'cyber', 'glacius'].map((p) => (
+                  {['auto', 'terrestrial', 'ocean', 'volcanic', 'gas_giant', 'glacius'].map((p) => (
                     <button
                       key={p}
                       onClick={() => setPalette(p)}
@@ -397,7 +370,7 @@ export function GenerativeCosmosSection() {
                           : 'bg-space-950/60 border-space-800 text-space-400 hover:text-white'
                       }`}
                     >
-                      {p}
+                      {p.replace('_', ' ')}
                     </button>
                   ))}
                 </div>
