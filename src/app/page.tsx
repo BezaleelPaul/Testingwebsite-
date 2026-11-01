@@ -10,6 +10,7 @@ import { SkillsSection } from '@/components/sections/SkillsSection';
 import { AchievementsSection } from '@/components/sections/AchievementsSection';
 import { GitHubAnalyticsSection } from '@/components/sections/GitHubAnalyticsSection';
 import { ContactSection } from '@/components/sections/ContactSection';
+import { ExplorationBot } from '@/components/interactive/ExplorationBot';
 import { 
   INITIAL_PROFILE, 
   INITIAL_PROJECTS, 
@@ -54,6 +55,9 @@ export default function Home() {
 
       {/* Section 08: Contact - Beyond the Horizon */}
       <ContactSection profile={INITIAL_PROFILE} />
+
+      {/* Interactive Exploration Bot Companion */}
+      <ExplorationBot />
     </div>
   );
 }
