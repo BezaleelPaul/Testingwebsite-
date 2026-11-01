@@ -26,6 +26,7 @@ function SolarSystemRig({ selectedBodyId, onSelectBody }: HeroCosmosProps) {
 
   // Direct group refs for 60+ FPS zero-state transform updates
   const bodyGroups = useRef<{ [id: string]: THREE.Group | null }>({});
+  const orbitLineGroups = useRef<{ [id: string]: THREE.Group | null }>({});
 
   useFrame((state, delta) => {
     // Majestic, serene celestial time clock
@@ -49,19 +50,30 @@ function SolarSystemRig({ selectedBodyId, onSelectBody }: HeroCosmosProps) {
     moonBodies.forEach((moon) => {
       const parentPos = moon.parentBodyId ? parentPositions[moon.parentBodyId] : undefined;
 
-      // Realistic, serene orbital period calibration:
-      // Prevents satellites from spinning at 35 revs/second, creating graceful, physically realistic orbits
+      // Realistic, serene orbital period calibration
       let calibratedPeriod = moon.orbitalPeriodDays;
-      if (moon.id === 'iss') calibratedPeriod = 24.0; // ~13s smooth visible Earth satellite pass
-      if (moon.id === 'europa') calibratedPeriod = 32.0; // ~18s smooth Jovian moon orbit
-      if (moon.id === 'jwst') calibratedPeriod = 80.0; // Serene L2 Lagrangian station-keeping
+      if (moon.id === 'iss') calibratedPeriod = 36.0; // ~20s smooth visible Earth satellite pass
+      if (moon.id === 'europa') calibratedPeriod = 48.0; // ~27s smooth Jovian moon orbit
+      if (moon.id === 'jwst') calibratedPeriod = 90.0; // Serene L2 Lagrangian station-keeping
 
       const calibratedMoon = { ...moon, orbitalPeriodDays: calibratedPeriod };
       const relPos = calculateOrbitPosition(calibratedMoon, t);
-      const absPos = parentPos ? relPos.add(parentPos) : relPos;
+      const absPos = parentPos ? relPos.clone().add(parentPos) : relPos;
       const grp = bodyGroups.current[moon.id];
       if (grp) {
         grp.position.copy(absPos);
+        if (moon.id === 'iss') {
+          // Tangent orientation: align station forward along its orbital trajectory
+          const nextRel = calculateOrbitPosition(calibratedMoon, t + 0.1);
+          const nextAbs = parentPos ? nextRel.add(parentPos) : nextRel;
+          grp.lookAt(nextAbs);
+        }
+      }
+
+      // Update satellite orbit path center
+      const lineGrp = orbitLineGroups.current[moon.id];
+      if (lineGrp && parentPos) {
+        lineGrp.position.copy(parentPos);
       }
     });
 
@@ -115,6 +127,21 @@ function SolarSystemRig({ selectedBodyId, onSelectBody }: HeroCosmosProps) {
             data={body}
             isSelected={selectedBodyId === body.id}
             onSelect={(b) => onSelectBody?.(b)}
+          />
+        </group>
+      ))}
+
+      {/* Satellite Trajectory Orbit Lines (ISS, Luna, Europa) */}
+      {moonBodies.map((moon) => (
+        <group
+          key={`orbit-group-${moon.id}`}
+          ref={(el) => {
+            orbitLineGroups.current[moon.id] = el;
+          }}
+        >
+          <OrbitLine
+            body={moon}
+            isSelected={selectedBodyId === moon.id}
           />
         </group>
       ))}

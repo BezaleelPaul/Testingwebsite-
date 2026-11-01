@@ -52,9 +52,14 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
     // 1. Orbital motion if elapsedDays is explicitly passed by observatory simulator
     if (elapsedDays !== undefined) {
       const relPos = calculateOrbitPosition(data, elapsedDays);
-      const absPos = parentPosition ? relPos.add(parentPosition) : relPos;
+      const absPos = parentPosition ? relPos.clone().add(parentPosition) : relPos;
       if (groupRef.current) {
         groupRef.current.position.copy(absPos);
+        if (data.type === 'station') {
+          const nextRel = calculateOrbitPosition(data, elapsedDays + 0.05);
+          const nextAbs = parentPosition ? nextRel.add(parentPosition) : nextRel;
+          groupRef.current.lookAt(nextAbs);
+        }
       }
       if (onPositionUpdate) {
         onPositionUpdate(data.id, absPos);
@@ -100,7 +105,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
         {/* Core Body Geometry based on Type */}
         {data.type === 'station' ? (
           /* International Space Station (ISS) 3D Model */
-          <group onClick={handleClick} scale={[1.8, 1.8, 1.8]}>
+          <group onClick={handleClick} scale={[0.55, 0.55, 0.55]}>
             {/* Central Pressurized Module Truss */}
             <mesh>
               <cylinderGeometry args={[0.12, 0.12, 0.7, 16]} />
@@ -141,7 +146,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
           </group>
         ) : data.type === 'telescope' ? (
           /* James Webb Space Telescope (JWST) 3D Model */
-          <group onClick={handleClick} scale={[1.8, 1.8, 1.8]}>
+          <group onClick={handleClick} scale={[0.55, 0.55, 0.55]}>
             {/* Diamond-Shaped Multi-Layer Sunshield */}
             <mesh rotation={[Math.PI / 8, 0, 0]}>
               <boxGeometry args={[1.2, 0.02, 0.8]} />
@@ -166,7 +171,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
           </group>
         ) : data.type === 'spacecraft' ? (
           /* Voyager 1 Interstellar Probe Model */
-          <group onClick={handleClick} scale={[1.8, 1.8, 1.8]}>
+          <group onClick={handleClick} scale={[0.55, 0.55, 0.55]}>
             {/* High-Gain Parabolic Radio Dish */}
             <mesh rotation={[Math.PI / 3, 0, 0]}>
               <sphereGeometry args={[0.4, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2]} />
