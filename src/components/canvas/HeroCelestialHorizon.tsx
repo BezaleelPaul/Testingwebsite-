@@ -3,172 +3,156 @@
 import React, { useRef, useMemo, useState, useEffect } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
+import { CELESTIAL_BODIES } from '@/lib/constants';
+import { CelestialBody } from './CelestialBody';
+import { OrbitLine } from './OrbitLine';
+import { AsteroidBelt } from './AsteroidBelt';
+import { Starfield } from './Starfield';
+import { CelestialBodyData } from '@/types/simulation';
 
-// Rayleigh scattering atmospheric glow shader for the planetary horizon
-const HorizonAtmosphereShader = {
-  vertexShader: `
-    varying vec3 vNormal;
-    varying vec3 vPosition;
-    void main() {
-      vNormal = normalize(normalMatrix * normal);
-      vPosition = (modelViewMatrix * vec4(position, 1.0)).xyz;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-    }
-  `,
-  fragmentShader: `
-    uniform vec3 glowColor;
-    varying vec3 vNormal;
-    varying vec3 vPosition;
-    void main() {
-      vec3 viewCameraDir = normalize(-vPosition);
-      float intensity = pow(0.72 - dot(vNormal, viewCameraDir), 3.2);
-      gl_FragColor = vec4(glowColor, clamp(intensity, 0.0, 1.0) * 0.95);
-    }
-  `
-};
+interface HeroCosmosProps {
+  onSelectBody?: (body: CelestialBodyData) => void;
+}
 
-function PlanetHorizon() {
-  const planetRef = useRef<THREE.Mesh>(null);
-  const atmosphereRef = useRef<THREE.Mesh>(null);
+function SolarSystemRig({ onSelectBody }: HeroCosmosProps) {
+  const [positions, setPositions] = useState<{ [id: string]: THREE.Vector3 }>({});
+  const [elapsedDays, setElapsedDays] = useState(0);
+  const rigGroupRef = useRef<THREE.Group>(null);
 
-  // Subtle planetary rotation
-  useFrame((_, delta) => {
-    if (planetRef.current) {
-      planetRef.current.rotation.y += delta * 0.02;
-    }
-    if (atmosphereRef.current) {
-      atmosphereRef.current.rotation.y += delta * 0.02;
+  // Smooth orbital simulation clock
+  useFrame((state, delta) => {
+    // Progress simulated days smoothly
+    setElapsedDays((prev) => prev + delta * 2.5);
+
+    // Subtle gentle camera parallax drift responding to mouse
+    if (rigGroupRef.current) {
+      const mouseX = state.pointer.x * 0.15;
+      const mouseY = state.pointer.y * 0.12;
+      rigGroupRef.current.rotation.y = THREE.MathUtils.lerp(
+        rigGroupRef.current.rotation.y,
+        mouseX + 0.1,
+        0.03
+      );
+      rigGroupRef.current.rotation.x = THREE.MathUtils.lerp(
+        rigGroupRef.current.rotation.x,
+        -mouseY - 0.25,
+        0.03
+      );
     }
   });
 
-  const atmosphereMaterial = useMemo(() => {
-    return new THREE.ShaderMaterial({
-      vertexShader: HorizonAtmosphereShader.vertexShader,
-      fragmentShader: HorizonAtmosphereShader.fragmentShader,
-      uniforms: {
-        glowColor: { value: new THREE.Color('#38bdf8') },
-      },
-      blending: THREE.AdditiveBlending,
-      side: THREE.BackSide,
-      transparent: true,
-      depthWrite: false,
-    });
-  }, []);
+  const handlePositionUpdate = (id: string, pos: THREE.Vector3) => {
+    setPositions((prev) => ({
+      ...prev,
+      [id]: pos.clone(),
+    }));
+  };
+
+  const primaryBodies = CELESTIAL_BODIES.filter((b) => !b.parentBodyId);
+  const moonBodies = CELESTIAL_BODIES.filter((b) => !!b.parentBodyId);
 
   return (
-    <group position={[0, -28, -8]}>
-      {/* Massive curving planetary body */}
-      <mesh ref={planetRef} rotation={[0.4, 0, 0.15]}>
-        <sphereGeometry args={[26, 64, 64]} />
-        <meshStandardMaterial
-          color="#0b172a"
-          roughness={0.85}
-          metalness={0.15}
-        />
-      </mesh>
+    <group ref={rigGroupRef} position={[0, -2, 0]} rotation={[-0.35, 0.2, 0]}>
+      {/* Central Sun Light Source */}
+      <pointLight
+        position={[0, 0, 0]}
+        intensity={900}
+        color="#fff5e0"
+        distance={1200}
+        decay={1.2}
+      />
+      <ambientLight intensity={0.12} color="#94a3b8" />
 
-      {/* Atmospheric Rim Glow */}
-      <mesh ref={atmosphereRef} material={atmosphereMaterial} scale={[1.025, 1.025, 1.025]}>
-        <sphereGeometry args={[26, 48, 48]} />
-      </mesh>
+      {/* Trajectory Orbit Lines for all primary planets */}
+      {primaryBodies.map((body) => (
+        <OrbitLine key={`orbit-${body.id}`} body={body} isSelected={false} />
+      ))}
+
+      {/* Orbiting Celestial Bodies (Sol, Mercury, Venus, Earth, Mars, Jupiter, Saturn) */}
+      {primaryBodies.map((body) => (
+        <CelestialBody
+          key={body.id}
+          data={body}
+          elapsedDays={elapsedDays}
+          isSelected={false}
+          onSelect={(b) => onSelectBody?.(b)}
+          onPositionUpdate={handlePositionUpdate}
+        />
+      ))}
+
+      {/* Moons orbiting parent planets (Luna, Europa) */}
+      {moonBodies.map((moon) => {
+        const parentPos = moon.parentBodyId ? positions[moon.parentBodyId] : undefined;
+        return (
+          <React.Fragment key={moon.id}>
+            {parentPos && (
+              <OrbitLine
+                body={moon}
+                parentPosition={parentPos}
+                isSelected={false}
+              />
+            )}
+            <CelestialBody
+              data={moon}
+              parentPosition={parentPos}
+              elapsedDays={elapsedDays}
+              isSelected={false}
+              onSelect={(b) => onSelectBody?.(b)}
+              onPositionUpdate={handlePositionUpdate}
+            />
+          </React.Fragment>
+        );
+      })}
+
+      {/* Asteroid Belt */}
+      <AsteroidBelt innerRadius={39} outerRadius={48} count={1200} />
     </group>
   );
 }
 
-function StarfieldParticles({ count = 1800 }) {
-  const [positions, colors] = useMemo(() => {
-    const pos = new Float32Array(count * 3);
-    const col = new Float32Array(count * 3);
-    const palette = [
-      new THREE.Color('#00f3ff'),
-      new THREE.Color('#93c5fd'),
-      new THREE.Color('#ffffff'),
-      new THREE.Color('#a855f7'),
-      new THREE.Color('#fed7aa'),
-    ];
+export const HeroCelestialHorizon: React.FC<HeroCosmosProps> = ({ onSelectBody }) => {
+  const [mounted, setMounted] = useState(false);
 
-    for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 80;
-      pos[i * 3 + 1] = Math.random() * 40 - 5;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 50 - 10;
-
-      const c = palette[Math.floor(Math.random() * palette.length)];
-      col[i * 3] = c.r;
-      col[i * 3 + 1] = c.g;
-      col[i * 3 + 2] = c.b;
-    }
-    return [pos, col];
-  }, [count]);
-
-  const pointsRef = useRef<THREE.Points>(null);
-
-  useFrame((_, delta) => {
-    if (pointsRef.current) {
-      pointsRef.current.rotation.y -= delta * 0.005;
-    }
-  });
-
-  return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[positions, 3]}
-        />
-        <bufferAttribute
-          attach="attributes-color"
-          args={[colors, 3]}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.12}
-        vertexColors
-        transparent
-        opacity={0.8}
-        sizeAttenuation
-      />
-    </points>
-  );
-}
-
-export const HeroCelestialHorizon: React.FC = () => {
-  const [hasWebGL, setHasWebGL] = useState(true);
-
-  // Check WebGL availability for graceful fallback
   useEffect(() => {
-    try {
-      const canvas = document.createElement('canvas');
-      const gl = !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
-      setHasWebGL(gl);
-    } catch {
-      setHasWebGL(false);
-    }
+    setMounted(true);
   }, []);
 
-  if (!hasWebGL) {
-    // Elegant CSS Fallback if WebGL is unavailable
+  if (!mounted) {
     return (
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -bottom-48 left-1/2 -translate-x-1/2 w-[160vw] h-[70vh] rounded-[100%] bg-gradient-to-t from-cyan-950/40 via-space-900 to-transparent border-t border-hud-cyan/30 shadow-[0_-20px_80px_rgba(0,243,255,0.15)]" />
-      </div>
+      <div
+        className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-950/40 via-space-950/90 to-space-950"
+        aria-hidden="true"
+      />
     );
   }
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
+    <div
+      className="absolute inset-0 z-0 overflow-hidden pointer-events-auto select-none"
+      aria-label="Interactive 3D Solar System and Celestial Cosmos"
+    >
       <Canvas
-        camera={{ position: [0, 2, 14], fov: 45 }}
-        gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
+        camera={{ position: [0, 32, 65], fov: 46, near: 0.1, far: 2000 }}
+        gl={{
+          antialias: true,
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 1.15,
+          powerPreference: 'high-performance',
+          alpha: true,
+        }}
       >
-        <ambientLight intensity={0.15} color="#94a3b8" />
-        <directionalLight position={[10, 15, 8]} intensity={1.8} color="#e0f2fe" />
-        <pointLight position={[-15, 5, -5]} intensity={0.6} color="#00f3ff" />
+        {/* Deep Cosmic Starfield */}
+        <Starfield count={6000} />
 
-        <PlanetHorizon />
-        <StarfieldParticles count={1600} />
+        {/* Orbiting Solar System */}
+        <SolarSystemRig onSelectBody={onSelectBody} />
       </Canvas>
-      {/* Subtle bottom vignette to ensure perfect text contrast */}
-      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-space-950 via-space-950/80 to-transparent" />
+
+      {/* Film grain and atmospheric overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none bg-gradient-to-t from-space-950 via-transparent to-space-950/70"
+        aria-hidden="true"
+      />
     </div>
   );
 };
