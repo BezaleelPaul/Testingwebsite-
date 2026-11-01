@@ -24,10 +24,23 @@ export interface NasaNearEarthObject {
   orbitingBody: string;
 }
 
+export interface IssLiveTelemetry {
+  name: string;
+  id: number;
+  latitude: number;
+  longitude: number;
+  altitudeKm: number;
+  velocityKmh: number;
+  velocityKms: number;
+  visibility: 'daylight' | 'eclipsed';
+  timestamp: string;
+}
+
 export interface NasaLiveTelemetry {
   apod: NasaApodDiscovery;
   neoCountToday: number;
   asteroids: NasaNearEarthObject[];
+  iss: IssLiveTelemetry;
   source: 'live' | 'cached';
   timestamp: string;
 }
@@ -77,8 +90,47 @@ const FALLBACK_ASTEROIDS: NasaNearEarthObject[] = [
   },
 ];
 
+const FALLBACK_ISS: IssLiveTelemetry = {
+  name: 'International Space Station',
+  id: 25544,
+  latitude: 28.5729,
+  longitude: -80.6490,
+  altitudeKm: 421.4,
+  velocityKmh: 27580.0,
+  velocityKms: 7.66,
+  visibility: 'daylight',
+  timestamp: new Date().toISOString(),
+};
+
 /**
- * Fetch real NASA Open API data (APOD + Near Earth Objects).
+ * Fetch live International Space Station (ISS) GPS coordinates and velocity.
+ */
+export async function fetchIssTelemetry(): Promise<IssLiveTelemetry> {
+  try {
+    const res = await fetch('https://api.wheretheiss.at/v1/satellites/25544', {
+      cache: 'no-store',
+    });
+    if (!res.ok) return FALLBACK_ISS;
+    const data = await res.json();
+    const velKmh = parseFloat(data.velocity) || 27600;
+    return {
+      name: 'International Space Station',
+      id: data.id || 25544,
+      latitude: parseFloat(data.latitude) || 0,
+      longitude: parseFloat(data.longitude) || 0,
+      altitudeKm: parseFloat(data.altitude) || 420,
+      velocityKmh: Math.round(velKmh),
+      velocityKms: parseFloat((velKmh / 3600).toFixed(2)),
+      visibility: data.visibility || 'daylight',
+      timestamp: new Date().toISOString(),
+    };
+  } catch {
+    return FALLBACK_ISS;
+  }
+}
+
+/**
+ * Fetch real NASA Open API data (APOD + Near Earth Objects + ISS Live Telemetry).
  * Free public key 'DEMO_KEY' is standard for public NASA discovery feeds.
  */
 export async function fetchNasaDiscoveries(): Promise<NasaLiveTelemetry> {
@@ -87,6 +139,7 @@ export async function fetchNasaDiscoveries(): Promise<NasaLiveTelemetry> {
 
   let apod = FALLBACK_APOD;
   let asteroids = FALLBACK_ASTEROIDS;
+  let iss = FALLBACK_ISS;
   let isLive = false;
 
   try {
@@ -104,7 +157,17 @@ export async function fetchNasaDiscoveries(): Promise<NasaLiveTelemetry> {
       .then((res) => (res.ok ? res.json() : null))
       .catch(() => null);
 
-    const [apodData, neoData] = await Promise.all([apodPromise, neoPromise]);
+    const issPromise = fetchIssTelemetry();
+
+    const [apodData, neoData, issData] = await Promise.all([
+      apodPromise,
+      neoPromise,
+      issPromise,
+    ]);
+
+    if (issData) {
+      iss = issData;
+    }
 
     if (apodData && apodData.title) {
       apod = {
@@ -147,6 +210,7 @@ export async function fetchNasaDiscoveries(): Promise<NasaLiveTelemetry> {
     apod,
     neoCountToday: asteroids.length,
     asteroids,
+    iss,
     source: isLive ? 'live' : 'cached',
     timestamp: new Date().toISOString(),
   };

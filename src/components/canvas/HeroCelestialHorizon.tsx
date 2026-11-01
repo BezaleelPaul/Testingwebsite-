@@ -11,32 +11,32 @@ import { Starfield } from './Starfield';
 import { CelestialBodyData } from '@/types/simulation';
 
 interface HeroCosmosProps {
+  selectedBodyId?: string;
   onSelectBody?: (body: CelestialBodyData) => void;
 }
 
-function SolarSystemRig({ onSelectBody }: HeroCosmosProps) {
+function SolarSystemRig({ selectedBodyId, onSelectBody }: HeroCosmosProps) {
   const [positions, setPositions] = useState<{ [id: string]: THREE.Vector3 }>({});
   const [elapsedDays, setElapsedDays] = useState(0);
   const rigGroupRef = useRef<THREE.Group>(null);
 
   // Smooth orbital simulation clock
   useFrame((state, delta) => {
-    // Progress simulated days smoothly
-    setElapsedDays((prev) => prev + delta * 2.5);
+    setElapsedDays((prev) => prev + delta * 2.2);
 
     // Subtle gentle camera parallax drift responding to mouse
     if (rigGroupRef.current) {
-      const mouseX = state.pointer.x * 0.15;
+      const mouseX = state.pointer.x * 0.16;
       const mouseY = state.pointer.y * 0.12;
       rigGroupRef.current.rotation.y = THREE.MathUtils.lerp(
         rigGroupRef.current.rotation.y,
         mouseX + 0.1,
-        0.03
+        0.035
       );
       rigGroupRef.current.rotation.x = THREE.MathUtils.lerp(
         rigGroupRef.current.rotation.x,
-        -mouseY - 0.25,
-        0.03
+        -mouseY - 0.28,
+        0.035
       );
     }
   });
@@ -56,31 +56,35 @@ function SolarSystemRig({ onSelectBody }: HeroCosmosProps) {
       {/* Central Sun Light Source */}
       <pointLight
         position={[0, 0, 0]}
-        intensity={900}
+        intensity={950}
         color="#fff5e0"
-        distance={1200}
+        distance={1400}
         decay={1.2}
       />
-      <ambientLight intensity={0.12} color="#94a3b8" />
+      <ambientLight intensity={0.14} color="#94a3b8" />
 
       {/* Trajectory Orbit Lines for all primary planets */}
       {primaryBodies.map((body) => (
-        <OrbitLine key={`orbit-${body.id}`} body={body} isSelected={false} />
+        <OrbitLine
+          key={`orbit-${body.id}`}
+          body={body}
+          isSelected={selectedBodyId === body.id}
+        />
       ))}
 
-      {/* Orbiting Celestial Bodies (Sol, Mercury, Venus, Earth, Mars, Jupiter, Saturn) */}
+      {/* Primary Celestial Bodies (Sol, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Voyager 1) */}
       {primaryBodies.map((body) => (
         <CelestialBody
           key={body.id}
           data={body}
           elapsedDays={elapsedDays}
-          isSelected={false}
+          isSelected={selectedBodyId === body.id}
           onSelect={(b) => onSelectBody?.(b)}
           onPositionUpdate={handlePositionUpdate}
         />
       ))}
 
-      {/* Moons orbiting parent planets (Luna, Europa) */}
+      {/* Secondary Satellites & Moons (Luna, Europa, ISS, JWST) */}
       {moonBodies.map((moon) => {
         const parentPos = moon.parentBodyId ? positions[moon.parentBodyId] : undefined;
         return (
@@ -89,14 +93,14 @@ function SolarSystemRig({ onSelectBody }: HeroCosmosProps) {
               <OrbitLine
                 body={moon}
                 parentPosition={parentPos}
-                isSelected={false}
+                isSelected={selectedBodyId === moon.id}
               />
             )}
             <CelestialBody
               data={moon}
               parentPosition={parentPos}
               elapsedDays={elapsedDays}
-              isSelected={false}
+              isSelected={selectedBodyId === moon.id}
               onSelect={(b) => onSelectBody?.(b)}
               onPositionUpdate={handlePositionUpdate}
             />
@@ -104,13 +108,13 @@ function SolarSystemRig({ onSelectBody }: HeroCosmosProps) {
         );
       })}
 
-      {/* Asteroid Belt */}
-      <AsteroidBelt innerRadius={39} outerRadius={48} count={1200} />
+      {/* Instanced Asteroid Belt */}
+      <AsteroidBelt innerRadius={39} outerRadius={48} count={1300} />
     </group>
   );
 }
 
-export const HeroCelestialHorizon: React.FC<HeroCosmosProps> = ({ onSelectBody }) => {
+export const HeroCelestialHorizon: React.FC<HeroCosmosProps> = ({ selectedBodyId, onSelectBody }) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -132,7 +136,7 @@ export const HeroCelestialHorizon: React.FC<HeroCosmosProps> = ({ onSelectBody }
       aria-label="Interactive 3D Solar System and Celestial Cosmos"
     >
       <Canvas
-        camera={{ position: [0, 32, 65], fov: 46, near: 0.1, far: 2000 }}
+        camera={{ position: [0, 34, 68], fov: 46, near: 0.1, far: 2000 }}
         gl={{
           antialias: true,
           toneMapping: THREE.ACESFilmicToneMapping,
@@ -141,14 +145,14 @@ export const HeroCelestialHorizon: React.FC<HeroCosmosProps> = ({ onSelectBody }
           alpha: true,
         }}
       >
-        {/* Deep Cosmic Starfield */}
-        <Starfield count={6000} />
+        {/* Deep Cosmic Starfield & Nebula Gas Clouds */}
+        <Starfield count={6500} />
 
-        {/* Orbiting Solar System */}
-        <SolarSystemRig onSelectBody={onSelectBody} />
+        {/* Orbiting Solar System & Spacecraft */}
+        <SolarSystemRig selectedBodyId={selectedBodyId} onSelectBody={onSelectBody} />
       </Canvas>
 
-      {/* Film grain and atmospheric overlay */}
+      {/* Atmospheric depth vignette */}
       <div
         className="absolute inset-0 pointer-events-none bg-gradient-to-t from-space-950 via-transparent to-space-950/70"
         aria-hidden="true"

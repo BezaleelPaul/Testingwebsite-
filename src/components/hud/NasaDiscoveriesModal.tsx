@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { fetchNasaDiscoveries, NasaLiveTelemetry } from '@/lib/nasaApi';
-import { Globe, Orbit, ShieldAlert, Sparkles, ExternalLink, RefreshCw, X, Radio } from 'lucide-react';
+import { Globe, Orbit, ShieldAlert, Sparkles, ExternalLink, RefreshCw, X, Radio, Compass, Satellite } from 'lucide-react';
 import { spaceAudio } from '@/lib/audio';
 
 interface NasaDiscoveriesModalProps {
@@ -18,7 +18,7 @@ export const NasaDiscoveriesModal: React.FC<NasaDiscoveriesModalProps> = ({
 }) => {
   const [data, setData] = useState<NasaLiveTelemetry | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [activeTab, setActiveTab] = useState<'apod' | 'asteroids'>('apod');
+  const [activeTab, setActiveTab] = useState<'apod' | 'asteroids' | 'iss'>('apod');
 
   const loadData = async () => {
     setLoading(true);
@@ -59,11 +59,11 @@ export const NasaDiscoveriesModal: React.FC<NasaDiscoveriesModalProps> = ({
                       : 'bg-cyan-950/80 text-hud-cyan border-cyan-800'
                   }`}
                 >
-                  {data?.source === 'live' ? 'LIVE NASA FEED' : 'CACHED ORBITAL DATA'}
+                  {data?.source === 'live' ? 'LIVE NASA & SATELLITE NETWORK' : 'CACHED ORBITAL DATA'}
                 </span>
               </div>
               <p className="text-[11px] text-gray-400">
-                Data Source: NASA Open APIs (APOD & JPL NeoWs Asteroid Tracker)
+                Sources: NASA Open Science API (APOD, JPL Asteroid Radar) & ISS Real-Time Satellite Tracking
               </p>
             </div>
           </div>
@@ -92,10 +92,10 @@ export const NasaDiscoveriesModal: React.FC<NasaDiscoveriesModalProps> = ({
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex border-b border-slate-800 bg-space-900/60 px-6 pt-2">
+        <div className="flex border-b border-slate-800 bg-space-900/60 px-6 pt-2 overflow-x-auto">
           <button
             onClick={() => setActiveTab('apod')}
-            className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider flex items-center gap-2 border-b-2 transition-colors ${
+            className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider flex items-center gap-2 border-b-2 transition-colors whitespace-nowrap ${
               activeTab === 'apod'
                 ? 'border-hud-cyan text-hud-cyan bg-cyan-950/20'
                 : 'border-transparent text-gray-400 hover:text-gray-200'
@@ -105,8 +105,19 @@ export const NasaDiscoveriesModal: React.FC<NasaDiscoveriesModalProps> = ({
             Cosmic Discovery of the Day (APOD)
           </button>
           <button
+            onClick={() => setActiveTab('iss')}
+            className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider flex items-center gap-2 border-b-2 transition-colors whitespace-nowrap ${
+              activeTab === 'iss'
+                ? 'border-hud-cyan text-hud-cyan bg-cyan-950/20'
+                : 'border-transparent text-gray-400 hover:text-gray-200'
+            }`}
+          >
+            <Satellite className="w-3.5 h-3.5" />
+            Live ISS Space Station Tracker
+          </button>
+          <button
             onClick={() => setActiveTab('asteroids')}
-            className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider flex items-center gap-2 border-b-2 transition-colors ${
+            className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider flex items-center gap-2 border-b-2 transition-colors whitespace-nowrap ${
               activeTab === 'asteroids'
                 ? 'border-hud-cyan text-hud-cyan bg-cyan-950/20'
                 : 'border-transparent text-gray-400 hover:text-gray-200'
@@ -164,7 +175,90 @@ export const NasaDiscoveriesModal: React.FC<NasaDiscoveriesModalProps> = ({
                 <p>{data.apod.explanation}</p>
               </div>
             </div>
+          ) : activeTab === 'iss' && data ? (
+            /* Live ISS Space Station Telemetry View */
+            <div className="space-y-4">
+              <div className="p-4 rounded-xl bg-gradient-to-r from-cyan-950/70 to-blue-950/70 border border-cyan-500/40 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl bg-space-900 border border-cyan-500/60 flex items-center justify-center text-xl text-hud-cyan">
+                    🛰️
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-base font-bold text-white uppercase">
+                        INTERNATIONAL SPACE STATION (ISS)
+                      </h3>
+                      <span className="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-700 px-2 py-0.5 rounded animate-pulse">
+                        LIVE TELEMETRY
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-400">
+                      NORAD ID: #25544 · Inclination: 51.64° · Crew: Active Expedition
+                    </p>
+                  </div>
+                </div>
+
+                <div className="text-right">
+                  <span className="text-[10px] text-gray-400 block uppercase">ORBITAL VELOCITY</span>
+                  <span className="text-xl font-bold text-hud-cyan">
+                    {data.iss.velocityKmh.toLocaleString()} <span className="text-xs font-normal text-gray-300">km/h</span>
+                  </span>
+                  <span className="block text-[10px] text-emerald-400">({data.iss.velocityKms} km/s)</span>
+                </div>
+              </div>
+
+              {/* Real-Time Stats Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div className="bg-space-900 p-3 rounded-lg border border-slate-800">
+                  <span className="text-[10px] text-gray-400 block uppercase">ALTITUDE</span>
+                  <span className="text-base font-bold text-hud-amber">
+                    {data.iss.altitudeKm.toFixed(1)} km
+                  </span>
+                  <span className="text-[10px] text-gray-500 block">Low Earth Orbit</span>
+                </div>
+
+                <div className="bg-space-900 p-3 rounded-lg border border-slate-800">
+                  <span className="text-[10px] text-gray-400 block uppercase">LATITUDE</span>
+                  <span className="text-base font-bold text-white">
+                    {data.iss.latitude.toFixed(4)}°
+                  </span>
+                  <span className="text-[10px] text-gray-500 block">Current Ground Track</span>
+                </div>
+
+                <div className="bg-space-900 p-3 rounded-lg border border-slate-800">
+                  <span className="text-[10px] text-gray-400 block uppercase">LONGITUDE</span>
+                  <span className="text-base font-bold text-white">
+                    {data.iss.longitude.toFixed(4)}°
+                  </span>
+                  <span className="text-[10px] text-gray-500 block">Earth Coordinates</span>
+                </div>
+
+                <div className="bg-space-900 p-3 rounded-lg border border-slate-800">
+                  <span className="text-[10px] text-gray-400 block uppercase">VISIBILITY</span>
+                  <span className="text-base font-bold text-emerald-400 uppercase">
+                    {data.iss.visibility}
+                  </span>
+                  <span className="text-[10px] text-gray-500 block">Solar Panel Status</span>
+                </div>
+              </div>
+
+              <div className="bg-space-900/80 p-4 rounded-lg border border-slate-800 text-xs text-gray-300 leading-relaxed space-y-2">
+                <p>
+                  The International Space Station completes one full revolution around the Earth approximately every <strong className="text-white">92.68 minutes</strong>, experiencing 16 sunrises and sunsets every 24 hours. The 3D cosmos simulator accurately renders the station in low Earth orbit.
+                </p>
+                <div className="pt-2 flex justify-end">
+                  <a
+                    href="/observatory/"
+                    className="px-3 py-1.5 bg-hud-cyan text-space-950 font-bold rounded text-xs hover:bg-cyan-300 transition-colors flex items-center gap-1.5"
+                  >
+                    <span>Track ISS in 3D Orbit</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+            </div>
           ) : data ? (
+            /* Near Earth Asteroids View */
             <div className="space-y-4">
               <div className="flex items-center justify-between bg-space-900/60 p-3 rounded-lg border border-slate-800 text-xs">
                 <div>
@@ -253,7 +347,7 @@ export const NasaDiscoveriesModal: React.FC<NasaDiscoveriesModalProps> = ({
         <div className="px-6 py-3 bg-space-900/90 border-t border-slate-800 flex items-center justify-between text-[11px] text-gray-400">
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-hud-cyan animate-ping" />
-            Synchronized with NASA Jet Propulsion Laboratory / Open Science API
+            Synchronized with NASA Jet Propulsion Laboratory & International Space Station Network
           </span>
           <span>Timestamp: {data ? new Date(data.timestamp).toLocaleTimeString() : '---'}</span>
         </div>

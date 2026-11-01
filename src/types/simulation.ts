@@ -1,7 +1,7 @@
 export interface CelestialBodyData {
   id: string;
   name: string;
-  type: 'star' | 'planet' | 'moon' | 'dwarf';
+  type: 'star' | 'planet' | 'moon' | 'dwarf' | 'spacecraft' | 'station' | 'telescope';
   radius: number; // rendering scale radius
   actualRadiusKm: number;
   color: string;
