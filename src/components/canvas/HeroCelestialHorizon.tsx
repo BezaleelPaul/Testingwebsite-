@@ -6,7 +6,6 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { CELESTIAL_BODIES } from '@/lib/constants';
 import { CelestialBody } from './CelestialBody';
 import { OrbitLine } from './OrbitLine';
-import { AsteroidBelt } from './AsteroidBelt';
 import { Starfield } from './Starfield';
 import { CelestialBodyData } from '@/types/simulation';
 import { calculateOrbitPosition } from '@/lib/kepler';
@@ -161,9 +160,6 @@ function SolarSystemRig({ selectedBodyId, onSelectBody }: HeroCosmosProps) {
           />
         </group>
       ))}
-
-      {/* Instanced Asteroid Belt (Mars - Jupiter corridor) */}
-      <AsteroidBelt innerRadius={39} outerRadius={48} count={1300} />
     </group>
   );
 }

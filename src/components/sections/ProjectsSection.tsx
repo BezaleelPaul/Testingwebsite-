@@ -43,26 +43,26 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
   }, [filteredProjects]);
 
   return (
-    <section id="projects" className="py-24 px-4 sm:px-6 lg:px-8 bg-space-950">
+    <section id="projects" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#060a12] border-t border-slate-800">
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center space-y-2">
-          <span className="text-xs font-mono text-hud-cyan tracking-widest uppercase">
+        <div className="flex flex-col items-center text-center space-y-3">
+          <span className="text-xs font-mono text-cyan-400 font-bold tracking-widest uppercase">
             [ 02 // ENGINEERING SHOWCASE ]
           </span>
-          <h2 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-wide">
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-wide">
             FEATURED DISCOVERIES & SYSTEMS
           </h2>
-          <p className="max-w-2xl text-sm sm:text-base text-slate-400 font-sans">
+          <p className="max-w-2xl text-base sm:text-lg text-slate-300 font-sans leading-relaxed">
             Production systems, algorithmic frameworks, and open-source software built with verifiable real-world utility.
           </p>
-          <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-hud-cyan to-transparent mt-2" />
+          <div className="w-20 h-1 bg-cyan-400 rounded-full mt-2" />
         </div>
 
-        {/* Filter and Search Controls */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-4 rounded-xl bg-space-900/80 border border-slate-800">
+        {/* Filter and Search Controls Card */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-5 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 shadow-md">
           {/* Category Filter Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
+          <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -70,10 +70,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                   spaceAudio.playTelemetryBeep(900);
                   setActiveCategory(cat);
                 }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-mono tracking-wider transition-all whitespace-nowrap ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-mono tracking-wider transition-all whitespace-nowrap font-bold ${
                   activeCategory === cat
-                    ? 'bg-hud-cyan text-space-950 font-bold shadow-[0_0_12px_rgba(0,243,255,0.4)]'
-                    : 'bg-space-950/80 text-slate-400 hover:text-white border border-slate-850 hover:border-slate-700'
+                    ? 'bg-cyan-400 text-slate-950 shadow-md'
+                    : 'bg-slate-800 text-slate-300 hover:text-white border border-slate-600 hover:border-cyan-400'
                 }`}
               >
                 {cat}
@@ -82,60 +82,60 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
           </div>
 
           {/* Search Input */}
-          <div className="relative w-full md:w-72">
-            <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+          <div className="relative w-full md:w-80">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search stack, project, keyword..."
-              className="w-full bg-space-950 border border-slate-800 rounded-lg pl-9 pr-4 py-2 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-hud-cyan transition-colors"
+              className="w-full bg-[#070b14] border-2 border-slate-700 rounded-xl pl-9 pr-4 py-2 text-xs font-mono text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400 transition-colors font-medium"
             />
           </div>
         </div>
 
-        {/* Featured Projects (Editorial Large Spotlight) */}
+        {/* Featured Projects (Editorial Spotlight) */}
         {featuredProjects.length > 0 && (
           <div className="space-y-6">
-            <h3 className="text-xs font-mono uppercase tracking-widest text-hud-cyan flex items-center gap-2">
-              <Sparkles className="w-3.5 h-3.5 text-hud-amber" /> Flagship Architectural Spotlights
+            <h3 className="text-sm font-mono uppercase tracking-widest text-cyan-300 flex items-center gap-2 font-bold">
+              <Sparkles className="w-4 h-4 text-amber-400" /> Flagship Architectural Spotlights
             </h3>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {featuredProjects.map((project) => (
                 <div
                   key={project.id}
-                  className="rounded-2xl bg-gradient-to-br from-space-900/90 to-space-950/90 border border-cyan-500/30 p-6 sm:p-8 space-y-6 hover:border-hud-cyan transition-all duration-300 shadow-[0_10px_35px_rgba(0,0,0,0.6)] group relative overflow-hidden"
+                  className="rounded-2xl bg-[#0d1424] border-2 border-slate-700/90 p-7 space-y-6 hover:border-cyan-400 transition-all duration-300 shadow-xl group relative overflow-hidden"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-mono text-hud-cyan font-bold bg-cyan-950/80 border border-cyan-800 px-2.5 py-1 rounded">
+                    <span className="text-xs font-mono text-cyan-300 font-bold bg-cyan-950/90 border border-cyan-700 px-3 py-1 rounded-md">
                       {project.category}
                     </span>
-                    <span className="text-xs font-mono text-emerald-400 flex items-center gap-1">
+                    <span className="text-xs font-mono text-emerald-400 font-bold flex items-center gap-1.5 bg-emerald-950/60 border border-emerald-800 px-2.5 py-1 rounded">
                       <CheckCircle className="w-3.5 h-3.5" /> {project.status}
                     </span>
                   </div>
 
                   <div>
-                    <h4 className="text-2xl font-display font-bold text-white group-hover:text-hud-cyan transition-colors">
+                    <h4 className="text-2xl font-display font-extrabold text-white group-hover:text-cyan-300 transition-colors">
                       {project.title}
                     </h4>
-                    <p className="text-sm font-mono text-slate-400 mt-1">{project.tagline}</p>
+                    <p className="text-sm font-mono text-cyan-400 mt-1 font-semibold">{project.tagline}</p>
                   </div>
 
                   {/* Problem & Solution Breakdown */}
-                  <div className="space-y-3 bg-space-950/60 p-4 rounded-xl border border-slate-850">
+                  <div className="space-y-3 bg-[#070b14] p-4 rounded-xl border border-slate-700">
                     <div>
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-hud-amber font-semibold">
+                      <span className="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold">
                         The Challenge:
                       </span>
-                      <p className="text-xs text-slate-300 mt-0.5 leading-relaxed">{project.problem}</p>
+                      <p className="text-sm text-slate-200 mt-1 leading-relaxed font-sans">{project.problem}</p>
                     </div>
-                    <div>
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-hud-cyan font-semibold">
+                    <div className="pt-2 border-t border-slate-800">
+                      <span className="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold">
                         The Architectural Solution:
                       </span>
-                      <p className="text-xs text-slate-300 mt-0.5 leading-relaxed">{project.solution}</p>
+                      <p className="text-sm text-slate-200 mt-1 leading-relaxed font-sans">{project.solution}</p>
                     </div>
                   </div>
 
@@ -144,7 +144,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                     {project.stack.map((tech) => (
                       <span
                         key={tech}
-                        className="px-2.5 py-1 rounded bg-space-950 text-slate-300 text-xs font-mono border border-slate-800"
+                        className="px-2.5 py-1 rounded-md bg-slate-800 text-slate-200 text-xs font-mono font-medium border border-slate-600"
                       >
                         {tech}
                       </span>
@@ -152,36 +152,36 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                   </div>
 
                   {/* Action Links */}
-                  <div className="pt-4 border-t border-slate-850 flex items-center justify-between">
+                  <div className="pt-4 border-t border-slate-750 flex items-center justify-between">
                     <button
                       onClick={() => {
                         spaceAudio.playTelemetryBeep(1100);
                         setSelectedProject(project);
                       }}
-                      className="text-xs font-mono text-slate-400 hover:text-white underline decoration-slate-600 underline-offset-4 flex items-center gap-1"
+                      className="text-xs font-mono text-cyan-400 hover:text-white font-bold underline decoration-cyan-500/50 underline-offset-4 flex items-center gap-1"
                     >
                       <span>Read Full Specs</span>
                     </button>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2.5">
                       {project.demoUrl && (
                         <a
                           href={project.demoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-hud-cyan text-space-950 font-mono text-xs font-bold hover:bg-cyan-300 transition-colors"
+                          className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-cyan-400 text-slate-950 font-mono text-xs font-bold hover:bg-cyan-300 transition-colors shadow-md"
                         >
                           <span>Live Demo</span>
-                          <ArrowUpRight className="w-3.5 h-3.5" />
+                          <ArrowUpRight className="w-4 h-4" />
                         </a>
                       )}
                       <a
                         href={project.repoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-space-850 hover:bg-space-800 border border-slate-700 text-white font-mono text-xs transition-colors"
+                        className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-mono text-xs font-bold transition-colors"
                       >
-                        <Github className="w-3.5 h-3.5" />
+                        <Github className="w-4 h-4" />
                         <span>Source</span>
                       </a>
                     </div>
@@ -194,27 +194,29 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
 
         {/* Standard Projects Grid */}
         <div className="space-y-6">
-          <h3 className="text-xs font-mono uppercase tracking-widest text-slate-400 flex items-center gap-2">
-            <Layers className="w-3.5 h-3.5 text-hud-cyan" /> Complete Engineering Library ({filteredProjects.length})
+          <h3 className="text-sm font-mono uppercase tracking-widest text-slate-300 flex items-center gap-2 font-bold">
+            <Layers className="w-4 h-4 text-cyan-400" /> Complete Engineering Library ({filteredProjects.length})
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {standardProjects.map((project) => (
               <div
                 key={project.id}
-                className="rounded-xl bg-space-900/70 border border-slate-800 hover:border-cyan-500/50 p-6 space-y-4 transition-all duration-200 flex flex-col justify-between group"
+                className="rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 hover:border-cyan-400 p-6 space-y-4 transition-all duration-200 flex flex-col justify-between group shadow-lg"
               >
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between text-[11px] font-mono">
-                    <span className="text-hud-cyan">{project.category}</span>
-                    <span className="text-slate-500">{project.status}</span>
+                  <div className="flex items-center justify-between text-xs font-mono">
+                    <span className="text-cyan-300 font-bold bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-800">
+                      {project.category}
+                    </span>
+                    <span className="text-slate-400 font-medium">{project.status}</span>
                   </div>
 
-                  <h4 className="text-lg font-bold text-white group-hover:text-hud-cyan transition-colors">
+                  <h4 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
                     {project.title}
                   </h4>
 
-                  <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                  <p className="text-sm text-slate-200 leading-relaxed font-sans">
                     {project.description}
                   </p>
 
@@ -222,26 +224,26 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                     {project.stack.slice(0, 4).map((tech) => (
                       <span
                         key={tech}
-                        className="px-2 py-0.5 rounded bg-space-950 text-slate-400 text-[10px] font-mono border border-slate-850"
+                        className="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700"
                       >
                         {tech}
                       </span>
                     ))}
                     {project.stack.length > 4 && (
-                      <span className="px-2 py-0.5 rounded bg-space-950 text-slate-500 text-[10px] font-mono">
+                      <span className="px-2 py-0.5 rounded bg-slate-850 text-slate-400 text-xs font-mono">
                         +{project.stack.length - 4}
                       </span>
                     )}
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-slate-850 flex items-center justify-between text-xs font-mono">
+                <div className="pt-4 border-t border-slate-750 flex items-center justify-between text-xs font-mono">
                   <button
                     onClick={() => {
                       spaceAudio.playTelemetryBeep(1100);
                       setSelectedProject(project);
                     }}
-                    className="text-slate-400 hover:text-white"
+                    className="text-cyan-400 hover:text-white font-bold"
                   >
                     Details
                   </button>
@@ -251,18 +253,18 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                         href={project.demoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-hud-cyan hover:underline flex items-center gap-0.5"
+                        className="text-cyan-300 hover:text-white font-bold flex items-center gap-0.5"
                       >
-                        Demo <ArrowUpRight className="w-3 h-3" />
+                        Demo <ArrowUpRight className="w-3.5 h-3.5" />
                       </a>
                     )}
                     <a
                       href={project.repoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-slate-300 hover:text-white flex items-center gap-0.5"
+                      className="text-slate-200 hover:text-white font-medium flex items-center gap-0.5"
                     >
-                      Repo <ExternalLink className="w-3 h-3" />
+                      Repo <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   </div>
                 </div>
@@ -273,36 +275,36 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
 
         {/* Project Detail Modal */}
         {selectedProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-            <div className="relative w-full max-w-2xl bg-space-900 border border-hud-cyan/50 rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl overflow-y-auto max-h-[90vh]">
-              <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+            <div className="relative w-full max-w-2xl bg-[#0d1424] border-2 border-cyan-400 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl overflow-y-auto max-h-[90vh]">
+              <div className="flex items-center justify-between pb-4 border-b border-slate-700">
                 <div>
-                  <span className="text-[11px] font-mono text-hud-cyan font-bold uppercase">
+                  <span className="text-xs font-mono text-cyan-400 font-bold uppercase">
                     {selectedProject.category} · {selectedProject.status}
                   </span>
                   <h3 className="text-2xl font-bold text-white mt-1">{selectedProject.title}</h3>
                 </div>
                 <button
                   onClick={() => setSelectedProject(null)}
-                  className="p-1 rounded bg-space-800 text-slate-400 hover:text-white border border-slate-700"
+                  className="p-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-600"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <div className="space-y-4 text-xs sm:text-sm font-sans text-slate-300 leading-relaxed">
+              <div className="space-y-4 text-sm font-sans text-slate-200 leading-relaxed">
                 <div>
-                  <h4 className="font-mono text-xs uppercase tracking-wider text-hud-amber mb-1 font-bold">
+                  <h4 className="font-mono text-xs uppercase tracking-wider text-amber-400 mb-1 font-bold">
                     Problem Definition
                   </h4>
-                  <p className="bg-space-950 p-3 rounded-lg border border-slate-850">{selectedProject.problem}</p>
+                  <p className="bg-[#070b14] p-3.5 rounded-xl border border-slate-700 leading-relaxed">{selectedProject.problem}</p>
                 </div>
 
                 <div>
-                  <h4 className="font-mono text-xs uppercase tracking-wider text-hud-cyan mb-1 font-bold">
+                  <h4 className="font-mono text-xs uppercase tracking-wider text-cyan-400 mb-1 font-bold">
                     Architectural Solution
                   </h4>
-                  <p className="bg-space-950 p-3 rounded-lg border border-slate-850">{selectedProject.solution}</p>
+                  <p className="bg-[#070b14] p-3.5 rounded-xl border border-slate-700 leading-relaxed">{selectedProject.solution}</p>
                 </div>
 
                 {selectedProject.highlights && (
@@ -310,7 +312,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                     <h4 className="font-mono text-xs uppercase tracking-wider text-white mb-2 font-bold">
                       Key Highlights & Milestones
                     </h4>
-                    <ul className="space-y-1.5 list-disc list-inside font-mono text-xs text-slate-400">
+                    <ul className="space-y-1.5 list-disc list-inside font-mono text-xs text-slate-300">
                       {selectedProject.highlights.map((h, i) => (
                         <li key={i}>{h}</li>
                       ))}
@@ -319,12 +321,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                 )}
 
                 <div>
-                  <h4 className="font-mono text-xs uppercase tracking-wider text-slate-400 mb-2 font-bold">
+                  <h4 className="font-mono text-xs uppercase tracking-wider text-slate-300 mb-2 font-bold">
                     Technology Stack
                   </h4>
                   <div className="flex flex-wrap gap-1.5">
                     {selectedProject.stack.map((t) => (
-                      <span key={t} className="px-3 py-1 rounded bg-space-950 text-hud-cyan text-xs font-mono border border-cyan-900/50">
+                      <span key={t} className="px-3 py-1 rounded-md bg-[#070b14] text-cyan-300 text-xs font-mono font-bold border border-cyan-800">
                         {t}
                       </span>
                     ))}
@@ -332,13 +334,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-slate-800 flex items-center justify-end gap-3">
+              <div className="pt-4 border-t border-slate-700 flex items-center justify-end gap-3">
                 {selectedProject.demoUrl && (
                   <a
                     href={selectedProject.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-lg bg-hud-cyan text-space-950 font-mono text-xs font-bold hover:bg-cyan-300 transition-colors flex items-center gap-1.5"
+                    className="px-5 py-2.5 rounded-xl bg-cyan-400 text-slate-950 font-mono text-xs font-bold hover:bg-cyan-300 transition-colors flex items-center gap-1.5 shadow-md"
                   >
                     <span>Launch Live Demo</span>
                     <ArrowUpRight className="w-4 h-4" />
@@ -348,7 +350,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                   href={selectedProject.repoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-lg bg-space-800 hover:bg-space-700 text-white font-mono text-xs border border-slate-700 transition-colors flex items-center gap-1.5"
+                  className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-mono text-xs font-bold border border-slate-600 transition-colors flex items-center gap-1.5"
                 >
                   <Github className="w-4 h-4" />
                   <span>View Repository</span>

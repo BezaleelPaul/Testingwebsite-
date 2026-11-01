@@ -9,14 +9,10 @@ import {
   Sparkles, 
   Shuffle, 
   Compass, 
-  Layers, 
   Sliders, 
   ZoomIn,
   ZoomOut,
-  Orbit,
-  Flame,
-  Droplets,
-  Wind
+  Orbit
 } from 'lucide-react';
 
 interface RepoPreset {
@@ -76,7 +72,8 @@ export function GenerativeCosmosSection() {
 
   const handleRandomize = () => {
     const randomSeeds = [
-      'Kepler_452b_Prime',
+      'Proxima_Centauri_Prime',
+      'Kepler_452b_SuperEarth',
       'Quantum_Singularity_X9',
       'Flutter_Dart_Engine',
       'IEEE_Global_Network',
@@ -97,43 +94,38 @@ export function GenerativeCosmosSection() {
   };
 
   return (
-    <section id="procedural-planets" className="relative py-24 bg-space-950 border-t border-space-800/60 overflow-hidden">
-      {/* Background Ambience */}
-      <div className="absolute inset-0 bg-radial-vignette opacity-70 pointer-events-none" />
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-hud-cyan/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-purple-600/5 rounded-full blur-3xl pointer-events-none" />
-
+    <section id="procedural-planets" className="relative py-24 bg-[#050811] border-t border-slate-800 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-hud-cyan/10 border border-hud-cyan/30 text-hud-cyan text-xs font-mono tracking-widest uppercase mb-4">
-            <Globe className="w-3.5 h-3.5" />
-            <span>Procedural Planetary Synthesizer</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
-            Procedural Seed Exoplanets
+        <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
+          <span className="text-xs font-mono text-cyan-400 font-bold tracking-widest uppercase">
+            [ 03 // PROCEDURAL GENERATION ENGINE ]
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-wide">
+            PROCEDURAL EXOPLANET SYNTHESIZER
           </h2>
-          <p className="text-space-300 text-sm sm:text-base leading-relaxed">
-            Inspired by deterministic seed world generation. Enter any cryptographic seed or explore Bezaleel&apos;s repositories synthesized into high-fidelity 3D exoplanets featuring procedural terrain textures, dynamic cloud layers, atmospheric scattering, and planetary rings.
+          <p className="text-slate-200 text-base sm:text-lg leading-relaxed font-sans">
+            Inspired by deterministic seed generation. Enter any keyword, seed, or explore Bezaleel&apos;s repositories synthesized into high-fidelity 3D exoplanets featuring harmonic procedural terrain textures, cloud dynamics, Rayleigh atmospheric scattering, and planetary rings.
           </p>
+          <div className="w-20 h-1 bg-cyan-400 rounded-full mx-auto mt-2" />
         </div>
 
         {/* Interactive Workspace Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left / Center: 3D Viewport */}
-          <div className="lg:col-span-8 bg-space-900/60 border border-space-700/60 rounded-2xl overflow-hidden backdrop-blur-md shadow-2xl relative">
+          {/* Left / Center: 3D Viewport Solid Card */}
+          <div className="lg:col-span-8 bg-[#0b101d] border-2 border-slate-700 rounded-3xl overflow-hidden shadow-2xl relative">
             {/* Viewport Overlay Badges */}
             <div className="absolute top-4 left-4 z-20 flex flex-wrap gap-2 pointer-events-none">
-              <span className="px-2.5 py-1 rounded-md bg-space-950/80 border border-space-700 text-hud-cyan text-xs font-mono flex items-center gap-1.5 backdrop-blur-sm">
-                <Globe className="w-3.5 h-3.5" />
-                Seed: <span className="text-white font-semibold">{seed.slice(0, 20)}{seed.length > 20 ? '...' : ''}</span>
+              <span className="px-3 py-1.5 rounded-lg bg-[#070b14]/95 border border-slate-700 text-cyan-300 text-xs font-mono font-bold flex items-center gap-1.5 shadow-md">
+                <Globe className="w-4 h-4 text-cyan-400" />
+                Seed: <span className="text-white font-bold">{seed.slice(0, 18)}{seed.length > 18 ? '...' : ''}</span>
               </span>
-              <span className="px-2.5 py-1 rounded-md bg-space-950/80 border border-space-700 text-space-300 text-xs font-mono flex items-center gap-1.5 backdrop-blur-sm">
-                <Orbit className="w-3.5 h-3.5 text-hud-cyan" />
+              <span className="px-3 py-1.5 rounded-lg bg-[#070b14]/95 border border-slate-700 text-slate-200 text-xs font-mono flex items-center gap-1.5 shadow-md">
+                <Orbit className="w-4 h-4 text-cyan-400" />
                 Atmospheric Glow
               </span>
-              <span className="px-2.5 py-1 rounded-md bg-space-950/80 border border-space-700 text-emerald-400 text-xs font-mono flex items-center gap-1.5 backdrop-blur-sm">
-                60 FPS Procedural
+              <span className="px-3 py-1.5 rounded-lg bg-[#070b14]/95 border border-slate-700 text-emerald-400 text-xs font-mono font-bold flex items-center gap-1.5 shadow-md">
+                60 FPS Smooth
               </span>
             </div>
 
@@ -142,36 +134,36 @@ export function GenerativeCosmosSection() {
               <button
                 type="button"
                 onClick={() => setZoomEnabled(!zoomEnabled)}
-                className={`px-3 py-1 rounded-lg text-xs font-mono flex items-center gap-1.5 border transition-all ${
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold flex items-center gap-1.5 border-2 transition-all shadow-md ${
                   zoomEnabled
-                    ? 'bg-hud-cyan text-space-950 font-bold border-hud-cyan shadow-[0_0_12px_#00f3ff]'
-                    : 'bg-space-950/80 text-slate-300 border-space-700 hover:border-hud-cyan hover:text-white'
+                    ? 'bg-cyan-400 text-slate-950 border-cyan-300'
+                    : 'bg-[#070b14] text-slate-200 border-slate-600 hover:border-cyan-400 hover:text-white'
                 }`}
                 title="Toggle scroll wheel zoom (off by default to permit natural page scrolling)"
               >
-                {zoomEnabled ? <ZoomOut className="w-3.5 h-3.5" /> : <ZoomIn className="w-3.5 h-3.5" />}
+                {zoomEnabled ? <ZoomOut className="w-4 h-4" /> : <ZoomIn className="w-4 h-4" />}
                 <span>{zoomEnabled ? 'Zoom: On' : 'Zoom: Off'}</span>
               </button>
             </div>
 
             {/* Hint Overlay */}
             <div className="absolute bottom-4 left-4 z-20 pointer-events-none hidden sm:block">
-              <span className="text-[11px] font-mono text-space-400 bg-space-950/80 px-2 py-1 rounded border border-space-800">
-                🖱️ Left click + drag to rotate • {zoomEnabled ? 'Scroll to zoom' : 'Toggle Zoom button to zoom'}
+              <span className="text-xs font-mono text-slate-300 bg-[#070b14]/90 px-3 py-1.5 rounded-lg border border-slate-700 font-medium">
+                🖱️ Left click + drag to inspect • {zoomEnabled ? 'Scroll to zoom' : 'Click Zoom: On to enable scroll zoom'}
               </span>
             </div>
 
             {/* 3D WebGL Canvas */}
-            <div className="h-[480px] sm:h-[560px] w-full cursor-grab active:cursor-grabbing bg-space-950/90">
+            <div className="h-[480px] sm:h-[560px] w-full cursor-grab active:cursor-grabbing bg-[#02050e]">
               <Canvas
                 camera={{ position: [0, 2, 14], fov: 45 }}
                 gl={{ antialias: true, alpha: false }}
               >
-                <color attach="background" args={['#030712']} />
+                <color attach="background" args={['#02050e']} />
                 
                 {/* Lighting System */}
                 <ambientLight intensity={0.25} />
-                <directionalLight position={[14, 8, 10]} intensity={2.2} castShadow />
+                <directionalLight position={[14, 8, 10]} intensity={2.4} castShadow />
                 <pointLight position={[-12, -6, -10]} intensity={0.4} color="#38bdf8" />
                 
                 <Suspense fallback={null}>
@@ -201,16 +193,16 @@ export function GenerativeCosmosSection() {
           {/* Right: Interactive Configuration Dock */}
           <div className="lg:col-span-4 space-y-6">
             {/* Seed Controller Card */}
-            <div className="bg-space-900/60 border border-space-700/60 rounded-2xl p-6 backdrop-blur-md">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-hud-cyan" />
-                  Cosmic Seed Synthesizer
+            <div className="bg-[#0d1424] border-2 border-slate-700/80 rounded-2xl p-6 shadow-xl space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-cyan-400" />
+                  Seed Synthesizer
                 </h3>
                 <button
                   onClick={handleRandomize}
                   title="Generate Random Seed"
-                  className="p-1.5 rounded-lg bg-space-800 border border-space-700 text-space-300 hover:text-hud-cyan hover:border-hud-cyan/50 transition-all flex items-center gap-1.5 text-xs font-mono"
+                  className="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-600 text-slate-200 hover:text-cyan-300 hover:border-cyan-400 transition-all flex items-center gap-1.5 text-xs font-mono font-bold"
                 >
                   <Shuffle className="w-3.5 h-3.5" />
                   <span>Random</span>
@@ -226,70 +218,68 @@ export function GenerativeCosmosSection() {
                 className="space-y-3"
               >
                 <div>
-                  <label className="block text-xs font-mono text-space-400 mb-1">
-                    Enter any seed, word, or concept:
+                  <label className="block text-xs font-mono text-slate-300 mb-1.5 font-semibold">
+                    Enter any word or seed:
                   </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={inputVal}
-                      onChange={(e) => setInputVal(e.target.value)}
-                      placeholder="e.g. Flutter, Apollo11, Quantum, Voyager"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-space-950/80 border border-space-700 text-white font-mono text-sm focus:outline-none focus:border-hud-cyan focus:ring-1 focus:ring-hud-cyan transition-all"
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    value={inputVal}
+                    onChange={(e) => setInputVal(e.target.value)}
+                    placeholder="e.g. Flutter, Apollo11, Quantum, Voyager"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#070b14] border-2 border-slate-700 text-white font-mono text-sm focus:outline-none focus:border-cyan-400 transition-all font-medium"
+                  />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-2.5 px-4 rounded-xl bg-hud-cyan text-space-950 font-semibold text-sm hover:bg-cyan-300 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-lg shadow-hud-cyan/20"
+                  className="w-full py-3 px-4 rounded-xl bg-cyan-400 text-slate-950 font-bold text-sm hover:bg-cyan-300 transition-all flex items-center justify-center gap-2 shadow-md"
                 >
                   <Globe className="w-4 h-4" />
-                  Synthesize Exoplanet
+                  Synthesize World
                 </button>
               </form>
             </div>
 
             {/* Bezaleel Repo Worlds Preset Picker */}
-            <div className="bg-space-900/60 border border-space-700/60 rounded-2xl p-6 backdrop-blur-md">
-              <h3 className="text-xs font-mono uppercase tracking-widest text-space-400 mb-3 flex items-center gap-2">
-                <Compass className="w-3.5 h-3.5 text-hud-cyan" />
+            <div className="bg-[#0d1424] border-2 border-slate-700/80 rounded-2xl p-6 shadow-xl space-y-3">
+              <h3 className="text-xs font-mono uppercase tracking-widest text-slate-300 flex items-center gap-2 font-bold">
+                <Compass className="w-4 h-4 text-cyan-400" />
                 Repository Seeds (Bezaleel Paul)
               </h3>
-              <p className="text-xs text-space-300 mb-4">
-                Click any of Bezaleel&apos;s verified software repositories to synthesize its procedural planetary manifestation:
+              <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                Click any of Bezaleel&apos;s verified repositories to synthesize its procedural planetary manifestation:
               </p>
 
-              <div className="space-y-2.5">
+              <div className="space-y-2.5 pt-1">
                 {REPO_PRESETS.map((preset) => {
                   const isActive = seed === preset.seed;
                   return (
                     <button
                       key={preset.seed}
                       onClick={() => handleApplyPreset(preset)}
-                      className={`w-full text-left p-3 rounded-xl border transition-all flex items-start gap-3 ${
+                      className={`w-full text-left p-3.5 rounded-xl border-2 transition-all flex items-start gap-3 ${
                         isActive
-                          ? 'bg-hud-cyan/15 border-hud-cyan text-white shadow-md shadow-hud-cyan/10'
-                          : 'bg-space-950/50 border-space-800 hover:border-space-700 text-space-300 hover:text-white'
+                          ? 'bg-cyan-950/80 border-cyan-400 text-white shadow-md'
+                          : 'bg-[#070b14] border-slate-700 hover:border-slate-500 text-slate-200 hover:text-white'
                       }`}
                     >
-                      <span className="text-xl p-1 bg-space-800 rounded-lg">{preset.icon}</span>
+                      <span className="text-xl p-1 bg-slate-800 rounded-lg">{preset.icon}</span>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-1">
                           <span className="text-xs font-mono font-bold truncate text-white">
                             {preset.name}
                           </span>
-                          <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono uppercase ${
-                            preset.palette === 'terrestrial' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :
-                            preset.palette === 'volcanic' ? 'bg-red-950 text-red-400 border border-red-800' :
-                            preset.palette === 'ocean' ? 'bg-cyan-950 text-cyan-400 border border-cyan-800' :
-                            preset.palette === 'gas_giant' ? 'bg-amber-950 text-amber-400 border border-amber-800' :
-                            'bg-blue-950 text-blue-400 border border-blue-800'
+                          <span className={`text-[10px] px-2 py-0.5 rounded font-mono uppercase font-bold ${
+                            preset.palette === 'terrestrial' ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' :
+                            preset.palette === 'volcanic' ? 'bg-red-950 text-red-300 border border-red-700' :
+                            preset.palette === 'ocean' ? 'bg-cyan-950 text-cyan-300 border border-cyan-700' :
+                            preset.palette === 'gas_giant' ? 'bg-amber-950 text-amber-300 border border-amber-700' :
+                            'bg-blue-950 text-blue-300 border border-blue-700'
                           }`}>
                             {preset.palette}
                           </span>
                         </div>
-                        <p className="text-[11px] text-space-400 line-clamp-1 mt-0.5">
+                        <p className="text-xs text-slate-300 line-clamp-1 mt-1 font-sans">
                           {preset.description}
                         </p>
                       </div>
@@ -300,17 +290,17 @@ export function GenerativeCosmosSection() {
             </div>
 
             {/* Geological Modifiers & Sliders */}
-            <div className="bg-space-900/60 border border-space-700/60 rounded-2xl p-6 backdrop-blur-md space-y-4">
-              <h3 className="text-xs font-mono uppercase tracking-widest text-space-400 flex items-center gap-2">
-                <Sliders className="w-3.5 h-3.5 text-hud-cyan" />
+            <div className="bg-[#0d1424] border-2 border-slate-700/80 rounded-2xl p-6 shadow-xl space-y-4">
+              <h3 className="text-xs font-mono uppercase tracking-widest text-slate-300 flex items-center gap-2 font-bold">
+                <Sliders className="w-4 h-4 text-cyan-400" />
                 Planetary Modifiers
               </h3>
 
               {/* Roughness Slider */}
               <div>
-                <div className="flex justify-between text-xs font-mono text-space-300 mb-1">
+                <div className="flex justify-between text-xs font-mono text-slate-200 mb-1 font-semibold">
                   <span>Terrain Relief:</span>
-                  <span className="text-hud-cyan font-bold">{roughness.toFixed(1)}x</span>
+                  <span className="text-cyan-400 font-bold">{roughness.toFixed(1)}x</span>
                 </div>
                 <input
                   type="range"
@@ -319,15 +309,15 @@ export function GenerativeCosmosSection() {
                   step="0.1"
                   value={roughness}
                   onChange={(e) => setRoughness(parseFloat(e.target.value))}
-                  className="w-full accent-hud-cyan cursor-pointer"
+                  className="w-full accent-cyan-400 cursor-pointer"
                 />
               </div>
 
               {/* Radius Slider */}
               <div>
-                <div className="flex justify-between text-xs font-mono text-space-300 mb-1">
+                <div className="flex justify-between text-xs font-mono text-slate-200 mb-1 font-semibold">
                   <span>Planetary Radius:</span>
-                  <span className="text-hud-cyan font-bold">{radius.toFixed(1)} units</span>
+                  <span className="text-cyan-400 font-bold">{radius.toFixed(1)} units</span>
                 </div>
                 <input
                   type="range"
@@ -336,20 +326,20 @@ export function GenerativeCosmosSection() {
                   step="0.2"
                   value={radius}
                   onChange={(e) => setRadius(parseFloat(e.target.value))}
-                  className="w-full accent-hud-cyan cursor-pointer"
+                  className="w-full accent-cyan-400 cursor-pointer"
                 />
               </div>
 
               {/* Ring Toggle */}
               <div className="pt-2 flex items-center justify-between">
-                <span className="text-xs font-mono text-space-300">Planetary Ring System:</span>
+                <span className="text-xs font-mono text-slate-200 font-semibold">Planetary Ring System:</span>
                 <button
                   type="button"
                   onClick={() => setShowRings(!showRings)}
-                  className={`px-3 py-1 rounded-md text-xs font-mono border transition-all ${
+                  className={`px-3.5 py-1 rounded-lg text-xs font-mono font-bold border transition-all ${
                     showRings
-                      ? 'bg-hud-cyan/20 border-hud-cyan text-hud-cyan'
-                      : 'bg-space-800 border-space-700 text-space-400'
+                      ? 'bg-cyan-950 border-cyan-400 text-cyan-300'
+                      : 'bg-slate-800 border-slate-600 text-slate-400'
                   }`}
                 >
                   {showRings ? 'Enabled' : 'Disabled'}
@@ -358,16 +348,16 @@ export function GenerativeCosmosSection() {
 
               {/* Biome Palette Override */}
               <div className="pt-2">
-                <span className="block text-xs font-mono text-space-400 mb-2">Climate Classification:</span>
-                <div className="grid grid-cols-3 gap-1.5 text-[11px] font-mono">
+                <span className="block text-xs font-mono text-slate-300 mb-2 font-semibold">Climate Classification:</span>
+                <div className="grid grid-cols-3 gap-1.5 text-xs font-mono font-bold">
                   {['auto', 'terrestrial', 'ocean', 'volcanic', 'gas_giant', 'glacius'].map((p) => (
                     <button
                       key={p}
                       onClick={() => setPalette(p)}
-                      className={`py-1.5 px-2 rounded-lg border text-center capitalize transition-all ${
+                      className={`py-2 px-2 rounded-lg border text-center capitalize transition-all ${
                         palette === p
-                          ? 'bg-hud-cyan/20 border-hud-cyan text-white font-bold'
-                          : 'bg-space-950/60 border-space-800 text-space-400 hover:text-white'
+                          ? 'bg-cyan-400 border-cyan-300 text-slate-950 font-bold shadow-md'
+                          : 'bg-[#070b14] border-slate-700 text-slate-300 hover:text-white hover:border-slate-500'
                       }`}
                     >
                       {p.replace('_', ' ')}

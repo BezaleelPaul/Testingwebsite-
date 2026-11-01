@@ -19,7 +19,7 @@ export const Starfield: React.FC<{ count?: number }> = ({ count = 6500 }) => {
       new THREE.Color('#fff4e8'), // Class G (Yellow - Sol)
       new THREE.Color('#ffd2a1'), // Class K (Orange)
       new THREE.Color('#ffcc6f'), // Class M (Red dwarf)
-      new THREE.Color('#00f3ff'), // Sci-fi cyan accent
+      new THREE.Color('#cbd5e1'), // Stellar White
     ];
 
     for (let i = 0; i < count; i++) {
@@ -96,7 +96,7 @@ export const Starfield: React.FC<{ count?: number }> = ({ count = 6500 }) => {
       {/* 1. Deep Space Starfield Points */}
       <points geometry={starGeometry}>
         <pointsMaterial
-          size={1.6}
+          size={0.95}
           vertexColors
           transparent
           opacity={0.88}
@@ -108,10 +108,10 @@ export const Starfield: React.FC<{ count?: number }> = ({ count = 6500 }) => {
       <group ref={nebulaRef}>
         <points geometry={nebulaGeometry}>
           <pointsMaterial
-            size={45.0}
+            size={20.0}
             vertexColors
             transparent
-            opacity={0.18}
+            opacity={0.08}
             blending={THREE.AdditiveBlending}
             depthWrite={false}
             sizeAttenuation

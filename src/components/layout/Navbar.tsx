@@ -68,21 +68,14 @@ export const Navbar: React.FC = () => {
               onClick={() => spaceAudio.playTelemetryBeep(960)}
               className={`text-xs font-mono uppercase tracking-widest transition-colors focus:outline-none ${
                 link.highlight 
-                  ? 'text-hud-cyan font-bold hover:text-cyan-300 flex items-center gap-1.5 bg-hud-cyan/10 px-2.5 py-1 rounded border border-hud-cyan/30'
-                  : 'text-slate-300 hover:text-hud-cyan focus:text-hud-cyan'
+                  ? 'text-hud-cyan font-bold hover:text-cyan-300 flex items-center gap-1.5 bg-hud-cyan/15 px-3 py-1 rounded border border-hud-cyan/40'
+                  : 'text-slate-200 hover:text-hud-cyan focus:text-hud-cyan font-medium'
               }`}
             >
               {link.highlight && <Globe className="w-3.5 h-3.5 text-hud-cyan" />}
               <span>{link.label}</span>
             </a>
           ))}
-          <Link
-            href="/observatory"
-            className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/70 border border-cyan-500/50 text-hud-cyan hover:bg-hud-cyan hover:text-space-950 text-xs font-mono font-bold tracking-wider transition-all shadow-[0_0_12px_rgba(0,243,255,0.25)] group"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-hud-cyan animate-ping group-hover:bg-space-950" />
-            <span>🪐 3D Cosmos</span>
-          </Link>
         </nav>
 
         {/* Controls & Action Buttons */}
@@ -139,16 +132,8 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="sm:hidden bg-space-950/95 border-b border-cyan-500/30 px-6 py-6 space-y-4 backdrop-blur-xl animate-in slide-in-from-top-4 duration-200">
+        <div className="sm:hidden bg-[#0a0f1d]/98 border-b border-slate-700 px-6 py-6 space-y-4 backdrop-blur-xl animate-in slide-in-from-top-4 duration-200">
           <nav className="flex flex-col space-y-3">
-            <Link
-              href="/observatory"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-2 text-sm font-mono font-bold text-hud-cyan py-1 bg-cyan-950/40 px-3 rounded border border-cyan-800/60"
-            >
-              <span className="w-2 h-2 rounded-full bg-hud-cyan animate-ping" />
-              <span>🪐 Launch 3D Cosmos Simulation</span>
-            </Link>
             {navLinks.map((link) => (
               <a
                 key={link.label}

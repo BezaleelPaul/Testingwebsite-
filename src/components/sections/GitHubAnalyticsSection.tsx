@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { GitHubAnalyticsData } from '@/types/portfolio';
-import { GitPullRequest, GitCommit, GitBranch, Star, Users, Flame, Clock, ExternalLink, Code } from 'lucide-react';
+import { Star, Flame, Clock, ExternalLink, Code } from 'lucide-react';
 
 interface GitHubAnalyticsSectionProps {
   data: GitHubAnalyticsData;
@@ -30,52 +30,52 @@ export const GitHubAnalyticsSection: React.FC<GitHubAnalyticsSectionProps> = ({ 
   const areaStr = `${padX},${padY + chartH} ${polylineStr} ${padX + chartW},${padY + chartH}`;
 
   return (
-    <section id="github" className="py-24 px-4 sm:px-6 lg:px-8 bg-space-950 border-t border-slate-900">
+    <section id="github" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#060a12] border-t border-slate-800">
       <div className="max-w-7xl mx-auto space-y-14">
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center space-y-2">
-          <span className="text-xs font-mono text-hud-cyan tracking-widest uppercase">
+        <div className="flex flex-col items-center text-center space-y-3">
+          <span className="text-xs font-mono text-cyan-400 font-bold tracking-widest uppercase">
             [ 06 // ACTIVE REPOSITORY TELEMETRY ]
           </span>
-          <h2 className="text-3xl sm:text-4xl font-display font-bold text-white tracking-wide">
+          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-wide">
             GITHUB & COMPUTATIONAL ACTIVITY
           </h2>
-          <p className="max-w-2xl text-sm sm:text-base text-slate-400 font-sans">
+          <p className="max-w-2xl text-base sm:text-lg text-slate-300 font-sans leading-relaxed">
             Real-time contribution frequency, 30-day commit density, and competitive algorithmic records.
           </p>
-          <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-hud-cyan to-transparent mt-2" />
+          <div className="w-20 h-1 bg-cyan-400 rounded-full mt-2" />
         </div>
 
         {/* High-Level Stat Cells Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-          <div className="p-4 rounded-xl bg-space-900/80 border border-slate-800 text-center">
-            <span className="block text-2xl font-bold font-display text-white">{data.stats.repos}</span>
-            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Public Repos</span>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
+          <div className="p-5 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 text-center shadow-lg">
+            <span className="block text-3xl font-extrabold font-display text-white">{data.stats.repos}</span>
+            <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">Public Repos</span>
           </div>
 
-          <div className="p-4 rounded-xl bg-space-900/80 border border-slate-800 text-center">
-            <span className="block text-2xl font-bold font-display text-hud-amber">{data.stats.stars}</span>
-            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Stars Earned</span>
+          <div className="p-5 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 text-center shadow-lg">
+            <span className="block text-3xl font-extrabold font-display text-amber-400">{data.stats.stars}</span>
+            <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">Stars Earned</span>
           </div>
 
-          <div className="p-4 rounded-xl bg-space-900/80 border border-slate-800 text-center">
-            <span className="block text-2xl font-bold font-display text-emerald-400">{data.stats.streak}d</span>
-            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Active Streak</span>
+          <div className="p-5 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 text-center shadow-lg">
+            <span className="block text-3xl font-extrabold font-display text-emerald-400">{data.stats.streak}d</span>
+            <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">Active Streak</span>
           </div>
 
-          <div className="p-4 rounded-xl bg-space-900/80 border border-slate-800 text-center">
-            <span className="block text-2xl font-bold font-display text-hud-cyan">{data.stats.total30d}</span>
-            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">30d Commits</span>
+          <div className="p-5 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 text-center shadow-lg">
+            <span className="block text-3xl font-extrabold font-display text-cyan-400">{data.stats.total30d}</span>
+            <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">30d Commits</span>
           </div>
 
-          <div className="p-4 rounded-xl bg-space-900/80 border border-slate-800 text-center">
-            <span className="block text-2xl font-bold font-display text-hud-violet">{data.cp.leetcode.solved}</span>
-            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">LeetCode Solved</span>
+          <div className="p-5 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 text-center shadow-lg">
+            <span className="block text-3xl font-extrabold font-display text-indigo-300">{data.cp.leetcode.solved}+</span>
+            <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">LeetCode Solved</span>
           </div>
 
-          <div className="p-4 rounded-xl bg-space-900/80 border border-slate-800 text-center">
-            <span className="block text-2xl font-bold font-display text-sky-400">{data.cp.codeforces.rating}</span>
-            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Codeforces</span>
+          <div className="p-5 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 text-center shadow-lg">
+            <span className="block text-3xl font-extrabold font-display text-sky-400">{data.cp.codeforces.rating}</span>
+            <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">Codeforces</span>
           </div>
         </div>
 
@@ -83,20 +83,20 @@ export const GitHubAnalyticsSection: React.FC<GitHubAnalyticsSectionProps> = ({ 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* 30-Day Activity Area Chart (8 cols) */}
           <div className="lg:col-span-8 space-y-6">
-            <div className="p-6 sm:p-7 rounded-2xl bg-space-900/90 border border-slate-800 space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-850 pb-4">
+            <div className="p-6 sm:p-8 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 shadow-xl space-y-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-700 pb-4">
                 <div>
-                  <h3 className="font-bold font-display text-white text-base flex items-center gap-2">
-                    <Flame className="w-4 h-4 text-hud-amber" />
+                  <h3 className="font-extrabold font-display text-white text-lg flex items-center gap-2">
+                    <Flame className="w-5 h-5 text-amber-400" />
                     <span>30-Day Commit Cadence</span>
                   </h3>
-                  <p className="text-xs font-mono text-slate-400">Daily code pushes and active repository synchronizations</p>
+                  <p className="text-xs font-mono text-slate-300 font-medium">Daily code pushes and active repository synchronizations</p>
                 </div>
-                <div className="text-right font-mono text-xs text-hud-cyan">
+                <div className="text-right font-mono text-xs text-cyan-400 font-bold">
                   {hoveredPoint ? (
                     <span><strong>{hoveredPoint.date}</strong>: {hoveredPoint.count} commit{hoveredPoint.count === 1 ? '' : 's'}</span>
                   ) : (
-                    <span className="text-slate-500">Hover over nodes for daily counts</span>
+                    <span className="text-slate-400 font-medium">Hover over nodes for daily counts</span>
                   )}
                 </div>
               </div>
@@ -106,8 +106,8 @@ export const GitHubAnalyticsSection: React.FC<GitHubAnalyticsSectionProps> = ({ 
                 <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-44 overflow-visible">
                   <defs>
                     <linearGradient id="commitGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#00f3ff" stopOpacity="0.35" />
-                      <stop offset="100%" stopColor="#a855f7" stopOpacity="0.0" />
+                      <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.35" />
+                      <stop offset="100%" stopColor="#818cf8" stopOpacity="0.0" />
                     </linearGradient>
                   </defs>
 
@@ -118,8 +118,8 @@ export const GitHubAnalyticsSection: React.FC<GitHubAnalyticsSectionProps> = ({ 
                   <polyline
                     points={polylineStr}
                     fill="none"
-                    stroke="#00f3ff"
-                    strokeWidth="2.5"
+                    stroke="#22d3ee"
+                    strokeWidth="3"
                     strokeLinejoin="round"
                     strokeLinecap="round"
                   />
@@ -130,9 +130,9 @@ export const GitHubAnalyticsSection: React.FC<GitHubAnalyticsSectionProps> = ({ 
                       key={idx}
                       cx={p.x}
                       cy={p.y}
-                      r={p.count > 0 ? 4 : 2}
+                      r={p.count > 0 ? 4.5 : 2.5}
                       className="cursor-pointer transition-all duration-200"
-                      fill={p.count > 0 ? '#00f3ff' : '#475569'}
+                      fill={p.count > 0 ? '#22d3ee' : '#64748b'}
                       onMouseEnter={() => setHoveredPoint({ date: p.date, count: p.count })}
                       onMouseLeave={() => setHoveredPoint(null)}
                     />
@@ -141,19 +141,19 @@ export const GitHubAnalyticsSection: React.FC<GitHubAnalyticsSectionProps> = ({ 
               </div>
 
               {/* Contribution Heatmap Tiles */}
-              <div className="pt-4 border-t border-slate-850">
-                <h4 className="text-[11px] font-mono uppercase tracking-wider text-slate-400 mb-2">
+              <div className="pt-4 border-t border-slate-700">
+                <h4 className="text-xs font-mono uppercase tracking-wider text-slate-300 font-bold mb-2.5">
                   Daily Contribution Matrix
                 </h4>
                 <div className="flex flex-wrap gap-1.5">
                   {data.series.map((s, idx) => {
                     const bg = s.count === 0 
-                      ? 'bg-space-950 border border-slate-850'
+                      ? 'bg-[#070b14] border border-slate-700'
                       : s.count <= 2 
-                      ? 'bg-emerald-950 border border-emerald-800 text-emerald-400'
+                      ? 'bg-emerald-950 border border-emerald-700 text-emerald-400'
                       : s.count <= 5
                       ? 'bg-emerald-600'
-                      : 'bg-hud-cyan text-space-950 shadow-[0_0_8px_#00f3ff]';
+                      : 'bg-cyan-400 text-slate-950 shadow-[0_0_8px_#22d3ee]';
                     return (
                       <span
                         key={idx}
@@ -166,34 +166,34 @@ export const GitHubAnalyticsSection: React.FC<GitHubAnalyticsSectionProps> = ({ 
               </div>
             </div>
 
-            {/* Top Starred Repositories */}
-            <div className="p-6 rounded-2xl bg-space-900/90 border border-slate-800 space-y-4">
-              <h3 className="font-bold font-display text-white text-base flex items-center gap-2">
-                <Star className="w-4 h-4 text-hud-amber" />
+            {/* Featured Repositories Card */}
+            <div className="p-6 sm:p-7 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 shadow-xl space-y-4">
+              <h3 className="font-extrabold font-display text-white text-lg flex items-center gap-2">
+                <Star className="w-5 h-5 text-amber-400" />
                 <span>Featured Open Source Repositories</span>
               </h3>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 {data.topRepos.map((repo) => (
                   <a
                     key={repo.name}
                     href={`https://github.com/BezaleelPaul/${repo.name}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3.5 rounded-xl bg-space-950/70 border border-slate-850 hover:border-hud-cyan/50 transition-colors space-y-1.5 group block"
+                    className="p-4 rounded-xl bg-[#070b14] border border-slate-700 hover:border-cyan-400 transition-colors space-y-2 group block shadow-md"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs font-bold text-white group-hover:text-hud-cyan transition-colors">
+                      <span className="font-mono text-xs font-bold text-white group-hover:text-cyan-300 transition-colors">
                         {repo.name}
                       </span>
-                      <span className="text-[10px] font-mono text-slate-400 flex items-center gap-1">
-                        <Star className="w-3 h-3 text-hud-amber" /> {repo.stars}
+                      <span className="text-xs font-mono text-slate-300 flex items-center gap-1 font-bold">
+                        <Star className="w-3.5 h-3.5 text-amber-400" /> {repo.stars}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-400 font-sans line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-slate-300 font-sans line-clamp-2 leading-relaxed">
                       {repo.description}
                     </p>
-                    <span className="inline-block text-[10px] font-mono text-cyan-400">
+                    <span className="inline-block text-xs font-mono text-cyan-400 font-semibold">
                       ● {repo.language}
                     </span>
                   </a>
@@ -202,22 +202,22 @@ export const GitHubAnalyticsSection: React.FC<GitHubAnalyticsSectionProps> = ({ 
             </div>
           </div>
 
-          {/* Competitive Programming & Activity (4 cols) */}
+          {/* Competitive Programming Column (4 cols) */}
           <div className="lg:col-span-4 space-y-6">
-            {/* LeetCode Breakdown Card */}
-            <div className="p-6 rounded-2xl bg-space-900/90 border border-slate-800 space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-850 pb-3">
-                <h4 className="font-bold font-display text-white text-base flex items-center gap-2">
-                  <Code className="w-4 h-4 text-hud-amber" />
+            {/* LeetCode Card */}
+            <div className="p-6 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 shadow-xl space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-700 pb-3">
+                <h4 className="font-extrabold font-display text-white text-base flex items-center gap-2">
+                  <Code className="w-4 h-4 text-amber-400" />
                   <span>LeetCode Verification</span>
                 </h4>
                 <a
                   href={`https://leetcode.com/u/${data.cp.leetcode.username}/`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-hud-cyan hover:underline text-xs font-mono flex items-center gap-1"
+                  className="text-cyan-400 hover:underline text-xs font-mono font-bold flex items-center gap-1"
                 >
-                  Profile <ExternalLink className="w-3 h-3" />
+                  Profile <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               </div>
 
@@ -225,68 +225,68 @@ export const GitHubAnalyticsSection: React.FC<GitHubAnalyticsSectionProps> = ({ 
                 <span className="block text-4xl font-extrabold font-display text-white">
                   {data.cp.leetcode.solved}
                 </span>
-                <span className="text-xs font-mono text-slate-400 uppercase tracking-widest">
+                <span className="text-xs font-mono text-slate-300 font-semibold uppercase tracking-widest">
                   Challenges Solved
                 </span>
               </div>
 
-              <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono">
-                <div className="p-2 rounded bg-space-950 border border-slate-850">
+              <div className="grid grid-cols-3 gap-2.5 text-center text-xs font-mono">
+                <div className="p-2.5 rounded-xl bg-[#070b14] border border-slate-700">
                   <span className="block font-bold text-emerald-400 text-sm">{data.cp.leetcode.easy}</span>
-                  <span className="text-[10px] text-slate-500">Easy</span>
+                  <span className="text-xs text-slate-400 font-medium">Easy</span>
                 </div>
-                <div className="p-2 rounded bg-space-950 border border-slate-850">
-                  <span className="block font-bold text-hud-amber text-sm">{data.cp.leetcode.medium}</span>
-                  <span className="text-[10px] text-slate-500">Medium</span>
+                <div className="p-2.5 rounded-xl bg-[#070b14] border border-slate-700">
+                  <span className="block font-bold text-amber-400 text-sm">{data.cp.leetcode.medium}</span>
+                  <span className="text-xs text-slate-400 font-medium">Medium</span>
                 </div>
-                <div className="p-2 rounded bg-space-950 border border-slate-850">
+                <div className="p-2.5 rounded-xl bg-[#070b14] border border-slate-700">
                   <span className="block font-bold text-rose-400 text-sm">{data.cp.leetcode.hard}</span>
-                  <span className="text-[10px] text-slate-500">Hard</span>
+                  <span className="text-xs text-slate-400 font-medium">Hard</span>
                 </div>
               </div>
 
-              <p className="text-[11px] font-mono text-slate-400 text-center pt-1">
-                Global Ranking: <strong className="text-white">#{data.cp.leetcode.ranking}</strong>
+              <p className="text-xs font-mono text-slate-300 text-center pt-1 font-medium">
+                Global Ranking: <strong className="text-cyan-300 font-bold">#{data.cp.leetcode.ranking}</strong>
               </p>
             </div>
 
             {/* Codeforces Card */}
-            <div className="p-6 rounded-2xl bg-space-900/90 border border-slate-800 space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-850 pb-3">
-                <h4 className="font-bold font-display text-white text-base">Codeforces Rating</h4>
-                <span className="text-xs font-mono text-hud-cyan">@{data.cp.codeforces.handle}</span>
+            <div className="p-6 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 shadow-xl space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-700 pb-3">
+                <h4 className="font-extrabold font-display text-white text-base">Codeforces Rating</h4>
+                <span className="text-xs font-mono text-cyan-400 font-bold">@{data.cp.codeforces.handle}</span>
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="block text-3xl font-extrabold font-display text-hud-violet">
+                  <span className="block text-3xl font-extrabold font-display text-indigo-300">
                     {data.cp.codeforces.rating}
                   </span>
-                  <span className="text-xs font-mono text-slate-400">Current Rating</span>
+                  <span className="text-xs font-mono text-slate-300 font-semibold">Current Rating</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-xs font-mono font-bold text-slate-300 bg-space-950 px-2.5 py-1 rounded border border-slate-800">
+                  <span className="text-xs font-mono font-bold text-slate-200 bg-[#070b14] px-3 py-1.5 rounded-lg border border-slate-700">
                     [{data.cp.codeforces.rank}]
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* Recent Public Activity Feed */}
-            <div className="p-6 rounded-2xl bg-space-900/90 border border-slate-800 space-y-4">
-              <h4 className="font-bold font-display text-white text-base flex items-center gap-2">
-                <Clock className="w-4 h-4 text-hud-cyan" />
+            {/* Recent Public Activity Feed Card */}
+            <div className="p-6 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 shadow-xl space-y-4">
+              <h4 className="font-extrabold font-display text-white text-base flex items-center gap-2">
+                <Clock className="w-4 h-4 text-cyan-400" />
                 <span>Recent Event Logs</span>
               </h4>
 
               <div className="space-y-2.5 text-xs font-mono">
                 {data.recentActivity.slice(0, 5).map((act, i) => (
-                  <div key={i} className="flex items-start gap-2 text-slate-300 py-1 border-b border-slate-850 last:border-none">
+                  <div key={i} className="flex items-start gap-2.5 text-slate-200 py-1.5 border-b border-slate-750 last:border-none">
                     <span>{act.emoji}</span>
-                    <div className="flex-1">
+                    <div className="flex-1 font-medium">
                       <span>{act.action} </span>
-                      <strong className="text-hud-cyan">{act.repo}</strong>
+                      <strong className="text-cyan-300 font-bold">{act.repo}</strong>
                     </div>
-                    <span className="text-slate-500 text-[10px] shrink-0">{act.time}</span>
+                    <span className="text-slate-400 text-xs shrink-0 font-semibold">{act.time}</span>
                   </div>
                 ))}
               </div>
