@@ -8,6 +8,7 @@ import { CelestialBodyData } from '@/types/simulation';
 import { calculateOrbitPosition } from '@/lib/kepler';
 import { createAtmosphereMaterial } from './AtmosphereShader';
 import { spaceAudio } from '@/lib/audio';
+import { PLANET_TEXTURE_PATHS, loadCachedTexture } from '@/lib/planetTextures';
 
 interface CelestialBodyProps {
   data: CelestialBodyData;
@@ -47,6 +48,19 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
     }
     return null;
   }, [data.emissive]);
+
+  // Load authentic NASA / Solar System planetary textures
+  const textures = useMemo(() => {
+    const config = PLANET_TEXTURE_PATHS[data.id];
+    if (!config) return null;
+    return {
+      map: config.map ? loadCachedTexture(config.map, true) : null,
+      normalMap: config.normalMap ? loadCachedTexture(config.normalMap, false) : null,
+      specularMap: config.specularMap ? loadCachedTexture(config.specularMap, false) : null,
+      cloudsMap: config.cloudsMap ? loadCachedTexture(config.cloudsMap, true) : null,
+      ringMap: config.ringMap ? loadCachedTexture(config.ringMap, true) : null,
+    };
+  }, [data.id]);
 
   useFrame((_, delta) => {
     // 1. Orbital motion if elapsedDays is explicitly passed by observatory simulator
@@ -201,14 +215,21 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
             castShadow={!data.emissive}
             receiveShadow={!data.emissive}
           >
-            <sphereGeometry args={[data.radius, 48, 48]} />
+            <sphereGeometry args={[data.radius, 64, 64]} />
             {data.emissive ? (
-              <meshBasicMaterial color={data.color} />
+              <meshBasicMaterial
+                map={textures?.map || undefined}
+                color={textures?.map ? '#ffffff' : data.color}
+              />
             ) : (
               <meshStandardMaterial
-                color={data.color}
+                map={textures?.map || undefined}
+                color={textures?.map ? '#ffffff' : data.color}
+                normalMap={textures?.normalMap || undefined}
+                normalScale={textures?.normalMap ? new THREE.Vector2(0.85, 0.85) : undefined}
+                roughnessMap={textures?.specularMap || undefined}
                 roughness={data.id === 'earth' ? 0.6 : 0.75}
-                metalness={data.id === 'earth' ? 0.2 : 0.1}
+                metalness={data.id === 'earth' ? 0.15 : 0.05}
               />
             )}
           </mesh>
@@ -217,13 +238,14 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
         {/* Earth Atmospheric Cloud Deck */}
         {data.id === 'earth' && (
           <mesh ref={cloudsRef} scale={[1.026, 1.026, 1.026]}>
-            <sphereGeometry args={[data.radius, 48, 48]} />
+            <sphereGeometry args={[data.radius, 64, 64]} />
             <meshStandardMaterial
-              color="#ffffff"
+              map={textures?.cloudsMap || undefined}
+              alphaMap={textures?.cloudsMap || undefined}
               transparent
-              opacity={0.36}
+              opacity={textures?.cloudsMap ? 0.88 : 0.36}
               roughness={0.9}
-              blending={THREE.AdditiveBlending}
+              blending={textures?.cloudsMap ? THREE.NormalBlending : THREE.AdditiveBlending}
               depthWrite={false}
             />
           </mesh>
@@ -264,10 +286,11 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
             <mesh>
               <ringGeometry args={[data.radius * 1.35, data.radius * 2.05, 64]} />
               <meshStandardMaterial
-                color="#e2ca76"
+                map={textures?.ringMap || undefined}
+                color={textures?.ringMap ? '#ffffff' : '#e2ca76'}
                 side={THREE.DoubleSide}
                 transparent
-                opacity={0.85}
+                opacity={0.88}
                 roughness={0.7}
               />
             </mesh>
@@ -275,10 +298,11 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
             <mesh>
               <ringGeometry args={[data.radius * 2.14, data.radius * 2.55, 64]} />
               <meshStandardMaterial
-                color="#cbb262"
+                map={textures?.ringMap || undefined}
+                color={textures?.ringMap ? '#ffffff' : '#cbb262'}
                 side={THREE.DoubleSide}
                 transparent
-                opacity={0.45}
+                opacity={0.5}
                 roughness={0.8}
               />
             </mesh>
