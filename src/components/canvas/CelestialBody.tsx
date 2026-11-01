@@ -12,7 +12,7 @@ import { spaceAudio } from '@/lib/audio';
 interface CelestialBodyProps {
   data: CelestialBodyData;
   parentPosition?: THREE.Vector3;
-  elapsedDays: number;
+  elapsedDays?: number;
   isSelected: boolean;
   onSelect: (body: CelestialBodyData) => void;
   onPositionUpdate?: (id: string, pos: THREE.Vector3) => void;
@@ -20,7 +20,7 @@ interface CelestialBodyProps {
 
 export const CelestialBody: React.FC<CelestialBodyProps> = ({
   data,
-  parentPosition = new THREE.Vector3(0, 0, 0),
+  parentPosition,
   elapsedDays,
   isSelected,
   onSelect,
@@ -49,16 +49,16 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   }, [data.emissive]);
 
   useFrame((_, delta) => {
-    // 1. Calculate orbital position via Kepler equations
-    const relPos = calculateOrbitPosition(data, elapsedDays);
-    const absPos = relPos.add(parentPosition);
-
-    if (groupRef.current) {
-      groupRef.current.position.copy(absPos);
-    }
-
-    if (onPositionUpdate) {
-      onPositionUpdate(data.id, absPos);
+    // 1. Orbital motion if elapsedDays is explicitly passed by observatory simulator
+    if (elapsedDays !== undefined) {
+      const relPos = calculateOrbitPosition(data, elapsedDays);
+      const absPos = parentPosition ? relPos.add(parentPosition) : relPos;
+      if (groupRef.current) {
+        groupRef.current.position.copy(absPos);
+      }
+      if (onPositionUpdate) {
+        onPositionUpdate(data.id, absPos);
+      }
     }
 
     // 2. Axial rotation

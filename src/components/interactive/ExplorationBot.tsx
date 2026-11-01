@@ -88,9 +88,20 @@ const JOURNEY_STEPS: JourneyStep[] = [
     skills: ['WebGL', 'Three.js', 'Astrophysics Simulation', 'REST APIs', 'GLSL']
   },
   {
-    id: 'leadership',
+    id: 'voxel-planets',
     stepNumber: 6,
-    phase: 'PHASE 06: TECHNICAL LEADERSHIP',
+    phase: 'PHASE 06: GENERATIVE VOXEL COSMOS',
+    title: 'Minecraft Procedural Voxel Planet Synthesizer',
+    period: '2026',
+    targetSectionId: 'voxel-cosmos',
+    narration: 'Inspired by Minecraft block aesthetics and procedural world synthesis, he built an instanced voxel engine converting cryptographic seeds and GitHub repositories into interactive 3D worlds with distinct geological strata, biomes, and planetary rings.',
+    highlightStats: 'Deterministic Seed Noise · 60 FPS Instanced WebGL · Repository Worlds',
+    skills: ['Procedural Synthesis', 'InstancedMesh', 'Mulberry32 PRNG', '3D Math']
+  },
+  {
+    id: 'leadership',
+    stepNumber: 7,
+    phase: 'PHASE 07: TECHNICAL LEADERSHIP',
     title: 'IEEE EXCOM Member & Webmaster',
     period: '2023 — 2024',
     targetSectionId: 'experience',
@@ -100,8 +111,8 @@ const JOURNEY_STEPS: JourneyStep[] = [
   },
   {
     id: 'frontiers',
-    stepNumber: 7,
-    phase: 'PHASE 07: ACTIVE FRONTIERS',
+    stepNumber: 8,
+    phase: 'PHASE 08: ACTIVE FRONTIERS',
     title: '34 Repositories & Open to Opportunities',
     period: 'Active Horizon',
     targetSectionId: 'contact',
@@ -115,28 +126,30 @@ export const ExplorationBot: React.FC = () => {
   const [isActive, setIsActive] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [isAutoTour, setIsAutoTour] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
-  const [botPos, setBotPos] = useState({ x: -100, y: -100 });
   const [gestureAlert, setGestureAlert] = useState(false);
 
-  // Mouse gesture tracking: detects smooth circular motion
-  const pathHistory = useRef<Array<{ x: number; y: number; time: number }>>([]);
+  // References for zero-cost smooth cursor following
+  const botDroneRef = useRef<HTMLDivElement>(null);
+  const mouseCoords = useRef({ x: -200, y: -200 });
+  const botCoords = useRef({ x: -200, y: -200 });
+  const pathHistory = useRef<Array<{ x: number; y: number }>>([]);
   const animFrameRef = useRef<number | null>(null);
 
-  // Smooth bot floating interpolation towards cursor
+  // Smooth bot floating animation using direct DOM transformation (0 React re-renders)
   useEffect(() => {
-    let currentX = botPos.x;
-    let currentY = botPos.y;
+    if (!isActive) return;
 
     const smoothFollow = () => {
-      if (isActive) {
-        // Target offset slightly to the top-right of cursor
-        const targetX = mousePos.x + 28;
-        const targetY = mousePos.y - 28;
-        currentX += (targetX - currentX) * 0.12;
-        currentY += (targetY - currentY) * 0.12;
-        setBotPos({ x: currentX, y: currentY });
+      const targetX = mouseCoords.current.x + 28;
+      const targetY = mouseCoords.current.y - 28;
+
+      botCoords.current.x += (targetX - botCoords.current.x) * 0.14;
+      botCoords.current.y += (targetY - botCoords.current.y) * 0.14;
+
+      if (botDroneRef.current) {
+        botDroneRef.current.style.transform = `translate3d(${botCoords.current.x}px, ${botCoords.current.y}px, 0)`;
       }
+
       animFrameRef.current = requestAnimationFrame(smoothFollow);
     };
 
@@ -144,42 +157,38 @@ export const ExplorationBot: React.FC = () => {
     return () => {
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     };
-  }, [isActive, mousePos]);
+  }, [isActive]);
 
-  // Circular gesture detection algorithm
+  // Mousemove listener with circular gesture detection
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    const x = e.clientX;
-    const y = e.clientY;
-    const now = performance.now();
+    mouseCoords.current.x = e.clientX;
+    mouseCoords.current.y = e.clientY;
 
-    setMousePos({ x, y });
+    if (isActive) return;
 
-    // Track last 35 points (approx 0.5s - 1.0s of motion)
-    pathHistory.current.push({ x, y, time: now });
-    if (pathHistory.current.length > 35) {
-      pathHistory.current.shift();
-    }
+    // Track last 30 positions for gesture
+    const pts = pathHistory.current;
+    pts.push({ x: e.clientX, y: e.clientY });
+    if (pts.length > 30) pts.shift();
 
-    if (pathHistory.current.length >= 25 && !isActive) {
-      // Check if path forms a closed loop (start and end close together, with centroid in middle)
-      const pts = pathHistory.current;
+    if (pts.length >= 22) {
       const first = pts[0];
       const last = pts[pts.length - 1];
       const distStartEnd = Math.hypot(last.x - first.x, last.y - first.y);
 
       // Centroid
       let avgX = 0, avgY = 0;
-      pts.forEach(p => { avgX += p.x; avgY += p.y; });
+      pts.forEach((p) => { avgX += p.x; avgY += p.y; });
       avgX /= pts.length;
       avgY /= pts.length;
 
       // Average radius
       let avgRadius = 0;
-      pts.forEach(p => { avgRadius += Math.hypot(p.x - avgX, p.y - avgY); });
+      pts.forEach((p) => { avgRadius += Math.hypot(p.x - avgX, p.y - avgY); });
       avgRadius /= pts.length;
 
-      // If loop completed with decent radius (40px - 180px) and closed endpoints
-      if (distStartEnd < 50 && avgRadius > 35 && avgRadius < 180) {
+      // If loop closed with radius between 35px and 160px
+      if (distStartEnd < 55 && avgRadius > 35 && avgRadius < 160) {
         setIsActive(true);
         setGestureAlert(true);
         spaceAudio.playWarpSwoosh();
@@ -199,7 +208,7 @@ export const ExplorationBot: React.FC = () => {
   const goToStep = useCallback((stepIdx: number) => {
     if (stepIdx < 0 || stepIdx >= JOURNEY_STEPS.length) return;
     setCurrentStep(stepIdx);
-    spaceAudio.playTelemetryBeep(1000 + stepIdx * 100);
+    spaceAudio.playTelemetryBeep(1000 + stepIdx * 80);
 
     const step = JOURNEY_STEPS[stepIdx];
     const targetEl = document.getElementById(step.targetSectionId);
@@ -222,7 +231,7 @@ export const ExplorationBot: React.FC = () => {
           return prev;
         }
       });
-    }, 6000);
+    }, 7000);
 
     return () => clearInterval(timer);
   }, [isAutoTour, isActive, goToStep]);
@@ -239,7 +248,7 @@ export const ExplorationBot: React.FC = () => {
         </div>
       )}
 
-      {/* Discreet Summon Trigger in Bottom Right (for easy discovery) */}
+      {/* Summon Trigger in Bottom Right */}
       {!isActive && (
         <div className="fixed bottom-6 right-6 z-40 pointer-events-auto">
           <button
@@ -263,18 +272,15 @@ export const ExplorationBot: React.FC = () => {
         </div>
       )}
 
-      {/* Floating Exploration Companion Drone */}
+      {/* Floating Exploration Companion Drone (Smooth DOM Transform) */}
       {isActive && (
         <div
-          className="fixed pointer-events-none z-50 transition-transform duration-75 ease-out hidden md:block"
-          style={{
-            transform: `translate3d(${botPos.x}px, ${botPos.y}px, 0)`,
-          }}
+          ref={botDroneRef}
+          className="fixed top-0 left-0 pointer-events-none z-50 hidden md:block will-change-transform"
         >
-          {/* Holographic Drone Eye */}
-          <div className="relative flex items-center justify-center">
+          <div className="relative flex items-center justify-center -translate-x-1/2 -translate-y-1/2">
             {/* Pulsing Outer Scanning Ring */}
-            <div className="w-10 h-10 rounded-full border border-hud-cyan/40 animate-ping absolute" />
+            <div className="w-9 h-9 rounded-full border border-hud-cyan/40 animate-ping absolute" />
             <div className="w-8 h-8 rounded-full border border-cyan-400 animate-spin-slow absolute" />
 
             {/* Glowing Core */}
@@ -282,8 +288,8 @@ export const ExplorationBot: React.FC = () => {
               <Bot className="w-3 h-3 text-space-950 font-bold" />
             </div>
 
-            {/* Trailing scanning beam */}
-            <div className="w-12 h-0.5 bg-gradient-to-r from-hud-cyan to-transparent absolute left-5 -rotate-12" />
+            {/* Scanning beam */}
+            <div className="w-12 h-0.5 bg-gradient-to-r from-hud-cyan to-transparent absolute left-4 -rotate-12" />
           </div>
         </div>
       )}
@@ -297,7 +303,7 @@ export const ExplorationBot: React.FC = () => {
               <div className="w-2.5 h-2.5 rounded-full bg-hud-cyan animate-ping" />
               <span className="font-bold text-white tracking-widest text-[11px] flex items-center gap-1.5">
                 <Bot className="w-3.5 h-3.5 text-hud-cyan" />
-                <span>EXPLORATION BOT // WAYPOINT {step.stepNumber}/6</span>
+                <span>JOURNEY BOT // WAYPOINT {step.stepNumber}/{JOURNEY_STEPS.length}</span>
               </span>
             </div>
 
@@ -334,7 +340,7 @@ export const ExplorationBot: React.FC = () => {
           </div>
 
           {/* Title & Timeline */}
-          <div className="mb-3">
+          <div className="mb-2">
             <h4 className="text-sm font-bold text-white leading-tight font-display">
               {step.title}
             </h4>
@@ -342,67 +348,63 @@ export const ExplorationBot: React.FC = () => {
           </div>
 
           {/* Chronological Narration */}
-          <p className="text-xs text-slate-300 font-sans leading-relaxed mb-4 bg-space-950/80 p-3 rounded-xl border border-slate-850">
+          <p className="text-xs text-slate-300 font-sans leading-relaxed mb-3 bg-space-950/80 p-3 rounded-xl border border-slate-850">
             {step.narration}
           </p>
 
           {/* Verified Highlights */}
           <div className="mb-3 text-[11px] text-hud-cyan font-mono flex items-center gap-1.5">
-            <Sparkles className="w-3 h-3 text-hud-amber shrink-0" />
-            <span className="truncate">{step.highlightStats}</span>
+            <Sparkles className="w-3.5 h-3.5 text-hud-cyan shrink-0" />
+            <span className="font-semibold truncate">{step.highlightStats}</span>
           </div>
 
-          {/* Action Link for 3D Cosmos */}
-          {step.id === 'space-astrophysics' && (
-            <div className="mb-3">
-              <a
-                href="/observatory"
-                className="w-full py-1.5 px-3 rounded-lg bg-gradient-to-r from-hud-cyan to-blue-500 text-space-950 font-mono font-bold text-[11px] uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(0,243,255,0.4)] hover:brightness-110 transition-all"
+          {/* Skill Constellations */}
+          <div className="flex flex-wrap gap-1 mb-4">
+            {step.skills.map((skill) => (
+              <span
+                key={skill}
+                className="px-2 py-0.5 rounded text-[10px] bg-cyan-950/60 border border-cyan-800 text-cyan-300"
               >
-                <span>🪐 Launch 3D Cosmos Observatory</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </a>
-            </div>
-          )}
+                {skill}
+              </span>
+            ))}
+          </div>
 
-          {/* Step Progress Dots */}
-          <div className="flex items-center justify-between pt-2 border-t border-slate-850">
-            <div className="flex items-center gap-1.5">
-              {JOURNEY_STEPS.map((s, idx) => (
+          {/* Navigation Waypoint Controls */}
+          <div className="flex items-center justify-between pt-3 border-t border-slate-800">
+            <button
+              onClick={() => goToStep(currentStep - 1)}
+              disabled={currentStep === 0}
+              className="flex items-center gap-1 px-3 py-1.5 rounded bg-space-950 border border-slate-700 hover:border-hud-cyan text-slate-300 hover:text-white disabled:opacity-40 disabled:hover:border-slate-700 transition-colors"
+            >
+              <ChevronLeft className="w-3.5 h-3.5" />
+              <span>Previous</span>
+            </button>
+
+            {/* Waypoint Progress Pips */}
+            <div className="flex items-center gap-1">
+              {JOURNEY_STEPS.map((_, idx) => (
                 <button
-                  key={s.id}
+                  key={idx}
                   onClick={() => goToStep(idx)}
-                  className={`w-2.5 h-2.5 rounded-full transition-all ${
+                  className={`w-2 h-2 rounded-full transition-all ${
                     currentStep === idx
-                      ? 'bg-hud-cyan scale-125 shadow-[0_0_8px_#00f3ff]'
-                      : 'bg-space-950 border border-slate-700 hover:border-hud-cyan'
+                      ? 'w-4 bg-hud-cyan shadow-[0_0_8px_#00f3ff]'
+                      : 'bg-slate-700 hover:bg-slate-500'
                   }`}
-                  title={s.title}
+                  aria-label={`Go to step ${idx + 1}`}
                 />
               ))}
             </div>
 
-            {/* Controls: Prev & Next */}
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => goToStep(currentStep - 1)}
-                disabled={currentStep === 0}
-                className="p-1 rounded bg-space-950 border border-slate-700 text-slate-400 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors"
-                title="Previous Waypoint"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-
-              <button
-                onClick={() => goToStep(currentStep + 1)}
-                disabled={currentStep === JOURNEY_STEPS.length - 1}
-                className="flex items-center gap-1 px-2.5 py-1 rounded bg-hud-cyan text-space-950 font-bold hover:bg-cyan-300 disabled:opacity-30 disabled:pointer-events-none transition-colors text-[10px]"
-                title="Next Waypoint"
-              >
-                <span>NEXT</span>
-                <ChevronRight className="w-3 h-3" />
-              </button>
-            </div>
+            <button
+              onClick={() => goToStep(currentStep + 1)}
+              disabled={currentStep === JOURNEY_STEPS.length - 1}
+              className="flex items-center gap-1 px-3 py-1.5 rounded bg-hud-cyan text-space-950 font-bold hover:bg-cyan-300 disabled:opacity-40 disabled:hover:bg-hud-cyan transition-colors"
+            >
+              <span>Next</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
           </div>
         </div>
       )}

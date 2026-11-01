@@ -7,12 +7,17 @@
   --foreground: #f8fafc;
 }
 
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: 'Outfit', sans-serif;
-  overflow: hidden;
-  user-select: none;
+  overflow-x: hidden;
+  min-height: 100vh;
 }
 
 /* Subtle CRT scanline overlay */
@@ -32,8 +37,8 @@ body {
 
 /* Custom scrollbars */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {

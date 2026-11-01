@@ -12,12 +12,8 @@ import {
   Layers, 
   Sliders, 
   Globe, 
-  Flame, 
-  TreePine, 
-  Cpu, 
-  Snowflake,
-  ExternalLink,
-  Info
+  ZoomIn,
+  ZoomOut
 } from 'lucide-react';
 
 interface RepoPreset {
@@ -73,6 +69,7 @@ export function GenerativeCosmosSection() {
   const [radius, setRadius] = useState<number>(7);
   const [palette, setPalette] = useState<string>('auto');
   const [showRings, setShowRings] = useState<boolean>(true);
+  const [zoomEnabled, setZoomEnabled] = useState<boolean>(false);
   const [selectedBlock, setSelectedBlock] = useState<{
     type: string;
     position: [number, number, number];
@@ -143,10 +140,27 @@ export function GenerativeCosmosSection() {
               </span>
             </div>
 
+            {/* Scroll Zoom Toggle Control */}
+            <div className="absolute top-4 right-4 z-20">
+              <button
+                type="button"
+                onClick={() => setZoomEnabled(!zoomEnabled)}
+                className={`px-3 py-1 rounded-lg text-xs font-mono flex items-center gap-1.5 border transition-all ${
+                  zoomEnabled
+                    ? 'bg-hud-cyan text-space-950 font-bold border-hud-cyan shadow-[0_0_12px_#00f3ff]'
+                    : 'bg-space-950/80 text-slate-300 border-space-700 hover:border-hud-cyan hover:text-white'
+                }`}
+                title="Toggle scroll wheel zoom (off by default to permit natural page scrolling)"
+              >
+                {zoomEnabled ? <ZoomOut className="w-3.5 h-3.5" /> : <ZoomIn className="w-3.5 h-3.5" />}
+                <span>{zoomEnabled ? 'Zoom: On' : 'Zoom: Off'}</span>
+              </button>
+            </div>
+
             {/* Hint Overlay */}
             <div className="absolute bottom-4 left-4 z-20 pointer-events-none hidden sm:block">
-              <span className="text-[11px] font-mono text-space-400 bg-space-950/70 px-2 py-1 rounded border border-space-800">
-                🖱️ Left click + drag to rotate • Scroll to zoom • Click blocks to inspect
+              <span className="text-[11px] font-mono text-space-400 bg-space-950/80 px-2 py-1 rounded border border-space-800">
+                🖱️ Left click + drag to rotate • Click blocks to inspect • {zoomEnabled ? 'Scroll to zoom' : 'Toggle Zoom button to zoom'}
               </span>
             </div>
 
@@ -178,6 +192,7 @@ export function GenerativeCosmosSection() {
 
                 <OrbitControls
                   enableDamping
+                  enableZoom={zoomEnabled}
                   dampingFactor={0.05}
                   minDistance={10}
                   maxDistance={45}

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useMemo, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { CELESTIAL_BODIES } from '@/lib/constants';
@@ -9,6 +9,7 @@ import { OrbitLine } from './OrbitLine';
 import { AsteroidBelt } from './AsteroidBelt';
 import { Starfield } from './Starfield';
 import { CelestialBodyData } from '@/types/simulation';
+import { calculateOrbitPosition } from '@/lib/kepler';
 
 interface HeroCosmosProps {
   selectedBodyId?: string;
@@ -16,40 +17,61 @@ interface HeroCosmosProps {
 }
 
 function SolarSystemRig({ selectedBodyId, onSelectBody }: HeroCosmosProps) {
-  const [positions, setPositions] = useState<{ [id: string]: THREE.Vector3 }>({});
-  const [elapsedDays, setElapsedDays] = useState(0);
   const rigGroupRef = useRef<THREE.Group>(null);
+  const timeRef = useRef(0);
 
-  // Smooth orbital simulation clock
+  // Split primary bodies vs satellites
+  const primaryBodies = CELESTIAL_BODIES.filter((b) => !b.parentBodyId);
+  const moonBodies = CELESTIAL_BODIES.filter((b) => !!b.parentBodyId);
+
+  // References to groups for smooth direct transform updates without React state re-renders
+  const bodyGroups = useRef<{ [id: string]: THREE.Group | null }>({});
+
   useFrame((state, delta) => {
-    setElapsedDays((prev) => prev + delta * 2.2);
+    // Advance simulation time smoothly
+    timeRef.current += delta * 2.2;
+    const t = timeRef.current;
 
-    // Subtle gentle camera parallax drift responding to mouse
+    // Cache parent positions calculated mathematically
+    const parentPositions: { [id: string]: THREE.Vector3 } = {};
+
+    // 1. Update primary planet positions
+    primaryBodies.forEach((body) => {
+      const pos = calculateOrbitPosition(body, t);
+      parentPositions[body.id] = pos;
+      const grp = bodyGroups.current[body.id];
+      if (grp) {
+        grp.position.copy(pos);
+      }
+    });
+
+    // 2. Update satellite / moon positions relative to their parent
+    moonBodies.forEach((moon) => {
+      const parentPos = moon.parentBodyId ? parentPositions[moon.parentBodyId] : undefined;
+      const relPos = calculateOrbitPosition(moon, t);
+      const absPos = parentPos ? relPos.add(parentPos) : relPos;
+      const grp = bodyGroups.current[moon.id];
+      if (grp) {
+        grp.position.copy(absPos);
+      }
+    });
+
+    // 3. Subtle gentle camera parallax drift responding to mouse
     if (rigGroupRef.current) {
-      const mouseX = state.pointer.x * 0.16;
-      const mouseY = state.pointer.y * 0.12;
+      const mouseX = state.pointer.x * 0.14;
+      const mouseY = state.pointer.y * 0.10;
       rigGroupRef.current.rotation.y = THREE.MathUtils.lerp(
         rigGroupRef.current.rotation.y,
-        mouseX + 0.1,
-        0.035
+        mouseX + 0.12,
+        0.04
       );
       rigGroupRef.current.rotation.x = THREE.MathUtils.lerp(
         rigGroupRef.current.rotation.x,
         -mouseY - 0.28,
-        0.035
+        0.04
       );
     }
   });
-
-  const handlePositionUpdate = (id: string, pos: THREE.Vector3) => {
-    setPositions((prev) => ({
-      ...prev,
-      [id]: pos.clone(),
-    }));
-  };
-
-  const primaryBodies = CELESTIAL_BODIES.filter((b) => !b.parentBodyId);
-  const moonBodies = CELESTIAL_BODIES.filter((b) => !!b.parentBodyId);
 
   return (
     <group ref={rigGroupRef} position={[0, -2, 0]} rotation={[-0.35, 0.2, 0]}>
@@ -61,7 +83,7 @@ function SolarSystemRig({ selectedBodyId, onSelectBody }: HeroCosmosProps) {
         distance={1400}
         decay={1.2}
       />
-      <ambientLight intensity={0.14} color="#94a3b8" />
+      <ambientLight intensity={0.16} color="#94a3b8" />
 
       {/* Trajectory Orbit Lines for all primary planets */}
       {primaryBodies.map((body) => (
@@ -72,43 +94,39 @@ function SolarSystemRig({ selectedBodyId, onSelectBody }: HeroCosmosProps) {
         />
       ))}
 
-      {/* Primary Celestial Bodies (Sol, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Voyager 1) */}
+      {/* Primary Celestial Bodies */}
       {primaryBodies.map((body) => (
-        <CelestialBody
+        <group
           key={body.id}
-          data={body}
-          elapsedDays={elapsedDays}
-          isSelected={selectedBodyId === body.id}
-          onSelect={(b) => onSelectBody?.(b)}
-          onPositionUpdate={handlePositionUpdate}
-        />
+          ref={(el) => {
+            bodyGroups.current[body.id] = el;
+          }}
+        >
+          <CelestialBody
+            data={body}
+            isSelected={selectedBodyId === body.id}
+            onSelect={(b) => onSelectBody?.(b)}
+          />
+        </group>
       ))}
 
-      {/* Secondary Satellites & Moons (Luna, Europa, ISS, JWST) */}
-      {moonBodies.map((moon) => {
-        const parentPos = moon.parentBodyId ? positions[moon.parentBodyId] : undefined;
-        return (
-          <React.Fragment key={moon.id}>
-            {parentPos && (
-              <OrbitLine
-                body={moon}
-                parentPosition={parentPos}
-                isSelected={selectedBodyId === moon.id}
-              />
-            )}
-            <CelestialBody
-              data={moon}
-              parentPosition={parentPos}
-              elapsedDays={elapsedDays}
-              isSelected={selectedBodyId === moon.id}
-              onSelect={(b) => onSelectBody?.(b)}
-              onPositionUpdate={handlePositionUpdate}
-            />
-          </React.Fragment>
-        );
-      })}
+      {/* Secondary Satellites & Moons (Luna, ISS, JWST, Europa) */}
+      {moonBodies.map((moon) => (
+        <group
+          key={moon.id}
+          ref={(el) => {
+            bodyGroups.current[moon.id] = el;
+          }}
+        >
+          <CelestialBody
+            data={moon}
+            isSelected={selectedBodyId === moon.id}
+            onSelect={(b) => onSelectBody?.(b)}
+          />
+        </group>
+      ))}
 
-      {/* Instanced Asteroid Belt */}
+      {/* Instanced Asteroid Belt (Mars - Jupiter corridor) */}
       <AsteroidBelt innerRadius={39} outerRadius={48} count={1300} />
     </group>
   );
