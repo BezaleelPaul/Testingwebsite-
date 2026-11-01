@@ -5,6 +5,7 @@ import { Navbar } from '@/components/layout/Navbar';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { AboutSection } from '@/components/sections/AboutSection';
 import { ProjectsSection } from '@/components/sections/ProjectsSection';
+import { GenerativeCosmosSection } from '@/components/sections/GenerativeCosmosSection';
 import { ExperienceSection } from '@/components/sections/ExperienceSection';
 import { SkillsSection } from '@/components/sections/SkillsSection';
 import { AchievementsSection } from '@/components/sections/AchievementsSection';
@@ -39,6 +40,9 @@ export default function Home() {
 
         {/* Section 03: Projects - Featured Discoveries & Library */}
         <ProjectsSection projects={INITIAL_PROJECTS} />
+
+        {/* Section 03.5: Generative Voxel Cosmos - Minecraft-Style Seed Engine */}
+        <GenerativeCosmosSection />
 
         {/* Section 04: Experience - Expeditions & Chronological Timeline */}
         <ExperienceSection experience={INITIAL_EXPERIENCE} />

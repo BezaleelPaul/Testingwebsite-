@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { FileText, Volume2, VolumeX, Menu, X, Lock } from 'lucide-react';
+import { FileText, Volume2, VolumeX, Menu, X, Lock, Box } from 'lucide-react';
 import { spaceAudio } from '@/lib/audio';
 
 export const Navbar: React.FC = () => {
@@ -29,6 +29,7 @@ export const Navbar: React.FC = () => {
   const navLinks = [
     { label: 'About', href: '#about' },
     { label: 'Projects', href: '#projects' },
+    { label: 'Voxel Cosmos', href: '#voxel-cosmos', highlight: true },
     { label: 'Experience', href: '#experience' },
     { label: 'Skills', href: '#skills' },
     { label: 'GitHub', href: '#github' },
@@ -59,15 +60,20 @@ export const Navbar: React.FC = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6" aria-label="Main Navigation">
+        <nav className="hidden md:flex items-center gap-5" aria-label="Main Navigation">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
               onClick={() => spaceAudio.playTelemetryBeep(960)}
-              className="text-xs font-mono uppercase tracking-widest text-slate-300 hover:text-hud-cyan transition-colors focus:outline-none focus:text-hud-cyan"
+              className={`text-xs font-mono uppercase tracking-widest transition-colors focus:outline-none ${
+                link.highlight 
+                  ? 'text-hud-cyan font-bold hover:text-cyan-300 flex items-center gap-1 bg-hud-cyan/10 px-2 py-0.5 rounded border border-hud-cyan/30'
+                  : 'text-slate-300 hover:text-hud-cyan focus:text-hud-cyan'
+              }`}
             >
-              {link.label}
+              {link.highlight && <Box className="w-3 h-3 text-hud-cyan" />}
+              <span>{link.label}</span>
             </a>
           ))}
           <Link
@@ -148,9 +154,12 @@ export const Navbar: React.FC = () => {
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-mono uppercase tracking-widest text-slate-200 hover:text-hud-cyan py-1"
+                className={`text-sm font-mono uppercase tracking-widest py-1 flex items-center gap-2 ${
+                  link.highlight ? 'text-hud-cyan font-bold' : 'text-slate-200 hover:text-hud-cyan'
+                }`}
               >
-                {link.label}
+                {link.highlight && <Box className="w-3.5 h-3.5 text-hud-cyan" />}
+                <span>{link.label}</span>
               </a>
             ))}
           </nav>
