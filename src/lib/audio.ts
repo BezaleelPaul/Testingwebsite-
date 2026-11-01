@@ -141,7 +141,11 @@ class SpaceAudioSystem {
   }
 
   public toggleMute(): boolean {
-    this.isMuted = !this.isMuted;
+    return this.setMuted(!this.isMuted);
+  }
+
+  public setMuted(muted: boolean): boolean {
+    this.isMuted = muted;
     if (this.ambientGain && this.ctx) {
       this.ambientGain.gain.setValueAtTime(this.isMuted ? 0 : 0.08, this.ctx.currentTime);
     }

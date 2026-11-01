@@ -2,9 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import { ArrowDown, FileText, Send, Sparkles, MapPin, CheckCircle2 } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowDown, FileText, Send, Sparkles, MapPin, Orbit, Radio } from 'lucide-react';
 import { spaceAudio } from '@/lib/audio';
 import { PilotProfile, GitHubAnalyticsData } from '@/types/portfolio';
+import { NasaDiscoveriesModal } from '../hud/NasaDiscoveriesModal';
+import { fetchNasaDiscoveries, NasaLiveTelemetry } from '@/lib/nasaApi';
 
 // Dynamic import of 3D Hero Horizon with SSR disabled for optimal bundle splitting
 const HeroCelestialHorizon = dynamic(
@@ -20,6 +23,13 @@ interface HeroSectionProps {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) => {
   const [typedIndex, setTypedIndex] = useState(0);
+  const [isNasaModalOpen, setIsNasaModalOpen] = useState(false);
+  const [nasaTelemetry, setNasaTelemetry] = useState<NasaLiveTelemetry | null>(null);
+
+  useEffect(() => {
+    fetchNasaDiscoveries().then((data) => setNasaTelemetry(data)).catch(() => {});
+  }, []);
+
   const typingSnippets = [
     'Flutter & Cross-Platform Mobile Applications',
     'AI-Driven Digital Twins & Predictive Machine Learning',
@@ -77,13 +87,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
 
         {/* Primary Action Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+          <Link
+            href="/observatory"
+            onClick={() => spaceAudio.playTelemetryBeep(1200)}
+            className="flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-hud-cyan to-blue-500 text-space-950 font-mono font-bold text-xs uppercase tracking-wider shadow-[0_0_30px_rgba(0,243,255,0.5)] hover:shadow-[0_0_40px_rgba(0,243,255,0.8)] transform hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-hud-cyan group"
+          >
+            <Orbit className="w-4 h-4 animate-spin text-space-950" style={{ animationDuration: '8s' }} />
+            <span>Launch 3D Cosmos</span>
+          </Link>
+
           <a
             href="#projects"
             onClick={() => spaceAudio.playTelemetryBeep(1000)}
-            className="flex items-center gap-2 px-6 py-3 rounded-lg bg-hud-cyan text-space-950 font-mono font-bold text-xs uppercase tracking-wider shadow-[0_0_25px_rgba(0,243,255,0.4)] hover:bg-cyan-300 hover:shadow-[0_0_35px_rgba(0,243,255,0.6)] transform hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-hud-cyan"
+            className="flex items-center gap-2 px-6 py-3 rounded-lg bg-space-900/90 border border-slate-700 hover:border-hud-cyan text-white font-mono font-bold text-xs uppercase tracking-wider backdrop-blur-md hover:bg-space-850 transform hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-hud-cyan"
           >
             <span>Explore My Work</span>
-            <ArrowDown className="w-4 h-4 animate-bounce" />
+            <ArrowDown className="w-4 h-4 animate-bounce text-hud-cyan" />
           </a>
 
           <a
@@ -104,6 +123,28 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
             <Send className="w-4 h-4 text-slate-400" />
             <span>Contact Me</span>
           </a>
+        </div>
+
+        {/* Live NASA Deep Space Telemetry Ticker Pill */}
+        <div className="pt-2 flex justify-center">
+          <button
+            onClick={() => {
+              spaceAudio.playTelemetryBeep(1100);
+              setIsNasaModalOpen(true);
+            }}
+            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-space-900/80 border border-cyan-500/40 hover:border-hud-cyan text-xs font-mono text-slate-300 hover:text-white backdrop-blur-md transition-all shadow-[0_0_15px_rgba(0,243,255,0.15)] group"
+          >
+            <Radio className="w-3.5 h-3.5 text-hud-cyan animate-pulse" />
+            <span className="text-[11px] font-bold text-hud-cyan uppercase tracking-wider">
+              NASA LIVE TELEMETRY:
+            </span>
+            <span className="text-slate-300 truncate max-w-[280px] sm:max-w-md text-left">
+              {nasaTelemetry ? nasaTelemetry.apod.title : 'Interrogating NASA Deep Space Network...'}
+            </span>
+            <span className="text-[10px] bg-cyan-950 text-cyan-300 px-2 py-0.5 rounded border border-cyan-800 hidden sm:inline">
+              [ INSPECT DISCOVERIES ]
+            </span>
+          </button>
         </div>
 
         {/* Quick Verified Recruiter Metrics Bar */}
@@ -129,6 +170,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
           </div>
         </div>
       </div>
+
+      {/* NASA Live Discoveries Modal */}
+      <NasaDiscoveriesModal
+        isOpen={isNasaModalOpen}
+        onClose={() => setIsNasaModalOpen(false)}
+      />
     </section>
   );
 };

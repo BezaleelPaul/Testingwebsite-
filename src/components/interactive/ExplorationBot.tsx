@@ -77,9 +77,20 @@ const JOURNEY_STEPS: JourneyStep[] = [
     skills: ['Machine Learning', 'XGBoost', 'Predictive Modeling', 'Python']
   },
   {
-    id: 'leadership',
+    id: 'space-astrophysics',
     stepNumber: 5,
-    phase: 'PHASE 05: TECHNICAL LEADERSHIP',
+    phase: 'PHASE 05: 3D COSMIC ENGINE & NASA TELEMETRY',
+    title: 'Orbital Observatory & Keplerian Physics Simulator',
+    period: '2025 — 2026',
+    targetSectionId: 'projects',
+    narration: 'Bridging high-performance 3D WebGL with real astrophysics, he engineered a 3D Solar System simulator solving Keplerian conic equations and streaming live telemetry from NASA Open APIs (APOD cosmic discoveries & Near-Earth Asteroid radar feeds).',
+    highlightStats: 'Three.js / R3F · NASA Deep Space Network API · Keplerian Physics',
+    skills: ['WebGL', 'Three.js', 'Astrophysics Simulation', 'REST APIs', 'GLSL']
+  },
+  {
+    id: 'leadership',
+    stepNumber: 6,
+    phase: 'PHASE 06: TECHNICAL LEADERSHIP',
     title: 'IEEE EXCOM Member & Webmaster',
     period: '2023 — 2024',
     targetSectionId: 'experience',
@@ -89,8 +100,8 @@ const JOURNEY_STEPS: JourneyStep[] = [
   },
   {
     id: 'frontiers',
-    stepNumber: 6,
-    phase: 'PHASE 06: ACTIVE FRONTIERS',
+    stepNumber: 7,
+    phase: 'PHASE 07: ACTIVE FRONTIERS',
     title: '34 Repositories & Open to Opportunities',
     period: 'Active Horizon',
     targetSectionId: 'contact',
@@ -336,10 +347,23 @@ export const ExplorationBot: React.FC = () => {
           </p>
 
           {/* Verified Highlights */}
-          <div className="mb-4 text-[11px] text-hud-cyan font-mono flex items-center gap-1.5">
+          <div className="mb-3 text-[11px] text-hud-cyan font-mono flex items-center gap-1.5">
             <Sparkles className="w-3 h-3 text-hud-amber shrink-0" />
             <span className="truncate">{step.highlightStats}</span>
           </div>
+
+          {/* Action Link for 3D Cosmos */}
+          {step.id === 'space-astrophysics' && (
+            <div className="mb-3">
+              <a
+                href="/observatory"
+                className="w-full py-1.5 px-3 rounded-lg bg-gradient-to-r from-hud-cyan to-blue-500 text-space-950 font-mono font-bold text-[11px] uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(0,243,255,0.4)] hover:brightness-110 transition-all"
+              >
+                <span>🪐 Launch 3D Cosmos Observatory</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          )}
 
           {/* Step Progress Dots */}
           <div className="flex items-center justify-between pt-2 border-t border-slate-850">

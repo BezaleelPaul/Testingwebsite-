@@ -57,6 +57,26 @@ export const INITIAL_PROFILE: PilotProfile = {
 
 export const INITIAL_PROJECTS: ProjectItem[] = [
   {
+    id: "celestial-observatory-3d",
+    title: "Orbital Observatory: 3D Keplerian Engine & NASA Telemetry",
+    tagline: "Full-scale 3D solar system simulation with Keplerian orbital mechanics, JPL Horizons telemetry, and live NASA Open API discoveries.",
+    category: "Full-Stack",
+    problem: "Real-time astronomical modeling requires high-fidelity mathematical orbital equations (Kepler's laws, eccentric anomaly) synchronized with live telemetry and WebGL rendering without degrading frontend responsiveness.",
+    solution: "Architected a React Three Fiber 3D celestial canvas running Keplerian conic equations at 60 FPS, paired with real-time NASA Open APIs (APOD cosmic discoveries and NeoWs Near-Earth Asteroid tracking).",
+    description: "An interactive digital planetarium and orbital physics workstation simulating planetary orbits, orbital inclination, axial tilt, and real-time asteroid proximity using live NASA Deep Space data feeds.",
+    stack: ["Three.js", "React Three Fiber", "NASA Open API", "Keplerian Physics", "GLSL Shaders", "Next.js", "TypeScript"],
+    featured: true,
+    repoUrl: "https://github.com/BezaleelPaul/bezaleelpaul.github.io",
+    demoUrl: "/observatory",
+    status: "Production",
+    metrics: "60 FPS 3D rendering with live NASA Deep Space Network API synchronization.",
+    highlights: [
+      "Custom Keplerian orbital solver computing true anomaly via Newton-Raphson approximation",
+      "Live integration with NASA Open APIs for daily cosmic discoveries and near-Earth asteroids",
+      "Multi-camera orbital rig with free-flight, chase, cockpit, and planetary orbit modes"
+    ]
+  },
+  {
     id: "nadicare-twin-engine",
     title: "NADICARE Twin Engine",
     tagline: "AI-driven physiological digital twin modeling real-time cardiac performance and recovery.",
