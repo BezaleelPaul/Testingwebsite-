@@ -1,0 +1,429 @@
+import { 
+  PilotProfile, 
+  ProjectItem, 
+  ExperienceItem, 
+  SkillCategoryGroup, 
+  AchievementItem, 
+  GitHubAnalyticsData,
+  AdminSettings
+} from '@/types/portfolio';
+
+export const INITIAL_PROFILE: PilotProfile = {
+  name: "Bezaleel Paul N",
+  callsign: "BezForge",
+  headline: "Software Developer · Flutter · Full-Stack · AI/ML",
+  subheadline: "B.Tech CSE @ CMR University · BS in Data Science @ IIT Madras · IEEE EXCOM Member & Webmaster · Architecting rigorously engineered, aesthetically refined digital systems.",
+  location: "Bangalore, India",
+  status: "Open to Software Engineering & AI/ML Opportunities",
+  bio: [
+    "I am a developer and computer science student based in Bangalore, working at the convergence of software engineering, artificial intelligence, and human-centric design.",
+    "My engineering philosophy is rooted in intellectual rigor, aesthetic restraint, and functional clarity. Whether developing an AI-driven physiological digital twin, high-throughput system automation utilities, or cross-platform Flutter applications, I craft software that operates with precision.",
+    "Beyond pure code, I draw deep inspiration from contemplative thought, the arts, mathematical models, and the boundless horizons of interstellar exploration."
+  ],
+  education: [
+    {
+      institution: "CMR University",
+      degree: "Bachelor of Technology (B.Tech)",
+      field: "Computer Science and Engineering",
+      period: "2023 — 2027",
+      details: "Core focus on Data Structures & Algorithms, Distributed Systems, Object-Oriented Software Design, and Operating Systems.",
+      badge: "In Progress"
+    },
+    {
+      institution: "Indian Institute of Technology (IIT) Madras",
+      degree: "Bachelor of Science (BS)",
+      field: "Data Science and Applications",
+      period: "2023 — Present",
+      details: "Rigorous foundation in Mathematical Statistics, Machine Learning, Computational Linear Algebra, and Large-Scale Data Systems.",
+      badge: "Premier Program"
+    }
+  ],
+  approach: [
+    "First-principles systems design and clean architecture",
+    "Performance-focused mobile & web rendering loops",
+    "Deep algorithmic problem solving with verifiable outcomes",
+    "Pragmatic AI integration that solves tangible problems"
+  ],
+  resumeUrl: "/resume.pdf",
+  socials: [
+    { name: "GitHub", handle: "@BezaleelPaul", url: "https://github.com/BezaleelPaul", icon: "github", primary: true },
+    { name: "LinkedIn", handle: "bezaleel-paul", url: "https://www.linkedin.com/in/bezaleel-paul-7b114b307", icon: "linkedin", primary: true },
+    { name: "LeetCode", handle: "BezaleelPaulN", url: "https://leetcode.com/u/BezaleelPaulN/", icon: "code", primary: true },
+    { name: "Codeforces", handle: "BezaleelPaulN", url: "https://codeforces.com/profile/BezaleelPaulN", icon: "terminal" },
+    { name: "Kaggle", handle: "bezaleelpaul", url: "https://www.kaggle.com/bezaleelpaul", icon: "database" },
+    { name: "Email", handle: "bezaleel321@gmail.com", url: "mailto:bezaleel321@gmail.com", icon: "mail", primary: true }
+  ]
+};
+
+export const INITIAL_PROJECTS: ProjectItem[] = [
+  {
+    id: "celestial-observatory-3d",
+    title: "Orbital Observatory: 3D Keplerian Engine & NASA Telemetry",
+    tagline: "Full-scale 3D solar system simulation with Keplerian orbital mechanics, JPL Horizons telemetry, and live NASA Open API discoveries.",
+    category: "Full-Stack",
+    problem: "Real-time astronomical modeling requires high-fidelity mathematical orbital equations (Kepler's laws, eccentric anomaly) synchronized with live telemetry and WebGL rendering without degrading frontend responsiveness.",
+    solution: "Architected a React Three Fiber 3D celestial canvas running Keplerian conic equations at 60 FPS, paired with real-time NASA Open APIs (APOD cosmic discoveries and NeoWs Near-Earth Asteroid tracking).",
+    description: "An interactive digital planetarium and orbital physics workstation simulating planetary orbits, orbital inclination, axial tilt, and real-time asteroid proximity using live NASA Deep Space data feeds.",
+    stack: ["Three.js", "React Three Fiber", "NASA Open API", "Keplerian Physics", "GLSL Shaders", "Next.js", "TypeScript"],
+    featured: true,
+    repoUrl: "https://github.com/BezaleelPaul/bezaleelpaul.github.io",
+    demoUrl: "/observatory",
+    status: "Production",
+    metrics: "60 FPS 3D rendering with live NASA Deep Space Network API synchronization.",
+    highlights: [
+      "Custom Keplerian orbital solver computing true anomaly via Newton-Raphson approximation",
+      "Live integration with NASA Open APIs for daily cosmic discoveries and near-Earth asteroids",
+      "Multi-camera orbital rig with free-flight, chase, cockpit, and planetary orbit modes"
+    ]
+  },
+  {
+    id: "nadicare-twin-engine",
+    title: "NADICARE Twin Engine",
+    tagline: "AI-driven physiological digital twin modeling real-time cardiac performance and recovery.",
+    category: "AI / ML",
+    problem: "Real-time cardiovascular stress modeling often lacks proactive recovery forecasting, relying instead on static retrospective metrics.",
+    solution: "Engineered a predictive digital twin combining machine learning algorithms with interactive telemetry to forecast heart rate response windows and recovery dynamics.",
+    description: "An advanced biomedical engineering concept integrating XGBoost regression models with Streamlit and Plotly visualization pipelines to simulate real-time physiological response to exertion.",
+    stack: ["Python", "Streamlit", "XGBoost", "Plotly", "NumPy", "Scikit-Learn"],
+    featured: true,
+    repoUrl: "https://github.com/BezaleelPaul/bnmit-nadicare-health",
+    demoUrl: null,
+    status: "Active",
+    metrics: "Simulates continuous physiological load curves with dynamic recovery prediction.",
+    highlights: [
+      "Dynamic cardiac load response simulation based on user strain inputs",
+      "XGBoost-powered recovery window forecasting algorithms",
+      "Multi-metric telemetry dashboards with real-time visual variance tracking"
+    ]
+  },
+  {
+    id: "file-organizer-ecosystem",
+    title: "Mise: File Organizer & Disk Intelligence",
+    tagline: "Local-first, safety-guaranteed file organizer & disk workstation with selective undo and duplicate treemap for Windows, macOS, Linux, and Android.",
+    category: "Flutter & Mobile",
+    problem: "Manual filesystem triage is inefficient, risky without transactional undo guarantees, and difficult across heterogeneous operating systems.",
+    solution: "Engineered Mise: a cross-platform Flutter and Python workstation featuring selective undo, duplicate detection treemaps, and CLI capabilities.",
+    description: "Available as a cross-platform Flutter application and Python utility providing automated filesystem classification, duplicate space analysis, and batch file organization.",
+    stack: ["Flutter", "Dart", "Python", "CLI", "Cross-Platform", "Desktop & Mobile"],
+    featured: true,
+    repoUrl: "https://github.com/BezaleelPaul/file_organizer_flutter",
+    demoUrl: null,
+    status: "Production",
+    metrics: "Sub-second filesystem classification with transactional safety undo logs.",
+    highlights: [
+      "Selective undo architecture preserving file safety and transaction history",
+      "Disk intelligence duplicate treemap visualization",
+      "Native desktop support across Windows, macOS, Linux, and Android"
+    ]
+  },
+  {
+    id: "bescom-calculator",
+    title: "BESCOM Energy Tariff Calculator",
+    tagline: "Interactive civic electricity consumption calculator built with accurate BESCOM slab structures.",
+    category: "Web Development",
+    problem: "Utility consumers face complex tiered billing slabs with non-linear fixed charges, making estimation difficult.",
+    solution: "Built a responsive, zero-dependency civic web application calculating exact domestic power billing according to active official tariff slabs.",
+    description: "A deployed, production-ready civic utility featuring interactive mathematical models for power tariffs, fixed kilowatt charges, and seasonal fuel adjustment adjustments.",
+    stack: ["HTML5", "CSS3", "JavaScript (ES6+)", "Responsive UI"],
+    featured: false,
+    repoUrl: "https://github.com/BezaleelPaul/BESCOM-Calculator",
+    demoUrl: "https://bezaleelpaul.github.io/BESCOM-Calculator/",
+    status: "Production",
+    metrics: "Over 100% mathematical fidelity with official utility billing slabs.",
+    highlights: [
+      "Accurate multi-tier domestic and commercial slab computation",
+      "Live hosted on GitHub Pages with instant client-side calculation",
+      "Accessible keyboard-friendly numerical interface"
+    ]
+  },
+  {
+    id: "maclaurin-visualizer",
+    title: "Maclaurin Series Convergence Visualizer",
+    tagline: "Mathematical visualization engine demonstrating infinite polynomial Taylor & Maclaurin convergence.",
+    category: "Web Development",
+    problem: "Calculus students struggle to develop intuition for polynomial approximation of transcendental functions.",
+    solution: "Constructed a high-frame-rate HTML5 Canvas visualizer plotting partial sum approximations in real time as polynomial degree increases.",
+    description: "An educational mathematics software tool designed to visualize series convergence, error bounds, and function behavior across arbitrary degrees.",
+    stack: ["JavaScript", "HTML5 Canvas", "Calculus Algorithms", "LaTeX Math"],
+    featured: false,
+    repoUrl: "https://github.com/BezaleelPaul",
+    demoUrl: null,
+    status: "Active",
+    metrics: "60 FPS dynamic polynomial curve evaluation.",
+    highlights: [
+      "Interactive degree slider from n=1 to high-order polynomials",
+      "Support for sin(x), cos(x), e^x, and ln(1+x) expansions",
+      "Color-coded visual convergence comparison vs true function curve"
+    ]
+  },
+  {
+    id: "drishti-ai",
+    title: "Drishti-AI Vision System",
+    tagline: "Computer vision and visual intelligence research repository.",
+    category: "AI / ML",
+    problem: "Real-time edge computer vision workflows often require streamlined pipeline integration.",
+    solution: "Implemented modular computer vision pipelines for feature extraction and object detection.",
+    description: "An ongoing AI research repository focusing on computer vision experiments, deep learning models, and real-time visual inferencing.",
+    stack: ["Python", "OpenCV", "TensorFlow", "Deep Learning"],
+    featured: false,
+    repoUrl: "https://github.com/BezaleelPaul/Drishti-AI",
+    demoUrl: null,
+    status: "Prototype",
+    highlights: [
+      "Modular image preprocessing and bounding box evaluation",
+      "Clean API separation for vision inference engines"
+    ]
+  },
+  {
+    id: "youtube-thumbnail-grabber",
+    title: "Playlist Thumbnail Grabber",
+    tagline: "Open-source media extraction utility for batch playlist metadata and thumbnail retrieval.",
+    category: "Open Source",
+    problem: "Content creators and researchers require batch visual assets from long playlist feeds without manual downloads.",
+    solution: "Engineered automated batch retrieval scripts extracting high-resolution metadata and image streams.",
+    description: "An active open-source contribution repository with branches, pull requests, and automated asset scraping capabilities.",
+    stack: ["Python", "REST APIs", "Automation", "Git Workflow"],
+    featured: false,
+    repoUrl: "https://github.com/BezaleelPaul/YouTubePlaylistThumbnailGrabber",
+    demoUrl: null,
+    status: "Open Source",
+    highlights: [
+      "Automated extraction of maximum-resolution thumbnails",
+      "Forked and enhanced with active PRs and branching architecture"
+    ]
+  }
+];
+
+export const INITIAL_EXPERIENCE: ExperienceItem[] = [
+  {
+    id: "software-dev-intern",
+    role: "Software Engineering & ML Contributor",
+    organization: "Independent & Open Source Projects",
+    period: "2023 — Present",
+    location: "Bangalore, India",
+    type: "Work",
+    summary: "Architecting end-to-end full-stack applications, AI predictive pipelines, and automated developer tooling.",
+    responsibilities: [
+      "Engineered the NADICARE Twin Engine for physiological stress forecasting using XGBoost and dynamic Plotly dashboards.",
+      "Developed cross-platform mobile and desktop utilities using Flutter, Dart, and Python.",
+      "Maintained 34 public repositories with automated GitHub Actions CI/CD workflows."
+    ],
+    skills: ["Python", "Flutter", "Machine Learning", "Full-Stack Web", "Git CI/CD"]
+  },
+  {
+    id: "ieee-technical-member",
+    role: "IEEE EXCOM Member & Webmaster",
+    organization: "IEEE Student Branch",
+    period: "2023 — 2024",
+    location: "Bangalore, India",
+    type: "IEEE",
+    summary: "Led digital web operations, technical workshops, and developer initiatives as an Executive Committee member.",
+    responsibilities: [
+      "Architected and maintained official student branch web portals and event registration infrastructure.",
+      "Spearheaded technical workshops and peer coding sessions in foundational programming and algorithmic thinking.",
+      "Collaborated with executive leadership to organize regional technical symposiums and collegiate developer exchanges."
+    ],
+    skills: ["Web Architecture", "Technical Leadership", "Event Coordination", "Community Outreach"]
+  },
+  {
+    id: "competitive-programming",
+    role: "Competitive Programmer & Algorithmic Specialist",
+    organization: "LeetCode & Codeforces",
+    period: "2023 — Present",
+    location: "Online",
+    type: "Leadership",
+    summary: "Rigorous daily practice in computational complexity, dynamic programming, and data structure design.",
+    responsibilities: [
+      "Solved 270+ complex algorithmic challenges on LeetCode across Arrays, Trees, Graphs, and DP.",
+      "Maintained an active rated profile on Codeforces with continuous performance evaluation.",
+      "Consistently achieved structured solutions with optimal asymptotic time and space bounds."
+    ],
+    skills: ["Algorithms", "Data Structures", "Dynamic Programming", "C++", "Python"]
+  }
+];
+
+export const INITIAL_SKILLS: SkillCategoryGroup[] = [
+  {
+    id: "languages",
+    name: "Programming Languages",
+    icon: "code",
+    description: "Core languages for systems, algorithms, scripting, and application engineering.",
+    skills: [
+      { name: "Python", category: "Core", highlight: true },
+      { name: "JavaScript (ES6+)", category: "Web", highlight: true },
+      { name: "TypeScript", category: "Web", highlight: true },
+      { name: "Dart", category: "Mobile", highlight: true },
+      { name: "C / C++", category: "Systems" },
+      { name: "SQL", category: "Data" },
+      { name: "HTML5 / CSS3", category: "Frontend" }
+    ]
+  },
+  {
+    id: "mobile-frontend",
+    name: "Mobile & Frontend Development",
+    icon: "smartphone",
+    description: "Modern frameworks for high-performance responsive interfaces and native mobile apps.",
+    skills: [
+      { name: "Flutter", category: "Mobile", highlight: true },
+      { name: "React.js", category: "Web", highlight: true },
+      { name: "Next.js 14", category: "Full-Stack", highlight: true },
+      { name: "Tailwind CSS", category: "Styling", highlight: true },
+      { name: "Three.js / WebGL", category: "3D Graphics" },
+      { name: "Tkinter", category: "Desktop" }
+    ]
+  },
+  {
+    id: "ai-ml",
+    name: "Artificial Intelligence & Data Science",
+    icon: "brain",
+    description: "Machine learning algorithms, deep learning models, and analytical tools.",
+    skills: [
+      { name: "TensorFlow", category: "Deep Learning", highlight: true },
+      { name: "XGBoost", category: "Gradient Boosting", highlight: true },
+      { name: "Scikit-Learn", category: "ML", highlight: true },
+      { name: "OpenCV", category: "Vision" },
+      { name: "Plotly & Streamlit", category: "Data Visualization" },
+      { name: "Pandas & NumPy", category: "Scientific Computing" }
+    ]
+  },
+  {
+    id: "backend-cloud",
+    name: "Backend, Tools & DevOps",
+    icon: "server",
+    description: "Server architecture, version control, CI/CD pipelines, and cloud services.",
+    skills: [
+      { name: "FastAPI", category: "Backend", highlight: true },
+      { name: "Node.js", category: "Backend" },
+      { name: "Git & GitHub", category: "Version Control", highlight: true },
+      { name: "GitHub Actions", category: "CI/CD", highlight: true },
+      { name: "Firebase", category: "BaaS" },
+      { name: "Docker (Basics)", category: "Containerization" },
+      { name: "Linux CLI", category: "Environments" }
+    ]
+  }
+];
+
+export const INITIAL_ACHIEVEMENTS: AchievementItem[] = [
+  {
+    id: "leetcode-270",
+    title: "270+ Algorithmic Challenges Solved",
+    issuer: "LeetCode",
+    date: "2024 — 2026",
+    category: "Competitive Programming",
+    summary: "Demonstrated consistent mastery over computational problem solving spanning 116 Easy, 17 Medium, and 2 Hard challenges.",
+    metrics: "Top percentile solver with verified submission telemetry.",
+    link: "https://leetcode.com/u/BezaleelPaulN/"
+  },
+  {
+    id: "codeforces-rating",
+    title: "Rated Competitor (959 Peak)",
+    issuer: "Codeforces",
+    date: "2024 — Present",
+    category: "Competitive Programming",
+    summary: "Active participant in timed algorithmic contests testing rapid implementation and asymptotic optimization.",
+    metrics: "Handle: BezaleelPaulN",
+    link: "https://codeforces.com/profile/BezaleelPaulN"
+  },
+  {
+    id: "iit-madras-admit",
+    title: "Admitted to IIT Madras BS in Data Science",
+    issuer: "Indian Institute of Technology Madras",
+    date: "2023",
+    category: "Academic",
+    summary: "Selected for the rigorous degree program in Data Science and Applications offered by India's premier engineering institute.",
+    metrics: "Double degree pursuit alongside B.Tech Computer Science."
+  },
+  {
+    id: "open-source-repos",
+    title: "34 Public Repositories & Continuous CI Automation",
+    issuer: "GitHub",
+    date: "2023 — Present",
+    category: "Hackathon",
+    summary: "Built and maintained 34 repositories across utility tools, AI models, calculus visualizers, and Flutter apps with scheduled GitHub Actions pipelines.",
+    metrics: "34 Repositories · Active 30-Day Activity Streak"
+  }
+];
+
+export const INITIAL_GITHUB_DATA: GitHubAnalyticsData = {
+  generatedAt: "2026-11-01T12:00:00Z",
+  stats: {
+    repos: 34,
+    stars: 4,
+    followers: 3,
+    following: 10,
+    streak: 30,
+    total30d: 30
+  },
+  cp: {
+    leetcode: {
+      username: "BezaleelPaulN",
+      solved: 270,
+      easy: 116,
+      medium: 17,
+      hard: 2,
+      ranking: "1,312,296"
+    },
+    codeforces: {
+      handle: "BezaleelPaulN",
+      rating: 959,
+      maxRating: 959,
+      rank: "NEWBIE",
+      maxRank: "NEWBIE"
+    }
+  },
+  series: [
+    { date: "2026-10-03", count: 0 },
+    { date: "2026-10-04", count: 0 },
+    { date: "2026-10-05", count: 1 },
+    { date: "2026-10-06", count: 5 },
+    { date: "2026-10-07", count: 6 },
+    { date: "2026-10-08", count: 0 },
+    { date: "2026-10-09", count: 10 },
+    { date: "2026-10-10", count: 2 },
+    { date: "2026-10-11", count: 0 },
+    { date: "2026-10-12", count: 0 },
+    { date: "2026-10-13", count: 1 },
+    { date: "2026-10-14", count: 0 },
+    { date: "2026-10-15", count: 0 },
+    { date: "2026-10-16", count: 0 },
+    { date: "2026-10-17", count: 0 },
+    { date: "2026-10-18", count: 0 },
+    { date: "2026-10-19", count: 0 },
+    { date: "2026-10-20", count: 4 },
+    { date: "2026-10-21", count: 0 },
+    { date: "2026-10-22", count: 0 },
+    { date: "2026-10-23", count: 0 },
+    { date: "2026-10-24", count: 0 },
+    { date: "2026-10-25", count: 1 },
+    { date: "2026-10-26", count: 0 },
+    { date: "2026-10-27", count: 0 },
+    { date: "2026-10-28", count: 0 },
+    { date: "2026-10-29", count: 0 },
+    { date: "2026-10-30", count: 0 },
+    { date: "2026-10-31", count: 0 },
+    { date: "2026-11-01", count: 0 }
+  ],
+  recentActivity: [
+    { emoji: "📦", action: "Pushed updates to", repo: "file_organizer_flutter", time: "6d ago" },
+    { emoji: "🌿", action: "Created branch in", repo: "YouTubePlaylistThumbnailGrabber", time: "11d ago" },
+    { emoji: "🔀", action: "Opened Pull Request in", repo: "YouTubePlaylistThumbnailGrabber", time: "11d ago" },
+    { emoji: "🍴", action: "Forked repository", repo: "YouTubePlaylistThumbnailGrabber", time: "11d ago" },
+    { emoji: "📦", action: "Pushed commits to", repo: "Drishti-AI", time: "11d ago" },
+    { emoji: "📦", action: "Pushed commits to", repo: "Drishti-AI", time: "18d ago" },
+    { emoji: "📦", action: "Pushed commits to", repo: "file_organizer_flutter", time: "22d ago" }
+  ],
+  topRepos: [
+    { name: "bnmit-nadicare-health", stars: 1, description: "AI Digital Twin for real-time cardiac performance modeling", language: "Python" },
+    { name: "file_organizer_flutter", stars: 1, description: "Cross-platform Flutter companion for automated filesystem categorization", language: "Dart" },
+    { name: "File-Organizer", stars: 1, description: "Smart Python & Tkinter GUI for rule-based file organization", language: "Python" },
+    { name: "BESCOM-Calculator", stars: 1, description: "Karnataka electricity tariff slab calculator live on GitHub Pages", language: "JavaScript" }
+  ]
+};
+
+export const INITIAL_ADMIN_SETTINGS: AdminSettings = {
+  publishedAt: "2026-11-01T12:00:00Z",
+  resumeDownloadUrl: "/resume.pdf",
+  showAiAssistant: true,
+  hiddenProjectIds: [],
+  featuredProjectIds: ["nadicare-twin-engine", "file-organizer-ecosystem"]
+};

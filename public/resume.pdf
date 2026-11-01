@@ -1,0 +1,85 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 850 >>
+stream
+BT
+/F1 22 Tf
+50 740 Td
+(BEZALEEL PAUL N) Tj
+/F1 11 Tf
+0 -22 Td
+(Software Developer | Flutter | Full-Stack | AI/ML) Tj
+0 -15 Td
+(Bangalore, India | bezaleel321@gmail.com | github.com/BezaleelPaul | linkedin.com/in/bezaleel-paul-7b114b307) Tj
+0 -28 Td
+/F1 13 Tf
+(EDUCATION) Tj
+/F1 10 Tf
+0 -16 Td
+(CMR University - B.Tech in Computer Science and Engineering (2023 - 2027)) Tj
+0 -13 Td
+(IIT Madras - BS in Data Science and Applications (2023 - Present)) Tj
+0 -24 Td
+/F1 13 Tf
+(EXPERIENCE & LEADERSHIP) Tj
+/F1 10 Tf
+0 -16 Td
+(IEEE Student Branch - IEEE EXCOM Member & Webmaster (2023 - 2024)) Tj
+0 -13 Td
+(Software Engineering & Open Source Contributor (2023 - Present)) Tj
+0 -24 Td
+/F1 13 Tf
+(CORE PROJECTS) Tj
+/F1 10 Tf
+0 -16 Td
+(1. NADICARE Twin Engine: AI Digital Twin for cardiac load and recovery (Python, XGBoost, Streamlit)) Tj
+0 -13 Td
+(2. Mise File Organizer: Disk intelligence workstation with selective undo (Flutter, Dart, Python)) Tj
+0 -13 Td
+(3. BESCOM Calculator: Official tariff slab electricity calculator (HTML, CSS, JavaScript)) Tj
+0 -13 Td
+(4. Maclaurin Visualizer: Interactive Taylor & Maclaurin series convergence engine (Canvas, JS)) Tj
+0 -24 Td
+/F1 13 Tf
+(TECHNICAL SKILLS) Tj
+/F1 10 Tf
+0 -16 Td
+(Languages: Python, Dart, JavaScript, TypeScript, C/C++, SQL, HTML5/CSS3) Tj
+0 -13 Td
+(Frameworks: Flutter, React, Next.js, FastAPI, TensorFlow, XGBoost, Streamlit) Tj
+0 -13 Td
+(Developer Tools: Git, GitHub Actions CI/CD, Docker, Linux, Firebase, WebGL/Three.js) Tj
+0 -24 Td
+/F1 13 Tf
+(COMPETITIVE PROGRAMMING & METRICS) Tj
+/F1 10 Tf
+0 -16 Td
+(LeetCode: 270+ Solved | Codeforces: Rating 959 | 34 Public Repositories | 30-Day Active Streak) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000227 00000 n 
+0000001130 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1197
+%%EOF
