@@ -36,6 +36,16 @@ export const PLANET_TEXTURE_PATHS: { [id: string]: {
   sun: {
     map: '/textures/planets/sun_1k.jpg',
   },
+  uranus: {
+    map: '/textures/planets/uranus_1k.jpg',
+    ringMap: '/textures/planets/uranus_ring.png',
+  },
+  neptune: {
+    map: '/textures/planets/neptune_1k.jpg',
+  },
+  pluto: {
+    map: '/textures/planets/pluto_1k.jpg',
+  },
 };
 
 // Singleton cache so textures are only loaded into VRAM once

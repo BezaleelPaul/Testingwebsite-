@@ -27,9 +27,9 @@ export const Navbar: React.FC = () => {
   };
 
   const navLinks = [
+    { label: 'Start Journey 🚀', href: '#cosmos-journey', highlight: true },
     { label: 'About', href: '#about' },
     { label: 'Projects', href: '#projects' },
-    { label: 'Procedural Worlds', href: '#procedural-planets', highlight: true },
     { label: 'Experience', href: '#experience' },
     { label: 'Skills', href: '#skills' },
     { label: 'GitHub', href: '#github' },

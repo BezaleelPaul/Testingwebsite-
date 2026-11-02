@@ -62,6 +62,22 @@ const textures = [
     name: 'sun_1k.jpg',
     url: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/sunmap.jpg',
   },
+  {
+    name: 'uranus_1k.jpg',
+    url: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/uranusmap.jpg',
+  },
+  {
+    name: 'uranus_ring.png',
+    url: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/uranusringcolour.jpg',
+  },
+  {
+    name: 'neptune_1k.jpg',
+    url: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/neptunemap.jpg',
+  },
+  {
+    name: 'pluto_1k.jpg',
+    url: 'https://cdn.jsdelivr.net/gh/jeromeetienne/threex.planets@master/images/plutomap1k.jpg',
+  },
 ];
 
 function downloadFile(item) {

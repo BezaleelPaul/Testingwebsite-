@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
 import { 
   ArrowDown, 
   FileText, 
@@ -11,20 +10,18 @@ import {
   MapPin, 
   Orbit, 
   Radio, 
-  Satellite, 
   Compass, 
   Globe,
-  ChevronRight
+  ChevronRight,
+  Zap
 } from 'lucide-react';
 import { spaceAudio } from '@/lib/audio';
 import { PilotProfile, GitHubAnalyticsData } from '@/types/portfolio';
-import { NasaDiscoveriesModal } from '../hud/NasaDiscoveriesModal';
-import { TelemetryPanel } from '../hud/TelemetryPanel';
-import { fetchNasaDiscoveries, NasaLiveTelemetry } from '@/lib/nasaApi';
-import { CELESTIAL_BODIES } from '@/lib/constants';
 import { CelestialBodyData } from '@/types/simulation';
+import { generateProceduralStarSystem, StarSystem } from '@/lib/proceduralUniverse';
+import { CosmicJourneyScreen } from '../interactive/CosmicJourneyScreen';
 
-// Dynamic import of 3D Hero Horizon with SSR disabled for optimal client-side WebGL rendering
+// Dynamic import of 3D Hero Horizon with SSR disabled for WebGL stability
 const HeroCelestialHorizon = dynamic(
   () => import('../canvas/HeroCelestialHorizon').then((mod) => mod.HeroCelestialHorizon),
   { ssr: false }
@@ -37,50 +34,113 @@ interface HeroSectionProps {
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) => {
-  const [typedIndex, setTypedIndex] = useState(0);
-  const [isNasaModalOpen, setIsNasaModalOpen] = useState(false);
-  const [nasaTelemetry, setNasaTelemetry] = useState<NasaLiveTelemetry | null>(null);
+  const [currentSeed, setCurrentSeed] = useState<string>('sol');
   const [selectedBody, setSelectedBody] = useState<CelestialBodyData | null>(null);
+  const [sectorCounter, setSectorCounter] = useState<number>(1);
+  const [isWarping, setIsWarping] = useState<boolean>(false);
+  const [isJourneyActive, setIsJourneyActive] = useState<boolean>(false);
 
+  // Generate star system deterministically using astrophysical formulas
+  const starSystem: StarSystem = useMemo(() => {
+    return generateProceduralStarSystem(currentSeed);
+  }, [currentSeed]);
+
+  // Keep selected body in sync if system changes
   useEffect(() => {
-    fetchNasaDiscoveries().then((data) => setNasaTelemetry(data)).catch(() => {});
+    if (starSystem.bodies.length > 1) {
+      const defaultTarget = starSystem.bodies.find((b) => b.id === 'earth') || starSystem.bodies[1];
+      setSelectedBody(defaultTarget);
+    } else {
+      setSelectedBody(starSystem.bodies[0]);
+    }
+  }, [starSystem]);
+
+  // Listen for hash change (#cosmos-journey) from Navbar
+  useEffect(() => {
+    const handleHash = () => {
+      if (window.location.hash === '#cosmos-journey') {
+        setIsJourneyActive(true);
+      }
+    };
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
   }, []);
 
-  const typingSnippets = [
-    'Flutter & Cross-Platform Desktop/Mobile Architectures',
-    'AI-Driven Digital Twins & Predictive ML Modeling',
-    'Full-Stack Systems & High-Throughput Utilities',
-    'Double Degree: CMR University B.Tech CSE & IIT Madras BS Data Science'
-  ];
+  const handleWarp = (newSeed: string) => {
+    setIsWarping(true);
+    spaceAudio.playTelemetryBeep(1400);
+    setCurrentSeed(newSeed);
+    setTimeout(() => {
+      setIsWarping(false);
+    }, 600);
+  };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTypedIndex((prev) => (prev + 1) % typingSnippets.length);
-    }, 3800);
-    return () => clearInterval(interval);
-  }, [typingSnippets.length]);
+  const handleRandomSystem = () => {
+    const randomSeeds = [
+      'kepler_452b',
+      'proxima_prime',
+      'andromeda_spire',
+      'gliese_667c',
+      'quantum_singularity',
+      'pulsar_sector_9',
+      'minecraft_seed_104',
+      'interstellar_frontier',
+      'cygnus_x1',
+      'orion_nebula_core',
+    ];
+    const picked = randomSeeds[Math.floor(Math.random() * randomSeeds.length)] + '_' + Math.floor(Math.random() * 900 + 100);
+    handleWarp(picked);
+  };
 
-  const quickTargets = [
-    { id: 'sun', label: '☀️ Sol' },
-    { id: 'earth', label: '🌍 Earth' },
-    { id: 'iss', label: '🛰️ ISS Live' },
-    { id: 'jwst', label: '🔭 JWST' },
-    { id: 'mars', label: '🔴 Mars' },
-    { id: 'saturn', label: '🪐 Saturn' },
-    { id: 'voyager1', label: '🛸 Voyager 1' },
-  ];
+  const handleNextSector = () => {
+    const nextIdx = sectorCounter + 1;
+    setSectorCounter(nextIdx);
+    handleWarp(`sector_${nextIdx}_deepspace`);
+  };
+
+  const handlePrevSector = () => {
+    const prevIdx = Math.max(1, sectorCounter - 1);
+    setSectorCounter(prevIdx);
+    if (prevIdx === 1) {
+      handleWarp('sol');
+    } else {
+      handleWarp(`sector_${prevIdx}_deepspace`);
+    }
+  };
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-between pt-28 pb-10 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* 3D Celestial Solar System Canvas (Non-blocking background with soft cinematic depth) */}
+    <section id="cosmos" className="relative min-h-screen flex flex-col justify-between pt-28 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      {/* 3D Celestial Solar System Canvas (Non-blocking background with realistic physics & textures) */}
       <HeroCelestialHorizon
+        system={starSystem}
         selectedBodyId={selectedBody?.id}
-        onSelectBody={(body) => {
-          setSelectedBody(body);
-        }}
+        onSelectBody={(body) => setSelectedBody(body)}
+        isWarping={isWarping}
+        isFullJourney={false}
       />
 
-      {/* Main Content Container with High-Contrast Solid Editorial Card */}
+      {/* Full-Screen Interactive Cosmic Journey Screen Modal */}
+      <CosmicJourneyScreen
+        isOpen={isJourneyActive}
+        onClose={() => {
+          setIsJourneyActive(false);
+          if (window.location.hash === '#cosmos-journey') {
+            window.history.replaceState(null, '', ' ');
+          }
+        }}
+        system={starSystem}
+        currentSeed={currentSeed}
+        onWarp={handleWarp}
+        onNextSector={handleNextSector}
+        onPrevSector={handlePrevSector}
+        onRandomSystem={handleRandomSystem}
+        selectedBody={selectedBody}
+        onSelectBody={setSelectedBody}
+        isWarping={isWarping}
+      />
+
+      {/* Main Portfolio Content Card with High-Contrast Solid Editorial Design */}
       <div className="relative z-10 max-w-4xl mx-auto w-full my-auto">
         <div className="bg-[#0b0f19]/95 border-2 border-slate-700/80 rounded-3xl p-8 sm:p-12 shadow-[0_25px_80px_rgba(0,0,0,0.95)] backdrop-blur-xl text-center space-y-6">
           {/* Availability & Location Status Pill */}
@@ -118,168 +178,89 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
             </div>
           </div>
 
-          {/* Professional Summary (100% readable with high contrast) */}
+          {/* Professional Summary (High-contrast, crystal clear readability) */}
           <p className="max-w-2xl mx-auto text-base sm:text-lg text-slate-200 font-sans leading-relaxed">
             Crafting high-throughput mobile, desktop, and machine learning systems with architectural elegance, clean design, and algorithmic rigor. <strong className="text-white font-semibold">270+ LeetCode problems solved</strong> with active competitive engineering experience.
           </p>
 
-          {/* Action Buttons - Large, High-Contrast, Minimalist */}
+          {/* Action Buttons: Clean & Prominent with Start Journey CTA */}
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            {/* Primary Journey CTA */}
+            <button
+              onClick={() => {
+                spaceAudio.playTelemetryBeep(1400);
+                setIsJourneyActive(true);
+              }}
+              className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-400 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-slate-950 font-mono font-extrabold text-sm uppercase tracking-wider shadow-[0_0_25px_rgba(34,211,238,0.5)] transition-all transform hover:-translate-y-0.5 focus:ring-2 focus:ring-cyan-300"
+            >
+              <Sparkles className="w-4 h-4 text-slate-950 animate-spin" />
+              <span>Start Cosmic Journey 🚀</span>
+            </button>
+
+            {/* Download Resume Button */}
             <a
               href="/resume.pdf"
               download
               onClick={() => spaceAudio.playTelemetryBeep(1150)}
-              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-mono font-bold text-sm uppercase tracking-wider shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all transform hover:-translate-y-0.5 focus:ring-2 focus:ring-cyan-300"
+              className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-mono font-bold text-sm uppercase tracking-wider transition-all transform hover:-translate-y-0.5"
             >
-              <FileText className="w-4 h-4 text-slate-950" />
-              <span>Download Resume</span>
+              <FileText className="w-4 h-4 text-cyan-400" />
+              <span>Resume (PDF)</span>
             </a>
 
+            {/* Explore Projects Button */}
             <a
               href="#projects"
               onClick={() => spaceAudio.playTelemetryBeep(1000)}
-              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-mono font-bold text-sm uppercase tracking-wider transition-all transform hover:-translate-y-0.5"
+              className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 hover:text-white font-mono font-bold text-sm uppercase tracking-wider transition-all transform hover:-translate-y-0.5"
             >
               <span>Explore Projects</span>
               <ArrowDown className="w-4 h-4 text-cyan-400" />
             </a>
 
-            <a
-              href="#procedural-planets"
-              onClick={() => spaceAudio.playTelemetryBeep(1050)}
-              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/50 text-cyan-300 hover:text-white font-mono font-bold text-sm uppercase tracking-wider transition-all transform hover:-translate-y-0.5"
-            >
-              <Globe className="w-4 h-4 text-cyan-400" />
-              <span>Procedural Exoplanets</span>
-            </a>
-
+            {/* Contact Button */}
             <a
               href="#contact"
               onClick={() => spaceAudio.playTelemetryBeep(850)}
-              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 hover:text-white font-mono font-bold text-sm uppercase tracking-wider transition-all transform hover:-translate-y-0.5"
+              className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 hover:text-white font-mono font-bold text-sm uppercase tracking-wider transition-all transform hover:-translate-y-0.5"
             >
-              <Send className="w-4 h-4 text-slate-400" />
+              <Send className="w-4 h-4 text-cyan-400" />
               <span>Contact</span>
             </a>
           </div>
 
-          {/* 3D Celestial Targets Quick Selector */}
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-2 border-t border-slate-800/80">
-            <span className="text-xs font-mono text-slate-400 uppercase tracking-wider">
-              Explore 3D Background:
-            </span>
-            {quickTargets.map((target) => {
-              const body = CELESTIAL_BODIES.find((b) => b.id === target.id);
-              const isCurrent = selectedBody?.id === target.id;
-              return (
-                <button
-                  key={target.id}
-                  onClick={() => {
-                    spaceAudio.playTelemetryBeep(1050);
-                    if (body) {
-                      setSelectedBody(isCurrent ? null : body);
-                    }
-                  }}
-                  className={`px-3 py-1.5 text-xs font-mono font-medium rounded-lg transition-all ${
-                    isCurrent
-                      ? 'bg-cyan-400 text-slate-950 font-bold shadow-md'
-                      : 'bg-slate-800/80 text-slate-200 border border-slate-700 hover:border-cyan-400 hover:text-cyan-300'
-                  }`}
-                >
-                  {target.label}
-                </button>
-              );
-            })}
-            {selectedBody && (
-              <button
-                onClick={() => setSelectedBody(null)}
-                className="px-2.5 py-1.5 text-xs font-mono text-rose-300 hover:text-rose-100 rounded bg-rose-950/60 border border-rose-800/60"
-              >
-                Reset Focus
-              </button>
-            )}
+          {/* Verified Engineering Metrics */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-slate-800">
+            <div className="bg-[#070b14] border border-slate-800 p-3.5 rounded-xl">
+              <span className="text-xs font-mono text-slate-400 block mb-1">PUBLIC REPOS</span>
+              <span className="text-2xl font-bold font-mono text-cyan-400">{stats.publicRepos}</span>
+            </div>
+            <div className="bg-[#070b14] border border-slate-800 p-3.5 rounded-xl">
+              <span className="text-xs font-mono text-slate-400 block mb-1">LEETCODE</span>
+              <span className="text-2xl font-bold font-mono text-amber-400">{cp.leetcode.solved}+</span>
+            </div>
+            <div className="bg-[#070b14] border border-slate-800 p-3.5 rounded-xl">
+              <span className="text-xs font-mono text-slate-400 block mb-1">CODEFORCES</span>
+              <span className="text-2xl font-bold font-mono text-emerald-400">{cp.codeforces.rating}</span>
+            </div>
+            <div className="bg-[#070b14] border border-slate-800 p-3.5 rounded-xl">
+              <span className="text-xs font-mono text-slate-400 block mb-1">ACTIVE STREAK</span>
+              <span className="text-2xl font-bold font-mono text-sky-400">{stats.currentStreak} Days</span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom Bar: Live NASA Deep Space & Telemetry Strip */}
-      <div className="relative z-10 max-w-5xl mx-auto w-full pt-6">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3 rounded-2xl bg-space-900/80 border border-slate-800/80 backdrop-blur-md text-xs font-mono">
-          {/* Left: NASA Discovery */}
-          <button
-            onClick={() => {
-              spaceAudio.playTelemetryBeep(1100);
-              setIsNasaModalOpen(true);
-            }}
-            className="flex items-center gap-2.5 text-slate-300 hover:text-white transition-colors group text-left min-w-0"
-          >
-            <Radio className="w-4 h-4 text-hud-cyan animate-pulse shrink-0" />
-            <span className="text-[11px] font-bold text-hud-cyan uppercase tracking-wider shrink-0">
-              NASA LIVE:
-            </span>
-            <span className="truncate max-w-[260px] sm:max-w-md text-white font-medium">
-              {nasaTelemetry ? nasaTelemetry.apod.title : 'Interrogating NASA Deep Space Network...'}
-            </span>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-hud-cyan shrink-0" />
-          </button>
-
-          {/* Right: ISS Real-Time Stats */}
-          <div className="flex items-center gap-3 shrink-0">
-            {nasaTelemetry && (
-              <div className="flex items-center gap-2 text-slate-400 text-[11px]">
-                <Satellite className="w-3.5 h-3.5 text-hud-cyan" />
-                <span>ISS ALT: <strong className="text-hud-amber">{nasaTelemetry.iss.altitudeKm.toFixed(0)} km</strong></span>
-                <span className="text-slate-600">·</span>
-                <span>SPD: <strong className="text-hud-cyan">{nasaTelemetry.iss.velocityKmh.toLocaleString()} km/h</strong></span>
-              </div>
-            )}
-            <button
-              onClick={() => {
-                spaceAudio.playTelemetryBeep(1100);
-                setIsNasaModalOpen(true);
-              }}
-              className="px-2.5 py-1 rounded-md bg-hud-cyan/10 border border-hud-cyan/30 text-hud-cyan hover:bg-hud-cyan hover:text-space-950 text-[10px] uppercase font-bold transition-all"
-            >
-              Open Radar HUD
-            </button>
-          </div>
-        </div>
-
-        {/* Quick Verified Metrics Bar with Solid High-Contrast Cards */}
-        <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-          <div className="p-4 rounded-2xl bg-[#0c1220] border-2 border-slate-700/80 shadow-md">
-            <span className="block text-3xl font-extrabold font-display text-white">{stats.repos}+</span>
-            <span className="text-xs font-mono font-semibold text-slate-300 uppercase tracking-wider">Public Repos</span>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-[#0c1220] border-2 border-slate-700/80 shadow-md">
-            <span className="block text-3xl font-extrabold font-display text-cyan-400">{cp.leetcode.solved}+</span>
-            <span className="text-xs font-mono font-semibold text-slate-300 uppercase tracking-wider">LeetCode Solved</span>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-[#0c1220] border-2 border-slate-700/80 shadow-md">
-            <span className="block text-3xl font-extrabold font-display text-indigo-300">{cp.codeforces.rating}</span>
-            <span className="text-xs font-mono font-semibold text-slate-300 uppercase tracking-wider">Codeforces Rating</span>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-[#0c1220] border-2 border-slate-700/80 shadow-md">
-            <span className="block text-3xl font-extrabold font-display text-emerald-400">{stats.streak} Days</span>
-            <span className="text-xs font-mono font-semibold text-slate-300 uppercase tracking-wider">Active Streak</span>
-          </div>
-        </div>
+      {/* Down Scroll Indicator */}
+      <div className="relative z-10 flex justify-center pt-8">
+        <a
+          href="#about"
+          className="flex flex-col items-center gap-1.5 text-slate-400 hover:text-cyan-400 transition-colors font-mono text-xs tracking-widest uppercase"
+        >
+          <span>Scroll to Explore Orbit</span>
+          <ArrowDown className="w-4 h-4 animate-bounce text-cyan-400" />
+        </a>
       </div>
-
-      {/* Interactive JPL Horizons Telemetry Side Panel (shown on planet click) */}
-      <TelemetryPanel
-        body={selectedBody}
-        onClose={() => setSelectedBody(null)}
-      />
-
-      {/* NASA Live Discoveries Modal */}
-      <NasaDiscoveriesModal
-        isOpen={isNasaModalOpen}
-        onClose={() => setIsNasaModalOpen(false)}
-      />
     </section>
   );
 };

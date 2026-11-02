@@ -3,39 +3,42 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { CELESTIAL_BODIES } from '@/lib/constants';
+import { OrbitControls } from '@react-three/drei';
 import { CelestialBody } from './CelestialBody';
 import { OrbitLine } from './OrbitLine';
 import { Starfield } from './Starfield';
 import { CelestialBodyData } from '@/types/simulation';
 import { calculateOrbitPosition } from '@/lib/kepler';
+import { StarSystem } from '@/lib/proceduralUniverse';
 
 interface HeroCosmosProps {
+  system: StarSystem;
   selectedBodyId?: string;
   onSelectBody?: (body: CelestialBodyData) => void;
+  isWarping?: boolean;
+  isFullJourney?: boolean;
 }
 
-function SolarSystemRig({ selectedBodyId, onSelectBody }: HeroCosmosProps) {
+function SolarSystemRig({ system, selectedBodyId, onSelectBody, isFullJourney }: HeroCosmosProps) {
   const rigGroupRef = useRef<THREE.Group>(null);
   const timeRef = useRef(0);
 
-  // Split primary bodies vs satellites
-  const primaryBodies = CELESTIAL_BODIES.filter((b) => !b.parentBodyId);
-  const moonBodies = CELESTIAL_BODIES.filter((b) => !!b.parentBodyId);
+  // Split primary bodies (star and planets) vs satellites (moons)
+  const primaryBodies = system.bodies.filter((b) => !b.parentBodyId);
+  const moonBodies = system.bodies.filter((b) => !!b.parentBodyId);
 
-  // Direct group refs for 60+ FPS zero-state transform updates
+  // Group refs for 60+ FPS zero-state transform updates
   const bodyGroups = useRef<{ [id: string]: THREE.Group | null }>({});
   const orbitLineGroups = useRef<{ [id: string]: THREE.Group | null }>({});
 
   useFrame((state, delta) => {
-    // Majestic, serene celestial time clock
-    timeRef.current += delta * 1.8;
+    // Serene celestial time clock
+    timeRef.current += delta * 1.6;
     const t = timeRef.current;
 
-    // Cache parent positions calculated mathematically
     const parentPositions: { [id: string]: THREE.Vector3 } = {};
 
-    // 1. Update primary planet positions with Keplerian physics
+    // 1. Primary bodies (Star and Planets)
     primaryBodies.forEach((body) => {
       const pos = calculateOrbitPosition(body, t);
       parentPositions[body.id] = pos;
@@ -45,79 +48,66 @@ function SolarSystemRig({ selectedBodyId, onSelectBody }: HeroCosmosProps) {
       }
     });
 
-    // 2. Update satellite & moon positions with calibrated real-world orbital pacing
+    // 2. Secondary moons
     moonBodies.forEach((moon) => {
       const parentPos = moon.parentBodyId ? parentPositions[moon.parentBodyId] : undefined;
-
-      // Realistic, serene orbital period calibration
-      let calibratedPeriod = moon.orbitalPeriodDays;
-      if (moon.id === 'iss') calibratedPeriod = 36.0; // ~20s smooth visible Earth satellite pass
-      if (moon.id === 'europa') calibratedPeriod = 48.0; // ~27s smooth Jovian moon orbit
-      if (moon.id === 'jwst') calibratedPeriod = 90.0; // Serene L2 Lagrangian station-keeping
-
-      const calibratedMoon = { ...moon, orbitalPeriodDays: calibratedPeriod };
-      const relPos = calculateOrbitPosition(calibratedMoon, t);
+      const relPos = calculateOrbitPosition(moon, t);
       const absPos = parentPos ? relPos.clone().add(parentPos) : relPos;
       const grp = bodyGroups.current[moon.id];
       if (grp) {
         grp.position.copy(absPos);
-        if (moon.id === 'iss') {
-          // Tangent orientation: align station forward along its orbital trajectory
-          const nextRel = calculateOrbitPosition(calibratedMoon, t + 0.1);
-          const nextAbs = parentPos ? nextRel.add(parentPos) : nextRel;
-          grp.lookAt(nextAbs);
-        }
       }
-
-      // Update satellite orbit path center
       const lineGrp = orbitLineGroups.current[moon.id];
       if (lineGrp && parentPos) {
         lineGrp.position.copy(parentPos);
       }
     });
 
-    // 3. Subtle gentle camera parallax drift responding to mouse
-    if (rigGroupRef.current) {
-      const mouseX = state.pointer.x * 0.12;
-      const mouseY = state.pointer.y * 0.08;
+    // 3. Subtle mouse parallax drift only in background mode (when OrbitControls is not taking over)
+    if (!isFullJourney && rigGroupRef.current) {
+      const mouseX = state.pointer.x * 0.1;
+      const mouseY = state.pointer.y * 0.06;
       rigGroupRef.current.rotation.y = THREE.MathUtils.lerp(
         rigGroupRef.current.rotation.y,
-        mouseX + 0.12,
+        mouseX + 0.08,
         0.035
       );
       rigGroupRef.current.rotation.x = THREE.MathUtils.lerp(
         rigGroupRef.current.rotation.x,
-        -mouseY - 0.26,
+        -mouseY - 0.28,
         0.035
       );
     }
   });
 
   return (
-    <group ref={rigGroupRef} position={[0, -2, 0]} rotation={[-0.35, 0.2, 0]}>
-      {/* Central Sun Light Source */}
+    <group ref={rigGroupRef} position={[0, -2, 0]} rotation={isFullJourney ? [0, 0, 0] : [-0.32, 0.15, 0]}>
+      {/* Central Star Light Source with Realistic Solar Spectrum */}
       <pointLight
         position={[0, 0, 0]}
-        intensity={950}
-        color="#fff5e0"
-        distance={1400}
-        decay={1.2}
+        intensity={1050 * system.star.coronaIntensity}
+        color={system.star.colorHex}
+        distance={2500}
+        decay={1.15}
       />
-      <ambientLight intensity={0.16} color="#94a3b8" />
+      {/* Ambient starlight from the Milky Way */}
+      <ambientLight intensity={0.08} color="#475569" />
 
-      {/* Trajectory Orbit Lines for all primary planets */}
-      {primaryBodies.map((body) => (
-        <OrbitLine
-          key={`orbit-${body.id}`}
-          body={body}
-          isSelected={selectedBodyId === body.id}
-        />
-      ))}
+      {/* Planetary Orbit Lines */}
+      {primaryBodies
+        .filter((b) => b.type !== 'star')
+        .map((body) => (
+          <OrbitLine
+            key={`orbit-${system.id}-${body.id}`}
+            body={body}
+            isSelected={selectedBodyId === body.id}
+          />
+        ))}
 
       {/* Primary Celestial Bodies */}
       {primaryBodies.map((body) => (
         <group
-          key={body.id}
+          key={`${system.id}-${body.id}`}
           ref={(el) => {
             bodyGroups.current[body.id] = el;
           }}
@@ -130,25 +120,22 @@ function SolarSystemRig({ selectedBodyId, onSelectBody }: HeroCosmosProps) {
         </group>
       ))}
 
-      {/* Satellite Trajectory Orbit Lines (ISS, Luna, Europa) */}
+      {/* Moon Orbit Lines */}
       {moonBodies.map((moon) => (
         <group
-          key={`orbit-group-${moon.id}`}
+          key={`moon-orbit-${system.id}-${moon.id}`}
           ref={(el) => {
             orbitLineGroups.current[moon.id] = el;
           }}
         >
-          <OrbitLine
-            body={moon}
-            isSelected={selectedBodyId === moon.id}
-          />
+          <OrbitLine body={moon} isSelected={selectedBodyId === moon.id} />
         </group>
       ))}
 
-      {/* Secondary Satellites & Moons (Luna, ISS, JWST, Europa) */}
+      {/* Moon Bodies */}
       {moonBodies.map((moon) => (
         <group
-          key={moon.id}
+          key={`${system.id}-${moon.id}`}
           ref={(el) => {
             bodyGroups.current[moon.id] = el;
           }}
@@ -164,7 +151,13 @@ function SolarSystemRig({ selectedBodyId, onSelectBody }: HeroCosmosProps) {
   );
 }
 
-export const HeroCelestialHorizon: React.FC<HeroCosmosProps> = ({ selectedBodyId, onSelectBody }) => {
+export const HeroCelestialHorizon: React.FC<HeroCosmosProps> = ({
+  system,
+  selectedBodyId,
+  onSelectBody,
+  isWarping = false,
+  isFullJourney = false,
+}) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -183,34 +176,58 @@ export const HeroCelestialHorizon: React.FC<HeroCosmosProps> = ({ selectedBodyId
   return (
     <div
       className="absolute inset-0 z-0 overflow-hidden pointer-events-auto select-none"
-      aria-label="Interactive 3D Solar System and Celestial Cosmos"
+      aria-label="Realistic 3D Planetary Cosmos and Procedural Solar System"
     >
       <Canvas
-        camera={{ position: [0, 34, 68], fov: 46, near: 0.1, far: 2000 }}
+        camera={{ position: isFullJourney ? [0, 32, 75] : [0, 36, 72], fov: 45, near: 0.1, far: 3500 }}
         gl={{
           antialias: true,
           toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 1.15,
+          toneMappingExposure: isFullJourney ? 1.35 : 1.25,
           powerPreference: 'high-performance',
           alpha: true,
         }}
       >
-        {/* Deep Cosmic Starfield & Nebula Gas Clouds */}
-        <Starfield count={6500} />
+        {/* Deep Cosmic Starfield & Interstellar Dust */}
+        <Starfield count={isFullJourney ? 9000 : 7000} />
 
-        {/* Orbiting Solar System & Spacecraft */}
-        <SolarSystemRig selectedBodyId={selectedBodyId} onSelectBody={onSelectBody} />
+        {/* 360-degree Interactive Orbit Controls in Full Journey Mode */}
+        {isFullJourney && (
+          <OrbitControls
+            makeDefault
+            enableDamping
+            dampingFactor={0.06}
+            minDistance={10}
+            maxDistance={500}
+            rotateSpeed={0.8}
+            zoomSpeed={1.0}
+            panSpeed={0.8}
+          />
+        )}
+
+        {/* Orbiting Star System & Planetary Spheres */}
+        <SolarSystemRig
+          system={system}
+          selectedBodyId={selectedBodyId}
+          onSelectBody={onSelectBody}
+          isWarping={isWarping}
+          isFullJourney={isFullJourney}
+        />
       </Canvas>
 
-      {/* Soft Cinematic Background Blur & Dark Vignette Scrim (Guarantees website texts are seen first with crystal clarity) */}
-      <div
-        className="absolute inset-0 pointer-events-none backdrop-blur-[3px] bg-space-950/50"
-        aria-hidden="true"
-      />
-      <div
-        className="absolute inset-0 pointer-events-none bg-gradient-to-t from-space-950 via-space-950/30 to-space-950/80"
-        aria-hidden="true"
-      />
+      {/* Cinematic Blur & Vignette Scrim ONLY active in background resume mode */}
+      {!isFullJourney && (
+        <>
+          <div
+            className="absolute inset-0 pointer-events-none backdrop-blur-[2.5px] bg-space-950/40"
+            aria-hidden="true"
+          />
+          <div
+            className="absolute inset-0 pointer-events-none bg-gradient-to-t from-space-950 via-space-950/20 to-space-950/80"
+            aria-hidden="true"
+          />
+        </>
+      )}
     </div>
   );
 };

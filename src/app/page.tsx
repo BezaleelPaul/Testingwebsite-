@@ -5,7 +5,6 @@ import { Navbar } from '@/components/layout/Navbar';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { AboutSection } from '@/components/sections/AboutSection';
 import { ProjectsSection } from '@/components/sections/ProjectsSection';
-import { GenerativeCosmosSection } from '@/components/sections/GenerativeCosmosSection';
 import { ExperienceSection } from '@/components/sections/ExperienceSection';
 import { SkillsSection } from '@/components/sections/SkillsSection';
 import { AchievementsSection } from '@/components/sections/AchievementsSection';
@@ -28,7 +27,7 @@ export default function Home() {
       <Navbar />
 
       <main>
-        {/* Section 01: Hero - The Beginning */}
+        {/* Section 01: Hero & Infinite Procedural Star System Cosmos */}
         <HeroSection 
           profile={INITIAL_PROFILE} 
           stats={INITIAL_GITHUB_DATA.stats} 
@@ -38,11 +37,8 @@ export default function Home() {
         {/* Section 02: About - My Orbit & Education */}
         <AboutSection profile={INITIAL_PROFILE} />
 
-        {/* Section 03: Projects - Featured Discoveries & Library */}
+        {/* Section 03: Projects - Featured Discoveries & Systems */}
         <ProjectsSection projects={INITIAL_PROJECTS} />
-
-        {/* Section 03.5: Procedural Planetary Synthesizer - Seed-Generated Exoplanets */}
-        <GenerativeCosmosSection />
 
         {/* Section 04: Experience - Expeditions & Chronological Timeline */}
         <ExperienceSection experience={INITIAL_EXPERIENCE} />
