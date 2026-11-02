@@ -233,7 +233,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-slate-800">
             <div className="bg-[#070b14] border border-slate-800 p-3.5 rounded-xl">
               <span className="text-xs font-mono text-slate-400 block mb-1">PUBLIC REPOS</span>
-              <span className="text-2xl font-bold font-mono text-cyan-400">{stats.publicRepos}</span>
+              <span className="text-2xl font-bold font-mono text-cyan-400">{stats.repos}</span>
             </div>
             <div className="bg-[#070b14] border border-slate-800 p-3.5 rounded-xl">
               <span className="text-xs font-mono text-slate-400 block mb-1">LEETCODE</span>
@@ -245,7 +245,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
             </div>
             <div className="bg-[#070b14] border border-slate-800 p-3.5 rounded-xl">
               <span className="text-xs font-mono text-slate-400 block mb-1">ACTIVE STREAK</span>
-              <span className="text-2xl font-bold font-mono text-sky-400">{stats.currentStreak} Days</span>
+              <span className="text-2xl font-bold font-mono text-sky-400">{stats.streak} Days</span>
             </div>
           </div>
         </div>

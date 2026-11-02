@@ -31,7 +31,7 @@ export interface CelestialBodyData {
   orbitalVelocityKms: number;
   atmosphericComposition: string[];
   description: string;
-  jplHorizonsId: string;
+  jplHorizonsId?: string;
 }
 
 export interface SpacecraftState {

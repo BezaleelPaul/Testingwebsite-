@@ -20,8 +20,7 @@ export function getOrCreateProceduralPlanetTexture(
 
   if (typeof document === 'undefined') {
     // SSR fallback dummy texture
-    const dummy = new THREE.CanvasTexture(document?.createElement('canvas') as any);
-    return dummy;
+    return new THREE.Texture() as unknown as THREE.CanvasTexture;
   }
 
   const width = 1024;

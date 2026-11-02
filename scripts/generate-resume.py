@@ -7,8 +7,10 @@ def create_resume():
 0 -22 Td
 (Software Developer | Flutter | Full-Stack | AI/ML) Tj
 0 -15 Td
-(Bangalore, India | bezaleel321@gmail.com | github.com/BezaleelPaul | linkedin.com/in/bezaleel-pauln | x.com/BezaleelPaul1) Tj
-0 -28 Td
+(Bangalore, India | bezaleel321@gmail.com | Projects Archive: bezaleelpaul.github.io/projects) Tj
+0 -14 Td
+(GitHub: github.com/BezaleelPaul | LinkedIn: linkedin.com/in/bezaleel-pauln | X: x.com/BezaleelPaul1) Tj
+0 -26 Td
 /F1 13 Tf
 (EDUCATION) Tj
 /F1 10 Tf
@@ -26,7 +28,7 @@ def create_resume():
 (Software Engineering & Open Source Contributor (2025 - Present)) Tj
 0 -24 Td
 /F1 13 Tf
-(CORE PROJECTS) Tj
+(CORE PROJECTS (Full Catalog & Live Demos: bezaleelpaul.github.io/projects)) Tj
 /F1 10 Tf
 0 -16 Td
 (1. NADICARE Twin Engine: AI Digital Twin for cardiac load and recovery (Python, XGBoost, Streamlit)) Tj
