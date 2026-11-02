@@ -167,13 +167,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
 
             <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
               <span className="px-3 py-1 rounded-md bg-slate-800/90 border border-slate-700 text-slate-200 text-xs font-mono font-medium">
-                🎓 CMR University (B.Tech CSE)
+                🎓 CMR University (B.Tech CSE '25–'29)
               </span>
               <span className="px-3 py-1 rounded-md bg-slate-800/90 border border-slate-700 text-slate-200 text-xs font-mono font-medium">
-                🎓 IIT Madras (BS Data Science)
+                🎓 IIT Madras (BS Data Science '26–Present)
               </span>
               <span className="px-3 py-1 rounded-md bg-cyan-950/60 border border-cyan-700/60 text-cyan-300 text-xs font-mono font-medium">
-                ⚡ IEEE Webmaster & EXCOM
+                ⚡ IEEE Webmaster & EXCOM ('25–'26)
               </span>
             </div>
           </div>

@@ -39,7 +39,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
         res = 'Python, Flutter, Dart, TypeScript, React, Next.js, TensorFlow, XGBoost, C++, SQL.';
         break;
       case 'socials':
-        res = 'GitHub: @BezaleelPaul | LinkedIn: bezaleel-paul | LeetCode: BezaleelPaulN';
+        res = 'GitHub: @BezaleelPaul | LinkedIn: in/bezaleel-pauln | X: @BezaleelPaul1 | LeetCode: BezaleelPaulN';
         break;
       case 'clear':
         setTerminalLogs([]);
