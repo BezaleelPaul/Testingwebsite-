@@ -97,13 +97,9 @@
   ],
   "certifications": [
     "AI Apps w/ Gemini & Imagen — Google, Apr 2026",
-    "Flutter Software Training — CMR Univ., Feb 2026",
     "Data Analytics with Python — NPTEL, Apr 2026",
     "Claude Code in Action — Anthropic, Mar 2026",
-    "IBM SkillsBuild — IBM, Nov 2025",
-    "Python Fundamentals — Great Learning, Nov 2025",
-    "C Programming Basics — Simplilearn, Nov 2025",
-    "Generative AI Mastermind — Outskill, Feb 2026"
+    "Flutter Software Training — CMR Univ., Feb 2026"
   ],
   "languages": [
     [
@@ -141,9 +137,9 @@
       "org": "IEEE CMR University Student Branch",
       "place": "CMR University, Bengaluru, India",
       "bullets": [
-        "Contribute to technical and organizational activities of the IEEE student branch.",
-        "Manage and develop web-based platforms and digital presence for the student branch.",
-        "Support technical initiatives, events, and student-focused activities as an IEEE EXCOM member."
+        "Engineered and maintained responsive web platforms for IEEE CMR Student Branch using Next.js and modern web tooling.",
+        "Organized technical workshops, hackathons, and webinars reaching 500+ student attendees across campus.",
+        "Mentored 60+ junior peers on Git, open-source development workflows, and cross-platform Flutter fundamentals."
       ]
     }
   ],
