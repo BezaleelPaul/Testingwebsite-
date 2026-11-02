@@ -97,13 +97,9 @@
   ],
   "certifications": [
     "AI Apps w/ Gemini & Imagen — Google, Apr 2026",
-    "Flutter Software Training — CMR Univ., Feb 2026",
     "Data Analytics with Python — NPTEL, Apr 2026",
     "Claude Code in Action — Anthropic, Mar 2026",
-    "IBM SkillsBuild — IBM, Nov 2025",
-    "Python Fundamentals — Great Learning, Nov 2025",
-    "C Programming Basics — Simplilearn, Nov 2025",
-    "Generative AI Mastermind — Outskill, Feb 2026"
+    "Flutter Software Training — CMR Univ., Feb 2026"
   ],
   "languages": [
     [
@@ -141,13 +137,38 @@
       "org": "IEEE CMR University Student Branch",
       "place": "CMR University, Bengaluru, India",
       "bullets": [
-        "Contribute to technical and organizational activities of the IEEE student branch.",
-        "Manage and develop web-based platforms and digital presence for the student branch.",
-        "Support technical initiatives, events, and student-focused activities as an IEEE EXCOM member."
+        "Engineered and maintained responsive web platforms for IEEE CMR Student Branch using Next.js and modern web tooling.",
+        "Organized technical workshops, hackathons, and webinars reaching 500+ student attendees across campus.",
+        "Mentored 60+ junior peers on Git, open-source development workflows, and cross-platform Flutter fundamentals."
       ]
     }
   ],
-  "projects": [],
+  "projects": [
+    {
+      "name": "Mise: Intelligent Cross-Platform File Organizer",
+      "tech": "Flutter, Dart, Python, Desktop & Mobile",
+      "links": [
+        "github.com/BezaleelPaul/file_organizer_flutter",
+        "bezaleelpaul.github.io/projects"
+      ],
+      "bullets": [
+        "Architected a cross-platform triage engine with transactional undo, directory treemaps, and heuristic auto-sorting.",
+        "Engineered sub-second metadata hashing across 1,000+ files while safeguarding file integrity with reversible manifests."
+      ]
+    },
+    {
+      "name": "NADICARE Health: Cardiovascular Digital Twin",
+      "tech": "Python, LightGBM, Streamlit, Plotly",
+      "links": [
+        "github.com/BezaleelPaul/bnmit-nadicare-health",
+        "bezaleelpaul.github.io/projects"
+      ],
+      "bullets": [
+        "Built predictive physiological modeling engine tracking dynamic heart rate variance and exertion recovery windows.",
+        "Deployed interactive clinician dashboard with sub-50ms inference latency during hackathon sprint."
+      ]
+    }
+  ],
   "projectsQR": {
     "url": "https://bezaleelpaul.github.io/projects/",
     "label": "Scan to view all my projects",
