@@ -1,357 +1,230 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { 
-  ArrowLeft, 
-  Search, 
-  ExternalLink, 
-  Github, 
-  Sparkles, 
-  Layers, 
-  CheckCircle, 
-  ArrowUpRight, 
-  X, 
-  FolderGit2,
-  Code2,
-  Terminal,
-  Cpu,
-  Globe
-} from 'lucide-react';
-import { INITIAL_PROJECTS, INITIAL_PROFILE } from '@/data/profileData';
-import { ProjectItem, ProjectCategory } from '@/types/portfolio';
-import { spaceAudio } from '@/lib/audio';
+import { ArrowLeft, ArrowUpRight, Github, Search } from 'lucide-react';
+import { INITIAL_PROJECTS } from '@/data/profileData';
+import { ProjectCategory } from '@/types/portfolio';
 import { Navbar } from '@/components/layout/Navbar';
+
+const categories: ProjectCategory[] = [
+  'All',
+  'Flutter & Mobile',
+  'AI / ML',
+  'Full-Stack',
+  'Web Development',
+  'Open Source',
+];
 
 export default function ProjectsPage() {
   const [activeCategory, setActiveCategory] = useState<ProjectCategory>('All');
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
-
-  const categories: ProjectCategory[] = [
-    'All',
-    'Flutter & Mobile',
-    'AI / ML',
-    'Full-Stack',
-    'Web Development',
-    'Open Source'
-  ];
 
   const filteredProjects = useMemo(() => {
-    return INITIAL_PROJECTS.filter((p) => {
-      const matchesCategory = activeCategory === 'All' || p.category === activeCategory;
-      const matchesSearch = 
-        p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.stack.some((s) => s.toLowerCase().includes(searchQuery.toLowerCase()));
+    const query = searchQuery.trim().toLowerCase();
+    return INITIAL_PROJECTS.filter((project) => {
+      const matchesCategory = activeCategory === 'All' || project.category === activeCategory;
+      const matchesSearch =
+        query.length === 0 ||
+        project.title.toLowerCase().includes(query) ||
+        project.tagline.toLowerCase().includes(query) ||
+        project.description.toLowerCase().includes(query) ||
+        project.stack.some((technology) => technology.toLowerCase().includes(query));
       return matchesCategory && matchesSearch;
     });
   }, [activeCategory, searchQuery]);
 
+  const resetFilters = () => {
+    setActiveCategory('All');
+    setSearchQuery('');
+  };
+
   return (
-    <div className="min-h-screen bg-space-950 text-white selection:bg-hud-cyan selection:text-space-950 font-sans antialiased overflow-x-hidden">
-      {/* Top Navbar */}
+    <div className="min-h-screen bg-paper text-ink">
       <Navbar />
 
-      <main className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
-        {/* Navigation Breadcrumb / Back Link */}
-        <div className="flex items-center justify-between">
+      <main className="pb-24 pt-32 sm:pt-36">
+        <div className="section-shell">
           <Link
             href="/"
-            onClick={() => spaceAudio.playTelemetryBeep(900)}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 border border-slate-700 text-slate-300 hover:text-white hover:border-cyan-400 font-mono text-xs font-bold transition-all group shadow-sm"
+            className="inline-flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-ink/45 transition-colors hover:text-ink"
           >
-            <ArrowLeft className="w-4 h-4 text-cyan-400 group-hover:-translate-x-1 transition-transform" />
-            <span>Return to Portfolio</span>
+            <ArrowLeft className="h-3.5 w-3.5" />
+            Back to portfolio
           </Link>
 
-          <span className="text-xs font-mono text-slate-400">
-            Total Projects: <strong className="text-cyan-400 font-bold">{INITIAL_PROJECTS.length}</strong>
-          </span>
-        </div>
+          <header
+            className="mt-12 grid gap-8 border-b border-ink/15 pb-12 lg:grid-cols-12 lg:items-end"
+            data-reveal
+          >
+            <div className="lg:col-span-8">
+              <p className="eyebrow text-ink/45">Archive</p>
+              <h1 className="serif-display mt-5 max-w-3xl text-6xl text-ink sm:text-8xl">
+                Every project, in one place.
+              </h1>
+            </div>
+            <p className="max-w-sm text-sm leading-relaxed text-ink/55 lg:col-span-4 lg:ml-auto">
+              Mobile apps, machine-learning experiments, civic tools, and open-source utilities.
+              Filter by discipline or search the stack.
+            </p>
+          </header>
 
-        {/* Hero Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-cyan-500/40 text-cyan-400 font-mono text-xs font-semibold uppercase tracking-wider shadow-sm">
-            <FolderGit2 className="w-3.5 h-3.5 animate-pulse text-cyan-400" />
-            <span>Verified Systems, Frameworks & Tooling</span>
-          </div>
-
-          <h1 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight">
-            Complete Projects Archive
-          </h1>
-
-          <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-sans">
-            Deep-dive technical architectures, algorithmic problem solvers, predictive machine learning pipelines, and cross-platform utilities engineered by Bezaleel Paul N.
-          </p>
-        </div>
-
-        {/* Filter and Search Controls Card */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-5 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 shadow-xl">
-          {/* Category Filter Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => {
-                  spaceAudio.playTelemetryBeep(900);
-                  setActiveCategory(cat);
-                }}
-                className={`px-4 py-2 rounded-xl text-xs font-mono tracking-wider transition-all whitespace-nowrap font-bold ${
-                  activeCategory === cat
-                    ? 'bg-cyan-400 text-slate-950 shadow-[0_0_15px_rgba(34,211,238,0.4)]'
-                    : 'bg-slate-800 text-slate-300 hover:text-white border border-slate-600 hover:border-cyan-400'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          {/* Search Input */}
-          <div className="relative w-full md:w-80">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search stack, language, keywords..."
-              className="w-full bg-[#070b14] border-2 border-slate-700 rounded-xl pl-9 pr-4 py-2 text-xs font-mono text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400 transition-colors font-medium"
-            />
-          </div>
-        </div>
-
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {filteredProjects.map((project) => (
-            <div
-              key={project.id}
-              className="rounded-3xl bg-[#0c1220] border-2 border-slate-700/80 p-7 sm:p-9 space-y-6 flex flex-col justify-between hover:border-cyan-400 transition-all shadow-2xl relative group"
-            >
-              <div className="space-y-4">
-                {/* Header Tag & Status */}
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-xs font-mono font-bold text-cyan-300 bg-cyan-950/90 border border-cyan-700/80 px-3 py-1 rounded-md uppercase tracking-wider">
-                    {project.category}
-                  </span>
-                  <div className="flex items-center gap-2">
-                    {project.featured && (
-                      <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-amber-300 bg-amber-950/80 border border-amber-600/70 px-2.5 py-0.5 rounded-full">
-                        <Sparkles className="w-3 h-3 text-amber-400" /> FEATURED
-                      </span>
-                    )}
-                    <span className="text-xs font-mono text-slate-400">
-                      [{project.status}]
-                    </span>
-                  </div>
-                </div>
-
-                {/* Title & Tagline */}
-                <div className="space-y-2">
-                  <h3 className="text-2xl font-extrabold text-white group-hover:text-cyan-300 transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm font-mono text-cyan-400/90 font-medium leading-relaxed">
-                    {project.tagline}
-                  </p>
-                </div>
-
-                {/* Problem & Solution Architecture Card */}
-                <div className="bg-[#070b14] p-4 rounded-xl border border-slate-800 space-y-3 font-sans text-xs">
-                  <div>
-                    <span className="font-mono font-bold text-amber-400 uppercase tracking-wide block mb-1">
-                      CHALLENGE & PROBLEM:
-                    </span>
-                    <p className="text-slate-300 leading-relaxed font-sans">{project.problem}</p>
-                  </div>
-                  <div className="pt-2 border-t border-slate-800/80">
-                    <span className="font-mono font-bold text-emerald-400 uppercase tracking-wide block mb-1">
-                      ENGINEERED SOLUTION:
-                    </span>
-                    <p className="text-slate-200 leading-relaxed font-sans">{project.solution}</p>
-                  </div>
-                </div>
-
-                {/* Key Technical Highlights */}
-                {project.highlights && project.highlights.length > 0 && (
-                  <div className="space-y-2 pt-1">
-                    <span className="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold block">
-                      Key Highlights:
-                    </span>
-                    <ul className="space-y-1.5">
-                      {project.highlights.map((hl, hIdx) => (
-                        <li key={hIdx} className="text-xs text-slate-200 font-sans flex items-start gap-2">
-                          <CheckCircle className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
-                          <span>{hl}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+          <div className="border-b border-ink/15 py-7" data-reveal data-reveal-delay="80">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+              <div className="flex flex-wrap gap-2" role="group" aria-label="Filter projects by category">
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    type="button"
+                    onClick={() => setActiveCategory(category)}
+                    aria-pressed={activeCategory === category}
+                    className={`rounded-full border px-3.5 py-2 font-mono text-[10px] font-semibold tracking-[0.06em] transition-colors ${
+                      activeCategory === category
+                        ? 'border-ink bg-ink text-paper'
+                        : 'border-ink/20 text-ink/55 hover:border-ink hover:text-ink'
+                    }`}
+                  >
+                    {category}
+                  </button>
+                ))}
               </div>
 
-              {/* Stack & Links Footer */}
-              <div className="pt-5 border-t border-slate-700/80 space-y-4">
-                {/* Tech Stack Badges */}
-                <div className="flex flex-wrap gap-1.5">
-                  {project.stack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2.5 py-1 bg-slate-800/90 text-slate-200 text-xs font-mono font-medium rounded-md border border-slate-600"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+              <div className="relative w-full lg:w-80">
+                <Search className="absolute left-4 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink/35" />
+                <input
+                  type="search"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  aria-label="Search projects by name, description, or technology"
+                  placeholder="Search projects or stack"
+                  className="w-full rounded-full border border-ink/20 bg-paper-bright py-2.5 pl-10 pr-4 font-mono text-[10px] text-ink placeholder:text-ink/35 focus:border-ink focus:outline-none"
+                />
+              </div>
+            </div>
 
-                {/* Action Links */}
-                <div className="flex items-center justify-between gap-3 pt-2">
-                  <div className="flex items-center gap-3">
-                    {project.repoUrl && (
-                      <a
-                        href={project.repoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => spaceAudio.playTelemetryBeep(1100)}
-                        className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-mono text-xs font-bold border border-slate-600 transition-all hover:border-cyan-400"
+            <div className="mt-5 flex items-center justify-between gap-4">
+              <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-ink/40" aria-live="polite">
+                Showing {filteredProjects.length} of {INITIAL_PROJECTS.length} projects
+              </p>
+              {filteredProjects.length > 0 && (activeCategory !== 'All' || searchQuery.length > 0) && (
+                <button
+                  type="button"
+                  onClick={resetFilters}
+                  className="link-underline font-mono text-[9px] font-semibold uppercase tracking-[0.1em] text-ink/55 hover:text-ink"
+                >
+                  Reset filters
+                </button>
+              )}
+            </div>
+          </div>
+
+          {filteredProjects.length > 0 ? (
+            <div className="grid gap-x-8 md:grid-cols-2">
+              {filteredProjects.map((project, index) => (
+                <article
+                  key={project.id}
+                  className="flex flex-col border-b border-ink/15 py-9 md:py-11"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="eyebrow text-ink/40">{project.category}</span>
+                    <span className="font-mono text-[9px] uppercase tracking-[0.08em] text-ink/30">
+                      {project.status} / {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+
+                  <h2 className="mt-5 font-display text-3xl leading-[0.98] tracking-tight text-ink sm:text-4xl">
+                    {project.title}
+                  </h2>
+                  <p className="mt-4 max-w-xl text-sm leading-relaxed text-ink/58">
+                    {project.tagline}
+                  </p>
+
+                  <div className="mt-5 flex flex-wrap gap-x-3 gap-y-1.5">
+                    {project.stack.map((technology) => (
+                      <span
+                        key={technology}
+                        className="font-mono text-[9px] uppercase tracking-[0.06em] text-ink/38"
                       >
-                        <Github className="w-4 h-4 text-cyan-400" />
-                        <span>Source Code</span>
-                      </a>
-                    )}
+                        {technology}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="mt-7 flex-1 border-t border-ink/12 pt-5">
+                    <details className="group">
+                      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-mono text-[9px] font-semibold uppercase tracking-[0.12em] text-ink">
+                        Engineering notes
+                        <span className="relative h-3 w-3 shrink-0">
+                          <span className="absolute left-0 top-1/2 h-px w-3 bg-ink" />
+                          <span className="absolute left-1/2 top-0 h-3 w-px bg-ink transition-transform group-open:rotate-90" />
+                        </span>
+                      </summary>
+                      <div className="space-y-5 pt-5">
+                        <div>
+                          <h3 className="eyebrow text-ink/35">The problem</h3>
+                          <p className="mt-1.5 text-xs leading-relaxed text-ink/58">{project.problem}</p>
+                        </div>
+                        <div>
+                          <h3 className="eyebrow text-ink/35">The approach</h3>
+                          <p className="mt-1.5 text-xs leading-relaxed text-ink/58">{project.solution}</p>
+                        </div>
+                        {project.highlights.length > 0 && (
+                          <ul className="space-y-1.5">
+                            {project.highlights.map((highlight) => (
+                              <li key={highlight} className="flex gap-2 text-xs leading-relaxed text-ink/50">
+                                <span className="mt-[0.45rem] h-1 w-1 shrink-0 rounded-full bg-ink/35" />
+                                {highlight}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </details>
+                  </div>
+
+                  <div className="mt-6 flex items-center gap-5">
+                    <a
+                      href={project.repoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.1em] text-ink/55 hover:text-ink"
+                    >
+                      <Github className="h-3.5 w-3.5" />
+                      Source
+                    </a>
                     {project.demoUrl && (
                       <a
                         href={project.demoUrl}
-                        target={project.demoUrl.startsWith('http') ? '_blank' : '_self'}
-                        rel="noopener noreferrer"
-                        onClick={() => spaceAudio.playTelemetryBeep(1200)}
-                        className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-mono text-xs font-bold transition-all shadow-md"
+                        target={project.demoUrl.startsWith('http') ? '_blank' : undefined}
+                        rel={project.demoUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        className="inline-flex items-center gap-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.1em] text-ink/55 hover:text-ink"
                       >
-                        <ExternalLink className="w-4 h-4 text-slate-950" />
-                        <span>Live Demo</span>
+                        Live project
+                        <ArrowUpRight className="h-3.5 w-3.5" />
                       </a>
                     )}
                   </div>
-
-                  <button
-                    onClick={() => {
-                      setSelectedProject(project);
-                      spaceAudio.playTelemetryBeep(950);
-                    }}
-                    className="text-xs font-mono text-cyan-400 hover:text-cyan-300 font-bold underline flex items-center gap-1"
-                  >
-                    <span>Inspect</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
+                </article>
+              ))}
             </div>
-          ))}
-        </div>
-
-        {/* Modal for In-Depth Project Inspection */}
-        {selectedProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-            <div className="bg-[#0c1220] border-2 border-cyan-400 rounded-3xl p-6 sm:p-10 max-w-2xl w-full shadow-2xl relative space-y-6 max-h-[90vh] overflow-y-auto">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest block mb-1">
-                    [ PROJECT ARCHITECTURE SPEC ]
-                  </span>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                    {selectedProject.title}
-                  </h2>
-                </div>
-                <button
-                  onClick={() => setSelectedProject(null)}
-                  className="p-2 rounded-xl bg-slate-800 text-slate-400 hover:text-white border border-slate-700"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              <p className="text-sm font-mono text-cyan-300 font-medium">
-                {selectedProject.tagline}
+          ) : (
+            <div className="py-24 text-center">
+              <p className="eyebrow text-ink/35">No results</p>
+              <h2 className="serif-display mt-4 text-5xl text-ink">No matching projects.</h2>
+              <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-ink/50">
+                Try a broader category or a different keyword.
               </p>
-
-              <div className="bg-[#070b14] p-5 rounded-2xl border border-slate-800 space-y-4">
-                <div>
-                  <h4 className="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider mb-1">
-                    Problem Context:
-                  </h4>
-                  <p className="text-sm text-slate-300 font-sans leading-relaxed">
-                    {selectedProject.problem}
-                  </p>
-                </div>
-                <div className="pt-3 border-t border-slate-800">
-                  <h4 className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider mb-1">
-                    Engineered Solution & Architecture:
-                  </h4>
-                  <p className="text-sm text-slate-200 font-sans leading-relaxed">
-                    {selectedProject.solution}
-                  </p>
-                </div>
-                {selectedProject.metrics && (
-                  <div className="pt-3 border-t border-slate-800">
-                    <h4 className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider mb-1">
-                      Verified Metrics & Performance:
-                    </h4>
-                    <p className="text-sm text-slate-200 font-sans leading-relaxed">
-                      {selectedProject.metrics}
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              <div className="space-y-3">
-                <h4 className="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">
-                  Technology Stack & Tools:
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {selectedProject.stack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 rounded-lg bg-slate-800 text-cyan-300 text-xs font-mono font-medium border border-slate-700"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
-                {selectedProject.repoUrl && (
-                  <a
-                    href={selectedProject.repoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-mono text-xs font-bold border border-slate-600"
-                  >
-                    <Github className="w-4 h-4 text-cyan-400" />
-                    <span>View GitHub Repository</span>
-                  </a>
-                )}
-                {selectedProject.demoUrl && (
-                  <a
-                    href={selectedProject.demoUrl}
-                    target={selectedProject.demoUrl.startsWith('http') ? '_blank' : '_self'}
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-mono text-xs font-bold shadow-md"
-                  >
-                    <ExternalLink className="w-4 h-4 text-slate-950" />
-                    <span>Launch Live Demo</span>
-                  </a>
-                )}
-              </div>
+              <button
+                type="button"
+                onClick={resetFilters}
+                className="mt-7 rounded-full bg-ink px-5 py-3 font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-paper"
+              >
+                Reset filters
+              </button>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </main>
-
-      {/* Footer */}
-      <footer className="border-t border-slate-800 py-8 px-4 text-center font-mono text-xs text-slate-500">
-        <p>© 2026 Bezaleel Paul N · Complete Projects Archive · Bangalore, India</p>
-      </footer>
     </div>
   );
 }

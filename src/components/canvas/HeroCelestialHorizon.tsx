@@ -175,13 +175,17 @@ export const HeroCelestialHorizon: React.FC<HeroCosmosProps> = ({
 
   return (
     <div
-      className="absolute inset-0 z-0 overflow-hidden pointer-events-auto select-none"
-      aria-label="Realistic 3D Planetary Cosmos and Procedural Solar System"
+      className={`absolute inset-0 z-0 select-none overflow-hidden ${
+        isFullJourney ? 'pointer-events-auto' : 'pointer-events-none'
+      }`}
+      aria-hidden={!isFullJourney || undefined}
+      aria-label={isFullJourney ? 'Interactive 3D solar system' : undefined}
     >
       <Canvas
         camera={{ position: isFullJourney ? [0, 32, 75] : [0, 36, 72], fov: 45, near: 0.1, far: 3500 }}
+        dpr={[1, isFullJourney ? 2 : 1.5]}
         gl={{
-          antialias: true,
+          antialias: isFullJourney,
           toneMapping: THREE.ACESFilmicToneMapping,
           toneMappingExposure: isFullJourney ? 1.35 : 1.25,
           powerPreference: 'high-performance',
@@ -189,7 +193,7 @@ export const HeroCelestialHorizon: React.FC<HeroCosmosProps> = ({
         }}
       >
         {/* Deep Cosmic Starfield & Interstellar Dust */}
-        <Starfield count={isFullJourney ? 9000 : 7000} />
+        <Starfield count={isFullJourney ? 9000 : 5200} />
 
         {/* 360-degree Interactive Orbit Controls in Full Journey Mode */}
         {isFullJourney && (

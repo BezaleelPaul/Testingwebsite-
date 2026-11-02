@@ -1,132 +1,246 @@
-# System Architecture Document
-**Project:** Cinematic Interstellar Portfolio & Digital Resume  
-**Target:** `BezaleelPaul/bezaleelpaul.github.io`  
-**Version:** 3.0.0-production  
+# System Architecture
+
+**Project:** Bezaleel Paul portfolio and Work Atlas  
+**Framework:** Next.js 14 App Router, React 18, TypeScript  
+**Output:** Static export to `out/` for GitHub Pages  
+**Primary accent:** Signal lime on ink and paper
 
 ---
 
-## 1. High-Level System Architecture
+## 1. System Overview
 
-```mermaid
-flowchart TD
-    subgraph Data Sources & Automation
-        GH_API["GitHub REST API"] --> GHA["GitHub Actions Workflow"]
-        LOCAL_DATA["src/data/profileData.ts (Single Source of Truth)"]
-        ADMIN["Private Admin Command Centre (/admin)"] --> LOCAL_OVERRIDE["LocalStorage / Config Store"]
-    end
-
-    subgraph Core Next.js Application
-        LAYOUT["RootLayout (app/layout.tsx)"]
-        PAGE["Portfolio Page (app/page.tsx)"]
-        ADMIN_PAGE["Admin Command Centre (app/admin/page.tsx)"]
-        
-        LAYOUT --> PAGE
-        LAYOUT --> ADMIN_PAGE
-    end
-
-    subgraph Visual & Interactive Engine
-        R3F["Three.js / React Three Fiber (Hero Celestial Horizon)"]
-        GSAP_ST["GSAP ScrollTrigger (Editorial Scroll Sequences)"]
-        ANIME["Anime.js (Staggered Reveals & Constellation Motion)"]
-        AUDIO["Web Audio API (Subtle Acoustic Resonators)"]
-    end
-
-    PAGE --> R3F
-    PAGE --> GSAP_ST
-    PAGE --> ANIME
-    PAGE --> AUDIO
-
-    subgraph Production Deployment
-        STATIC["Static Export (out/)"] --> GHP["GitHub Pages (bezaleelpaul.github.io)"]
-        VERCEL["Vercel Cloud Deployment Ready"]
-    end
+```text
+src/data/profileData.ts
+        |
+        +--> Homepage sections
+        +--> Projects archive
+        +--> Resume data
+        |
+        +--> Work Atlas project metadata
+                    |
+GitHub REST API ----+--> scripts/generate-work-atlas.mjs
+                              |
+                              v
+                 src/data/workAtlas.generated.json
+                              |
+                              v
+                    src/data/workAtlas.ts
+                              |
+                              v
+                    /atlas + AtlasCanvas
 ```
 
+The site is statically rendered. There is no runtime server, database, or authentication boundary. Repository data is fetched ahead of time by a script and committed as JSON so the deployed site makes no third-party API calls.
+
 ---
 
-## 2. Technology Stack & Decision Matrix
+## 2. Routes
 
-| Layer | Selected Technology | Justification & Architectural Boundary |
+| Route | Rendering | Purpose |
 | :--- | :--- | :--- |
-| **Framework** | **Next.js 14 (App Router)** | Component-based architecture, optimized static bundling, fast SSR/SSG, and native TypeScript support. |
-| **Language** | **TypeScript 5.x** | Strict typing for GitHub data structures, project taxonomies, simulation parameters, and UI states. |
-| **Styling** | **Tailwind CSS 3.4** | Design-token-driven typography, editorial color palettes (Deep Space Black, Midnight Navy, Electric Cyan), and responsive grid layouts. |
-| **3D Engine** | **Three.js & React Three Fiber** | Constrained to the **Hero Celestial Horizon** and **Interactive Constellations**. No game mechanics or physics bloat. |
-| **Animation: Scroll** | **GSAP & ScrollTrigger** | High-performance scrubbed scroll timelines and editorial section reveals. Strictly no scroll-jacking. |
-| **Animation: Micro** | **Anime.js** | Letter-by-letter kinetic headlines, constellation SVG connector lines, and subtle hover mechanics. |
-| **Audio** | **Procedural Web Audio API** | Zero-bandwidth acoustic soundscape (40Hz deep hum, 880Hz soft telemetry blip), 100% user-consented with instantaneous mute toggle. |
-| **Icons** | **Lucide React** | Clean, accessible, lightweight vector iconography for developer toolchains and navigation. |
-| **Deployment** | **Static Export (`out/`)** | Zero-cost hosting on GitHub Pages with `.nojekyll` enabled; 100% compatible with Vercel and Netlify. |
+| `/` | Static server component | Editorial homepage, selected work, experience, skills, GitHub activity, contact |
+| `/projects` | Static client page | Searchable and filterable project archive with case notes |
+| `/atlas` | Static page plus client experience | Real commit-history constellation map |
+| `/resume` | Static client page | Structured resume, JSON view, PDF download |
+| `/observatory` | Static client page | Legacy solar-system demo linked from the Orbital Observatory project |
+| `/admin` | Static client page | Local-only command centre; not part of the public resume journey |
+
+`next.config.mjs` sets `output: 'export'` and `trailingSlash: true`.
 
 ---
 
-## 3. Data Flow & Synchronization Architecture
+## 3. Data Layer
 
-### 3.1. Unified Data Schema (`src/types/portfolio.ts`)
-The portfolio consumes a strongly typed data model:
-1. `PilotProfile`: Name, callsign, headline, location, mission, academic degrees, current status.
-2. `ProjectItem`: Slug, title, category, problem, solution, stack, repo, demo, featured, thumbnail, metrics.
-3. `ExperienceItem`: Role, organization, period, location, responsibilities, verified outcomes.
-4. `SkillCategory`: Category name, icon, items (name, badge, proficiency level indicator).
-5. `GitHubAnalytics`: Total repos, stars, followers, 30-day commit series, top repos, recent events.
-6. `AchievementItem`: Title, issuer, date, classification, credential URL.
+### `src/data/profileData.ts`
 
-### 3.2. GitHub Action Synchronization Pipeline
+Single source of truth for:
+
+- Profile, education, socials, approach
+- Seven archive projects
+- Experience, skills, achievements
+- GitHub analytics snapshot
+- Admin defaults
+
+Visible credibility values are kept conservative: 34 public repositories, 135 LeetCode problems, Codeforces rating 959, current streak 3.
+
+### Work Atlas Data
+
+`scripts/generate-work-atlas.mjs`:
+
+1. Queries GitHub repository metadata, recent commits, and the final pagination page for five repositories.
+2. Uses the final page number and final-page length to calculate exact default-branch commit totals.
+3. Removes automated sync, merge, and formatting-only commits.
+4. Samples up to 14 meaningful commits per project.
+5. Writes `src/data/workAtlas.generated.json`.
+
+`src/data/workAtlas.ts` joins generated history to `INITIAL_PROJECTS`, assigning:
+
+- Short display name
+- 3D anchor
+- Constellation shape
+- Commit sample
+- Total commits
+- Global timeline bounds
+
+Regenerate after repository activity changes:
+
+```powershell
+node scripts/generate-work-atlas.mjs
+npm run build
 ```
-[Scheduled Cron: 6h / Manual Dispatch]
-                 │
-                 ▼
-[scripts/sync-github.mjs executes]
-                 │
-                 ├── 1. Fetches user details from https://api.github.com/users/BezaleelPaul
-                 ├── 2. Queries repositories: stars, languages, topics, README snippets
-                 ├── 3. Queries public commit events over the last 30 days
-                 ├── 4. Merges with manual overrides (src/data/overrides.json)
-                 ▼
-[Writes validated src/data/syncedProfile.json]
-                 │
-                 ▼
-[Runs npm run build -> exports static site to out/]
-                 │
-                 ▼
-[Deploys to GitHub Pages via actions/deploy-pages@v4]
+
+If the GitHub API rate limit is exhausted, wait for the reset window before regenerating. The committed JSON remains usable in the meantime.
+
+---
+
+## 4. Homepage Composition
+
+`src/app/page.tsx` is a server component. It imports:
+
+- `Navbar`
+- `HeroSection`
+- `AboutSection`
+- `ProjectsSection`
+- `ExperienceSection`
+- `SkillsSection`
+- `AchievementsSection`
+- `GitHubAnalyticsSection`
+- `ContactSection`
+
+The hero is a server-rendered editorial layout with a small dynamically loaded 3D signal core. `HeroSignalVisual` keeps a CSS orbital fallback for reduced motion and while the client chunk loads. `HeroSignalCore` renders a wireframe icosahedron, three orbit rings, satellites, and deterministic dust with pointer parallax. The primary action opens `/atlas`.
+
+The navbar links to Work, Atlas, About, Experience, Skills, and Contact, plus the resume. It also maintains a requestAnimationFrame-throttled scroll-progress line.
+
+### Global motion layer
+
+`src/components/motion/SiteMotion.tsx` runs on pathname changes and uses anime.js 4 with IntersectionObserver for:
+
+- `[data-reveal]` section entrances
+- `[data-reveal-group]` / `[data-reveal-item]` staggered groups
+- `[data-count]` numeric count-ups
+- `[data-draw]` SVG line drawing
+
+A pre-hydration boot script adds `motion-ready` only when reduced motion is not requested. A timeout removes it if the client motion layer fails to initialize, and a `<noscript>` override keeps content visible without JavaScript. `src/app/template.tsx` supplies the route-enter fade.
+
+The resume uses the same design system and `src/data/resume.json`; its web actions and JSON modal are separated from the printable A4 sheet with Tailwind print variants and `@page` rules.
+
+---
+
+## 5. Work Atlas Architecture
+
+### Page shell
+
+`src/components/atlas/AtlasExperience.tsx`
+
+Responsibilities:
+
+- Selected project state
+- Timeline state and optional 4.8-second trace
+- Deep-link sync through `?project=`
+- Escape handling
+- Mobile body-scroll lock
+- Desktop case-notes panel
+- Mobile bottom-sheet case notes
+- Static-map fallback under reduced motion
+
+### 3D scene
+
+`src/components/atlas/AtlasCanvas.tsx`
+
+- React Three Fiber canvas, dynamically imported with `ssr: false`
+- Camera rig with damped position and orbit-target lerp
+- Orbit controls without pan
+- Five constellations built from `src/lib/workAtlasGeometry.ts`
+- Camera framing adapts to viewport width/aspect
+- Invisible hit spheres make project selection practical
+- Selected constellation uses signal lime and additive star glow
+- Other constellations dim
+- No post-processing, physics, or external textures
+
+### Geometry
+
+`src/lib/workAtlasGeometry.ts`
+
+- Deterministic seeded placement
+- Five backbone shapes, one per project
+- Commits distributed along backbone segments with bounded jitter
+- Shared by the 3D canvas and static SVG fallback
+
+### Static fallback
+
+`src/components/atlas/AtlasFallbackMap.tsx`
+
+Reuses the same geometry and timeline data to render an SVG constellation map when motion is reduced or before the 3D chunk loads.
+
+### Data honesty
+
+- The header reports 518 public commits across five repositories.
+- Only up to 14 meaningful commits per repository are plotted.
+- Origin stars use the real repository creation date.
+- Automated sync commits are excluded from the visual sample.
+- The UI states that history is sampled and lacks invented activity.
+
+---
+
+## 6. Rendering and Performance
+
+- Homepage first load is approximately 102 kB; the hero R3F scene loads as a separate client chunk.
+- Atlas first load is approximately 115 kB; its R3F scene loads as a separate client chunk.
+- Hero canvas DPR is capped at 1.5; Atlas canvas DPR is capped at 1.8.
+- Each route has at most one 3D canvas; the homepage uses only the lightweight signal core.
+- Reduced motion avoids initializing WebGL entirely.
+- Repository JSON is small enough to ship statically.
+- Images use `unoptimized: true` because the site is exported.
+- The legacy `/observatory` route still carries its own 3D bundle and is intentionally isolated.
+
+---
+
+## 7. Styling
+
+- Tailwind 3.4 with custom `ink`, `paper`, `signal`, and neutral line tokens.
+- Global editorial helpers live in `src/app/globals.css`.
+- Fonts are loaded from Google Fonts in `src/app/layout.tsx`.
+- Atlas timeline thumb styling is scoped to `.atlas-range`.
+- Reduced motion disables transitions globally and removes the canvas at the component level.
+
+See `DESIGN_SYSTEM.md` for the current token and component contract.
+
+---
+
+## 8. Testing
+
+Playwright covers ten flows:
+
+1. Homepage content and runtime errors
+2. Native project disclosures
+3. Mobile navigation
+4. Archive filtering, search, empty state, and reset
+5. Accessible activity chart
+6. Reduced-motion homepage without canvas
+7. Resume JSON modal and PDF link
+8. Atlas project selection and deep-link update
+9. Atlas deep-link restoration
+10. Reduced-motion Atlas static map
+
+Commands:
+
+```powershell
+npx tsc --noEmit
+npm run build
+$env:CHROME_PATH='C:\Program Files\Google\Chrome\Application\chrome.exe'
+npm run test:e2e
 ```
 
----
-
-## 4. Sectional Breakdown & User Journey
-
-1. **Section 01 — Hero: The Beginning**
-   * *Target*: 10–20 second recruiter comprehension.
-   * *Visual*: Celestial horizon planet curve with atmospheric rim scattering, gentle starfield, soft kinetic headline.
-   * *Content*: Bezaleel Paul · Software Developer | Flutter | Full-Stack | AI/ML · Bangalore, India.
-   * *CTAs*: `Explore Work`, `Download Resume`, `Contact Me`.
-   * *Fallback*: If WebGL fails, CSS radial gradient & SVG planetary curve renders smoothly with zero disruption.
-2. **Section 02 — About: My Orbit**
-   * *Content*: Academic credentials (B.Tech CSE at CMR University, BS Data Science at IIT Madras), development philosophy, and engineering approach.
-3. **Section 03 — Projects: Discoveries**
-   * *Editorial Layout*: Large spotlight cards for flagship systems (NADICARE Twin Engine, File Organizer, Maclaurin Visualizer, BESCOM Calculator).
-   * *Filtering*: Flutter & Mobile, Full-Stack, AI/ML, Web, Open Source.
-   * *Metadata*: Problem solved, engineering architecture, live links, GitHub repos.
-4. **Section 04 — Experience: Expeditions**
-   * *Timeline*: Verified internships, IEEE contributions, hackathons, and technical responsibilities.
-5. **Section 05 — Skills: Constellations**
-   * *Visual*: Constellation nodes connecting technical stacks into coherent clusters: Languages, Mobile, Frontend, Backend, AI/ML, Cloud & Dev Tools.
-6. **Section 06 — Achievements & Accolades**
-   * *Cards*: Competitive programming milestones (LeetCode 270+, Codeforces), certifications, and open-source contributions.
-7. **Section 07 — GitHub: Development Activity**
-   * *Interactive Telemetry*: 30-day activity spline graph with hover tooltips, live commit heatmaps, repository drilldowns, and language distribution.
-8. **Section 08 — Contact: Beyond the Horizon**
-   * *Footer*: Direct comms (Email, LinkedIn, GitHub), resume download, and closing exploration signature:
-   * *"Yet to learn. Yet to discover. Yet to explore."*
+For stable production verification, serve `out/` on port 3000 before Playwright. The config reuses an existing server when one is present.
 
 ---
 
-## 5. Security, Privacy & Reliability Guarantees
+## 9. Deployment
 
-1. **Zero Secret Exposure**: No GitHub Personal Access Tokens or API write keys are bundled into client-side bundles. All GitHub Actions use repository secrets (`GITHUB_TOKEN`).
-2. **Protected Admin Guard**: The `/admin` Command Centre enforces client-side session hashing and secret challenge gates before granting access to local overrides.
-3. **Graceful Degeneration**:
-   * WebGL disabled → Clean CSS planetary horizon with ambient starlight.
-   * Audio autoplay blocked → Silent mode with no console errors; user can manually toggle audio anytime.
-   * GitHub API rate-limited → Serves version-controlled cached snapshot with transparent timestamp.
+1. Regenerate repository data when needed.
+2. Run type checking.
+3. Run the production build.
+4. Serve `out/` and run Playwright.
+5. Publish `out/` through GitHub Pages.
+
+No server-side environment variables are required. Do not commit API tokens; the data generator uses unauthenticated public GitHub endpoints.

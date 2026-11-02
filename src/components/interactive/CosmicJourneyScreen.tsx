@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { 
   X, 
@@ -35,7 +35,7 @@ interface CosmicJourneyScreenProps {
   onPrevSector: () => void;
   onRandomSystem: () => void;
   selectedBody: CelestialBodyData | null;
-  onSelectBody: (body: CelestialBodyData) => void;
+  onSelectBody: (body: CelestialBodyData | null) => void;
   isWarping?: boolean;
 }
 
@@ -53,28 +53,44 @@ export const CosmicJourneyScreen: React.FC<CosmicJourneyScreenProps> = ({
   isWarping = false,
 }) => {
   const [seedInput, setSeedInput] = useState(currentSeed);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Sync input value with currentSeed
   useEffect(() => {
     setSeedInput(currentSeed);
   }, [currentSeed]);
 
-  // Handle ESC key to exit journey
   useEffect(() => {
     if (!isOpen) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onClose();
-      }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const frame = window.requestAnimationFrame(() => closeButtonRef.current?.focus());
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      document.body.style.overflow = originalOverflow;
+      previouslyFocused?.focus();
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#02040a] text-white flex flex-col justify-between overflow-hidden select-none animate-in fade-in duration-300">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="observatory-title"
+      className="fixed inset-0 z-50 flex select-none flex-col justify-between overflow-hidden bg-[#02040a] text-white animate-in fade-in duration-300"
+    >
       {/* 3D Full-Screen Canvas with Full OrbitControls */}
       <div className="absolute inset-0 z-0">
         <HeroCelestialHorizon
@@ -90,7 +106,7 @@ export const CosmicJourneyScreen: React.FC<CosmicJourneyScreenProps> = ({
       </div>
 
       {/* Floating Telemetry Panel */}
-      <TelemetryPanel body={selectedBody} onClose={() => onSelectBody(null as any)} />
+      <TelemetryPanel body={selectedBody} onClose={() => onSelectBody(null)} />
 
       {/* TOP NAVIGATION & SYSTEM STATUS BAR */}
       <header className="relative z-10 px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-gradient-to-b from-[#070b14]/90 via-[#070b14]/60 to-transparent backdrop-blur-md border-b border-slate-800/60">
@@ -99,7 +115,7 @@ export const CosmicJourneyScreen: React.FC<CosmicJourneyScreenProps> = ({
           <span className="w-3 h-3 rounded-full bg-cyan-400 animate-ping" />
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-base sm:text-lg font-mono font-extrabold text-white tracking-wider flex items-center gap-2">
+              <h2 id="observatory-title" className="flex items-center gap-2 font-mono text-base font-extrabold tracking-wider text-white sm:text-lg">
                 <Orbit className="w-5 h-5 text-cyan-400" />
                 {system.name.toUpperCase()}
               </h2>
@@ -123,7 +139,7 @@ export const CosmicJourneyScreen: React.FC<CosmicJourneyScreenProps> = ({
                 : 'bg-slate-900/90 text-slate-300 hover:bg-slate-800 border border-slate-700'
             }`}
           >
-            ☀️ Sol (NASA)
+            Sol
           </button>
           <button
             onClick={() => onWarp('trappist_1')}
@@ -133,7 +149,7 @@ export const CosmicJourneyScreen: React.FC<CosmicJourneyScreenProps> = ({
                 : 'bg-slate-900/90 text-slate-300 hover:bg-slate-800 border border-slate-700'
             }`}
           >
-            🔴 TRAPPIST-1
+            TRAPPIST-1
           </button>
           <button
             onClick={() => onWarp('alpha_centauri')}
@@ -143,19 +159,20 @@ export const CosmicJourneyScreen: React.FC<CosmicJourneyScreenProps> = ({
                 : 'bg-slate-900/90 text-slate-300 hover:bg-slate-800 border border-slate-700'
             }`}
           >
-            ⭐ Alpha Centauri
+            Alpha Centauri
           </button>
         </div>
 
         {/* Exit Journey Button */}
         <button
+          ref={closeButtonRef}
           onClick={() => {
             spaceAudio.playTelemetryBeep(900);
             onClose();
           }}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/90 hover:bg-red-950/80 border border-slate-700 hover:border-red-500 text-white font-mono text-xs font-bold tracking-wider transition-all shadow-lg group"
+          className="group flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/90 px-4 py-2 font-mono text-xs font-bold tracking-wider text-white shadow-lg transition-all hover:border-red-500 hover:bg-red-950/80"
         >
-          <span>Return to Resume</span>
+          <span>Return to résumé</span>
           <X className="w-4 h-4 text-slate-400 group-hover:text-red-400 transition-colors" />
           <span className="hidden sm:inline text-[10px] text-slate-500">[ESC]</span>
         </button>
@@ -164,11 +181,11 @@ export const CosmicJourneyScreen: React.FC<CosmicJourneyScreenProps> = ({
       {/* CENTER HUD HINT (Fades after interaction) */}
       <div className="relative z-10 pointer-events-none text-center self-center">
         <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-950/70 border border-slate-800 text-[11px] font-mono text-slate-400 backdrop-blur-sm shadow-md">
-          <span>🖱️ Left-Click + Drag: 360° Orbit</span>
+          <span>Drag to orbit</span>
           <span>·</span>
-          <span>📜 Scroll: Zoom In/Out</span>
+          <span>Scroll to zoom</span>
           <span>·</span>
-          <span>🎯 Click Body: Inspect Telemetry</span>
+          <span>Select a body to inspect</span>
         </span>
       </div>
 
@@ -177,22 +194,25 @@ export const CosmicJourneyScreen: React.FC<CosmicJourneyScreenProps> = ({
         {/* Minecraft-Style Seed Exploration Input Bar */}
         <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2 flex-1 min-w-[280px]">
-            <span className="text-xs font-mono font-bold text-cyan-400 whitespace-nowrap">Minecraft Seed:</span>
+            <label htmlFor="system-seed" className="whitespace-nowrap font-mono text-xs font-bold text-cyan-400">
+              System seed
+            </label>
             <input
+              id="system-seed"
               type="text"
               value={seedInput}
               onChange={(e) => setSeedInput(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') onWarp(seedInput);
               }}
-              placeholder="Type any word or world seed..."
+              placeholder="Type any word or number..."
               className="flex-1 px-3.5 py-2 rounded-lg bg-slate-950/90 border border-slate-700 text-xs font-mono text-white focus:outline-none focus:border-cyan-400 placeholder:text-slate-600 shadow-inner"
             />
             <button
               onClick={() => onWarp(seedInput)}
               className="px-4 py-2 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-mono font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(34,211,238,0.5)] whitespace-nowrap"
             >
-              Warp 🚀
+              Generate
             </button>
           </div>
 
@@ -218,7 +238,7 @@ export const CosmicJourneyScreen: React.FC<CosmicJourneyScreenProps> = ({
             <button
               onClick={onNextSector}
               className="flex items-center gap-1 px-4 py-2 rounded-lg bg-cyan-950 hover:bg-cyan-900 border border-cyan-600/80 text-xs font-mono text-cyan-300 font-bold transition-all shadow-md"
-              title="Warp to next sector infinitely like Minecraft"
+              title="Generate the next sector"
             >
               <span>Explore Next Sector</span>
               <ChevronRight className="w-3.5 h-3.5 text-cyan-400" />

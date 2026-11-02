@@ -18,7 +18,7 @@ export const INITIAL_PROFILE: PilotProfile = {
   bio: [
     "Hey! I'm Bezaleel Paul (friends call me Bez). I'm a developer and CS undergraduate based in Bangalore, pursuing my B.Tech at CMR University alongside a BS in Data Science from IIT Madras.",
     "I love building software that people actually use — from fast, responsive Flutter mobile apps to predictive machine learning prototypes and everyday civic utilities. When I run into an annoying problem (like messy folders with hundreds of unsorted downloads or convoluted utility bills), my immediate instinct is to write a tool for it.",
-    "When I'm not writing code or solving LeetCode problems (270+ solved and counting!), you'll find me reading about space science and orbital mechanics, tinkering with Linux setups, or exploring filter coffee spots around Bangalore."
+    "When I'm not writing code or solving LeetCode problems (135+ solved and counting!), you'll find me reading about space science and orbital mechanics, tinkering with Linux setups, or exploring filter coffee spots around Bangalore."
   ],
   education: [
     {
@@ -59,21 +59,21 @@ export const INITIAL_PROFILE: PilotProfile = {
 export const INITIAL_PROJECTS: ProjectItem[] = [
   {
     id: "celestial-observatory-3d",
-    title: "Orbital Observatory: 3D Keplerian Engine & NASA Telemetry",
-    tagline: "Full-scale 3D solar system simulation with Keplerian orbital mechanics, JPL Horizons telemetry, and live NASA Open API discoveries.",
+    title: "Orbital Observatory: 3D Keplerian Engine",
+    tagline: "Interactive solar-system model with Keplerian orbital mechanics, procedural worlds, and optional NASA Open API context.",
     category: "Full-Stack",
-    problem: "Real-time astronomical modeling requires high-fidelity mathematical orbital equations (Kepler's laws, eccentric anomaly) synchronized with live telemetry and WebGL rendering without degrading frontend responsiveness.",
-    solution: "Architected a React Three Fiber 3D celestial canvas running Keplerian conic equations at 60 FPS, paired with real-time NASA Open APIs (APOD cosmic discoveries and NeoWs Near-Earth Asteroid tracking).",
-    description: "An interactive digital planetarium and orbital physics workstation simulating planetary orbits, orbital inclination, axial tilt, and real-time asteroid proximity using live NASA Deep Space data feeds.",
+    problem: "Accurate astronomical modeling requires implementing Keplerian orbital equations and eccentric-anomaly corrections while keeping WebGL rendering responsive.",
+    solution: "Built a React Three Fiber celestial canvas around a custom Keplerian solver, with a lightweight background mode and a separate observational view for NASA APOD and near-Earth object data.",
+    description: "An interactive digital planetarium simulating planetary orbits, orbital inclination, axial tilt, and near-Earth object context with procedurally generated planetary data.",
     stack: ["Three.js", "React Three Fiber", "NASA Open API", "Keplerian Physics", "GLSL Shaders", "Next.js", "TypeScript"],
     featured: true,
     repoUrl: "https://github.com/BezaleelPaul/bezaleelpaul.github.io",
     demoUrl: "/observatory",
     status: "Production",
-    metrics: "60 FPS 3D rendering with live NASA Deep Space Network API synchronization.",
+    metrics: "Interactive 3D orbital model with a lightweight background rendering mode.",
     highlights: [
       "Custom Keplerian orbital solver computing true anomaly via Newton-Raphson approximation",
-      "Live integration with NASA Open APIs for daily cosmic discoveries and near-Earth asteroids",
+      "NASA Open API context for daily astronomy imagery and near-Earth asteroid data",
       "Multi-camera orbital rig with free-flight, chase, cockpit, and planetary orbit modes"
     ]
   },
@@ -130,7 +130,7 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
     repoUrl: "https://github.com/BezaleelPaul/BESCOM-Calculator",
     demoUrl: "https://bezaleelpaul.github.io/BESCOM-Calculator/",
     status: "Production",
-    metrics: "Over 100% mathematical fidelity with official utility billing slabs.",
+    metrics: "Client-side calculation against published domestic tariff slabs.",
     highlights: [
       "Accurate multi-tier domestic and commercial slab computation",
       "Live hosted on GitHub Pages with instant client-side calculation",
@@ -235,7 +235,7 @@ export const INITIAL_EXPERIENCE: ExperienceItem[] = [
     type: "Leadership",
     summary: "Rigorous daily practice in computational complexity, dynamic programming, and data structure design.",
     responsibilities: [
-      "Solved 270+ complex algorithmic challenges on LeetCode across Arrays, Trees, Graphs, and DP.",
+      "Solved 135+ complex algorithmic challenges on LeetCode across Arrays, Trees, Graphs, and DP.",
       "Maintained an active rated profile on Codeforces with continuous performance evaluation.",
       "Consistently achieved structured solutions with optimal asymptotic time and space bounds."
     ],
@@ -306,13 +306,13 @@ export const INITIAL_SKILLS: SkillCategoryGroup[] = [
 
 export const INITIAL_ACHIEVEMENTS: AchievementItem[] = [
   {
-    id: "leetcode-270",
-    title: "270+ Algorithmic Challenges Solved",
+    id: "leetcode-135",
+    title: "135+ Algorithmic Challenges Solved",
     issuer: "LeetCode",
     date: "2025 — Present",
     category: "Competitive Programming",
-    summary: "Demonstrated consistent mastery over computational problem solving spanning 116 Easy, 17 Medium, and 2 Hard challenges.",
-    metrics: "Top percentile solver with verified submission telemetry.",
+    summary: "Consistent practice across dynamic programming, graphs, trees, and array problems, with 116 Easy, 17 Medium, and 2 Hard challenges completed.",
+    metrics: "LeetCode handle: BezaleelPaulN",
     link: "https://leetcode.com/u/BezaleelPaulN/"
   },
   {
@@ -341,7 +341,7 @@ export const INITIAL_ACHIEVEMENTS: AchievementItem[] = [
     date: "2025 — Present",
     category: "Hackathon",
     summary: "Built and maintained 34 repositories across utility tools, AI models, calculus visualizers, and Flutter apps with scheduled GitHub Actions pipelines.",
-    metrics: "34 Repositories · Active 30-Day Activity Streak"
+    metrics: "34 public repositories"
   }
 ];
 
@@ -352,13 +352,13 @@ export const INITIAL_GITHUB_DATA: GitHubAnalyticsData = {
     stars: 4,
     followers: 3,
     following: 10,
-    streak: 30,
+    streak: 3,
     total30d: 30
   },
   cp: {
     leetcode: {
       username: "BezaleelPaulN",
-      solved: 270,
+      solved: 135,
       easy: 116,
       medium: 17,
       hard: 2,

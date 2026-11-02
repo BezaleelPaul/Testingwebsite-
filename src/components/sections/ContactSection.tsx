@@ -1,82 +1,87 @@
-'use client';
-
 import React from 'react';
+import Link from 'next/link';
+import { ArrowUp, ArrowUpRight, Download } from 'lucide-react';
 import { PilotProfile } from '@/types/portfolio';
-import { Mail, FileText, ArrowUpRight } from 'lucide-react';
-import { spaceAudio } from '@/lib/audio';
 
 interface ContactSectionProps {
   profile: PilotProfile;
 }
 
 export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
-  return (
-    <footer id="contact" className="relative py-28 px-4 sm:px-6 lg:px-8 bg-[#04070f] overflow-hidden border-t border-slate-800">
-      <div className="relative z-10 max-w-4xl mx-auto text-center space-y-12">
-        {/* Section Tag */}
-        <span className="text-xs font-mono text-cyan-400 font-bold tracking-widest uppercase">
-          📬 SAY HELLO
-        </span>
+  const primarySocials = profile.socials.filter((social) => social.primary);
+  const email = profile.socials.find((social) => social.icon === 'mail')?.handle || 'bezaleel321@gmail.com';
 
-        {/* Solid Contact Card */}
-        <div className="bg-[#0d1424] border-2 border-slate-700/80 rounded-3xl p-8 sm:p-12 shadow-2xl space-y-8">
-          <div className="space-y-4">
-            <h2 className="text-4xl sm:text-6xl font-display font-extrabold text-white tracking-tight">
-              LET&apos;S CONNECT & CHAT
+  return (
+    <footer id="contact" className="dark-surface border-t border-paper/10 bg-ink px-0 pb-8 pt-24 text-paper sm:pt-32">
+      <div className="section-shell">
+        <div
+          className="grid gap-12 border-b border-paper/15 pb-16 lg:grid-cols-12 lg:gap-16"
+          data-reveal
+        >
+          <div className="lg:col-span-8">
+            <p className="eyebrow text-signal">07 / Contact</p>
+            <h2 className="serif-display mt-5 max-w-4xl text-[clamp(3.6rem,8vw,7.5rem)] text-paper">
+              Have a problem worth <span className="italic text-signal">building?</span>
             </h2>
-            <p className="max-w-xl mx-auto text-base sm:text-lg text-slate-200 font-sans leading-relaxed">
-              Whether you want to discuss software engineering internships, mobile development with Flutter, machine learning, or just talk tech over coffee — feel free to reach out!
+            <p className="mt-7 max-w-xl text-base leading-relaxed text-paper/55">
+              I am open to software engineering internships, collaborative products, and
+              interesting open-source work. Email is the fastest way to reach me.
             </p>
           </div>
 
-          {/* Primary Contact CTA Buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-4">
+          <div className="flex flex-col justify-end gap-3 lg:col-span-4">
             <a
-              href="mailto:bezaleel321@gmail.com"
-              onClick={() => spaceAudio.playTelemetryBeep(1000)}
-              className="flex items-center gap-2 px-7 py-3.5 rounded-xl bg-cyan-400 text-slate-950 font-mono text-sm font-bold uppercase tracking-wider shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:bg-cyan-300 transform hover:-translate-y-0.5 transition-all"
+              href={`mailto:${email}`}
+              className="group flex items-center justify-between gap-4 rounded-full bg-signal px-5 py-4 font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-ink"
             >
-              <Mail className="w-4 h-4" />
-              <span>Send Direct Email (bezaleel321@gmail.com)</span>
+              <span className="truncate">{email}</span>
+              <ArrowUpRight className="h-4 w-4 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
-
-            <a
-              href="/resume.pdf"
-              download
-              onClick={() => spaceAudio.playTelemetryBeep(1100)}
-              className="flex items-center gap-2 px-7 py-3.5 rounded-xl bg-slate-800 border-2 border-slate-600 hover:border-cyan-400 text-white font-mono text-sm font-bold uppercase tracking-wider hover:bg-slate-700 transform hover:-translate-y-0.5 transition-all"
+            <Link
+              href="/resume"
+              className="flex items-center justify-between gap-4 rounded-full border border-paper/25 px-5 py-4 font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-paper transition-colors hover:border-paper"
             >
-              <FileText className="w-4 h-4 text-cyan-400" />
-              <span>Download Resume (PDF)</span>
-            </a>
-          </div>
-
-          {/* Social Links Network Grid */}
-          <div className="pt-6 border-t border-slate-750 flex flex-wrap items-center justify-center gap-3">
-            {profile.socials.map((social) => (
-              <a
-                key={social.name}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#070b14] border border-slate-700 hover:border-cyan-400 text-slate-200 hover:text-white font-mono text-xs font-bold transition-colors group"
-              >
-                <span>{social.name}</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-cyan-400 transition-colors" />
-              </a>
-            ))}
+              <span>View résumé</span>
+              <Download className="h-4 w-4" />
+            </Link>
           </div>
         </div>
 
-        {/* Memorable Closing Philosophy */}
-        <div className="pt-6 space-y-4">
-          <p className="text-2xl sm:text-3xl font-display italic text-slate-200 tracking-wide font-medium">
-            &ldquo;Yet to learn. Yet to discover. Yet to explore.&rdquo;
-          </p>
+        <div
+          className="flex flex-wrap gap-x-6 gap-y-3 border-b border-paper/15 py-7"
+          data-reveal
+        >
+          {primarySocials.map((social) => (
+            <a
+              key={social.name}
+              href={social.url}
+              target={social.url.startsWith('http') ? '_blank' : undefined}
+              rel={social.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+              className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.1em] text-paper/48 transition-colors hover:text-paper"
+            >
+              {social.name}
+              <ArrowUpRight className="h-3 w-3" />
+            </a>
+          ))}
+        </div>
 
-          <p className="text-xs font-mono text-slate-400 font-semibold">
-            © {new Date().getFullYear()} Bezaleel Paul N · Software Developer &amp; Double Degree Scholar
-          </p>
+        <div
+          className="flex flex-col justify-between gap-8 pt-8 sm:flex-row sm:items-end"
+          data-reveal
+        >
+          <div>
+            <p className="font-display text-2xl tracking-tight text-paper">Bezaleel Paul N</p>
+            <p className="mt-2 font-mono text-[9px] uppercase leading-relaxed tracking-[0.1em] text-paper/32">
+              © {new Date().getFullYear()} · Bangalore, India · Built with care
+            </p>
+          </div>
+          <a
+            href="#main-content"
+            className="inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.12em] text-paper/40 transition-colors hover:text-paper"
+          >
+            Back to top
+            <ArrowUp className="h-3.5 w-3.5" />
+          </a>
         </div>
       </div>
     </footer>

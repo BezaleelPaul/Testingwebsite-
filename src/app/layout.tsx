@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
+import { SiteMotion } from '@/components/motion/SiteMotion';
 import './globals.css';
 
+const motionBootScript = `(function(){try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('motion-ready');window.setTimeout(function(){if(document.documentElement.dataset.motionBoot!=='on'){document.documentElement.classList.remove('motion-ready')}},3500)}}catch(error){}})();`;
+
 export const metadata: Metadata = {
-  title: 'Bezaleel Paul N — Software Developer | Flutter | Full-Stack | AI/ML',
-  description: 'Digital Resume & Professional Portfolio of Bezaleel Paul N (BezForge). Software Developer, Flutter engineer, AI/ML builder, and Computer Science & Data Science scholar at CMR University and IIT Madras.',
+  title: 'Bezaleel Paul N — Software Developer',
+  description: 'Software developer building thoughtful mobile, web, and machine-learning products. Computer Science at CMR University and Data Science at IIT Madras.',
   keywords: [
     'Bezaleel Paul',
     'BezForge',
@@ -17,10 +20,10 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Bezaleel Paul N', url: 'https://github.com/BezaleelPaul' }],
   openGraph: {
-    title: 'Bezaleel Paul N — Portfolio & Digital Resume',
-    description: 'Software Developer · Flutter · Full-Stack · AI/ML · Bangalore, India',
+    title: 'Bezaleel Paul N — Software Developer',
+    description: 'Software developer · Flutter · Full-stack · AI/ML · Bangalore, India',
     url: 'https://bezaleelpaul.github.io/',
-    siteName: 'Bezaleel Paul Portfolio',
+    siteName: 'Bezaleel Paul',
     locale: 'en_US',
     type: 'website',
   },
@@ -36,18 +39,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: motionBootScript }} />
+        <noscript>
+          <style>{`[data-reveal],[data-reveal-item]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
-        <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2302040a'/><circle cx='50' cy='50' r='20' fill='%2300f3ff'/><circle cx='70' cy='35' r='6' fill='%2338bdf8'/></svg>" />
+        <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23111411'/><circle cx='50' cy='50' r='24' fill='%23d9ff63'/></svg>" />
       </head>
-      <body className="antialiased bg-[#02040a] text-white overflow-x-hidden selection:bg-[#00f3ff] selection:text-[#02040a]">
+      <body className="antialiased bg-paper text-ink overflow-x-hidden">
         {children}
+        <SiteMotion />
       </body>
     </html>
   );

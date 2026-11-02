@@ -6,7 +6,7 @@ class SpaceAudioSystem {
   private thrusterNoiseNode: AudioBufferSourceNode | null = null;
   private thrusterGain: GainNode | null = null;
   private isInitialized = false;
-  private isMuted = false;
+  private isMuted = true;
 
   private initContext() {
     if (typeof window === 'undefined') return;

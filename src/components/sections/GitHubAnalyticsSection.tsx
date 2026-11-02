@@ -1,293 +1,199 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import { ArrowUpRight, Star } from 'lucide-react';
 import { GitHubAnalyticsData } from '@/types/portfolio';
-import { Star, Flame, Clock, ExternalLink, Code } from 'lucide-react';
 
 interface GitHubAnalyticsSectionProps {
   data: GitHubAnalyticsData;
 }
 
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+const formatDay = (date: string) => {
+  const [, month, day] = date.split('-').map(Number);
+  return `${String(day).padStart(2, '0')} ${months[month - 1]}`;
+};
+
 export const GitHubAnalyticsSection: React.FC<GitHubAnalyticsSectionProps> = ({ data }) => {
-  const [hoveredPoint, setHoveredPoint] = useState<{ date: string; count: number } | null>(null);
+  const initialIndex = Math.max(0, data.series.length - 1);
+  const [selectedIndex, setSelectedIndex] = useState(initialIndex);
+  const selectedPoint = data.series[selectedIndex];
 
-  // SVG dimensions for 30-day commit trendline
-  const W = 680;
-  const H = 160;
-  const padX = 15;
-  const padY = 20;
-  const maxVal = Math.max(...data.series.map(s => s.count), 1);
-  const chartW = W - padX * 2;
-  const chartH = H - padY * 2;
-
-  const points = data.series.map((s, idx) => {
-    const x = padX + (idx / (data.series.length - 1)) * chartW;
-    const y = padY + chartH - (s.count / maxVal) * chartH;
-    return { x, y, date: s.date, count: s.count };
-  });
-
-  const polylineStr = points.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
-  const areaStr = `${padX},${padY + chartH} ${polylineStr} ${padX + chartW},${padY + chartH}`;
+  const chart = useMemo(() => {
+    const width = 720;
+    const height = 150;
+    const pad = 10;
+    const max = Math.max(...data.series.map((point) => point.count), 1);
+    const points = data.series.map((point, index) => {
+      const x = pad + (index / Math.max(1, data.series.length - 1)) * (width - pad * 2);
+      const y = pad + (1 - point.count / max) * (height - pad * 2);
+      return { x, y };
+    });
+    return {
+      polyline: points.map((point) => `${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(' '),
+      area: `${pad},${height - pad} ${points
+        .map((point) => `${point.x.toFixed(1)},${point.y.toFixed(1)}`)
+        .join(' ')} ${width - pad},${height - pad}`,
+    };
+  }, [data.series]);
 
   return (
-    <section id="github" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#060a12] border-t border-slate-800">
-      <div className="max-w-7xl mx-auto space-y-14">
-        {/* Section Header */}
-        <div className="flex flex-col items-center text-center space-y-3">
-          <span className="text-xs font-mono text-cyan-400 font-bold tracking-widest uppercase">
-            [ 06 // ACTIVE REPOSITORY TELEMETRY ]
-          </span>
-          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-wide">
-            GITHUB & COMPUTATIONAL ACTIVITY
-          </h2>
-          <p className="max-w-2xl text-base sm:text-lg text-slate-300 font-sans leading-relaxed">
-            Real-time contribution frequency, 30-day commit density, and competitive algorithmic records.
+    <section id="github" className="border-t border-ink/10 bg-paper-warm py-24 sm:py-32">
+      <div className="section-shell">
+        <header
+          className="grid gap-8 border-b border-ink/15 pb-10 lg:grid-cols-12 lg:items-end"
+          data-reveal
+        >
+          <div className="lg:col-span-8">
+            <p className="eyebrow text-ink/45">06 / Activity</p>
+            <h2 className="serif-display mt-5 max-w-3xl text-5xl text-ink sm:text-7xl">
+              A record of steady, visible work.
+            </h2>
+          </div>
+          <p className="max-w-sm text-sm leading-relaxed text-ink/55 lg:col-span-4 lg:ml-auto">
+            A recent 30-day snapshot of commits, public repositories, and competitive programming.
           </p>
-          <div className="w-20 h-1 bg-cyan-400 rounded-full mt-2" />
+        </header>
+
+        <div
+          className="grid grid-cols-2 border-b border-ink/15 sm:grid-cols-5"
+          data-reveal-group
+        >
+          {[
+            ['30d commits', data.stats.total30d],
+            ['Public repos', data.stats.repos],
+            ['Stars earned', data.stats.stars],
+            ['LeetCode', data.cp.leetcode.solved],
+            ['Codeforces', data.cp.codeforces.rating],
+          ].map(([label, value]) => (
+            <div
+              key={label}
+              className="border-r border-ink/10 py-7 pr-4 last:border-r-0 sm:px-5 sm:first:pl-0"
+              data-reveal-item
+            >
+              <span
+                className="block font-mono text-2xl font-medium text-ink sm:text-3xl"
+                data-count={value}
+              >
+                {value}
+              </span>
+              <span className="eyebrow mt-2 block text-[8px] text-ink/40">{label}</span>
+            </div>
+          ))}
         </div>
 
-        {/* High-Level Stat Cells Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
-          <div className="p-5 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 text-center shadow-lg">
-            <span className="block text-3xl font-extrabold font-display text-white">{data.stats.repos}</span>
-            <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">Public Repos</span>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 text-center shadow-lg">
-            <span className="block text-3xl font-extrabold font-display text-amber-400">{data.stats.stars}</span>
-            <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">Stars Earned</span>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 text-center shadow-lg">
-            <span className="block text-3xl font-extrabold font-display text-emerald-400">{data.stats.streak}d</span>
-            <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">Active Streak</span>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 text-center shadow-lg">
-            <span className="block text-3xl font-extrabold font-display text-cyan-400">{data.stats.total30d}</span>
-            <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">30d Commits</span>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 text-center shadow-lg">
-            <span className="block text-3xl font-extrabold font-display text-indigo-300">{data.cp.leetcode.solved}+</span>
-            <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">LeetCode Solved</span>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 text-center shadow-lg">
-            <span className="block text-3xl font-extrabold font-display text-sky-400">{data.cp.codeforces.rating}</span>
-            <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">Codeforces</span>
-          </div>
-        </div>
-
-        {/* Main Analytics Layout: Chart & Competitive Platforms */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* 30-Day Activity Area Chart (8 cols) */}
-          <div className="lg:col-span-8 space-y-6">
-            <div className="p-6 sm:p-8 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 shadow-xl space-y-5">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-700 pb-4">
-                <div>
-                  <h3 className="font-extrabold font-display text-white text-lg flex items-center gap-2">
-                    <Flame className="w-5 h-5 text-amber-400" />
-                    <span>30-Day Commit Cadence</span>
-                  </h3>
-                  <p className="text-xs font-mono text-slate-300 font-medium">Daily code pushes and active repository synchronizations</p>
-                </div>
-                <div className="text-right font-mono text-xs text-cyan-400 font-bold">
-                  {hoveredPoint ? (
-                    <span><strong>{hoveredPoint.date}</strong>: {hoveredPoint.count} commit{hoveredPoint.count === 1 ? '' : 's'}</span>
-                  ) : (
-                    <span className="text-slate-400 font-medium">Hover over nodes for daily counts</span>
-                  )}
-                </div>
+        <div className="grid gap-12 pt-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-8" data-reveal>
+            <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+              <div>
+                <p className="eyebrow text-ink/40">Daily commit cadence</p>
+                <p className="mt-3 font-mono text-sm text-ink" aria-live="polite">
+                  {formatDay(selectedPoint.date)} · {selectedPoint.count} commit
+                  {selectedPoint.count === 1 ? '' : 's'}
+                </p>
               </div>
-
-              {/* Dynamic SVG Area Spline */}
-              <div className="w-full overflow-x-auto py-2">
-                <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-44 overflow-visible">
-                  <defs>
-                    <linearGradient id="commitGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.35" />
-                      <stop offset="100%" stopColor="#818cf8" stopOpacity="0.0" />
-                    </linearGradient>
-                  </defs>
-
-                  {/* Shaded Area */}
-                  <polygon points={areaStr} fill="url(#commitGrad)" />
-
-                  {/* Trendline */}
-                  <polyline
-                    points={polylineStr}
-                    fill="none"
-                    stroke="#22d3ee"
-                    strokeWidth="3"
-                    strokeLinejoin="round"
-                    strokeLinecap="round"
-                  />
-
-                  {/* Interactive Points */}
-                  {points.map((p, idx) => (
-                    <circle
-                      key={idx}
-                      cx={p.x}
-                      cy={p.y}
-                      r={p.count > 0 ? 4.5 : 2.5}
-                      className="cursor-pointer transition-all duration-200"
-                      fill={p.count > 0 ? '#22d3ee' : '#64748b'}
-                      onMouseEnter={() => setHoveredPoint({ date: p.date, count: p.count })}
-                      onMouseLeave={() => setHoveredPoint(null)}
-                    />
-                  ))}
-                </svg>
-              </div>
-
-              {/* Contribution Heatmap Tiles */}
-              <div className="pt-4 border-t border-slate-700">
-                <h4 className="text-xs font-mono uppercase tracking-wider text-slate-300 font-bold mb-2.5">
-                  Daily Contribution Matrix
-                </h4>
-                <div className="flex flex-wrap gap-1.5">
-                  {data.series.map((s, idx) => {
-                    const bg = s.count === 0 
-                      ? 'bg-[#070b14] border border-slate-700'
-                      : s.count <= 2 
-                      ? 'bg-emerald-950 border border-emerald-700 text-emerald-400'
-                      : s.count <= 5
-                      ? 'bg-emerald-600'
-                      : 'bg-cyan-400 text-slate-950 shadow-[0_0_8px_#22d3ee]';
-                    return (
-                      <span
-                        key={idx}
-                        title={`${s.date}: ${s.count} commits`}
-                        className={`w-4 h-4 rounded-sm ${bg} transition-transform hover:scale-125 cursor-pointer`}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
+              <p className="font-mono text-[9px] uppercase tracking-[0.1em] text-ink/35">
+                Select a day to inspect
+              </p>
             </div>
 
-            {/* Featured Repositories Card */}
-            <div className="p-6 sm:p-7 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 shadow-xl space-y-4">
-              <h3 className="font-extrabold font-display text-white text-lg flex items-center gap-2">
-                <Star className="w-5 h-5 text-amber-400" />
-                <span>Featured Open Source Repositories</span>
-              </h3>
+            <div className="mt-8 overflow-hidden">
+              <svg
+                viewBox="0 0 720 150"
+                className="h-32 w-full overflow-visible"
+                aria-hidden="true"
+                preserveAspectRatio="none"
+              >
+                <defs>
+                  <linearGradient id="commit-area" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#111411" stopOpacity="0.16" />
+                    <stop offset="100%" stopColor="#111411" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                <polygon points={chart.area} fill="url(#commit-area)" />
+                <polyline
+                  data-draw
+                  points={chart.polyline}
+                  fill="none"
+                  stroke="#111411"
+                  strokeWidth="1.5"
+                  vectorEffect="non-scaling-stroke"
+                />
+              </svg>
+            </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div
+              className="mt-4 grid grid-cols-10 gap-1.5"
+              role="group"
+              aria-label="Daily commit activity"
+            >
+              {data.series.map((point, index) => {
+                const dayLabel = formatDay(point.date);
+                const commitLabel = `${point.count} commit${point.count === 1 ? '' : 's'}`;
+                const selected = index === selectedIndex;
+                const tone =
+                  point.count === 0
+                    ? 'bg-ink/10'
+                    : point.count <= 2
+                      ? 'bg-ink/35'
+                      : point.count <= 5
+                        ? 'bg-ink/65'
+                        : 'bg-ink';
+                return (
+                  <button
+                    key={point.date}
+                    type="button"
+                    onClick={() => setSelectedIndex(index)}
+                    aria-label={`${dayLabel}: ${commitLabel}`}
+                    aria-pressed={selected}
+                    title={`${dayLabel}: ${commitLabel}`}
+                    className={`h-5 rounded-[2px] transition-all sm:h-6 ${tone} ${
+                      selected ? 'ring-2 ring-ink ring-offset-2 ring-offset-paper-warm' : 'hover:opacity-70'
+                    }`}
+                  />
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="lg:col-span-4" data-reveal data-reveal-delay="80">
+            <div className="border-t border-ink/20 pt-5">
+              <div className="flex items-center justify-between">
+                <p className="eyebrow text-ink/40">Repositories</p>
+                <a
+                  href="https://github.com/BezaleelPaul"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.1em] text-ink/45 hover:text-ink"
+                >
+                  GitHub
+                  <ArrowUpRight className="h-3 w-3" />
+                </a>
+              </div>
+              <div className="mt-4">
                 {data.topRepos.map((repo) => (
                   <a
                     key={repo.name}
                     href={`https://github.com/BezaleelPaul/${repo.name}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-4 rounded-xl bg-[#070b14] border border-slate-700 hover:border-cyan-400 transition-colors space-y-2 group block shadow-md"
+                    className="group block border-b border-ink/10 py-4 last:border-b-0"
                   >
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs font-bold text-white group-hover:text-cyan-300 transition-colors">
+                    <div className="flex items-start justify-between gap-4">
+                      <span className="font-mono text-[11px] font-semibold text-ink group-hover:underline">
                         {repo.name}
                       </span>
-                      <span className="text-xs font-mono text-slate-300 flex items-center gap-1 font-bold">
-                        <Star className="w-3.5 h-3.5 text-amber-400" /> {repo.stars}
+                      <span className="flex items-center gap-1 font-mono text-[9px] text-ink/40">
+                        <Star className="h-3 w-3" />
+                        {repo.stars}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-300 font-sans line-clamp-2 leading-relaxed">
-                      {repo.description}
-                    </p>
-                    <span className="inline-block text-xs font-mono text-cyan-400 font-semibold">
-                      ● {repo.language}
+                    <p className="mt-1.5 text-xs leading-relaxed text-ink/50">{repo.description}</p>
+                    <span className="mt-2 block font-mono text-[8px] uppercase tracking-[0.1em] text-ink/35">
+                      {repo.language}
                     </span>
                   </a>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Competitive Programming Column (4 cols) */}
-          <div className="lg:col-span-4 space-y-6">
-            {/* LeetCode Card */}
-            <div className="p-6 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 shadow-xl space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-700 pb-3">
-                <h4 className="font-extrabold font-display text-white text-base flex items-center gap-2">
-                  <Code className="w-4 h-4 text-amber-400" />
-                  <span>LeetCode Verification</span>
-                </h4>
-                <a
-                  href={`https://leetcode.com/u/${data.cp.leetcode.username}/`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-cyan-400 hover:underline text-xs font-mono font-bold flex items-center gap-1"
-                >
-                  Profile <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              </div>
-
-              <div className="text-center py-2">
-                <span className="block text-4xl font-extrabold font-display text-white">
-                  {data.cp.leetcode.solved}
-                </span>
-                <span className="text-xs font-mono text-slate-300 font-semibold uppercase tracking-widest">
-                  Challenges Solved
-                </span>
-              </div>
-
-              <div className="grid grid-cols-3 gap-2.5 text-center text-xs font-mono">
-                <div className="p-2.5 rounded-xl bg-[#070b14] border border-slate-700">
-                  <span className="block font-bold text-emerald-400 text-sm">{data.cp.leetcode.easy}</span>
-                  <span className="text-xs text-slate-400 font-medium">Easy</span>
-                </div>
-                <div className="p-2.5 rounded-xl bg-[#070b14] border border-slate-700">
-                  <span className="block font-bold text-amber-400 text-sm">{data.cp.leetcode.medium}</span>
-                  <span className="text-xs text-slate-400 font-medium">Medium</span>
-                </div>
-                <div className="p-2.5 rounded-xl bg-[#070b14] border border-slate-700">
-                  <span className="block font-bold text-rose-400 text-sm">{data.cp.leetcode.hard}</span>
-                  <span className="text-xs text-slate-400 font-medium">Hard</span>
-                </div>
-              </div>
-
-              <p className="text-xs font-mono text-slate-300 text-center pt-1 font-medium">
-                Global Ranking: <strong className="text-cyan-300 font-bold">#{data.cp.leetcode.ranking}</strong>
-              </p>
-            </div>
-
-            {/* Codeforces Card */}
-            <div className="p-6 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 shadow-xl space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-700 pb-3">
-                <h4 className="font-extrabold font-display text-white text-base">Codeforces Rating</h4>
-                <span className="text-xs font-mono text-cyan-400 font-bold">@{data.cp.codeforces.handle}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div>
-                  <span className="block text-3xl font-extrabold font-display text-indigo-300">
-                    {data.cp.codeforces.rating}
-                  </span>
-                  <span className="text-xs font-mono text-slate-300 font-semibold">Current Rating</span>
-                </div>
-                <div className="text-right">
-                  <span className="text-xs font-mono font-bold text-slate-200 bg-[#070b14] px-3 py-1.5 rounded-lg border border-slate-700">
-                    [{data.cp.codeforces.rank}]
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Recent Public Activity Feed Card */}
-            <div className="p-6 rounded-2xl bg-[#0d1424] border-2 border-slate-700/80 shadow-xl space-y-4">
-              <h4 className="font-extrabold font-display text-white text-base flex items-center gap-2">
-                <Clock className="w-4 h-4 text-cyan-400" />
-                <span>Recent Event Logs</span>
-              </h4>
-
-              <div className="space-y-2.5 text-xs font-mono">
-                {data.recentActivity.slice(0, 5).map((act, i) => (
-                  <div key={i} className="flex items-start gap-2.5 text-slate-200 py-1.5 border-b border-slate-750 last:border-none">
-                    <span>{act.emoji}</span>
-                    <div className="flex-1 font-medium">
-                      <span>{act.action} </span>
-                      <strong className="text-cyan-300 font-bold">{act.repo}</strong>
-                    </div>
-                    <span className="text-slate-400 text-xs shrink-0 font-semibold">{act.time}</span>
-                  </div>
                 ))}
               </div>
             </div>

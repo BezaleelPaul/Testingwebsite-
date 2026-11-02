@@ -29,10 +29,12 @@ export const TelemetryPanel: React.FC<TelemetryPanelProps> = ({ body, onClose })
           </div>
         </div>
         <button
+          type="button"
           onClick={onClose}
-          className="text-gray-400 hover:text-white px-1.5 py-0.5 rounded bg-space-800 text-[10px] border border-slate-700"
+          aria-label="Close telemetry panel"
+          className="rounded border border-slate-700 bg-space-800 px-2 py-1 text-[10px] text-gray-400 hover:text-white"
         >
-          [✕]
+          Close
         </button>
       </div>
 
