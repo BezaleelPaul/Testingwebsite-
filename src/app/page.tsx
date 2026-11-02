@@ -9,6 +9,7 @@ import { ExperienceSection } from '@/components/sections/ExperienceSection';
 import { SkillsSection } from '@/components/sections/SkillsSection';
 import { AchievementsSection } from '@/components/sections/AchievementsSection';
 import { GitHubAnalyticsSection } from '@/components/sections/GitHubAnalyticsSection';
+import { SocialFeedSection } from '@/components/sections/SocialFeedSection';
 import { ContactSection } from '@/components/sections/ContactSection';
 import { ExplorationBot } from '@/components/interactive/ExplorationBot';
 import { 
@@ -51,6 +52,9 @@ export default function Home() {
 
         {/* Section 07: GitHub - Development Activity & Telemetry */}
         <GitHubAnalyticsSection data={INITIAL_GITHUB_DATA} />
+
+        {/* Section 07.5: Social Dispatches & Broadcasts (LinkedIn & X) */}
+        <SocialFeedSection />
       </main>
 
       {/* Section 08: Contact - Beyond the Horizon */}

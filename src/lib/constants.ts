@@ -393,7 +393,8 @@ export const PILOT_DATA = {
   ],
   links: {
     github: "https://github.com/BezaleelPaul",
-    linkedin: "https://www.linkedin.com/in/bezaleel-paul-7b114b307",
+    linkedin: "https://www.linkedin.com/in/bezaleel-pauln/",
+    twitter: "https://x.com/BezaleelPaul1",
     leetcode: "https://leetcode.com/u/BezaleelPaulN/",
     codeforces: "https://codeforces.com/profile/BezaleelPaulN",
     kaggle: "https://www.kaggle.com/bezaleelpaul",

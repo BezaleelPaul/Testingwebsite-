@@ -47,7 +47,8 @@ export const INITIAL_PROFILE: PilotProfile = {
   resumeUrl: "/resume.pdf",
   socials: [
     { name: "GitHub", handle: "@BezaleelPaul", url: "https://github.com/BezaleelPaul", icon: "github", primary: true },
-    { name: "LinkedIn", handle: "bezaleel-paul", url: "https://www.linkedin.com/in/bezaleel-paul-7b114b307", icon: "linkedin", primary: true },
+    { name: "LinkedIn", handle: "in/bezaleel-pauln", url: "https://www.linkedin.com/in/bezaleel-pauln/", icon: "linkedin", primary: true },
+    { name: "X (Twitter)", handle: "@BezaleelPaul1", url: "https://x.com/BezaleelPaul1", icon: "twitter", primary: true },
     { name: "LeetCode", handle: "BezaleelPaulN", url: "https://leetcode.com/u/BezaleelPaulN/", icon: "code", primary: true },
     { name: "Codeforces", handle: "BezaleelPaulN", url: "https://codeforces.com/profile/BezaleelPaulN", icon: "terminal" },
     { name: "Kaggle", handle: "bezaleelpaul", url: "https://www.kaggle.com/bezaleelpaul", icon: "database" },
