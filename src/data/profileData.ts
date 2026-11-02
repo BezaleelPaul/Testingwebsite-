@@ -12,13 +12,13 @@ export const INITIAL_PROFILE: PilotProfile = {
   name: "Bezaleel Paul N",
   callsign: "BezForge",
   headline: "Software Developer · Flutter · Full-Stack · AI/ML",
-  subheadline: "B.Tech CSE @ CMR University · BS in Data Science @ IIT Madras · IEEE EXCOM Member & Webmaster · Architecting rigorously engineered, aesthetically refined digital systems.",
+  subheadline: "B.Tech CSE @ CMR University ('25–'29) · BS in Data Science @ IIT Madras ('26–Present) · IEEE EXCOM Member & Webmaster ('25–'26). Building practical apps, fast mobile experiences, and exploring machine learning.",
   location: "Bangalore, India",
-  status: "Open to Software Engineering & AI/ML Opportunities",
+  status: "Open to SWE Internships & Collaborations",
   bio: [
-    "I am a developer and computer science student based in Bangalore, working at the convergence of software engineering, artificial intelligence, and human-centric design.",
-    "My engineering philosophy is rooted in intellectual rigor, aesthetic restraint, and functional clarity. Whether developing an AI-driven physiological digital twin, high-throughput system automation utilities, or cross-platform Flutter applications, I craft software that operates with precision.",
-    "Beyond pure code, I draw deep inspiration from contemplative thought, the arts, mathematical models, and the boundless horizons of interstellar exploration."
+    "Hey! I'm Bezaleel Paul (friends call me Bez). I'm a developer and CS undergraduate based in Bangalore, pursuing my B.Tech at CMR University alongside a BS in Data Science from IIT Madras.",
+    "I love building software that people actually use — from fast, responsive Flutter mobile apps to predictive machine learning prototypes and everyday civic utilities. When I run into an annoying problem (like messy folders with hundreds of unsorted downloads or convoluted utility bills), my immediate instinct is to write a tool for it.",
+    "When I'm not writing code or solving LeetCode problems (270+ solved and counting!), you'll find me reading about space science and orbital mechanics, tinkering with Linux setups, or exploring filter coffee spots around Bangalore."
   ],
   education: [
     {
@@ -39,10 +39,10 @@ export const INITIAL_PROFILE: PilotProfile = {
     }
   ],
   approach: [
-    "First-principles systems design and clean architecture",
-    "Performance-focused mobile & web rendering loops",
-    "Deep algorithmic problem solving with verifiable outcomes",
-    "Pragmatic AI integration that solves tangible problems"
+    "Build tools that solve real problems, not just resume fillers",
+    "Keep it snappy — 60 FPS interfaces and zero unnecessary bloat",
+    "Daily problem solving — keeping sharp on data structures & algorithms",
+    "Learn in public, share open-source code, and document the journey"
   ],
   resumeUrl: "/resume.pdf",
   socials: [

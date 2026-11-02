@@ -4,6 +4,7 @@ import React from 'react';
 import { Navbar } from '@/components/layout/Navbar';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { AboutSection } from '@/components/sections/AboutSection';
+import { HumanTouchSection } from '@/components/sections/HumanTouchSection';
 import { ProjectsSection } from '@/components/sections/ProjectsSection';
 import { ExperienceSection } from '@/components/sections/ExperienceSection';
 import { SkillsSection } from '@/components/sections/SkillsSection';
@@ -37,6 +38,9 @@ export default function Home() {
 
         {/* Section 02: About - My Orbit & Education */}
         <AboutSection profile={INITIAL_PROFILE} />
+
+        {/* Section 02.5: The Human Side - Now, Setup, Stories & Beyond Code */}
+        <HumanTouchSection />
 
         {/* Section 03: Projects - Featured Discoveries & Systems */}
         <ProjectsSection projects={INITIAL_PROJECTS} />

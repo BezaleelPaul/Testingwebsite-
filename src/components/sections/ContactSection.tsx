@@ -15,17 +15,17 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
       <div className="relative z-10 max-w-4xl mx-auto text-center space-y-12">
         {/* Section Tag */}
         <span className="text-xs font-mono text-cyan-400 font-bold tracking-widest uppercase">
-          [ 07 // BEYOND THE HORIZON ]
+          📬 SAY HELLO
         </span>
 
         {/* Solid Contact Card */}
         <div className="bg-[#0d1424] border-2 border-slate-700/80 rounded-3xl p-8 sm:p-12 shadow-2xl space-y-8">
           <div className="space-y-4">
             <h2 className="text-4xl sm:text-6xl font-display font-extrabold text-white tracking-tight">
-              INITIATE COLLABORATION
+              LET&apos;S CONNECT & CHAT
             </h2>
             <p className="max-w-xl mx-auto text-base sm:text-lg text-slate-200 font-sans leading-relaxed">
-              Whether for software engineering roles, full-stack architectures, AI/ML research collaborations, or open-source initiatives, my channel is open.
+              Whether you want to discuss software engineering internships, mobile development with Flutter, machine learning, or just talk tech over coffee — feel free to reach out!
             </p>
           </div>
 

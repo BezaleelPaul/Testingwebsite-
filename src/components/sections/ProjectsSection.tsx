@@ -35,13 +35,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
         {/* Section Header */}
         <div className="flex flex-col items-center text-center space-y-4">
           <span className="text-xs font-mono text-cyan-400 font-bold tracking-widest uppercase bg-cyan-950/60 border border-cyan-800/80 px-3 py-1 rounded-full">
-            [ 02 // ENGINEERING SHOWCASE ]
+            💼 FEATURED WORK
           </span>
           <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-wide">
-            FLAGSHIP ARCHITECTURES & SYSTEMS
+            PROJECTS & TOOLS I'VE BUILT
           </h2>
           <p className="max-w-2xl text-base sm:text-lg text-slate-300 font-sans leading-relaxed">
-            Featured production software, predictive machine learning engines, and cross-platform utilities.
+            Applications and open-source tools I've built to solve tangible, everyday problems.
           </p>
           
           <div className="pt-2">

@@ -181,7 +181,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
 
           {/* Professional Summary (High-contrast, crystal clear readability) */}
           <p className="max-w-2xl mx-auto text-base sm:text-lg text-slate-200 font-sans leading-relaxed">
-            Crafting high-throughput mobile, desktop, and machine learning systems with architectural elegance, clean design, and algorithmic rigor. <strong className="text-white font-semibold">270+ LeetCode problems solved</strong> with active competitive engineering experience.
+            Hey there! I'm a developer and CS undergraduate building fast, responsive mobile apps in <strong className="text-white font-semibold">Flutter</strong>, tinkering with <strong className="text-white font-semibold">AI/ML</strong>, and solving algorithmic problems daily (<strong className="text-cyan-300 font-semibold">270+ LeetCode solved</strong>).
           </p>
 
           {/* Action Buttons: Clean & Prominent with Start Journey CTA */}

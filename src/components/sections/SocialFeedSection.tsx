@@ -45,7 +45,7 @@ export const SocialFeedSection: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-cyan-500/40 text-cyan-400 font-mono text-xs font-semibold uppercase tracking-wider shadow-sm">
             <Radio className="w-3.5 h-3.5 animate-pulse text-cyan-400" />
-            <span>Direct Social Feeds & Broadcasts</span>
+            <span>Recent Posts & Social Updates</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
@@ -53,7 +53,7 @@ export const SocialFeedSection: React.FC = () => {
           </h2>
 
           <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-sans">
-            Direct real-time transmissions and official posts pulled directly from my accounts on X (Twitter) and LinkedIn.
+            Recent updates, project milestones, and tech thoughts from my personal accounts on X and LinkedIn.
           </p>
 
           {/* Social Tabs */}

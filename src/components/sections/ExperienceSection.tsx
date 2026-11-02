@@ -15,13 +15,13 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
         {/* Section Header */}
         <div className="flex flex-col items-center text-center space-y-3">
           <span className="text-xs font-mono text-cyan-400 font-bold tracking-widest uppercase">
-            [ 03 // PROFESSIONAL EXPEDITIONS ]
+            🏛️ EXPERIENCE
           </span>
           <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-wide">
-            EXPERIENCE & CONTRIBUTIONS
+            WHERE I'VE WORKED & CONTRIBUTED
           </h2>
           <p className="max-w-2xl text-base sm:text-lg text-slate-300 font-sans leading-relaxed">
-            Chronological engineering milestones, technical leadership, and collaborative open-source contributions.
+            Student leadership, active open-source contributions, and engineering milestones.
           </p>
           <div className="w-20 h-1 bg-cyan-400 rounded-full mt-2" />
         </div>

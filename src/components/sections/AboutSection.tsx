@@ -61,10 +61,10 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
         {/* Section Header */}
         <div className="flex flex-col items-center text-center space-y-3">
           <span className="text-xs font-mono text-cyan-400 font-bold tracking-widest uppercase">
-            [ 01 // PROFESSIONAL IDENTITY ]
+            👋 WHO I AM
           </span>
           <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-wide">
-            ABOUT & ACADEMIC JOURNEY
+            ABOUT ME & MY JOURNEY
           </h2>
           <div className="w-20 h-1 bg-cyan-400 rounded-full mt-2" />
         </div>
@@ -76,7 +76,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
             <div className="p-6 sm:p-8 rounded-2xl bg-[#0c1220] border-2 border-slate-700/80 shadow-xl space-y-5">
               <h3 className="text-xl font-display font-bold text-white flex items-center gap-2.5">
                 <Compass className="w-6 h-6 text-cyan-400" />
-                <span>The Convergence of Rigor & Imagination</span>
+                <span>A Little About Me & My Work</span>
               </h3>
               {profile.bio.map((paragraph, idx) => (
                 <p key={idx} className="text-base sm:text-lg text-slate-200 leading-relaxed font-sans">
@@ -86,7 +86,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
 
               <div className="pt-4 border-t border-slate-700">
                 <h4 className="text-xs font-mono uppercase tracking-wider text-amber-400 mb-3 flex items-center gap-2 font-bold">
-                  <Sparkles className="w-4 h-4 text-amber-400" /> Core Engineering Philosophy
+                  <Sparkles className="w-4 h-4 text-amber-400" /> How I Think About Building Software
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {profile.approach.map((point, idx) => (
@@ -103,7 +103,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
             <div className="p-6 sm:p-8 rounded-2xl bg-[#0c1220] border-2 border-slate-700/80 shadow-xl space-y-6">
               <h3 className="text-xl font-display font-bold text-white flex items-center gap-2.5">
                 <GraduationCap className="w-6 h-6 text-cyan-400" />
-                <span>Academic Dual-Track Journey</span>
+                <span>Academic Education & Degrees</span>
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -202,11 +202,11 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
                 </div>
                 <div className="flex justify-between py-1.5 border-b border-slate-750">
                   <span className="text-slate-300">Academic Standing:</span>
-                  <span className="text-white font-bold">Dual Degree Undergrad (2022–2027)</span>
+                  <span className="text-white font-bold">CMR Univ ('25–'29) · IIT Madras ('26–Present)</span>
                 </div>
                 <div className="flex justify-between py-1.5">
                   <span className="text-slate-300">Active Status:</span>
-                  <span className="text-emerald-400 font-bold">Available for Hiring & Research</span>
+                  <span className="text-emerald-400 font-bold">Open to SWE Internships & Projects</span>
                 </div>
               </div>
             </div>

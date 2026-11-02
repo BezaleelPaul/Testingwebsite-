@@ -31,10 +31,11 @@ export const Navbar: React.FC = () => {
     { label: 'About', href: '/#about' },
     { label: 'Projects', href: '/projects' },
     { label: 'Resume', href: '/resume' },
+    { label: 'Now & Life', href: '/#human-side' },
     { label: 'Experience', href: '/#experience' },
     { label: 'Skills', href: '/#skills' },
     { label: 'GitHub', href: '/#github' },
-    { label: 'Broadcasts', href: '/#social-feed' },
+    { label: 'Posts', href: '/#social-feed' },
     { label: 'Contact', href: '/#contact' },
   ];
 

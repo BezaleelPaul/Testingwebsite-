@@ -28,13 +28,13 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skills }) => {
         {/* Section Header */}
         <div className="flex flex-col items-center text-center space-y-3">
           <span className="text-xs font-mono text-cyan-400 font-bold tracking-widest uppercase">
-            [ 04 // TECHNICAL ARCHITECTURE ]
+            🛠️ SKILLS
           </span>
           <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-wide">
-            SKILLS & ARCHITECTURAL STACK
+            TECHNOLOGIES I WORK WITH
           </h2>
           <p className="max-w-2xl text-base sm:text-lg text-slate-300 font-sans leading-relaxed">
-            Categorized technical capabilities grounded in verified project implementation and mathematical theory.
+            The languages, frameworks, and tools I use to build real-world mobile, web, and ML software.
           </p>
           <div className="w-20 h-1 bg-cyan-400 rounded-full mt-2" />
         </div>
