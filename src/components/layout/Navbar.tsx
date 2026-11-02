@@ -1,174 +1,158 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { FileText, Volume2, VolumeX, Menu, X, Lock, Globe } from 'lucide-react';
-import { spaceAudio } from '@/lib/audio';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
+
+const navLinks = [
+  { label: 'Work', href: '/#projects' },
+  { label: 'Atlas', href: '/atlas' },
+  { label: '3D Cosmos', href: '/#cosmos-journey' },
+  { label: 'About', href: '/#about' },
+  { label: 'Experience', href: '/#experience' },
+  { label: 'Skills', href: '/#skills' },
+  { label: 'Contact', href: '/#contact' },
+];
 
 export const Navbar: React.FC = () => {
-  const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  const progressRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+    let frame = 0;
+
+    const updateProgress = () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? Math.min(1, Math.max(0, window.scrollY / maxScroll)) : 0;
+
+      if (progressRef.current) {
+        progressRef.current.style.transform = `scaleX(${progress})`;
+      }
+      frame = 0;
     };
+
+    const handleScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(updateProgress);
+    };
+
+    updateProgress();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, []);
 
-  const toggleSound = () => {
-    const nextMuted = spaceAudio.toggleMute();
-    setIsMuted(nextMuted);
-    if (!nextMuted) {
-      spaceAudio.playTelemetryBeep(880);
-    }
-  };
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
 
-  const navLinks = [
-    { label: 'Start Journey 🚀', href: '/#cosmos-journey', highlight: true },
-    { label: 'About', href: '/#about' },
-    { label: 'Projects', href: '/projects' },
-    { label: 'Resume', href: '/resume' },
-    { label: 'Now & Life', href: '/#human-side' },
-    { label: 'Experience', href: '/#experience' },
-    { label: 'Skills', href: '/#skills' },
-    { label: 'GitHub', href: '/#github' },
-    { label: 'Posts', href: '/#social-feed' },
-    { label: 'Contact', href: '/#contact' },
-  ];
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMobileMenuOpen(false);
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled
-          ? 'bg-space-950/85 backdrop-blur-md border-b border-cyan-500/20 py-3 shadow-[0_4px_30px_rgba(0,0,0,0.8)]'
-          : 'bg-transparent py-5'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Brand */}
-        <Link
-          href="/"
-          className="flex items-center gap-2 group cursor-pointer focus:outline-none focus:ring-2 focus:ring-hud-cyan rounded px-1"
-        >
-          <span className="w-2.5 h-2.5 rounded-full bg-hud-cyan group-hover:shadow-[0_0_10px_#00f3ff] transition-shadow" />
-          <span className="font-display font-extrabold tracking-wider text-base sm:text-lg text-white group-hover:text-hud-cyan transition-colors">
-            BEZALEEL PAUL
+    <header className="fixed inset-x-0 top-0 z-40 border-b border-ink/10 bg-paper/90 backdrop-blur-md">
+      <a
+        href="#main-content"
+        className="absolute left-4 top-3 -translate-y-20 rounded-full bg-ink px-4 py-2 text-xs font-bold text-paper focus:translate-y-0"
+      >
+        Skip to content
+      </a>
+
+      <div className="section-shell flex h-[4.5rem] items-center justify-between gap-6">
+        <Link href="/" className="group flex items-baseline gap-2.5" aria-label="Bezaleel Paul, home">
+          <span className="font-display text-[1.65rem] leading-none tracking-tight text-ink">
+            Bezaleel Paul
           </span>
-          <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/60 border border-cyan-800/60 px-1.5 py-0.5 rounded hidden sm:inline">
-            BEZFORGE
+          <span className="hidden font-mono text-[9px] font-medium uppercase tracking-[0.18em] text-ink/45 sm:inline">
+            / software engineer
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-5" aria-label="Main Navigation">
+        <nav className="hidden items-center gap-7 md:flex" aria-label="Main navigation">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              onClick={() => spaceAudio.playTelemetryBeep(960)}
-              className={`text-xs font-mono uppercase tracking-widest transition-colors focus:outline-none ${
-                link.highlight 
-                  ? 'text-hud-cyan font-bold hover:text-cyan-300 flex items-center gap-1.5 bg-hud-cyan/15 px-3 py-1 rounded border border-hud-cyan/40'
-                  : 'text-slate-200 hover:text-hud-cyan focus:text-hud-cyan font-medium'
-              }`}
+              className="nav-link font-mono text-[10px] font-semibold uppercase tracking-[0.15em] text-ink/60 transition-colors hover:text-ink"
             >
-              {link.highlight && <Globe className="w-3.5 h-3.5 text-hud-cyan" />}
-              <span>{link.label}</span>
+              {link.label}
             </a>
           ))}
         </nav>
 
-        {/* Controls & Action Buttons */}
-        <div className="hidden sm:flex items-center gap-3">
-          {/* Subtle Audio Toggle */}
-          <button
-            onClick={toggleSound}
-            title={isMuted ? 'Enable Audio SFX' : 'Mute Audio SFX'}
-            className="p-2 rounded bg-space-900 border border-slate-800 hover:border-hud-cyan text-slate-400 hover:text-hud-cyan transition-colors focus:outline-none focus:ring-1 focus:ring-hud-cyan"
-            aria-label="Toggle sound feedback"
-          >
-            {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-hud-cyan" />}
-          </button>
-
-          {/* Resume Link */}
+        <div className="hidden items-center gap-3 md:flex">
           <Link
             href="/resume"
-            onClick={() => spaceAudio.playTelemetryBeep(920)}
-            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-mono font-bold tracking-wider rounded bg-hud-cyan text-space-950 hover:bg-cyan-300 shadow-[0_0_15px_rgba(0,243,255,0.3)] transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-hud-cyan"
+            className="group inline-flex items-center gap-2 rounded-full border border-ink bg-ink px-4 py-2.5 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-paper transition-colors hover:bg-ink-soft"
           >
-            <FileText className="w-3.5 h-3.5" />
-            <span>RESUME</span>
-          </Link>
-
-          {/* Admin link */}
-          <Link
-            href="/admin"
-            title="Private Admin Command Centre"
-            className="p-2 rounded bg-space-900 border border-slate-800 hover:border-slate-700 text-slate-500 hover:text-slate-300 transition-colors"
-          >
-            <Lock className="w-3.5 h-3.5" />
+            Résumé
+            <ArrowUpRight className="h-3.5 w-3.5 text-signal transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="flex sm:hidden items-center gap-2">
-          <a
-            href="/resume.pdf"
-            download
-            className="p-2 text-xs font-mono font-bold rounded bg-hud-cyan text-space-950"
-            aria-label="Download resume"
-          >
-            <FileText className="w-4 h-4" />
-          </a>
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-slate-300 hover:text-white focus:outline-none"
-            aria-label="Toggle navigation menu"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => setMobileMenuOpen((open) => !open)}
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ink/20 text-ink md:hidden"
+          aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-navigation"
+        >
+          {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
       </div>
 
-      {/* Mobile Drawer */}
+      <div
+        ref={progressRef}
+        className="absolute inset-x-0 bottom-0 h-px origin-left bg-ink/70"
+        style={{ transform: 'scaleX(0)' }}
+        aria-hidden="true"
+      />
+
       {mobileMenuOpen && (
-        <div className="sm:hidden bg-[#0a0f1d]/98 border-b border-slate-700 px-6 py-6 space-y-4 backdrop-blur-xl animate-in slide-in-from-top-4 duration-200">
-          <nav className="flex flex-col space-y-3">
-            {navLinks.map((link) => (
+        <nav
+          id="mobile-navigation"
+          aria-label="Mobile navigation"
+          className="mobile-nav-enter border-t border-ink/10 bg-paper px-5 pb-7 pt-5 md:hidden"
+        >
+          <div className="flex flex-col">
+            {navLinks.map((link, index) => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`text-sm font-mono uppercase tracking-widest py-1 flex items-center gap-2 ${
-                  link.highlight ? 'text-hud-cyan font-bold' : 'text-slate-200 hover:text-hud-cyan'
-                }`}
+                className="flex items-baseline justify-between border-b border-ink/10 py-4 font-display text-3xl tracking-tight text-ink"
               >
-                {link.highlight && <Globe className="w-3.5 h-3.5 text-hud-cyan" />}
                 <span>{link.label}</span>
+                <span className="font-mono text-[9px] tracking-[0.16em] text-ink/40">
+                  0{index + 1}
+                </span>
               </a>
             ))}
-          </nav>
-          <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
-            <button
-              onClick={toggleSound}
-              className="flex items-center gap-2 text-xs font-mono text-slate-400"
-            >
-              {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-hud-cyan" />}
-              <span>{isMuted ? 'Audio Muted' : 'Audio Active'}</span>
-            </button>
-            <Link
-              href="/admin"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-1 text-xs font-mono text-slate-500 hover:text-slate-300"
-            >
-              <Lock className="w-3.5 h-3.5" />
-              <span>Admin</span>
-            </Link>
           </div>
-        </div>
+          <Link
+            href="/resume"
+            onClick={() => setMobileMenuOpen(false)}
+            className="mt-6 flex items-center justify-between rounded-full bg-ink px-5 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.15em] text-paper"
+          >
+            <span>View résumé</span>
+            <ArrowUpRight className="h-4 w-4 text-signal" />
+          </Link>
+        </nav>
       )}
     </header>
   );

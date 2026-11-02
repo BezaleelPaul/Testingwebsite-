@@ -3,29 +3,20 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { 
-  ArrowDown, 
-  FileText, 
-  Send, 
-  Sparkles, 
-  MapPin, 
-  Orbit, 
-  Radio, 
-  Compass, 
-  Globe,
-  ChevronRight,
-  Zap
-} from 'lucide-react';
-import { spaceAudio } from '@/lib/audio';
+import { ArrowDown, ArrowUpRight, Orbit, Sparkles } from 'lucide-react';
 import { PilotProfile, GitHubAnalyticsData } from '@/types/portfolio';
 import { CelestialBodyData } from '@/types/simulation';
 import { generateProceduralStarSystem, StarSystem } from '@/lib/proceduralUniverse';
-import { CosmicJourneyScreen } from '../interactive/CosmicJourneyScreen';
+import { spaceAudio } from '@/lib/audio';
+import { CosmicJourneyScreen } from '@/components/interactive/CosmicJourneyScreen';
 
-// Dynamic import of 3D Hero Horizon with SSR disabled for WebGL stability
+// Dynamic import of 3D Hero Celestial Horizon with SSR disabled for WebGL stability
 const HeroCelestialHorizon = dynamic(
-  () => import('../canvas/HeroCelestialHorizon').then((mod) => mod.HeroCelestialHorizon),
-  { ssr: false }
+  () => import('@/components/canvas/HeroCelestialHorizon').then((mod) => mod.HeroCelestialHorizon),
+  {
+    ssr: false,
+    loading: () => null,
+  }
 );
 
 interface HeroSectionProps {
@@ -56,7 +47,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
     }
   }, [starSystem]);
 
-  // Listen for hash change (#cosmos-journey) from Navbar
+  // Listen for hash change (#cosmos-journey) from Navbar or URL
   useEffect(() => {
     const handleHash = () => {
       if (window.location.hash === '#cosmos-journey') {
@@ -111,8 +102,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
   };
 
   return (
-    <section id="cosmos" className="relative min-h-screen flex flex-col justify-between pt-28 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* 3D Celestial Solar System Canvas (Non-blocking background with realistic physics & textures) */}
+    <section className="dark-surface relative isolate flex min-h-[92svh] flex-col justify-between overflow-hidden bg-ink px-0 pb-8 pt-28 text-paper sm:min-h-screen sm:pb-10 sm:pt-32">
+      {/* 3D Celestial Solar System Canvas (Realistic Three.js physics & textures) */}
       <HeroCelestialHorizon
         system={starSystem}
         selectedBodyId={selectedBody?.id}
@@ -141,125 +132,121 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
         isWarping={isWarping}
       />
 
-      {/* Main Portfolio Content Card with High-Contrast Solid Editorial Design */}
-      <div className="relative z-10 max-w-4xl mx-auto w-full my-auto">
-        <div className="bg-[#0b0f19]/95 border-2 border-slate-700/80 rounded-3xl p-8 sm:p-12 shadow-[0_25px_80px_rgba(0,0,0,0.95)] backdrop-blur-xl text-center space-y-6">
-          {/* Availability & Location Status Pill */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900 border border-emerald-500/40 text-xs font-mono shadow-md">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-emerald-400 font-bold uppercase tracking-wider text-xs">
-              {profile.status}
-            </span>
-            <span className="text-slate-600">|</span>
-            <span className="text-slate-200 flex items-center gap-1.5 text-xs font-medium">
-              <MapPin className="w-3.5 h-3.5 text-cyan-400" /> {profile.location}
-            </span>
-          </div>
+      {/* Atmospheric ambient vignette */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_72%_32%,rgba(217,255,99,0.06),transparent_45%),linear-gradient(90deg,rgba(17,20,17,0.88)_0%,rgba(17,20,17,0.65)_48%,rgba(17,20,17,0.2)_100%)]"
+        aria-hidden="true"
+      />
 
-          {/* Editorial Title & Subtitle */}
-          <div className="space-y-3">
-            <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight text-white leading-none">
-              BEZALEEL <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-400">PAUL</span>
-            </h1>
+      <div
+        className="section-shell relative z-10 flex items-center justify-between gap-4 border-b border-paper/15 pb-5"
+        data-reveal
+        data-reveal-delay="20"
+      >
+        <span className="eyebrow flex items-center gap-2 text-paper/70">
+          <span className="h-2 w-2 rounded-full bg-signal animate-pulse" />
+          <span className="text-signal font-semibold">Live 3D Cosmos</span> / Solar System Orbiting
+        </span>
+        <span className="eyebrow hidden text-paper/50 sm:block font-mono">
+          {profile.location} · 12.97° N, 77.59° E
+        </span>
+      </div>
 
-            <p className="text-xl sm:text-2xl font-mono text-cyan-300 font-bold tracking-wide">
-              Software Developer <span className="text-slate-500">·</span> Flutter <span className="text-slate-500">·</span> Full-Stack <span className="text-slate-500">·</span> AI/ML
-            </p>
-
-            <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
-              <span className="px-3 py-1 rounded-md bg-slate-800/90 border border-slate-700 text-slate-200 text-xs font-mono font-medium">
-                🎓 CMR University (B.Tech CSE '25–'29)
-              </span>
-              <span className="px-3 py-1 rounded-md bg-slate-800/90 border border-slate-700 text-slate-200 text-xs font-mono font-medium">
-                🎓 IIT Madras (BS Data Science '26–Present)
-              </span>
-              <span className="px-3 py-1 rounded-md bg-cyan-950/60 border border-cyan-700/60 text-cyan-300 text-xs font-mono font-medium">
-                ⚡ IEEE Webmaster & EXCOM ('25–'26)
-              </span>
-            </div>
-          </div>
-
-          {/* Professional Summary (High-contrast, crystal clear readability) */}
-          <p className="max-w-2xl mx-auto text-base sm:text-lg text-slate-200 font-sans leading-relaxed">
-            Hey there! I'm a developer and CS undergraduate building fast, responsive mobile apps in <strong className="text-white font-semibold">Flutter</strong>, tinkering with <strong className="text-white font-semibold">AI/ML</strong>, and solving algorithmic problems daily (<strong className="text-cyan-300 font-semibold">270+ LeetCode solved</strong>).
+      <div className="section-shell relative z-10 grid flex-1 items-center gap-12 py-14 lg:grid-cols-12 lg:py-18">
+        <div className="lg:col-span-8">
+          <p className="eyebrow mb-6 text-signal" data-reveal data-reveal-delay="90">
+            Software developer · builder · student
+          </p>
+          <h1
+            className="serif-display max-w-4xl text-[clamp(4.4rem,11vw,9.5rem)] text-paper leading-[0.96]"
+            data-reveal
+            data-reveal-delay="150"
+          >
+            Bezaleel <span className="italic text-signal">Paul.</span>
+          </h1>
+          <p
+            className="mt-6 max-w-2xl text-lg leading-relaxed text-paper/85 sm:text-xl font-normal drop-shadow-sm"
+            data-reveal
+            data-reveal-delay="230"
+          >
+            I build practical software for mobile, web, and machine learning. Currently studying
+            computer science at CMR University and data science at IIT Madras.
           </p>
 
-          {/* Action Buttons: Clean & Prominent with Start Journey CTA */}
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-            {/* Primary Journey CTA */}
+          <div
+            className="mt-8 flex flex-wrap items-center gap-3"
+            data-reveal
+            data-reveal-delay="310"
+          >
+            {/* Primary 3D Journey Button */}
             <button
+              type="button"
               onClick={() => {
                 spaceAudio.playTelemetryBeep(1400);
                 setIsJourneyActive(true);
               }}
-              className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-400 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-slate-950 font-mono font-extrabold text-sm uppercase tracking-wider shadow-[0_0_25px_rgba(34,211,238,0.5)] transition-all transform hover:-translate-y-0.5 focus:ring-2 focus:ring-cyan-300"
+              className="group inline-flex items-center gap-3 rounded-full bg-signal px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-ink transition-all hover:bg-signal-soft hover:shadow-[0_0_30px_rgba(217,255,99,0.45)] hover:-translate-y-0.5"
             >
-              <Sparkles className="w-4 h-4 text-slate-950 animate-spin" />
-              <span>Start Cosmic Journey 🚀</span>
+              <Sparkles className="h-4 w-4 animate-spin text-ink" />
+              <span>Explore 3D Solar System</span>
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </button>
 
-            {/* View Resume Button */}
+            {/* Work Atlas Button */}
             <Link
-              href="/resume"
-              onClick={() => spaceAudio.playTelemetryBeep(1150)}
-              className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-mono font-bold text-sm uppercase tracking-wider transition-all transform hover:-translate-y-0.5"
+              href="/atlas"
+              className="group inline-flex items-center gap-2.5 rounded-full border border-paper/40 bg-paper/10 backdrop-blur-md px-5 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-paper transition-all hover:border-paper hover:bg-paper hover:text-ink"
             >
-              <FileText className="w-4 h-4 text-cyan-400" />
-              <span>Resume</span>
+              <Orbit className="h-4 w-4 text-signal" />
+              <span>Open Work Atlas</span>
             </Link>
 
-            {/* Explore Projects Button */}
+            {/* Projects Archive */}
             <a
               href="#projects"
-              onClick={() => spaceAudio.playTelemetryBeep(1000)}
-              className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 hover:text-white font-mono font-bold text-sm uppercase tracking-wider transition-all transform hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-2 rounded-full border border-paper/30 px-5 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-paper/80 transition-colors hover:border-paper hover:text-paper"
             >
-              <span>Explore Projects</span>
-              <ArrowDown className="w-4 h-4 text-cyan-400" />
+              <span>Selected Work</span>
+              <ArrowDown className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
             </a>
 
-            {/* Contact Button */}
-            <a
-              href="#contact"
-              onClick={() => spaceAudio.playTelemetryBeep(850)}
-              className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 hover:text-white font-mono font-bold text-sm uppercase tracking-wider transition-all transform hover:-translate-y-0.5"
+            {/* Resume Link */}
+            <Link
+              href="/resume"
+              className="inline-flex items-center gap-2 px-3 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-paper/60 transition-colors hover:text-paper"
             >
-              <Send className="w-4 h-4 text-cyan-400" />
-              <span>Contact</span>
-            </a>
-          </div>
-
-          {/* Verified Engineering Metrics */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-slate-800">
-            <div className="bg-[#070b14] border border-slate-800 p-3.5 rounded-xl">
-              <span className="text-xs font-mono text-slate-400 block mb-1">PUBLIC REPOS</span>
-              <span className="text-2xl font-bold font-mono text-cyan-400">{stats.repos}</span>
-            </div>
-            <div className="bg-[#070b14] border border-slate-800 p-3.5 rounded-xl">
-              <span className="text-xs font-mono text-slate-400 block mb-1">LEETCODE</span>
-              <span className="text-2xl font-bold font-mono text-amber-400">{cp.leetcode.solved}+</span>
-            </div>
-            <div className="bg-[#070b14] border border-slate-800 p-3.5 rounded-xl">
-              <span className="text-xs font-mono text-slate-400 block mb-1">CODEFORCES</span>
-              <span className="text-2xl font-bold font-mono text-emerald-400">{cp.codeforces.rating}</span>
-            </div>
-            <div className="bg-[#070b14] border border-slate-800 p-3.5 rounded-xl">
-              <span className="text-xs font-mono text-slate-400 block mb-1">ACTIVE STREAK</span>
-              <span className="text-2xl font-bold font-mono text-sky-400">{stats.streak} Days</span>
-            </div>
+              <span>Read résumé</span>
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
+
+        <aside className="lg:col-span-4 lg:self-end" data-reveal-group data-reveal-delay="360">
+          <div className="grid grid-cols-3 gap-4 border-t border-paper/20 pt-5 lg:grid-cols-1 lg:gap-0 lg:border-l lg:border-t-0 lg:pl-7 lg:pt-0 backdrop-blur-sm bg-ink/20 lg:bg-transparent rounded-xl p-3 lg:p-0">
+            <div className="lg:border-b lg:border-paper/15 lg:py-4 lg:first:pt-0" data-reveal-item>
+              <span className="block font-mono text-2xl font-medium text-paper" data-count={stats.repos}>{stats.repos}</span>
+              <span className="eyebrow text-[9px] text-paper/50">Public repositories</span>
+            </div>
+            <div className="lg:border-b lg:border-paper/15 lg:py-4" data-reveal-item>
+              <span className="block font-mono text-2xl font-medium text-paper" data-count={cp.leetcode.solved}>{cp.leetcode.solved}</span>
+              <span className="eyebrow text-[9px] text-paper/50">LeetCode solved</span>
+            </div>
+            <div className="lg:py-4 lg:last:pb-0" data-reveal-item>
+              <span className="block font-mono text-2xl font-medium text-paper" data-count={cp.codeforces.rating}>{cp.codeforces.rating}</span>
+              <span className="eyebrow text-[9px] text-paper/50">Codeforces rating</span>
+            </div>
+          </div>
+        </aside>
       </div>
 
-      {/* Down Scroll Indicator */}
-      <div className="relative z-10 flex justify-center pt-8">
-        <a
-          href="#about"
-          className="flex flex-col items-center gap-1.5 text-slate-400 hover:text-cyan-400 transition-colors font-mono text-xs tracking-widest uppercase"
-        >
-          <span>Scroll to Explore Orbit</span>
-          <ArrowDown className="w-4 h-4 animate-bounce text-cyan-400" />
-        </a>
+      <div className="section-shell relative z-10 flex flex-col gap-4 border-t border-paper/15 pt-5 sm:flex-row sm:items-center sm:justify-between" data-reveal data-reveal-delay="440">
+        <p className="max-w-2xl font-mono text-[10px] uppercase leading-relaxed tracking-[0.1em] text-paper/50">
+          Interactive 3D simulation · Real Keplerian orbits · Drag to rotate background
+        </p>
+        <span className="eyebrow flex items-center gap-2 text-paper/50">
+          Scroll to explore
+          <ArrowDown className="h-3.5 w-3.5" />
+        </span>
       </div>
     </section>
   );
