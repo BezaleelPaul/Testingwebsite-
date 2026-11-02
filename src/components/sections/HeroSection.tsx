@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
+import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { 
   ArrowDown, 
@@ -197,16 +198,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
               <span>Start Cosmic Journey 🚀</span>
             </button>
 
-            {/* Download Resume Button */}
-            <a
-              href="/resume.pdf"
-              download
+            {/* View Resume Button */}
+            <Link
+              href="/resume"
               onClick={() => spaceAudio.playTelemetryBeep(1150)}
               className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-mono font-bold text-sm uppercase tracking-wider transition-all transform hover:-translate-y-0.5"
             >
               <FileText className="w-4 h-4 text-cyan-400" />
-              <span>Resume (PDF)</span>
-            </a>
+              <span>Resume</span>
+            </Link>
 
             {/* Explore Projects Button */}
             <a

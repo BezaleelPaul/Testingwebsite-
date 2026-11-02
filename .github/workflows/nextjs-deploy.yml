@@ -35,6 +35,9 @@ jobs:
       - name: Install dependencies
         run: npm ci || npm install
 
+      - name: Auto-sync and reorganize resume
+        run: npm run sync:resume
+
       - name: Build static site with Next.js
         run: npm run build
 

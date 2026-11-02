@@ -30,6 +30,7 @@ export const Navbar: React.FC = () => {
     { label: 'Start Journey 🚀', href: '/#cosmos-journey', highlight: true },
     { label: 'About', href: '/#about' },
     { label: 'Projects', href: '/projects' },
+    { label: 'Resume', href: '/resume' },
     { label: 'Experience', href: '/#experience' },
     { label: 'Skills', href: '/#skills' },
     { label: 'GitHub', href: '/#github' },
@@ -91,15 +92,15 @@ export const Navbar: React.FC = () => {
             {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-hud-cyan" />}
           </button>
 
-          {/* Download Resume Button */}
-          <a
-            href="/resume.pdf"
-            download
-            className="flex items-center gap-1.5 px-4 py-2 text-xs font-mono font-bold tracking-wider rounded bg-hud-cyan text-space-950 hover:bg-cyan-300 shadow-[0_0_15px_rgba(0,243,255,0.3)] transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-hud-cyan"
+          {/* Resume Link */}
+          <Link
+            href="/resume"
+            onClick={() => spaceAudio.playTelemetryBeep(920)}
+            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-mono font-bold tracking-wider rounded bg-hud-cyan text-space-950 hover:bg-cyan-300 shadow-[0_0_15px_rgba(0,243,255,0.3)] transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-hud-cyan"
           >
             <FileText className="w-3.5 h-3.5" />
-            <span>RESUME (PDF)</span>
-          </a>
+            <span>RESUME</span>
+          </Link>
 
           {/* Admin link */}
           <Link
