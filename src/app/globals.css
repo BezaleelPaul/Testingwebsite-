@@ -454,7 +454,7 @@ html.motion-ready [data-word-group] .word-mask [data-word-reveal] {
 /* Scroll-linked parallax and magnetic controls are driven by SiteMotion. */
 [data-parallax] { transform: translate3d(0, var(--parallax-offset, 0px), 0); }
 [data-magnetic] {
-  transform: translate3d(var(--magnetic-offset, 0px 0px), 0);
+  transform: translate(var(--magnetic-offset, 0px 0px));
   transition: transform 180ms cubic-bezier(.2,.8,.2,1);
   will-change: transform;
 }
