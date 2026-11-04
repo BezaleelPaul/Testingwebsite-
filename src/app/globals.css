@@ -408,3 +408,57 @@ html.motion-ready [data-word-group] .word-mask [data-word-reveal] {
 @media (prefers-reduced-motion: reduce) {
   .motion-ticker-track { animation: none !important; transform: none !important; }
 }
+
+
+/* Actual orbital movement in the hero, including mobile where WebGL is intentionally off. */
+.hero-signal-visual { contain: layout paint; }
+.hero-signal-rings { transform-style: preserve-3d; }
+.hero-signal-ring {
+  position: absolute;
+  inset: 8%;
+  border: 1px solid rgba(241,239,231,.13);
+  border-radius: 50%;
+  transform: rotateX(66deg) rotateZ(-18deg);
+}
+.hero-signal-ring-one { animation: hero-orbit-one 26s linear infinite; }
+.hero-signal-ring-two {
+  inset: 19%;
+  border-color: rgba(217,255,99,.22);
+  transform: rotateX(72deg) rotateZ(42deg);
+  animation: hero-orbit-two 19s linear infinite;
+}
+.hero-signal-ring-three {
+  inset: 31%;
+  border-color: rgba(241,239,231,.2);
+  transform: rotateY(68deg) rotateZ(-28deg);
+  animation: hero-orbit-three 32s linear infinite;
+}
+.hero-signal-core-glow {
+  position: absolute; inset: 37%; border-radius: 50%;
+  background: radial-gradient(circle, rgba(217,255,99,.22), rgba(217,255,99,.035) 46%, transparent 72%);
+  filter: blur(9px); animation: hero-core-pulse 5s ease-in-out infinite;
+}
+.hero-signal-node {
+  position: absolute; width: 5px; height: 5px; border-radius: 50%;
+  background: #d9ff63; box-shadow: 0 0 16px rgba(217,255,99,.65);
+}
+.hero-signal-node-one { top: 14%; left: 23%; animation: hero-node-drift 7s ease-in-out infinite; }
+.hero-signal-node-two { right: 12%; top: 55%; width: 3px; height: 3px; animation: hero-node-drift 9s ease-in-out -2s infinite; }
+.hero-signal-node-three { left: 48%; bottom: 10%; width: 4px; height: 4px; animation: hero-node-drift 8s ease-in-out -4s infinite; }
+@keyframes hero-orbit-one { to { transform: rotateX(66deg) rotateZ(342deg); } }
+@keyframes hero-orbit-two { to { transform: rotateX(72deg) rotateZ(402deg); } }
+@keyframes hero-orbit-three { to { transform: rotateY(68deg) rotateZ(332deg); } }
+@keyframes hero-core-pulse { 0%,100% { opacity:.55; transform:scale(.88); } 50% { opacity:1; transform:scale(1.12); } }
+@keyframes hero-node-drift { 0%,100% { translate:0 0; opacity:.5; } 50% { translate:8px -12px; opacity:1; } }
+
+/* Scroll-linked parallax and magnetic controls are driven by SiteMotion. */
+[data-parallax] { transform: translate3d(0, var(--parallax-offset, 0px), 0); }
+[data-magnetic] {
+  transform: translate(var(--magnetic-offset, 0px 0px));
+  transition: transform 180ms cubic-bezier(.2,.8,.2,1);
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-signal-ring, .hero-signal-core-glow, .hero-signal-node { animation: none !important; }
+  [data-parallax], [data-magnetic] { transform: none !important; }
+}

@@ -249,8 +249,8 @@ export const AtlasCanvas: React.FC<AtlasCanvasProps> = (props) => {
   return (
     <Canvas
       camera={{ position: [0, 0.6, 23], fov: 46, near: 0.1, far: 100 }}
-      dpr={[1, 1.8]}
-      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+      dpr={[1, 1.25]}
+      gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
       onPointerMissed={() => props.onSelect(null)}
       aria-hidden="true"
       style={{ background: 'transparent' }}

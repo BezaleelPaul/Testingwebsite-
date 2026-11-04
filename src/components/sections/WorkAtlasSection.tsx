@@ -41,14 +41,11 @@ export const WorkAtlasSection: React.FC = () => {
 
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const desktop = window.matchMedia('(min-width: 768px)');
-    const sync = () => setMotionEnabled(!reduced.matches && desktop.matches);
+    const sync = () => setMotionEnabled(!reduced.matches);
     sync();
     reduced.addEventListener('change', sync);
-    desktop.addEventListener('change', sync);
     return () => {
       reduced.removeEventListener('change', sync);
-      desktop.removeEventListener('change', sync);
     };
   }, []);
 
@@ -63,7 +60,7 @@ export const WorkAtlasSection: React.FC = () => {
         <div className="flex flex-col gap-8 border-b border-paper/15 pb-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
             <p className="eyebrow text-signal">02 / Work in orbit · live repository traces</p>
-            <h2 className="serif-display mt-5 text-6xl leading-[0.9] sm:text-8xl">
+            <h2 className="serif-display mt-5 text-6xl leading-[0.9] sm:text-8xl" data-reveal>
               The work <span className="italic text-signal">has gravity.</span>
             </h2>
             <p className="mt-5 max-w-xl text-sm leading-relaxed text-paper/55 sm:text-base">
