@@ -8,6 +8,7 @@ import { SkillsSection } from '@/components/sections/SkillsSection';
 import { AchievementsSection } from '@/components/sections/AchievementsSection';
 import { GitHubAnalyticsSection } from '@/components/sections/GitHubAnalyticsSection';
 import { ContactSection } from '@/components/sections/ContactSection';
+import { FrontierSection } from '@/components/sections/FrontierSection';
 import {
   INITIAL_PROFILE,
   INITIAL_PROJECTS,
@@ -29,6 +30,7 @@ export default function Home() {
         />
         <AboutSection profile={INITIAL_PROFILE} />
         <ProjectsSection projects={INITIAL_PROJECTS} />
+        <FrontierSection />
         <ExperienceSection experience={INITIAL_EXPERIENCE} />
         <SkillsSection skills={INITIAL_SKILLS} />
         <AchievementsSection achievements={INITIAL_ACHIEVEMENTS} />

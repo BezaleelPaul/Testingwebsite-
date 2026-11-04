@@ -19,7 +19,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
           data-reveal
         >
           <div className="lg:col-span-8">
-            <p className="eyebrow text-signal">07 / Contact</p>
+            <p className="eyebrow text-signal">08 / Contact</p>
             <h2 className="serif-display mt-5 max-w-4xl text-[clamp(3.6rem,8vw,7.5rem)] text-paper">
               Have a problem worth <span className="italic text-signal">building?</span>
             </h2>

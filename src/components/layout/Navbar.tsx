@@ -6,6 +6,7 @@ import { ArrowUpRight, Menu, X } from 'lucide-react';
 
 const navLinks = [
   { label: 'Work', href: '/#projects' },
+  { label: 'Frontier', href: '/#frontier' },
   { label: 'Atlas', href: '/atlas' },
   { label: '3D Cosmos', href: '/#cosmos-journey' },
   { label: 'About', href: '/#about' },

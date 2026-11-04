@@ -15,7 +15,7 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({ achiev
           data-reveal
         >
           <div className="lg:col-span-8">
-            <p className="eyebrow text-signal">05 / Proof</p>
+            <p className="eyebrow text-signal">06 / Proof</p>
             <h2 className="serif-display mt-5 max-w-3xl text-5xl text-paper sm:text-7xl">
               Measured progress, without the inflated claims.
             </h2>

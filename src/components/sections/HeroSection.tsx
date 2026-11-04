@@ -2,22 +2,13 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import { ArrowDown, ArrowUpRight, Orbit, Sparkles } from 'lucide-react';
 import { PilotProfile, GitHubAnalyticsData } from '@/types/portfolio';
 import { CelestialBodyData } from '@/types/simulation';
 import { generateProceduralStarSystem, StarSystem } from '@/lib/proceduralUniverse';
 import { spaceAudio } from '@/lib/audio';
 import { CosmicJourneyScreen } from '@/components/interactive/CosmicJourneyScreen';
-
-// Dynamic import of 3D Hero Celestial Horizon with SSR disabled for WebGL stability
-const HeroCelestialHorizon = dynamic(
-  () => import('@/components/canvas/HeroCelestialHorizon').then((mod) => mod.HeroCelestialHorizon),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
+import { HeroSignalVisual } from '@/components/sections/HeroSignalVisual';
 
 interface HeroSectionProps {
   profile: PilotProfile;
@@ -103,14 +94,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
 
   return (
     <section className="dark-surface relative isolate flex min-h-[92svh] flex-col justify-between overflow-hidden bg-ink px-0 pb-8 pt-28 text-paper sm:min-h-screen sm:pb-10 sm:pt-32">
-      {/* 3D Celestial Solar System Canvas (Realistic Three.js physics & textures) */}
-      <HeroCelestialHorizon
-        system={starSystem}
-        selectedBodyId={selectedBody?.id}
-        onSelectBody={(body) => setSelectedBody(body)}
-        isWarping={isWarping}
-        isFullJourney={false}
-      />
+      {/* Lightweight signal-core visual; the full planetary scene loads only on request. */}
+      <HeroSignalVisual />
 
       {/* Full-Screen Interactive Cosmic Journey Screen Modal */}
       <CosmicJourneyScreen
@@ -145,10 +130,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
       >
         <span className="eyebrow flex items-center gap-2 text-paper/70">
           <span className="h-2 w-2 rounded-full bg-signal animate-pulse" />
-          <span className="text-signal font-semibold">Live 3D Cosmos</span> / Solar System Orbiting
+          <span className="text-signal font-semibold">Signal Core</span> / Independent software exploration
         </span>
         <span className="eyebrow hidden text-paper/50 sm:block font-mono">
-          {profile.location} · 12.97° N, 77.59° E
+          {profile.location} · Bengaluru, India
         </span>
       </div>
 
@@ -241,7 +226,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
 
       <div className="section-shell relative z-10 flex flex-col gap-4 border-t border-paper/15 pt-5 sm:flex-row sm:items-center sm:justify-between" data-reveal data-reveal-delay="440">
         <p className="max-w-2xl font-mono text-[10px] uppercase leading-relaxed tracking-[0.1em] text-paper/50">
-          Interactive 3D simulation · Real Keplerian orbits · Drag to rotate background
+          A portfolio of systems, experiments, and things still worth exploring
         </p>
         <span className="eyebrow flex items-center gap-2 text-paper/50">
           Scroll to explore

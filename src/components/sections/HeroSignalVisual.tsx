@@ -12,13 +12,18 @@ export const HeroSignalVisual: React.FC = () => {
   const [showCanvas, setShowCanvas] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const desktopQuery = window.matchMedia('(min-width: 640px)');
 
-    const sync = () => setShowCanvas(!mediaQuery.matches);
+    const sync = () => setShowCanvas(!motionQuery.matches && desktopQuery.matches);
     sync();
-    mediaQuery.addEventListener('change', sync);
+    motionQuery.addEventListener('change', sync);
+    desktopQuery.addEventListener('change', sync);
 
-    return () => mediaQuery.removeEventListener('change', sync);
+    return () => {
+      motionQuery.removeEventListener('change', sync);
+      desktopQuery.removeEventListener('change', sync);
+    };
   }, []);
 
   return (
