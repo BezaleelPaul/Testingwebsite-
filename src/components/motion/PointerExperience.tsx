@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, type FC } from 'react';
 
 /** Desktop-only pointer layer. Touch and reduced-motion users keep native interactions. */
-export const PointerExperience: React.FC = () => {
+export const PointerExperience: FC = () => {
   useEffect(() => {
     const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
