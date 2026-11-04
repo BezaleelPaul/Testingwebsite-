@@ -284,3 +284,47 @@ details summary::marker {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* Frontier narrative: quiet orbital motion, static-first and reduced-motion safe. */
+.frontier-section { isolation: isolate; }
+.frontier-stars {
+  position: absolute; inset: 0; pointer-events: none; opacity: .38;
+  background-image: radial-gradient(1px 1px at 12% 22%, #f1efe7 55%, transparent 100%), radial-gradient(1px 1px at 72% 16%, #d9ff63 55%, transparent 100%), radial-gradient(1.5px 1.5px at 88% 64%, #f1efe7 55%, transparent 100%), radial-gradient(1px 1px at 38% 78%, #f1efe7 55%, transparent 100%);
+  background-size: 310px 260px, 390px 330px, 470px 370px, 530px 410px;
+}
+.frontier-destination { min-width: 0; }
+.frontier-orbit {
+  position: relative; display: grid; width: 76px; height: 76px; flex: 0 0 76px;
+  place-items: center; border: 1px solid rgba(241,239,231,.22); border-radius: 50%;
+}
+.frontier-orbit::before, .frontier-orbit::after {
+  position: absolute; content: ''; border: 1px solid rgba(217,255,99,.26); border-radius: 50%;
+}
+.frontier-orbit::before { inset: 12px; }
+.frontier-orbit::after { inset: -7px 22px; transform: rotate(35deg); }
+.frontier-orbit span { width: 16px; height: 16px; border-radius: 50%; background: #d9ff63; box-shadow: 0 0 24px rgba(217,255,99,.35); }
+.orbit-b span { width: 12px; height: 12px; background: #b6d6e8; }
+.orbit-c span { width: 22px; height: 22px; background: #c9a78b; }
+.orbit-d span { width: 9px; height: 9px; background: #d9ff63; }
+.frontier-wreckage { perspective: 500px; }
+.wreckage-ring { position: absolute; inset: 12% 18%; border: 1px dashed rgba(217,255,99,.3); border-radius: 50%; transform: rotate(-18deg) scaleY(.48); }
+.wreckage-hull { position: absolute; left: 39%; top: 32%; width: 25%; height: 38%; background: linear-gradient(145deg,#a9b2a1,#41483f 60%,#171c17); clip-path: polygon(50% 0,100% 72%,62% 100%,38% 100%,0 72%); transform: rotate(22deg); box-shadow: 0 0 30px rgba(217,255,99,.12); }
+.wreckage-wing { position: absolute; top: 48%; width: 34%; height: 17%; background: linear-gradient(90deg,#687166,#242a23); clip-path: polygon(0 0,100% 38%,70% 100%,15% 65%); }
+.wreckage-wing-left { left: 13%; transform: rotate(18deg); }
+.wreckage-wing-right { right: 12%; transform: rotate(174deg); }
+.wreckage-spark { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #d9ff63; box-shadow: 0 0 14px 4px rgba(217,255,99,.35); }
+.wreckage-spark-one { top: 24%; left: 25%; }
+.wreckage-spark-two { right: 22%; bottom: 24%; }
+@media (prefers-reduced-motion: no-preference) {
+  .frontier-orbit::after { animation: frontier-orbit 22s linear infinite; }
+  .frontier-destination:hover .frontier-orbit span { transform: scale(1.18); transition: transform 220ms ease; }
+}
+@keyframes frontier-orbit { to { transform: rotate(395deg); } }
+@media (max-width: 639px) {
+  .frontier-orbit { width: 58px; height: 58px; flex-basis: 58px; }
+  .frontier-wreckage { max-width: 290px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .frontier-orbit::after { animation: none !important; }
+}
