@@ -2,11 +2,7 @@
 
 import { useEffect } from 'react';
 
-/**
- * Desktop-only pointer layer: a restrained custom cursor, pointer-reactive
- * spotlight and low-amplitude 3D tilt. Touch and reduced-motion users keep
- * the native interaction model.
- */
+/** Desktop-only pointer layer. Touch and reduced-motion users keep native interactions. */
 export const PointerExperience: React.FC = () => {
   useEffect(() => {
     const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
@@ -82,15 +78,17 @@ export const PointerExperience: React.FC = () => {
       cursor.classList.remove('is-active', 'has-label');
       resetTilt();
     };
+    const onPointerOut = (event: PointerEvent) => {
+      if (!(event.relatedTarget instanceof Node)) onLeave();
+    };
 
     document.addEventListener('pointermove', onMove, { passive: true });
-    document.addEventListener('pointerout', (event) => {
-      if (!(event.relatedTarget instanceof Node)) onLeave();
-    });
+    document.addEventListener('pointerout', onPointerOut);
     window.addEventListener('blur', onLeave);
 
     return () => {
       document.removeEventListener('pointermove', onMove);
+      document.removeEventListener('pointerout', onPointerOut);
       window.removeEventListener('blur', onLeave);
       if (frame) window.cancelAnimationFrame(frame);
       resetTilt();
