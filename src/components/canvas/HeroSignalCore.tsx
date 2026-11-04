@@ -199,7 +199,7 @@ export default function HeroSignalCore() {
         antialias: true,
         powerPreference: 'low-power',
       }}
-      style={{ pointerEvents: 'none' }}
+      style={{ pointerEvents: 'auto' }}
     >
       <SignalObject />
     </Canvas>
