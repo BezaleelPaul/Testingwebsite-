@@ -40,15 +40,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
 
         <div>
           {featuredProjects.map((project, index) => (
-            <article
-              key={project.id}
-              className="project-card grid gap-7 border-b border-ink/15 py-12 lg:grid-cols-12 lg:gap-10 lg:py-16"
-              data-tilt="2.4"
-              data-spotlight
-              data-cursor-label="INSPECT"
-              data-reveal
-              data-reveal-delay={index * 40}
-            >
+            <div key={project.id} data-reveal data-reveal-delay={index * 40}>
+              <article
+                className="project-card grid gap-7 border-b border-ink/15 py-12 lg:grid-cols-12 lg:gap-10 lg:py-16"
+                data-tilt="2.4"
+                data-spotlight
+                data-cursor-label="INSPECT"
+              >
               <div className="lg:col-span-1">
                 <span className="font-mono text-xs text-ink/35">0{index + 1}</span>
               </div>
@@ -134,7 +132,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                   </div>
                 </details>
               </div>
-            </article>
+              </article>
+            </div>
           ))}
         </div>
 
