@@ -2,6 +2,7 @@ import React from 'react';
 import { Navbar } from '@/components/layout/Navbar';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { AboutSection } from '@/components/sections/AboutSection';
+import { MotionTicker } from '@/components/sections/MotionTicker';
 import { ProjectsSection } from '@/components/sections/ProjectsSection';
 import { WorkAtlasSection } from '@/components/sections/WorkAtlasSection';
 import { ExperienceSection } from '@/components/sections/ExperienceSection';
@@ -30,6 +31,7 @@ export default function Home() {
           cp={INITIAL_GITHUB_DATA.cp}
         />
         <AboutSection profile={INITIAL_PROFILE} />
+        <MotionTicker />
         <ProjectsSection projects={INITIAL_PROJECTS} />
         <WorkAtlasSection />
         <FrontierSection />
