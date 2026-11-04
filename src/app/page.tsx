@@ -3,6 +3,7 @@ import { Navbar } from '@/components/layout/Navbar';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { AboutSection } from '@/components/sections/AboutSection';
 import { ProjectsSection } from '@/components/sections/ProjectsSection';
+import { WorkAtlasSection } from '@/components/sections/WorkAtlasSection';
 import { ExperienceSection } from '@/components/sections/ExperienceSection';
 import { SkillsSection } from '@/components/sections/SkillsSection';
 import { AchievementsSection } from '@/components/sections/AchievementsSection';
@@ -30,6 +31,7 @@ export default function Home() {
         />
         <AboutSection profile={INITIAL_PROFILE} />
         <ProjectsSection projects={INITIAL_PROJECTS} />
+        <WorkAtlasSection />
         <FrontierSection />
         <ExperienceSection experience={INITIAL_EXPERIENCE} />
         <SkillsSection skills={INITIAL_SKILLS} />
