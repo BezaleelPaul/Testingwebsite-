@@ -120,7 +120,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
 
       {/* Atmospheric ambient vignette */}
       <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_72%_32%,rgba(217,255,99,0.06),transparent_45%),linear-gradient(90deg,rgba(17,20,17,0.88)_0%,rgba(17,20,17,0.65)_48%,rgba(17,20,17,0.2)_100%)]"
+        data-parallax="0.035" className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_72%_32%,rgba(217,255,99,0.06),transparent_45%),linear-gradient(90deg,rgba(17,20,17,0.88)_0%,rgba(17,20,17,0.65)_48%,rgba(17,20,17,0.2)_100%)]"
         aria-hidden="true"
       />
 
