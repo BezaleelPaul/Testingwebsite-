@@ -21,6 +21,7 @@ import {
   AtlasConstellation,
 } from '@/data/workAtlas';
 import { AtlasFallbackMap } from './AtlasFallbackMap';
+import { AnimatedWords } from '@/components/motion/AnimatedWords';
 
 const AtlasCanvas = dynamic(
   () => import('./AtlasCanvas').then((module) => module.AtlasCanvas),
@@ -360,8 +361,8 @@ export const AtlasExperience: React.FC = () => {
           <section className="lg:pointer-events-auto lg:self-start">
             <div className="border border-paper/12 bg-ink/75 p-5 backdrop-blur-md sm:p-6">
               <p className="eyebrow text-signal">01 / Constellation map</p>
-              <h1 className="serif-display mt-4 text-5xl text-paper sm:text-6xl">
-                The Work <span className="italic text-signal">Atlas.</span>
+              <h1 className="serif-display mt-4 text-5xl text-paper sm:text-6xl" data-word-group>
+                <AnimatedWords text="The Work Atlas." accentWords={['Atlas.']} />
               </h1>
               <p className="mt-5 max-w-sm text-sm leading-relaxed text-paper/60">
                 Five systems plotted from their actual repository timelines. Select a
