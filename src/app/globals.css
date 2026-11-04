@@ -372,3 +372,39 @@ html.motion-ready [data-word-group] .word-mask [data-word-reveal] {
     will-change: auto;
   }
 }
+
+
+/* Scroll-story typography: a restrained signal ribbon between the editorial chapters. */
+.motion-ticker { isolation: isolate; }
+.motion-ticker-track {
+  display: flex;
+  width: max-content;
+  animation: motion-ticker-drift 34s linear infinite;
+  will-change: transform;
+}
+.motion-ticker-group { display: flex; flex: 0 0 auto; align-items: center; }
+.motion-ticker-word {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding-inline: clamp(1.5rem, 4vw, 4rem);
+  white-space: nowrap;
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  font-size: clamp(.68rem, 1.1vw, .82rem);
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+.motion-ticker-star { font-size: 1.2em; opacity: .58; }
+@keyframes motion-ticker-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+.work-atlas-section { scroll-margin-top: 4.5rem; }
+.work-atlas-section canvas { touch-action: pan-y; }
+@media (hover: hover) and (pointer: fine) {
+  .work-atlas-section button,
+  .work-atlas-section a { cursor: pointer; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-ticker-track { animation: none !important; transform: none !important; }
+}
