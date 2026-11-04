@@ -56,6 +56,7 @@ export const FrontierSection: React.FC = () => (
           </Link>
         </div>
         <div className="frontier-wreckage relative mx-auto h-44 w-full max-w-sm lg:col-span-5" aria-hidden="true">
+          <div className="frontier-ship"><span /></div>
           <div className="wreckage-ring" />
           <div className="wreckage-hull" />
           <div className="wreckage-wing wreckage-wing-left" />
