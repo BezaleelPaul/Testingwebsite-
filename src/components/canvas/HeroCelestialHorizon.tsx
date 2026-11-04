@@ -180,17 +180,17 @@ export const HeroCelestialHorizon: React.FC<HeroCosmosProps> = ({
     >
       <Canvas
         camera={{ position: isFullJourney ? [0, 32, 75] : [0, 26, 68], fov: 45, near: 0.1, far: 3500 }}
-        dpr={[1, isFullJourney ? 2 : 1.5]}
+        dpr={[1, isFullJourney ? 1.25 : 1.1]}
         gl={{
-          antialias: true,
+          antialias: false,
           toneMapping: THREE.ACESFilmicToneMapping,
           toneMappingExposure: 1.35,
-          powerPreference: 'high-performance',
+          powerPreference: 'low-power',
           alpha: true,
         }}
       >
         {/* Deep Cosmic Starfield & Interstellar Dust */}
-        <Starfield count={isFullJourney ? 9000 : 6500} />
+        <Starfield count={isFullJourney ? 5200 : 3200} />
 
         {/* 360-degree Interactive Orbit Controls - always enabled */}
         <OrbitControls
