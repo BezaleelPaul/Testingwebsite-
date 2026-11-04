@@ -14,7 +14,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skills }) => {
           data-reveal
         >
           <div className="lg:col-span-8">
-            <p className="eyebrow text-ink/45">04 / Toolkit</p>
+            <p className="eyebrow text-ink/45">05 / Toolkit</p>
             <h2 className="serif-display mt-5 max-w-3xl text-5xl text-ink sm:text-7xl">
               Tools chosen for the problem, not the logo wall.
             </h2>
