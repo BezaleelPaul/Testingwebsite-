@@ -171,7 +171,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
                 spaceAudio.playTelemetryBeep(1400);
                 setIsJourneyActive(true);
               }}
-              className="group inline-flex items-center gap-3 rounded-full bg-signal px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-ink transition-all hover:bg-signal-soft hover:shadow-[0_0_30px_rgba(217,255,99,0.45)] hover:-translate-y-0.5"
+              data-magnetic className="group inline-flex items-center gap-3 rounded-full bg-signal px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-ink transition-all hover:bg-signal-soft hover:shadow-[0_0_30px_rgba(217,255,99,0.45)] hover:-translate-y-0.5"
             >
               <Sparkles className="h-4 w-4 animate-spin text-ink" />
               <span>Explore 3D Solar System</span>
@@ -181,7 +181,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
             {/* Work Atlas Button */}
             <Link
               href="/atlas"
-              className="group inline-flex items-center gap-2.5 rounded-full border border-paper/40 bg-paper/10 backdrop-blur-md px-5 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-paper transition-all hover:border-paper hover:bg-paper hover:text-ink"
+              data-magnetic className="group inline-flex items-center gap-2.5 rounded-full border border-paper/40 bg-paper/10 backdrop-blur-md px-5 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-paper transition-all hover:border-paper hover:bg-paper hover:text-ink"
             >
               <Orbit className="h-4 w-4 text-signal" />
               <span>Open Work Atlas</span>
