@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, Orbit, Sparkles } from 'lucide-react';
+import { AnimatedWords } from '@/components/motion/AnimatedWords';
 
 const destinations = [
   { number: '01', title: 'Build for people', detail: 'Flutter, mobile and full-stack products', href: '#projects', orbit: 'orbit-a' },
@@ -18,8 +19,9 @@ export const FrontierSection: React.FC = () => (
       <header className="grid gap-8 lg:grid-cols-12 lg:items-end" data-reveal>
         <div className="lg:col-span-8">
           <p className="eyebrow text-signal">03 / The frontier</p>
-          <h2 className="serif-display mt-6 max-w-4xl text-5xl leading-[0.92] sm:text-7xl">
-            Every project is a <span className="italic text-signal">new world.</span>
+          <h2 className="serif-display mt-6 max-w-4xl text-5xl leading-[0.92] sm:text-7xl" data-word-group>
+            <AnimatedWords text="Every project is a" />{' '}
+            <span className="italic text-signal"><AnimatedWords text="new world." accentWords={['world.']} /></span>
           </h2>
         </div>
         <p className="max-w-sm text-sm leading-relaxed text-paper/55 lg:col-span-4 lg:ml-auto">

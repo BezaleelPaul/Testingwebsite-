@@ -177,10 +177,50 @@ const Constellation: React.FC<{
   );
 };
 
+const AtlasOrigin: React.FC = () => {
+  const globeRef = useRef<THREE.Group>(null);
+
+  useFrame((state, delta) => {
+    if (globeRef.current) {
+      globeRef.current.rotation.y += delta * 0.075;
+      globeRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.16) * 0.035;
+    }
+  });
+
+  return (
+    <group position={[0, -0.8, 0]}>
+      <group ref={globeRef}>
+        <mesh>
+          <sphereGeometry args={[0.88, 36, 28]} />
+          <meshBasicMaterial color="#163c43" />
+        </mesh>
+        <mesh>
+          <sphereGeometry args={[0.895, 28, 20]} />
+          <meshBasicMaterial color="#a6e5d1" wireframe transparent opacity={0.2} />
+        </mesh>
+        <mesh rotation={[0.42, 0.1, -0.22]}>
+          <torusGeometry args={[1.18, 0.009, 6, 120]} />
+          <meshBasicMaterial color="#d9ff63" transparent opacity={0.55} />
+        </mesh>
+        <mesh rotation={[-0.68, 0.35, 0.4]}>
+          <torusGeometry args={[1.34, 0.004, 4, 120]} />
+          <meshBasicMaterial color="#f1efe7" transparent opacity={0.28} />
+        </mesh>
+      </group>
+      <Html center position={[0, -1.42, 0]} zIndexRange={[10, 0]}>
+        <div className="whitespace-nowrap border border-signal/25 bg-ink/75 px-2 py-1 font-mono text-[7px] uppercase tracking-[0.18em] text-signal">
+          Origin / Bezaleel
+        </div>
+      </Html>
+    </group>
+  );
+};
+
 const AtlasScene: React.FC<AtlasCanvasProps> = ({ selectedId, reveal, onSelect }) => {
   return (
     <>
       <CameraRig selectedId={selectedId} />
+      <AtlasOrigin />
       <OrbitControls
         makeDefault
         enablePan={false}

@@ -344,3 +344,31 @@ details summary::marker {
   position: absolute; top: 5px; left: 18px; width: 10px; height: 6px;
   border-radius: 50%; background: #d9ff63;
 }
+
+
+/* Editorial word reveals: masked, staggered and driven by the existing Anime.js runtime. */
+.animated-words { display: inline; }
+.word-mask {
+  display: inline-block;
+  overflow: clip;
+  vertical-align: bottom;
+  padding-block: 0.08em;
+  margin-block: -0.08em;
+}
+.word-mask [data-word-reveal] {
+  display: inline-block;
+  transform: translateY(0);
+  will-change: transform, opacity;
+}
+.word-accent { color: var(--signal); }
+html.motion-ready [data-word-group] .word-mask [data-word-reveal] {
+  opacity: 0;
+  transform: translateY(115%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .word-mask [data-word-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    will-change: auto;
+  }
+}

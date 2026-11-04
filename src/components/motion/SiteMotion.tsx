@@ -84,6 +84,23 @@ export const SiteMotion: React.FC = () => {
       watch(group, () => animation.play(), { threshold: 0.08 });
     });
 
+    document.querySelectorAll<HTMLElement>('[data-word-group]').forEach((group) => {
+      const words = Array.from(group.querySelectorAll<HTMLElement>('[data-word-reveal]'));
+      if (words.length === 0) return;
+
+      const animation = animate(words, {
+        opacity: [0, 1],
+        translateY: ['115%', '0%'],
+        duration: 980,
+        delay: stagger(58, { start: readDelay(group) }),
+        ease: 'out(4)',
+        autoplay: false,
+      });
+
+      activeAnimations.push(animation);
+      watch(group, () => animation.play(), { threshold: 0.18 });
+    });
+
     document.querySelectorAll<HTMLElement>('[data-count]').forEach((element) => {
       const target = Number(element.dataset.count);
       if (!Number.isFinite(target)) return;

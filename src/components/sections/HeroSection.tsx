@@ -9,6 +9,7 @@ import { generateProceduralStarSystem, StarSystem } from '@/lib/proceduralUniver
 import { spaceAudio } from '@/lib/audio';
 import { CosmicJourneyScreen } from '@/components/interactive/CosmicJourneyScreen';
 import { HeroSignalVisual } from '@/components/sections/HeroSignalVisual';
+import { AnimatedWords } from '@/components/motion/AnimatedWords';
 
 interface HeroSectionProps {
   profile: PilotProfile;
@@ -144,10 +145,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
           </p>
           <h1
             className="serif-display max-w-4xl text-[clamp(4.4rem,11vw,9.5rem)] text-paper leading-[0.96]"
-            data-reveal
+            data-word-group
             data-reveal-delay="150"
           >
-            Bezaleel <span className="italic text-signal">Paul.</span>
+            <AnimatedWords text="Bezaleel Paul." accentWords={['Paul.']} />
           </h1>
           <p
             className="mt-6 max-w-2xl text-lg leading-relaxed text-paper/85 sm:text-xl font-normal drop-shadow-sm"
