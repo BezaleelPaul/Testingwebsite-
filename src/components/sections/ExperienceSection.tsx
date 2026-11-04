@@ -14,7 +14,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
           data-reveal
         >
           <div className="lg:col-span-7">
-            <p className="eyebrow text-signal">03 / Experience</p>
+            <p className="eyebrow text-signal">04 / Experience</p>
             <h2 className="serif-display mt-5 max-w-2xl text-5xl text-paper sm:text-7xl">
               Work, leadership, and deliberate practice.
             </h2>
