@@ -8,7 +8,16 @@ import { CelestialBodyData } from '@/types/simulation';
 import { generateProceduralStarSystem, StarSystem } from '@/lib/proceduralUniverse';
 import { spaceAudio } from '@/lib/audio';
 import { CosmicJourneyScreen } from '@/components/interactive/CosmicJourneyScreen';
+import dynamic from 'next/dynamic';
 import { HeroSignalVisual } from '@/components/sections/HeroSignalVisual';
+
+const HeroCelestialHorizon = dynamic(
+  () => import('@/components/canvas/HeroCelestialHorizon').then((mod) => mod.HeroCelestialHorizon),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
 import { AnimatedWords } from '@/components/motion/AnimatedWords';
 
 interface HeroSectionProps {
@@ -96,7 +105,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
   return (
     <section className="dark-surface relative isolate flex min-h-[92svh] flex-col justify-between overflow-hidden bg-ink px-0 pb-8 pt-28 text-paper sm:min-h-screen sm:pb-10 sm:pt-32">
       {/* Lightweight signal-core visual; the full planetary scene loads only on request. */}
-      <HeroSignalVisual />
+      {/* 3D Celestial Solar System Canvas (Interactive Three.js physics & planets) */}
+      <HeroCelestialHorizon
+        system={starSystem}
+        selectedBodyId={selectedBody?.id}
+        onSelectBody={(body) => {
+          setSelectedBody(body);
+          spaceAudio.playTelemetryBeep(1200);
+        }}
+        isWarping={isWarping}
+        isFullJourney={false}
+      />
 
       {/* Full-Screen Interactive Cosmic Journey Screen Modal */}
       <CosmicJourneyScreen
@@ -138,8 +157,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
         </span>
       </div>
 
-      <div className="section-shell relative z-10 grid flex-1 items-center gap-12 py-14 lg:grid-cols-12 lg:py-18">
-        <div className="lg:col-span-8">
+      <div className="section-shell relative z-10 grid flex-1 items-center gap-12 py-14 lg:grid-cols-12 lg:py-18 pointer-events-none">
+        <div className="lg:col-span-8 pointer-events-auto">
           <p className="eyebrow mb-6 text-signal" data-reveal data-reveal-delay="90">
             Software developer · builder · student
           </p>
@@ -207,7 +226,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
           </div>
         </div>
 
-        <aside className="lg:col-span-4 lg:self-end" data-reveal-group data-reveal-delay="360">
+        <aside className="lg:col-span-4 lg:self-end pointer-events-auto" data-reveal-group data-reveal-delay="360">
           <div className="grid grid-cols-3 gap-4 border-t border-paper/20 pt-5 lg:grid-cols-1 lg:gap-0 lg:border-l lg:border-t-0 lg:pl-7 lg:pt-0 backdrop-blur-sm bg-ink/20 lg:bg-transparent rounded-xl p-3 lg:p-0">
             <div className="lg:border-b lg:border-paper/15 lg:py-4 lg:first:pt-0" data-reveal-item>
               <span className="block font-mono text-2xl font-medium text-paper" data-count={stats.repos}>{stats.repos}</span>
@@ -225,11 +244,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
         </aside>
       </div>
 
-      <div className="section-shell relative z-10 flex flex-col gap-4 border-t border-paper/15 pt-5 sm:flex-row sm:items-center sm:justify-between" data-reveal data-reveal-delay="440">
-        <p className="max-w-2xl font-mono text-[10px] uppercase leading-relaxed tracking-[0.1em] text-paper/50">
+      <div className="section-shell relative z-10 flex flex-col gap-4 border-t border-paper/15 pt-5 sm:flex-row sm:items-center sm:justify-between pointer-events-none" data-reveal data-reveal-delay="440">
+        <p className="max-w-2xl font-mono text-[10px] uppercase leading-relaxed tracking-[0.1em] text-paper/50 pointer-events-auto">
           A portfolio of systems, experiments, and things still worth exploring
         </p>
-        <span className="eyebrow flex items-center gap-2 text-paper/50">
+        <span className="eyebrow flex items-center gap-2 text-paper/50 pointer-events-auto">
           Scroll to explore
           <ArrowDown className="h-3.5 w-3.5" />
         </span>

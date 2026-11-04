@@ -175,39 +175,36 @@ export const HeroCelestialHorizon: React.FC<HeroCosmosProps> = ({
 
   return (
     <div
-      className={`absolute inset-0 z-0 select-none overflow-hidden ${
-        isFullJourney ? 'pointer-events-auto' : 'pointer-events-none'
-      }`}
-      aria-hidden={!isFullJourney || undefined}
-      aria-label={isFullJourney ? 'Interactive 3D solar system' : undefined}
+      className="absolute inset-0 z-0 select-none overflow-hidden pointer-events-auto cursor-grab active:cursor-grabbing"
+      aria-label="Interactive 3D Solar System simulation - drag to rotate, scroll to zoom"
     >
       <Canvas
-        camera={{ position: isFullJourney ? [0, 32, 75] : [0, 36, 72], fov: 45, near: 0.1, far: 3500 }}
+        camera={{ position: isFullJourney ? [0, 32, 75] : [0, 26, 68], fov: 45, near: 0.1, far: 3500 }}
         dpr={[1, isFullJourney ? 2 : 1.5]}
         gl={{
-          antialias: isFullJourney,
+          antialias: true,
           toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: isFullJourney ? 1.35 : 1.25,
+          toneMappingExposure: 1.35,
           powerPreference: 'high-performance',
           alpha: true,
         }}
       >
         {/* Deep Cosmic Starfield & Interstellar Dust */}
-        <Starfield count={isFullJourney ? 9000 : 5200} />
+        <Starfield count={isFullJourney ? 9000 : 6500} />
 
-        {/* 360-degree Interactive Orbit Controls in Full Journey Mode */}
-        {isFullJourney && (
-          <OrbitControls
-            makeDefault
-            enableDamping
-            dampingFactor={0.06}
-            minDistance={10}
-            maxDistance={500}
-            rotateSpeed={0.8}
-            zoomSpeed={1.0}
-            panSpeed={0.8}
-          />
-        )}
+        {/* 360-degree Interactive Orbit Controls - always enabled */}
+        <OrbitControls
+          makeDefault
+          enableDamping
+          dampingFactor={0.06}
+          minDistance={10}
+          maxDistance={400}
+          rotateSpeed={0.75}
+          zoomSpeed={0.85}
+          enableZoom={true}
+          panSpeed={0.7}
+          maxPolarAngle={Math.PI / 2 + 0.12}
+        />
 
         {/* Orbiting Star System & Planetary Spheres */}
         <SolarSystemRig
@@ -219,19 +216,11 @@ export const HeroCelestialHorizon: React.FC<HeroCosmosProps> = ({
         />
       </Canvas>
 
-      {/* Cinematic Blur & Vignette Scrim ONLY active in background resume mode */}
-      {!isFullJourney && (
-        <>
-          <div
-            className="absolute inset-0 pointer-events-none backdrop-blur-[2.5px] bg-space-950/40"
-            aria-hidden="true"
-          />
-          <div
-            className="absolute inset-0 pointer-events-none bg-gradient-to-t from-space-950 via-space-950/20 to-space-950/80"
-            aria-hidden="true"
-          />
-        </>
-      )}
+      {/* Subtle atmospheric vignette so foreground text remains readable without obscuring planets */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/35 to-transparent"
+        aria-hidden="true"
+      />
     </div>
   );
 };

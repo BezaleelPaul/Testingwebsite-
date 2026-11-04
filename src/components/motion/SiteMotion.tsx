@@ -26,7 +26,7 @@ export const SiteMotion: React.FC = () => {
   useEffect(() => {
     const root = document.documentElement;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const activeAnimations: Array<{ revert: () => void }> = [];
+    const activeAnimations: any[] = [];
     const observers: IntersectionObserver[] = [];
     let scrollFrame = 0;
     let pointerFrame = 0;
@@ -36,7 +36,7 @@ export const SiteMotion: React.FC = () => {
 
     const cleanup = () => {
       observers.forEach((observer) => observer.disconnect());
-      activeAnimations.forEach((animation) => animation.revert());
+      activeAnimations.forEach((animation) => { try { if (typeof animation.revert === "function") animation.revert(); else if (typeof animation.pause === "function") animation.pause(); } catch(e) {} });
       if (scrollFrame) window.cancelAnimationFrame(scrollFrame);
       if (pointerFrame) window.cancelAnimationFrame(pointerFrame);
       root.classList.remove('motion-ready');
