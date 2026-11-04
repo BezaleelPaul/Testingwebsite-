@@ -332,3 +332,15 @@ details summary::marker {
 @media (prefers-reduced-motion: reduce) {
   .frontier-orbit::after { animation: none !important; }
 }
+
+.frontier-ship {
+  position: absolute; z-index: 2; top: 8%; right: 13%; width: 48px; height: 16px;
+  background: linear-gradient(180deg, #f1efe7, #7c8877);
+  clip-path: polygon(0 50%, 35% 12%, 82% 25%, 100% 50%, 82% 75%, 35% 88%);
+  transform: rotate(-18deg);
+  filter: drop-shadow(0 0 10px rgba(217,255,99,.25));
+}
+.frontier-ship span {
+  position: absolute; top: 5px; left: 18px; width: 10px; height: 6px;
+  border-radius: 50%; background: #d9ff63;
+}
