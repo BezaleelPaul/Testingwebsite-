@@ -30,7 +30,7 @@ export const FrontierSection: React.FC = () => (
 
       <div className="relative mt-16 grid gap-0 border-y border-paper/15 sm:grid-cols-2" data-reveal-group>
         {destinations.map((item) => (
-          <Link key={item.number} href={item.href} className="frontier-destination group relative flex min-h-[190px] items-center gap-6 border-b border-paper/15 p-6 transition-colors hover:bg-paper/[0.045] sm:min-h-[220px] sm:p-8 sm:odd:border-r sm:odd:border-paper/15 sm:nth-[n+3]:border-b-0" data-reveal-item>
+          <Link key={item.number} href={item.href} className="frontier-destination group relative flex min-h-[190px] items-center gap-6 border-b border-paper/15 p-6 transition-colors hover:bg-paper/[0.045] sm:min-h-[220px] sm:p-8 sm:border-r sm:border-paper/15" data-reveal-item>
             <span className={`frontier-orbit ${item.orbit}`} aria-hidden="true"><span /></span>
             <span className="relative z-10 flex-1">
               <span className="eyebrow text-paper/35">{item.number} / Destination</span>
