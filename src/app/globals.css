@@ -294,6 +294,10 @@ details summary::marker {
   background-size: 310px 260px, 390px 330px, 470px 370px, 530px 410px;
 }
 .frontier-destination { min-width: 0; }
+@media (min-width: 640px) {
+  .frontier-destination:nth-child(2n) { border-right: 0; }
+  .frontier-destination:nth-child(n+3) { border-bottom: 0; }
+}
 .frontier-orbit {
   position: relative; display: grid; width: 76px; height: 76px; flex: 0 0 76px;
   place-items: center; border: 1px solid rgba(241,239,231,.22); border-radius: 50%;
