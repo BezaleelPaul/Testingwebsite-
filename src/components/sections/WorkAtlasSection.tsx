@@ -41,14 +41,11 @@ export const WorkAtlasSection: React.FC = () => {
 
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const desktop = window.matchMedia('(min-width: 768px)');
-    const sync = () => setMotionEnabled(!reduced.matches && desktop.matches);
+    const sync = () => setMotionEnabled(!reduced.matches);
     sync();
     reduced.addEventListener('change', sync);
-    desktop.addEventListener('change', sync);
     return () => {
       reduced.removeEventListener('change', sync);
-      desktop.removeEventListener('change', sync);
     };
   }, []);
 
