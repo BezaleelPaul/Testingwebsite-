@@ -48,9 +48,5 @@ export function SiteScrollMotion() {
     };
   }, []);
 
-  const reducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const finePointer = typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  if (reducedMotion || !finePointer) return null;
-
-  return <ReactLenis root options={{ autoRaf: false, anchors: true, smoothWheel: true }} ref={lenisRef} />;
+  return <ReactLenis root options={{ autoRaf: false, anchors: true, smoothWheel: true, syncTouch: false, respectReducedMotion: true }} ref={lenisRef} />;
 }
