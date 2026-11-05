@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ReactLenis, type LenisRef } from 'lenis/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -8,14 +8,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 /** Browser-only scroll coordinator with reduced-motion and touch fallbacks. */
 export function SiteScrollMotion() {
   const lenisRef = useRef<LenisRef>(null);
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (reducedMotion.matches) return;
+    setEnabled(!window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }, []);
 
+  useEffect(() => {
+    if (!enabled) return;
     gsap.registerPlugin(ScrollTrigger);
-    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    const lenis = finePointer ? lenisRef.current?.lenis : undefined;
+    const lenis = lenisRef.current?.lenis;
     const syncScroll = () => ScrollTrigger.update();
     const tick = (time: number) => lenis?.raf(time * 1000);
 
@@ -44,9 +46,9 @@ export function SiteScrollMotion() {
         lenis.off('scroll', syncScroll);
         gsap.ticker.remove(tick);
       }
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
-  }, []);
+  }, [enabled]);
 
+  if (!enabled) return null;
   return <ReactLenis root options={{ autoRaf: false, anchors: true, smoothWheel: true, syncTouch: false, respectReducedMotion: true }} ref={lenisRef} />;
 }
