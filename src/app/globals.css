@@ -569,3 +569,23 @@ body.pointer-enhanced .experience-cursor-dot {
   [data-tilt] { transform: none !important; transition: none !important; }
   .project-card::after { display: none; }
 }
+
+
+/* Closing transmission: layered CSS beacon, no WebGL or continuous canvas. */
+.frontier-beacon { display: grid; place-items: center; }
+.frontier-beacon-ring, .frontier-beacon-core { position: absolute; display: block; border-radius: 50%; }
+.frontier-beacon-ring-one { inset: 12%; border: 1px solid rgba(217,255,99,.5); }
+.frontier-beacon-ring-two { inset: 27%; border: 1px dashed rgba(241,239,231,.38); transform: rotate(-28deg) scaleY(.62); }
+.frontier-beacon-core {
+  width: 13px; height: 13px; background: #d9ff63;
+  box-shadow: 0 0 18px 5px rgba(217,255,99,.28), 0 0 54px 12px rgba(217,255,99,.1);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .frontier-beacon-ring-one { animation: beacon-breathe 5s ease-in-out infinite; }
+  .frontier-beacon-core { animation: beacon-pulse 3.2s ease-in-out infinite; }
+}
+@keyframes beacon-breathe { 50% { transform: scale(.94); opacity: .55; } }
+@keyframes beacon-pulse { 50% { box-shadow: 0 0 26px 8px rgba(217,255,99,.36), 0 0 68px 18px rgba(217,255,99,.12); } }
+@media (prefers-reduced-motion: reduce) {
+  .frontier-beacon-ring-one, .frontier-beacon-core { animation: none !important; }
+}
