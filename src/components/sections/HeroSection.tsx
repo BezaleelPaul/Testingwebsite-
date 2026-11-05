@@ -9,6 +9,7 @@ import { generateProceduralStarSystem, StarSystem } from '@/lib/proceduralUniver
 import { spaceAudio } from '@/lib/audio';
 import { CosmicJourneyScreen } from '@/components/interactive/CosmicJourneyScreen';
 import { HeroSignalVisual } from '@/components/sections/HeroSignalVisual';
+import { HeroPortraitDepth } from '@/components/sections/HeroPortraitDepth';
 import { AnimatedWords } from '@/components/motion/AnimatedWords';
 
 interface HeroSectionProps {
@@ -97,6 +98,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
     <section className="dark-surface relative isolate flex min-h-[92svh] flex-col justify-between overflow-hidden bg-ink px-0 pb-8 pt-28 text-paper sm:min-h-screen sm:pb-10 sm:pt-32">
       {/* Lightweight signal visual on load; the full 3D system mounts only inside the user-opened journey. */}
       <HeroSignalVisual />
+      <HeroPortraitDepth />
 
       {/* Full-Screen Interactive Cosmic Journey Screen Modal */}
       <CosmicJourneyScreen
