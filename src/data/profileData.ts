@@ -12,7 +12,7 @@ export const INITIAL_PROFILE: PilotProfile = {
   name: "Bezaleel Paul N",
   callsign: "BezForge",
   headline: "Software Developer · Flutter · Full-Stack · AI/ML",
-  subheadline: "B.Tech CSE @ CMR University ('25–'29) · BS in Data Science @ IIT Madras ('26–Present) · IEEE EXCOM Member & Webmaster ('25–'26). Building practical apps, fast mobile experiences, and exploring machine learning.",
+  subheadline: "Second-year CS student · B.Tech CSE @ CMR University · BS in Data Science @ IIT Madras. Former IEEE EXCOM member and Webmaster. Building practical apps, fast mobile experiences, and exploring machine learning.",
   location: "Bangalore, India",
   status: "Open to SWE Internships & Collaborations",
   bio: [
