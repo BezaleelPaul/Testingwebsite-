@@ -42,7 +42,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
           {featuredProjects.map((project, index) => (
             <div key={project.id} data-reveal data-reveal-delay={index * 40}>
               <article
-                className="project-card grid gap-7 border-b border-ink/15 py-12 lg:grid-cols-12 lg:gap-10 lg:py-16"
+                className="project-card grid gap-7 border-b border-ink/15 py-12 lg:grid-cols-12 lg:gap-10 lg:py-16" data-gsap-reveal
                 data-tilt="2.4"
                 data-spotlight
                 data-cursor-label="INSPECT"

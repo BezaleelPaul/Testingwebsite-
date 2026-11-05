@@ -141,11 +141,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
       <div className="section-shell relative z-10 grid flex-1 items-center gap-12 py-14 lg:grid-cols-12 lg:py-18 pointer-events-none">
         <div className="lg:col-span-8 pointer-events-auto">
           <p className="eyebrow mb-6 text-signal" data-reveal data-reveal-delay="90">
-            Software developer · builder · student
+            Second-year CS student.
           </p>
           <h1
-            className="serif-display max-w-4xl text-[clamp(4.4rem,11vw,9.5rem)] text-paper leading-[0.96]"
+            className="font-display max-w-5xl text-[clamp(4rem,12.5vw,10.5rem)] font-extrabold uppercase tracking-[-0.085em] text-paper leading-[0.82]"
             data-word-group
+            data-gsap-reveal
             data-reveal-delay="150"
           >
             <AnimatedWords text="Bezaleel Paul." accentWords={['Paul.']} />
