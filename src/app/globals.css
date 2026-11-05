@@ -589,3 +589,72 @@ body.pointer-enhanced .experience-cursor-dot {
 @media (prefers-reduced-motion: reduce) {
   .frontier-beacon-ring-one, .frontier-beacon-core { animation: none !important; }
 }
+
+
+/* Portrait depth/parallax accent sourced from the supplied portfolio's visual direction.
+   Uses the existing GitHub profile portrait as a reliable hosted image; no layout or palette changes. */
+.hero-portrait-depth {
+  --portrait-x: 0px;
+  --portrait-y: 0px;
+  --portrait-rotate-x: 0deg;
+  --portrait-rotate-y: 0deg;
+  --portrait-light-x: 50%;
+  --portrait-light-y: 42%;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: clamp(1rem, 5vw, 5rem);
+  width: clamp(15rem, 28vw, 25rem);
+  aspect-ratio: .78;
+  overflow: hidden;
+  pointer-events: auto;
+  border: 1px solid rgba(241,239,231,.18);
+  border-radius: 48% 48% 2px 2px;
+  opacity: .82;
+  transform: translate3d(var(--portrait-x), calc(-50% + var(--portrait-y)), 0)
+    perspective(900px) rotateX(var(--portrait-rotate-x)) rotateY(var(--portrait-rotate-y));
+  transform-style: preserve-3d;
+  transition: opacity 350ms ease, border-color 350ms ease;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+}
+.hero-portrait-depth__image {
+  position: absolute;
+  inset: -3%;
+  background-image: url('https://avatars.githubusercontent.com/u/145212633?v=4');
+  background-size: cover;
+  background-position: center 28%;
+  filter: grayscale(1) contrast(1.08);
+  transform: translateZ(18px) scale(1.035);
+}
+.hero-portrait-depth__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(17,20,17,.02), rgba(17,20,17,.08) 52%, #111411 100%),
+    linear-gradient(90deg, rgba(17,20,17,.24), transparent 40%, rgba(17,20,17,.1));
+}
+.hero-portrait-depth__light {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at var(--portrait-light-x) var(--portrait-light-y), rgba(217,255,99,.25), transparent 43%);
+  mix-blend-mode: screen;
+  transform: translateZ(34px);
+}
+.hero-portrait-depth__label {
+  position: absolute;
+  right: 1rem;
+  bottom: 2rem;
+  color: rgba(241,239,231,.62);
+  font: 600 8px/1 'JetBrains Mono', monospace;
+  letter-spacing: .18em;
+  writing-mode: vertical-rl;
+}
+@media (max-width: 1023px) {
+  .hero-portrait-depth { right: 1rem; width: clamp(12rem, 32vw, 19rem); opacity: .42; }
+}
+@media (max-width: 639px) {
+  .hero-portrait-depth { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-portrait-depth { transform: translateY(-50%); }
+  .hero-portrait-depth__image, .hero-portrait-depth__light { transform: none; }
+}
