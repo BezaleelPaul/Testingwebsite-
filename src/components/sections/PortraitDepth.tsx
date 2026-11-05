@@ -23,5 +23,5 @@ export function PortraitDepth(){
    return()=>{active=false;observer.disconnect();window.removeEventListener('pointermove',move);img.removeEventListener('load',upload);cancelAnimationFrame(raf);gl.getExtension('WEBGL_lose_context')?.loseContext();};
   }catch{el.classList.add('portrait-gl-failed');}
  },[]);
- return <div className="portrait-depth" aria-hidden="true"><img ref={image} src="https://github.com/BezaleelPaul.png?size=800" alt="" crossOrigin="anonymous"/><canvas ref={canvas}/></div>;
+ return <div className="portrait-depth" aria-hidden="true"><img ref={image} src="/Testingwebsite-/assets/portrait-processed.webp" alt="" crossOrigin="anonymous"/><canvas ref={canvas}/></div>;
 }
