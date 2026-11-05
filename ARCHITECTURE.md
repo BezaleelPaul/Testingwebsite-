@@ -1,7 +1,7 @@
 # System Architecture
 
 **Project:** Bezaleel Paul portfolio and Work Atlas  
-**Framework:** Next.js 14 App Router, React 18, TypeScript  
+**Framework:** Next.js 16 App Router, React 19, TypeScript  
 **Output:** Static export to `out/` for GitHub Pages  
 **Primary accent:** Signal lime on ink and paper
 
