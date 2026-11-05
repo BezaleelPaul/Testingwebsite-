@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { SiteMotion } from '@/components/motion/SiteMotion';
 import { PointerExperience } from '@/components/motion/PointerExperience';
 import './globals.css';
+import 'lenis/dist/lenis.css';
+import { SiteScrollMotion } from '@/components/motion/SiteScrollMotion';
 
 const motionBootScript = `(function(){try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('motion-ready');window.setTimeout(function(){if(document.documentElement.dataset.motionBoot!=='on'){document.documentElement.classList.remove('motion-ready')}},3500)}}catch(error){}})();`;
 
@@ -57,6 +59,7 @@ export default function RootLayout({
       <body className="antialiased bg-paper text-ink overflow-x-hidden">
         {children}
         <SiteMotion />
+        <SiteScrollMotion />
         <PointerExperience />
       </body>
     </html>
