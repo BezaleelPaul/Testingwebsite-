@@ -17,7 +17,8 @@ export function SiteScrollMotion() {
   useEffect(() => {
     if (!enabled) return;
     gsap.registerPlugin(ScrollTrigger);
-    const lenis = lenisRef.current?.lenis;
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const lenis = finePointer ? lenisRef.current?.lenis : undefined;
     const syncScroll = () => ScrollTrigger.update();
     const tick = (time: number) => lenis?.raf(time * 1000);
 
