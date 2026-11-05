@@ -23,7 +23,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
 
           <div className="lg:col-span-8">
             <div
-              className="max-w-3xl space-y-6 text-base leading-relaxed text-ink/78 sm:text-lg"
+              className="max-w-3xl space-y-6 text-base leading-relaxed text-ink/78 sm:text-lg" data-gsap-reveal
               data-reveal-group
               data-reveal-delay="80"
             >
