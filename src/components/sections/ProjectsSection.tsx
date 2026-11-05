@@ -47,8 +47,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                 data-spotlight
                 data-cursor-label="INSPECT"
               >
-              <div className="lg:col-span-1">
-                <span className="font-mono text-xs text-ink/35">0{index + 1}</span>
+              <div className="flex items-start justify-between lg:col-span-1 lg:block">
+                <span className="font-mono text-xs tabular-nums text-ink/35">{String(index + 1).padStart(2, '0')}</span>
+                <span className="eyebrow text-ink/30 lg:mt-3 lg:block">Featured</span>
               </div>
 
               <div className="lg:col-span-7">
@@ -77,6 +78,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
 
                 <div className="mt-8 flex flex-wrap items-center gap-5">
                   <a
+                    data-magnetic
                     href={project.repoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -87,6 +89,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                   </a>
                   {project.demoUrl && (
                     <a
+                      data-magnetic
                       href={project.demoUrl}
                       target={project.demoUrl.startsWith('http') ? '_blank' : undefined}
                       rel={project.demoUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
@@ -99,7 +102,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                 </div>
               </div>
 
-              <div className="lg:col-span-4">
+              <div className="space-y-8 lg:col-span-4">
+                <div className="border-l-2 border-signal bg-ink/[0.035] py-4 pl-5 pr-4">
+                  <p className="eyebrow text-ink/40">Build signal / outcome</p>
+                  <p className="mt-3 text-sm leading-relaxed text-ink/75">{project.metrics || project.tagline}</p>
+                </div>
                 <details className="project-notes group border-t border-ink/20 pt-4">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-ink transition-colors hover:text-ink/55">
                     <span className="project-notes-open">Read the case notes</span>
