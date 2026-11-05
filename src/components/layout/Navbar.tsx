@@ -128,7 +128,7 @@ export const Navbar: React.FC = () => {
         <nav
           id="mobile-navigation"
           aria-label="Mobile navigation"
-          className="mobile-nav-enter border-t border-ink/10 bg-paper px-5 pb-7 pt-5 md:hidden"
+          className="mobile-nav-enter max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain border-t border-ink/10 bg-paper px-5 pb-7 pt-5 md:hidden"
         >
           <div className="flex flex-col">
             {navLinks.map((link, index) => (

@@ -53,11 +53,13 @@ const SignalRing: React.FC<{
   satelliteColor?: string;
 }> = ({ radius, rotation, color, opacity, speed, satelliteColor }) => {
   const groupRef = useRef<THREE.Group>(null);
+  const elapsedRef = useRef(0);
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
+    elapsedRef.current += delta;
     if (!groupRef.current) return;
     groupRef.current.rotation.z += delta * speed;
-    groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.18 + radius) * 0.04;
+    groupRef.current.rotation.y = Math.sin(elapsedRef.current * 0.18 + radius) * 0.04;
   });
 
   return (
@@ -84,6 +86,7 @@ const SignalObject: React.FC = () => {
   const dustRef = useRef<THREE.Points>(null);
   const dustGeometry = useMemo(createDustGeometry, []);
   const glowTexture = useMemo(createGlowTexture, []);
+  const elapsedRef = useRef(0);
 
   useEffect(() => () => {
     dustGeometry.dispose();
@@ -91,7 +94,8 @@ const SignalObject: React.FC = () => {
   }, [dustGeometry, glowTexture]);
 
   useFrame((state, delta) => {
-    const time = state.clock.elapsedTime;
+    elapsedRef.current += delta;
+    const time = elapsedRef.current;
 
     if (parallaxRef.current) {
       parallaxRef.current.rotation.x = THREE.MathUtils.lerp(
@@ -193,10 +197,10 @@ export default function HeroSignalCore() {
   return (
     <Canvas
       camera={{ position: [0, 0, 7.4], fov: 42, near: 0.1, far: 40 }}
-      dpr={[1, 1.5]}
+      dpr={[1, 1.2]}
       gl={{
         alpha: true,
-        antialias: true,
+        antialias: false,
         powerPreference: 'low-power',
       }}
       style={{ pointerEvents: 'auto' }}

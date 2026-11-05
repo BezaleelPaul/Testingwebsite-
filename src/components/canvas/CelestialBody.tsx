@@ -33,6 +33,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
   const cloudsRef = useRef<THREE.Mesh>(null);
   const ringGroupRef = useRef<THREE.Group>(null);
   const starMaterialRef = useRef<THREE.ShaderMaterial | null>(null);
+  const elapsedRef = useRef(0);
 
   // 1. Physically-accurate Atmospheric Scattering Material
   const atmosphereMaterial = useMemo(() => {
@@ -92,7 +93,8 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
     return null;
   }, [data.id, data.color, data.glowColor, data.hasRings, data.radius, data.emissive]);
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
+    elapsedRef.current += delta;
     // 1. Orbital Motion Calculation
     if (elapsedDays !== undefined) {
       const relPos = calculateOrbitPosition(data, elapsedDays);
@@ -122,7 +124,7 @@ export const CelestialBody: React.FC<CelestialBodyProps> = ({
 
     // 4. Update Solar Plasma Granulation Time
     if (starMaterialRef.current && starMaterialRef.current.uniforms.uTime) {
-      starMaterialRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
+      starMaterialRef.current.uniforms.uTime.value = elapsedRef.current;
     }
 
     // 5. Update Atmospheric Scattering Light Vector

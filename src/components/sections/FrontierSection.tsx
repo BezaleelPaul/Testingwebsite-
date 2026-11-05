@@ -69,16 +69,33 @@ export const FrontierSection: React.FC = () => (
         </div>
       </div>
 
-      <div className="mt-20 flex flex-col gap-6 border-t border-paper/15 pt-8 sm:flex-row sm:items-end sm:justify-between" data-reveal>
-        <div>
-          <p className="eyebrow text-paper/35">Beyond the known universe</p>
-          <p className="serif-display mt-4 max-w-3xl text-4xl text-paper sm:text-6xl">Yet to learn. <span className="italic text-signal">Yet to explore.</span></p>
-          <p className="mt-4 max-w-lg text-sm leading-relaxed text-paper/45">The map ends here. The work does not.</p>
+      <footer className="frontier-transmission relative mt-24 overflow-hidden border-t border-paper/15 pt-10 sm:mt-32 sm:pt-14" data-reveal>
+        <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
+          <div className="relative z-10 lg:col-span-8">
+            <p className="eyebrow flex items-center gap-2 text-signal"><span className="h-1.5 w-1.5 rounded-full bg-signal" /> Final transmission / no final destination</p>
+            <p className="serif-display mt-6 max-w-4xl text-5xl leading-[0.92] text-paper sm:text-7xl">
+              Yet to learn.<br /><span className="italic text-signal">Yet to explore.</span>
+            </p>
+            <p className="mt-6 max-w-lg text-sm leading-relaxed text-paper/50 sm:text-base">
+              This is a snapshot, not a finish line. There are more systems to understand,
+              better questions to ask, and things I have not learned how to build yet.
+            </p>
+            <Link href="/atlas" className="group mt-8 inline-flex items-center gap-3 rounded-full border border-paper/25 px-5 py-3 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-paper transition-colors hover:border-signal hover:text-signal">
+              <Orbit className="h-4 w-4" /> Continue the journey <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </Link>
+          </div>
+          <div className="frontier-beacon relative mx-auto h-40 w-40 lg:col-span-4 lg:mb-2" aria-hidden="true">
+            <span className="frontier-beacon-ring frontier-beacon-ring-one" />
+            <span className="frontier-beacon-ring frontier-beacon-ring-two" />
+            <span className="frontier-beacon-core" />
+            <span className="absolute inset-x-0 bottom-0 text-center font-mono text-[9px] uppercase tracking-[0.18em] text-paper/30">Signal continues</span>
+          </div>
         </div>
-        <Link href="/atlas" className="inline-flex shrink-0 items-center gap-3 rounded-full border border-paper/25 px-5 py-3 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-paper transition-colors hover:border-signal hover:text-signal">
-          <Orbit className="h-4 w-4" /> Continue exploring <ArrowUpRight className="h-4 w-4" />
-        </Link>
-      </div>
+        <div className="mt-14 flex flex-wrap justify-between gap-3 border-t border-paper/10 pt-4 font-mono text-[9px] uppercase tracking-[0.14em] text-paper/25">
+          <span>End of transmission</span>
+          <span>More to discover / 2026—</span>
+        </div>
+      </footer>
     </div>
   </section>
 );

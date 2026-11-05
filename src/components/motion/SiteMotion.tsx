@@ -33,6 +33,7 @@ export const SiteMotion: React.FC = () => {
     let pointerTarget: HTMLElement | null = null;
     let pointerX = 0;
     let pointerY = 0;
+    let surfaceTarget: HTMLElement | null = null;
 
     const cleanup = () => {
       observers.forEach((observer) => observer.disconnect());
@@ -169,27 +170,56 @@ export const SiteMotion: React.FC = () => {
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
 
-    // Magnetic response for the small number of explicitly opted-in controls.
+    // Pointer depth and spotlight are progressive enhancements for desktop
+    // project surfaces. They never intercept input or affect touch navigation.
     const onPointerMove = (event: PointerEvent) => {
-      const target = (event.target as HTMLElement | null)?.closest<HTMLElement>('[data-magnetic]');
-      if (!target || event.pointerType !== 'mouse') {
+      if (event.pointerType !== 'mouse') return;
+
+      const element = event.target as HTMLElement | null;
+      const magnetic = element?.closest<HTMLElement>('[data-magnetic]') ?? null;
+      if (!magnetic) {
         if (pointerTarget) pointerTarget.style.setProperty('--magnetic-offset', '0px 0px');
         pointerTarget = null;
-        return;
+      } else {
+        pointerTarget = magnetic;
+        const magneticRect = magnetic.getBoundingClientRect();
+        pointerX = (event.clientX - magneticRect.left - magneticRect.width / 2) * 0.12;
+        pointerY = (event.clientY - magneticRect.top - magneticRect.height / 2) * 0.12;
       }
-      pointerTarget = target;
-      const rect = target.getBoundingClientRect();
-      pointerX = (event.clientX - rect.left - rect.width / 2) * 0.12;
-      pointerY = (event.clientY - rect.top - rect.height / 2) * 0.12;
+
+      const surface = element?.closest<HTMLElement>('[data-tilt], [data-spotlight]') ?? null;
+      if (surfaceTarget && surfaceTarget !== surface) {
+        surfaceTarget.style.setProperty('--pointer-tilt-x', '0deg');
+        surfaceTarget.style.setProperty('--pointer-tilt-y', '0deg');
+      }
+      surfaceTarget = surface;
+      if (surface) {
+        const rect = surface.getBoundingClientRect();
+        const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+        const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+        const strength = Math.min(5, Math.max(0, Number(surface.dataset.tilt || 2.4)));
+        surface.style.setProperty('--spotlight-x', `${(x * 100).toFixed(1)}%`);
+        surface.style.setProperty('--spotlight-y', `${(y * 100).toFixed(1)}%`);
+        surface.style.setProperty('--pointer-tilt-x', `${((0.5 - y) * strength).toFixed(2)}deg`);
+        surface.style.setProperty('--pointer-tilt-y', `${((x - 0.5) * strength).toFixed(2)}deg`);
+      }
+
       if (pointerFrame) return;
       pointerFrame = window.requestAnimationFrame(() => {
         pointerTarget?.style.setProperty('--magnetic-offset', `${pointerX}px ${pointerY}px`);
         pointerFrame = 0;
       });
     };
-    const onPointerLeave = () => {
-      if (pointerTarget) pointerTarget.style.setProperty('--magnetic-offset', '0px 0px');
-      pointerTarget = null;
+    const onPointerLeave = (event: PointerEvent) => {
+      const leaving = (event.target as HTMLElement | null)?.closest<HTMLElement>('[data-tilt], [data-spotlight]');
+      if (leaving && !leaving.contains(event.relatedTarget as Node | null)) {
+        leaving.style.setProperty('--pointer-tilt-x', '0deg');
+        leaving.style.setProperty('--pointer-tilt-y', '0deg');
+      }
+      if (pointerTarget && !pointerTarget.contains(event.relatedTarget as Node | null)) {
+        pointerTarget.style.setProperty('--magnetic-offset', '0px 0px');
+        pointerTarget = null;
+      }
     };
     document.addEventListener('pointermove', onPointerMove, { passive: true });
     document.addEventListener('pointerout', onPointerLeave);

@@ -8,16 +8,7 @@ import { CelestialBodyData } from '@/types/simulation';
 import { generateProceduralStarSystem, StarSystem } from '@/lib/proceduralUniverse';
 import { spaceAudio } from '@/lib/audio';
 import { CosmicJourneyScreen } from '@/components/interactive/CosmicJourneyScreen';
-import dynamic from 'next/dynamic';
 import { HeroSignalVisual } from '@/components/sections/HeroSignalVisual';
-
-const HeroCelestialHorizon = dynamic(
-  () => import('@/components/canvas/HeroCelestialHorizon').then((mod) => mod.HeroCelestialHorizon),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
 import { AnimatedWords } from '@/components/motion/AnimatedWords';
 
 interface HeroSectionProps {
@@ -104,18 +95,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
 
   return (
     <section className="dark-surface relative isolate flex min-h-[92svh] flex-col justify-between overflow-hidden bg-ink px-0 pb-8 pt-28 text-paper sm:min-h-screen sm:pb-10 sm:pt-32">
-      {/* Lightweight signal-core visual; the full planetary scene loads only on request. */}
-      {/* 3D Celestial Solar System Canvas (Interactive Three.js physics & planets) */}
-      <HeroCelestialHorizon
-        system={starSystem}
-        selectedBodyId={selectedBody?.id}
-        onSelectBody={(body) => {
-          setSelectedBody(body);
-          spaceAudio.playTelemetryBeep(1200);
-        }}
-        isWarping={isWarping}
-        isFullJourney={false}
-      />
+      {/* Lightweight signal visual on load; the full 3D system mounts only inside the user-opened journey. */}
+      <HeroSignalVisual />
 
       {/* Full-Screen Interactive Cosmic Journey Screen Modal */}
       <CosmicJourneyScreen

@@ -179,11 +179,13 @@ const Constellation: React.FC<{
 
 const AtlasOrigin: React.FC = () => {
   const globeRef = useRef<THREE.Group>(null);
+  const elapsedRef = useRef(0);
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
+    elapsedRef.current += delta;
     if (globeRef.current) {
       globeRef.current.rotation.y += delta * 0.075;
-      globeRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.16) * 0.035;
+      globeRef.current.rotation.x = Math.sin(elapsedRef.current * 0.16) * 0.035;
     }
   });
 
@@ -249,8 +251,8 @@ export const AtlasCanvas: React.FC<AtlasCanvasProps> = (props) => {
   return (
     <Canvas
       camera={{ position: [0, 0.6, 23], fov: 46, near: 0.1, far: 100 }}
-      dpr={[1, 1.25]}
-      gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
+      dpr={[1, 1.1]}
+      gl={{ antialias: false, alpha: true, powerPreference: 'low-power' }}
       onPointerMissed={() => props.onSelect(null)}
       aria-hidden="true"
       style={{ background: 'transparent' }}
