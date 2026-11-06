@@ -1017,3 +1017,11 @@ html.lenis.lenis-stopped { overflow:hidden; }
  *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
  .hero-reveal { opacity:1; transform:none; }
 }
+
+/* Ensure the hero reveal is CSS-driven even without the old motion boot script. */
+.hero-reveal { opacity: 0; transform: translateY(38px); animation: orbital-reveal .8s cubic-bezier(.2,.8,.2,1) forwards; }
+.hero-kicker.hero-reveal { animation-delay: .05s; }
+.hero-title.hero-reveal { animation-delay: .16s; }
+.hero-subtitle.hero-reveal { animation-delay: .27s; }
+.hero-actions.hero-reveal { animation-delay: .38s; }
+.hero-stats.hero-reveal { animation-delay: .48s; }
