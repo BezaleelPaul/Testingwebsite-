@@ -2,6 +2,7 @@ import { Navbar } from '@/components/layout/Navbar';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { OrbitalMarquee } from '@/components/sections/OrbitalMarquee';
 import { OrbitalAbout } from '@/components/sections/OrbitalAbout';
+import { SelectedWork } from '@/components/sections/SelectedWork';
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
         <HeroSection />
         <OrbitalMarquee />
         <OrbitalAbout />
+        <SelectedWork />
       </main>
     </>
   );
