@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight, Github } from 'lucide-react';
 import { ProjectItem } from '@/types/portfolio';
@@ -8,10 +10,50 @@ interface ProjectsSectionProps {
 }
 
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    if (!section || !track) return;
+    const media = window.matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)');
+    let frame = 0, distance = 0, start = 0, end = 0;
+    const update = () => {
+      frame = 0;
+      if (!media.matches || distance <= 0) { track.style.transform = ''; return; }
+      const progress = Math.min(1, Math.max(0, (window.scrollY - start) / Math.max(1, end - start)));
+      track.style.transform = 'translate3d(' + (-distance * progress) + 'px,0,0)';
+    };
+    const measure = () => {
+      distance = Math.max(0, track.scrollWidth - window.innerWidth);
+      start = section.getBoundingClientRect().top + window.scrollY;
+      end = start + distance;
+      section.style.height = media.matches ? (window.innerHeight + distance) + 'px' : '';
+      update();
+    };
+    const onScroll = () => { if (!frame) frame = window.requestAnimationFrame(update); };
+    const onResize = () => measure();
+    measure();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
+    media.addEventListener('change', onResize);
+    document.fonts.ready.then(measure);
+    const images = Array.from(track.querySelectorAll('img'));
+    images.forEach((image) => image.addEventListener('load', measure));
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
+      media.removeEventListener('change', onResize);
+      images.forEach((image) => image.removeEventListener('load', measure));
+      if (frame) window.cancelAnimationFrame(frame);
+      section.style.height = '';
+      track.style.transform = '';
+    };
+  }, [projects.length]);
   const featuredProjects = projects.filter((project) => project.featured);
 
   return (
-    <section id="projects" className="border-t border-ink/10 bg-paper-bright py-24 sm:py-32">
+    <section ref={sectionRef} id="projects" className="projects-scroll-section border-t border-ink/10 bg-paper-bright py-24 sm:py-32">
       <div className="section-shell">
         <header
           className="grid gap-8 border-b border-ink/15 pb-10 lg:grid-cols-12 lg:items-end"
@@ -38,7 +80,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
           </div>
         </header>
 
-        <div>
+        <div className="projects-scroll-viewport">
+          <div ref={trackRef} className="projects-scroll-track">
           {featuredProjects.map((project, index) => (
             <div key={project.id} data-reveal data-reveal-delay={index * 40}>
               <article
@@ -142,6 +185,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
               </article>
             </div>
           ))}
+          </div>
         </div>
 
         <div
