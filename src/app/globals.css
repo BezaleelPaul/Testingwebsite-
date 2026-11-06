@@ -606,8 +606,9 @@ body.pointer-enhanced .experience-cursor-dot {
   .projects-scroll-track .project-card { min-height: 62vh; align-content: center; }
 }
 @media (max-width: 1023px) {
-  .projects-scroll-viewport { overflow: visible; }
-  .projects-scroll-track { display: block; transform: none !important; }
+  .projects-scroll-viewport { overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; overscroll-behavior-inline: contain; padding-bottom: 1rem; }
+  .projects-scroll-track { display: flex; width: max-content; gap: 1rem; transform: none !important; }
+  .projects-scroll-track > div { flex: 0 0 min(86vw, 620px); width: min(86vw, 620px); scroll-snap-align: start; }
 }
 @media (prefers-reduced-motion: reduce) {
   .projects-scroll-section { height: auto !important; }
