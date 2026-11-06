@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Preloader } from '@/components/motion/Preloader';
 import { SmoothScroll } from '@/components/motion/SmoothScroll';
+import { ScrollAnimations } from '@/components/motion/ScrollAnimations';
+import { SiteMotion } from '@/components/motion/SiteMotion';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -28,8 +30,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <meta name="theme-color" content="#0A0A0F" />
       </head>
       <body>
+        <div id="scroll-progress" aria-hidden="true" />
+        <div id="orbital-cursor" aria-hidden="true" />
+        <div id="orbital-cursor-dot" aria-hidden="true" />
         <Preloader />
         <SmoothScroll />
+        <ScrollAnimations />
+        <SiteMotion />
         {children}
       </body>
     </html>

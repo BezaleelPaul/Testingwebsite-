@@ -33,7 +33,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
           {skills.map((group, index) => {
             const Icon = categoryIcons[group.id as keyof typeof categoryIcons] ?? Code2;
             return (
-              <article className="skills-card" key={group.id}>
+              <article className="skills-card" key={group.id} data-reveal>
                 <div className="skills-card-top">
                   <span>{String(index + 1).padStart(2, '0')} / {String(skills.length).padStart(2, '0')}</span>
                   <Icon size={20} strokeWidth={1.5} aria-hidden="true" />

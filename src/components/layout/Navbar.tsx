@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
 
 const links = [
   { label: 'Profile', href: '#top' },
@@ -12,9 +13,38 @@ const links = [
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion || !headerRef.current) return;
+
+    const brand = headerRef.current.querySelector('.nav-brand');
+    const navLinks = headerRef.current.querySelectorAll('.nav-links .nav-link');
+    const resumeBtn = headerRef.current.querySelector('.resume-button');
+
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+
+    if (brand) {
+      tl.fromTo(brand, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.6 }, 0.2);
+    }
+    if (navLinks.length) {
+      tl.fromTo(
+        navLinks,
+        { opacity: 0, y: -16 },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 },
+        0.35
+      );
+    }
+    if (resumeBtn) {
+      tl.fromTo(resumeBtn, { opacity: 0, y: -16 }, { opacity: 1, y: 0, duration: 0.5 }, 0.55);
+    }
+
+    return () => { tl.kill(); };
+  }, []);
 
   return (
-    <header className="site-nav">
+    <header className="site-nav" ref={headerRef}>
       <div className="site-shell nav-inner">
         <Link href="/" className="nav-brand" aria-label="Bezaleel Paul home">
           BP<span className="accent">.</span>

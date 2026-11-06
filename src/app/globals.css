@@ -2208,3 +2208,116 @@ html.lenis.lenis-stopped { overflow:hidden; }
 @media (prefers-reduced-motion: reduce) {
   .mobile-nav-toggle span, .mobile-nav-panel { transition: none; }
 }
+
+
+/* ============================================================
+   SCROLL ANIMATIONS SYSTEM
+   ============================================================ */
+
+/* Word reveal wrapper — clips overflow for smooth line reveals */
+.word-reveal-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  line-height: inherit;
+}
+.word-reveal {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+/* Clip-reveal elements (eyebrows, tags) */
+.clip-reveal {
+  overflow: hidden;
+  display: inline-block;
+}
+
+/* Orbital Cursor */
+#orbital-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 44px; height: 44px;
+  margin-left: -22px; margin-top: -22px;
+  border: 1.5px solid rgba(215,255,0,0.65);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+  transition: width 0.22s ease, height 0.22s ease, margin 0.22s ease,
+              border-color 0.22s ease, border-radius 0.22s ease;
+  mix-blend-mode: normal;
+  display: none;
+}
+#orbital-cursor.cursor-active { display: block; }
+#orbital-cursor.cursor-hover {
+  width: 70px; height: 70px;
+  margin-left: -35px; margin-top: -35px;
+  border-color: rgba(215,255,0,1);
+}
+#orbital-cursor.cursor-portrait {
+  width: 60px; height: 60px;
+  margin-left: -30px; margin-top: -30px;
+  border-radius: 2px;
+  border-color: rgba(215,255,0,0.9);
+}
+#orbital-cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 6px; height: 6px;
+  margin-left: -3px; margin-top: -3px;
+  border-radius: 50%;
+  background: var(--accent);
+  pointer-events: none;
+  z-index: 10000;
+  will-change: transform;
+  display: none;
+}
+#orbital-cursor-dot.cursor-active { display: block; }
+
+/* Scroll progress bar */
+#scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  transform-origin: left;
+  transform: scaleX(0);
+  z-index: 10001;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Nav scrolled state */
+.site-nav {
+  transition: height 0.3s ease, background 0.3s ease, border-bottom-color 0.3s ease;
+}
+.site-nav.is-scrolled {
+  height: 58px;
+  background: rgba(10,10,15,0.95);
+  border-bottom-color: rgba(215,255,0,0.12);
+}
+
+/* Initial hidden states for scroll-animated elements */
+.gsap-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.gsap-reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+}
+.gsap-scale-reveal {
+  opacity: 0;
+  transform: scale(0.94);
+}
+
+/* Word split animation helpers */
+[data-split-word] {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+[data-split-word] > span {
+  display: inline-block;
+  will-change: transform, opacity;
+}

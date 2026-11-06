@@ -50,6 +50,30 @@ export function SmoothScroll() {
           scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true },
         });
       }
+
+      // Scroll progress bar
+      const progressBar = document.getElementById('scroll-progress');
+      if (progressBar) {
+        gsap.to(progressBar, {
+          scaleX: 1,
+          ease: 'none',
+          scrollTrigger: {
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: true,
+          },
+        });
+      }
+
+      // Nav scroll state
+      const nav = document.querySelector('.site-nav');
+      if (nav) {
+        ScrollTrigger.create({
+          start: 'top -80px',
+          onEnter: () => nav.classList.add('is-scrolled'),
+          onLeaveBack: () => nav.classList.remove('is-scrolled'),
+        });
+      }
     }, hero || undefined);
 
     const refresh = () => ScrollTrigger.refresh();

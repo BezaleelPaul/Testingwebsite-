@@ -19,7 +19,7 @@ export function ContactSection({ profile }: ContactSectionProps) {
           </div>
 
           <div className="contact-main">
-            <div className="contact-copy">
+            <div className="contact-copy" data-reveal>
               <p className="contact-kicker">HAVE A GOOD PROBLEM?</p>
               <h2 id="contact-title">LET'S MAKE<br /><span>IT REAL.</span></h2>
               <p className="contact-description">
@@ -33,7 +33,7 @@ export function ContactSection({ profile }: ContactSectionProps) {
               )}
             </div>
 
-            <div className="contact-orbit" aria-hidden="true">
+            <div className="contact-orbit" aria-hidden="true" data-reveal>
               <div className="contact-orbit-ring contact-orbit-ring-one" />
               <div className="contact-orbit-ring contact-orbit-ring-two" />
               <div className="contact-orbit-core"><Radio size={26} strokeWidth={1.2} /></div>

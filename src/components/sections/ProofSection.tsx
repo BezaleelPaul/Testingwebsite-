@@ -69,7 +69,7 @@ export function ProofSection() {
           {proofItems.map((item) => {
             const Icon = item.icon;
             return (
-              <article className="proof-card" key={item.number}>
+              <article className="proof-card" key={item.number} data-reveal>
                 <div className="proof-card-top">
                   <span>{item.number} / 04</span>
                   <Icon size={18} strokeWidth={1.5} aria-hidden="true" />
@@ -78,7 +78,7 @@ export function ProofSection() {
                 <h3>{item.title}</h3>
                 <p className="proof-detail">{item.detail}</p>
                 <div className="proof-metric">
-                  <strong>{item.metric}</strong>
+                  <strong data-count={item.metric}>{item.metric}</strong>
                   <span>{item.metricLabel}</span>
                 </div>
                 <p className="proof-extra">{item.extra}</p>
