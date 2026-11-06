@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight, Github } from 'lucide-react';
 import { ProjectItem } from '@/types/portfolio';
+import { HorizontalScrollExperience } from '@/components/motion/HorizontalScrollExperience';
 
 interface ProjectsSectionProps {
   projects: ProjectItem[];
@@ -38,11 +39,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
           </div>
         </header>
 
-        <div>
+        <HorizontalScrollExperience>
           {featuredProjects.map((project, index) => (
-            <div key={project.id} data-reveal data-reveal-delay={index * 40}>
+            <div key={project.id} className="horizontal-work-slide" data-reveal data-reveal-delay={index * 40}>
               <article
-                className="project-card grid gap-7 border-b border-ink/15 py-12 lg:grid-cols-12 lg:gap-10 lg:py-16"
+                className="project-card horizontal-work-panel grid gap-7 border-b border-ink/15 py-12 lg:grid-cols-12 lg:gap-10 lg:py-16"
                 data-tilt="2.4"
                 data-spotlight
                 data-cursor-label="INSPECT"
@@ -150,7 +151,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
               </article>
             </div>
           ))}
-        </div>
+        </HorizontalScrollExperience>
 
         <div
           className="flex flex-col justify-between gap-5 pt-10 sm:flex-row sm:items-center"
