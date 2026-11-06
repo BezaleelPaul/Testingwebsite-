@@ -23,6 +23,27 @@ export function SmoothScroll() {
     });
 
     const updateScroll = () => ScrollTrigger.update();
+    const hero = document.querySelector<HTMLElement>('[data-hero-scroll]');
+    const heroContext = gsap.context(() => {
+      const visual = hero?.querySelector<HTMLElement>('.hero-signal-visual');
+      const copy = hero?.querySelector<HTMLElement>('[data-hero-copy]');
+      if (hero && visual) {
+        gsap.to(visual, {
+          scale: 1.12,
+          yPercent: 12,
+          ease: 'none',
+          scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true },
+        });
+      }
+      if (hero && copy) {
+        gsap.to(copy, {
+          yPercent: -8,
+          opacity: 0.42,
+          ease: 'none',
+          scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true },
+        });
+      }
+    }, hero || undefined);
     const tick = (time: number) => lenis.raf(time * 1000);
 
     lenis.on('scroll', updateScroll);
@@ -39,7 +60,7 @@ export function SmoothScroll() {
       lenis.off('scroll', updateScroll);
       gsap.ticker.remove(tick);
       lenis.destroy();
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      heroContext.revert();
     };
   }, []);
 
