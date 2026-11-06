@@ -778,9 +778,9 @@ body.pointer-enhanced .experience-cursor-dot {
   width: calc(100vw - 2rem);
   margin-left: calc(50% - 50vw + 1rem);
 }
-.horizontal-work-pin {
-  position: sticky;
-  top: 0;
+ .horizontal-work-pin {
+  position: relative;
+  top: auto;
   display: flex;
   height: 100svh;
   flex-direction: column;
@@ -861,3 +861,12 @@ html.lenis, html.lenis body { height: auto; }
 html.lenis.lenis-smooth { scroll-behavior: auto !important; }
 html.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 html.lenis.lenis-stopped { overflow: clip; }
+
+@keyframes preloader-rise {
+  from { opacity: 0; transform: translate3d(0, 2.25rem, 0); filter: blur(10px); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
+}
+.preloader-topline { animation: preloader-rise 700ms cubic-bezier(.22,1,.36,1) both; }
+.preloader-monogram { animation: preloader-rise 950ms cubic-bezier(.22,1,.36,1) 100ms both; }
+.preloader-statement { animation: preloader-rise 850ms cubic-bezier(.22,1,.36,1) 260ms both; }
+.preloader-bottom { animation: preloader-rise 750ms cubic-bezier(.22,1,.36,1) 360ms both; }
