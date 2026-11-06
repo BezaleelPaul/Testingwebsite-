@@ -207,16 +207,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
         </div>
 
         <aside className="lg:col-span-5 lg:self-center pointer-events-auto" data-reveal-group data-reveal-delay="360">
-          <div className="hero-portrait-slot" aria-label="Portrait image placeholder">
-            <div className="hero-portrait-grid" aria-hidden="true" />
-            <div className="hero-portrait-index">BP / 001</div>
-            <div className="hero-portrait-placeholder">
-              <span className="hero-portrait-plus">+</span>
-              <span className="eyebrow">Portrait image placeholder</span>
-              <span className="hero-portrait-note">Add your professional photograph here</span>
-            </div>
-            <div className="hero-portrait-caption"><span>BEZALEEL PAUL N</span><span>SOFTWARE DEVELOPER</span></div>
-          </div>
           <div className="grid grid-cols-3 gap-4 border-t border-paper/20 pt-5 lg:mt-5 lg:gap-0 lg:border-l lg:border-t-0 lg:pl-7 lg:pt-0 backdrop-blur-sm bg-ink/20 lg:bg-transparent rounded-xl p-3 lg:p-0">
             <div className="lg:border-b lg:border-paper/15 lg:py-4 lg:first:pt-0" data-reveal-item>
               <span className="block font-mono text-2xl font-medium text-paper" data-count={stats.repos}>{stats.repos}</span>
