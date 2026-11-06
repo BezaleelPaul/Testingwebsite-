@@ -139,7 +139,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
       </div>
 
       <div className="section-shell relative z-10 grid flex-1 items-center gap-12 py-14 lg:grid-cols-12 lg:py-18 pointer-events-none">
-        <div className="lg:col-span-8 pointer-events-auto">
+        <div className="lg:col-span-7 pointer-events-auto">
           <p className="eyebrow mb-6 text-signal" data-reveal data-reveal-delay="90">
             SOFTWARE ENGINEER / FLUTTER / FULL-STACK / AI
           </p>
