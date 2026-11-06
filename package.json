@@ -8,7 +8,9 @@
     "start": "next start",
     "test:e2e": "playwright test",
     "sync:resume": "node scripts/sync-resume.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prebuild": "npm run sync:public-repos",
+    "sync:public-repos": "node scripts/sync-public-repositories.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",
