@@ -1,5 +1,7 @@
 import { Navbar } from '@/components/layout/Navbar';
 import { HeroSection } from '@/components/sections/HeroSection';
+import { OrbitalMarquee } from '@/components/sections/OrbitalMarquee';
+import { OrbitalAbout } from '@/components/sections/OrbitalAbout';
 
 export default function Home() {
   return (
@@ -8,6 +10,8 @@ export default function Home() {
       <Navbar />
       <main id="main-content">
         <HeroSection />
+        <OrbitalMarquee />
+        <OrbitalAbout />
       </main>
     </>
   );
