@@ -22,6 +22,10 @@ export function SmoothScroll() {
       autoRaf: false,
     });
 
+    const preloaderActive = Boolean(document.querySelector('.portfolio-preloader'));
+    if (preloaderActive) lenis.stop();
+    const onIntroComplete = () => lenis.start();
+    window.addEventListener('portfolio:intro-complete', onIntroComplete);
     const updateScroll = () => ScrollTrigger.update();
     const hero = document.querySelector<HTMLElement>('[data-hero-scroll]');
     const heroContext = gsap.context(() => {
@@ -56,6 +60,7 @@ export function SmoothScroll() {
 
     return () => {
       window.removeEventListener('load', refresh);
+      window.removeEventListener('portfolio:intro-complete', onIntroComplete);
       window.cancelAnimationFrame(refreshFrame);
       lenis.off('scroll', updateScroll);
       gsap.ticker.remove(tick);
