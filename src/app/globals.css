@@ -1025,3 +1025,7 @@ html.lenis.lenis-stopped { overflow:hidden; }
 .hero-subtitle.hero-reveal { animation-delay: .27s; }
 .hero-actions.hero-reveal { animation-delay: .38s; }
 .hero-stats.hero-reveal { animation-delay: .48s; }
+
+.hero-contact { color:var(--muted); font:9px var(--mono); letter-spacing:.12em; transition:color .2s ease; }
+.hero-contact:hover { color:var(--accent); }
+@media(max-width:560px) { .hero-contact { font-size:7px; letter-spacing:.06em; } }
