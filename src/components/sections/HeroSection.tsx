@@ -7,7 +7,7 @@ export function HeroSection() {
     <section id="top" className="hero space-texture" data-hero-scroll aria-labelledby="hero-title">
       <div className="site-shell hero-topline">
         <span>01 / Independent software developer</span>
-        <span>Bengaluru, India · 2026</span>
+        <a className="hero-contact" href="mailto:bezaleel321@gmail.com">BEZALEEL321@GMAIL.COM ↗</a>
       </div>
 
       <div className="site-shell hero-main">
