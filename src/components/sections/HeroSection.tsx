@@ -131,7 +131,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
       >
         <span className="eyebrow flex items-center gap-2 text-paper/70">
           <span className="h-2 w-2 rounded-full bg-signal animate-pulse" />
-          <span className="text-signal font-semibold">Signal Core</span> / Independent software exploration
+          <span className="text-signal font-semibold">BENGALURU, INDIA</span> / Portfolio · 2026
         </span>
         <span className="eyebrow hidden text-paper/50 sm:block font-mono">
           {profile.location} · Bengaluru, India
@@ -141,22 +141,21 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
       <div className="section-shell relative z-10 grid flex-1 items-center gap-12 py-14 lg:grid-cols-12 lg:py-18 pointer-events-none">
         <div className="lg:col-span-8 pointer-events-auto">
           <p className="eyebrow mb-6 text-signal" data-reveal data-reveal-delay="90">
-            Software developer · builder · student
+            SOFTWARE ENGINEER / FLUTTER / FULL-STACK / AI
           </p>
           <h1
-            className="serif-display max-w-4xl text-[clamp(4.4rem,11vw,9.5rem)] text-paper leading-[0.96]"
+            className="hero-display max-w-5xl text-[clamp(4rem,10.5vw,9.25rem)] text-paper"
             data-word-group
             data-reveal-delay="150"
           >
-            <AnimatedWords text="Bezaleel Paul." accentWords={['Paul.']} />
+            <AnimatedWords text="BEZALEEL PAUL." accentWords={['PAUL.']} />
           </h1>
           <p
             className="mt-6 max-w-2xl text-lg leading-relaxed text-paper/85 sm:text-xl font-normal drop-shadow-sm"
             data-reveal
             data-reveal-delay="230"
           >
-            I build practical software for mobile, web, and machine learning. Currently studying
-            computer science at CMR University and data science at IIT Madras.
+            I design and build software across mobile, web, and applied AI. I am pursuing Computer Science at CMR University alongside the BS in Data Science programme at IIT Madras.
           </p>
 
           <div
@@ -174,7 +173,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
               data-magnetic className="group inline-flex items-center gap-3 rounded-full bg-signal px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-ink transition-all hover:bg-signal-soft hover:shadow-[0_0_30px_rgba(217,255,99,0.45)] hover:-translate-y-0.5"
             >
               <Sparkles className="h-4 w-4 animate-spin text-ink" />
-              <span>Explore 3D Solar System</span>
+              <span>Explore the experience</span>
               <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </button>
 
@@ -184,7 +183,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
               data-magnetic className="group inline-flex items-center gap-2.5 rounded-full border border-paper/40 bg-paper/10 backdrop-blur-md px-5 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-paper transition-all hover:border-paper hover:bg-paper hover:text-ink"
             >
               <Orbit className="h-4 w-4 text-signal" />
-              <span>Open Work Atlas</span>
+              <span>Explore selected work</span>
             </Link>
 
             {/* Projects Archive */}
@@ -207,8 +206,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
           </div>
         </div>
 
-        <aside className="lg:col-span-4 lg:self-end pointer-events-auto" data-reveal-group data-reveal-delay="360">
-          <div className="grid grid-cols-3 gap-4 border-t border-paper/20 pt-5 lg:grid-cols-1 lg:gap-0 lg:border-l lg:border-t-0 lg:pl-7 lg:pt-0 backdrop-blur-sm bg-ink/20 lg:bg-transparent rounded-xl p-3 lg:p-0">
+        <aside className="lg:col-span-5 lg:self-center pointer-events-auto" data-reveal-group data-reveal-delay="360">
+          <div className="hero-portrait-slot" aria-label="Portrait image placeholder">
+            <div className="hero-portrait-grid" aria-hidden="true" />
+            <div className="hero-portrait-index">BP / 001</div>
+            <div className="hero-portrait-placeholder">
+              <span className="hero-portrait-plus">+</span>
+              <span className="eyebrow">Portrait image placeholder</span>
+              <span className="hero-portrait-note">Add your professional photograph here</span>
+            </div>
+            <div className="hero-portrait-caption"><span>BEZALEEL PAUL N</span><span>SOFTWARE DEVELOPER</span></div>
+          </div>
+          <div className="grid grid-cols-3 gap-4 border-t border-paper/20 pt-5 lg:mt-5 lg:gap-0 lg:border-l lg:border-t-0 lg:pl-7 lg:pt-0 backdrop-blur-sm bg-ink/20 lg:bg-transparent rounded-xl p-3 lg:p-0">
             <div className="lg:border-b lg:border-paper/15 lg:py-4 lg:first:pt-0" data-reveal-item>
               <span className="block font-mono text-2xl font-medium text-paper" data-count={stats.repos}>{stats.repos}</span>
               <span className="eyebrow text-[9px] text-paper/50">Public repositories</span>
@@ -227,7 +236,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
 
       <div className="section-shell relative z-10 flex flex-col gap-4 border-t border-paper/15 pt-5 sm:flex-row sm:items-center sm:justify-between pointer-events-none" data-reveal data-reveal-delay="440">
         <p className="max-w-2xl font-mono text-[10px] uppercase leading-relaxed tracking-[0.1em] text-paper/50 pointer-events-auto">
-          A portfolio of systems, experiments, and things still worth exploring
+          ENGINEERING · PRODUCT THINKING · CONTINUOUS LEARNING
         </p>
         <span className="eyebrow flex items-center gap-2 text-paper/50 pointer-events-auto">
           Scroll to explore
