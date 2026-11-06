@@ -165,10 +165,10 @@
   ],
   "projects": [],
   "projectsQR": {
-    "url": "https://bezaleelpaul.github.io/projects/",
-    "label": "Scan to view all my projects",
-    "display": "bezaleelpaul.github.io/projects",
-    "note": "Flutter apps, AI/ML platforms & full-stack web apps, with source code and live demos"
+    "url": "https://bezaleelpaul-portfolio-demo.vercel.app/go/projects/",
+    "label": "Scan to view the project archive",
+    "display": "bezaleelpaul-portfolio-demo.vercel.app/go/projects",
+    "note": "Browse projects, engineering notes, technology stacks, source repositories and demos"
   },
   "footer": "Open to Software Development / Flutter Internships",
   "extra": []
