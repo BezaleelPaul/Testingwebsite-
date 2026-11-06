@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { ArrowLeft, ArrowUpRight, Github, Search } from 'lucide-react';
 import { INITIAL_PROJECTS } from '@/data/profileData';
 import githubRepositoryData from '@/data/github-repositories.json';
+import { ProjectCategory } from '@/types/portfolio';
+import { Navbar } from '@/components/layout/Navbar';
 
 type PublicRepository = {
   id: number;
@@ -21,8 +23,6 @@ type PublicRepository = {
 };
 
 const publicRepositories = githubRepositoryData.repositories as PublicRepository[];
-import { ProjectCategory } from '@/types/portfolio';
-import { Navbar } from '@/components/layout/Navbar';
 
 const categories: ProjectCategory[] = [
   'All',
@@ -264,7 +264,7 @@ export default function ProjectsPage() {
                   Public repositories.
                 </h2>
                 <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink/55">
-                  Every public repository owned by <span className="font-mono text-ink">@BezaleelPaul</span>, including forks and archived projects. New public repositories are discovered automatically.
+                  Every public repository owned by <span className="font-mono text-ink">@BezaleelPaul</span>, including forks and archived projects. New public repositories are discovered automatically; private work stays manual and is never fetched.
                 </p>
               </div>
               <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-ink/40 sm:text-right">
