@@ -711,6 +711,7 @@ body.pointer-enhanced .experience-cursor-dot {
   overflow: hidden;
   color: var(--paper);
   background: #10130f;
+  animation: none;
   opacity: 1;
   visibility: visible;
   clip-path: inset(0 0 0 0);
@@ -853,3 +854,10 @@ body.pointer-enhanced .experience-cursor-dot {
   .horizontal-work-panel > div:nth-of-type(3),
   .horizontal-work-panel > div:nth-of-type(4) { grid-column: 1 / -1; }
 }
+
+
+/* Lenis keeps native scroll semantics while smoothing wheel/trackpad movement. */
+html.lenis, html.lenis body { height: auto; }
+html.lenis.lenis-smooth { scroll-behavior: auto !important; }
+html.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+html.lenis.lenis-stopped { overflow: clip; }
