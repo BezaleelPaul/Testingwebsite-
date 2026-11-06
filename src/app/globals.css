@@ -1854,3 +1854,74 @@ html.lenis.lenis-stopped { overflow:hidden; }
 @media(prefers-reduced-motion:reduce) {
   .contact-email,.contact-links a { transition: none; }
 }
+
+
+/* Mobile navigation: keep section anchors reachable when desktop links collapse. */
+.mobile-nav-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  border: 1px solid rgba(241,239,231,.28);
+  background: rgba(10,10,15,.9);
+  color: #f7f8f2;
+  cursor: pointer;
+}
+.mobile-nav-toggle span {
+  display: block;
+  width: 16px;
+  height: 1px;
+  background: currentColor;
+  transition: transform 180ms ease;
+}
+.mobile-nav-toggle[aria-expanded="true"] span:first-child { transform: translateY(3.5px) rotate(45deg); }
+.mobile-nav-toggle[aria-expanded="true"] span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
+.mobile-nav-panel { display: none; }
+@media (max-width: 900px) {
+  .nav-inner { position: relative; }
+  .mobile-nav-toggle { display: inline-flex; margin-left: auto; }
+  .mobile-nav-panel {
+    position: absolute;
+    top: calc(100% + 1px);
+    right: 0;
+    left: 0;
+    display: grid;
+    gap: 0;
+    padding: 8px 18px;
+    border: 1px solid rgba(241,239,231,.16);
+    border-top: 0;
+    background: rgba(10,10,15,.97);
+    backdrop-filter: blur(18px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+  }
+  .mobile-nav-panel.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .mobile-nav-panel a {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(241,239,231,.12);
+    color: #f7f8f2;
+    font: 600 10px 'JetBrains Mono', monospace;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  .mobile-nav-panel a:last-child { border-bottom: 0; }
+  .mobile-nav-panel a span { color: #d7ff00; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav-toggle span, .mobile-nav-panel { transition: none; }
+}
