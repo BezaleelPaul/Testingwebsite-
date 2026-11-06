@@ -6,7 +6,8 @@ import { SelectedWork } from '@/components/sections/SelectedWork';
 import { ExperienceTimeline } from '@/components/sections/ExperienceTimeline';
 import { ProofSection } from '@/components/sections/ProofSection';
 import { SkillsSection } from '@/components/sections/SkillsSection';
-import { INITIAL_SKILLS } from '@/data/profileData';
+import { ContactSection } from '@/components/sections/ContactSection';
+import { INITIAL_PROFILE, INITIAL_SKILLS } from '@/data/profileData';
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
         <ExperienceTimeline />
         <ProofSection />
         <SkillsSection skills={INITIAL_SKILLS} />
+        <ContactSection profile={INITIAL_PROFILE} />
       </main>
     </>
   );
