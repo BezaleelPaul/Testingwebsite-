@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 const VERTEX = `attribute vec2 position; varying vec2 uv; void main(){uv=position*.5+.5;gl_Position=vec4(position,0.,1.);}`;
 const FRAGMENT = `precision mediump float; varying vec2 uv; uniform sampler2D portrait; uniform vec2 pointer; uniform float time; uniform float aspect; void main(){vec2 p=uv;vec4 source=texture2D(portrait,p);float lum=dot(source.rgb,vec3(.299,.587,.114));float depth=clamp(lum*.72+.18,0.,1.);p+=(pointer*.014)*(depth-.42);source=texture2D(portrait,p);float d=distance((uv-.5)*vec2(aspect,1.),(pointer+vec2(.5))*vec2(aspect,1.));float ripple=sin(atan(uv.y-pointer.y,uv.x-pointer.x)*3.0+time*1.1)*.012;float reveal=1.0-smoothstep(.22+ripple,.39+ripple,d);float gray=dot(source.rgb,vec3(.28,.58,.14))*.82;vec3 color=mix(vec3(gray),vec3(1.,.29,.08)*(0.35+lum*.72),reveal*.88);gl_FragColor=vec4(color,source.a);}`;
 export function PortraitDepth(){
+ const portraitSrc = `${process.env.NEXT_PUBLIC_SITE_BASE_PATH || ''}/assets/portrait-processed.webp`;
  const canvas=useRef<HTMLCanvasElement>(null); const image=useRef<HTMLImageElement>(null);
  useEffect(()=>{
   const el=canvas.current,img=image.current;if(!el||!img)return;
@@ -23,5 +24,5 @@ export function PortraitDepth(){
    return()=>{active=false;observer.disconnect();window.removeEventListener('pointermove',move);img.removeEventListener('load',upload);cancelAnimationFrame(raf);gl.getExtension('WEBGL_lose_context')?.loseContext();};
   }catch{el.classList.add('portrait-gl-failed');}
  },[]);
- return <div className="portrait-depth" aria-hidden="true"><img ref={image} src="/Testingwebsite-/assets/portrait-processed.webp" alt="" crossOrigin="anonymous"/><canvas ref={canvas}/></div>;
+ return <div className="portrait-depth" aria-hidden="true"><img ref={image} src={portraitSrc} alt="" crossOrigin="anonymous"/><canvas ref={canvas}/></div>;
 }
