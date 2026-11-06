@@ -1493,3 +1493,142 @@ html.lenis.lenis-stopped { overflow:hidden; }
   .proof-card { min-height: 370px; padding: 24px 20px; }
   .proof-foot { flex-direction: column; }
 }
+
+
+/* === ORBITAL STEP 06: SKILLS / ENGINEERING TOOLKIT === */
+.skills-section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(100px,12vw,170px) 0;
+  background: #0a0a0f;
+  color: #f7f8f2;
+}
+.skills-heading {
+  display: grid;
+  grid-template-columns: minmax(0,1.2fr) minmax(260px,.65fr);
+  align-items: end;
+  gap: 48px;
+  padding-bottom: clamp(48px,7vw,86px);
+}
+.skills-heading .orbital-eyebrow { color: #aeb3a5; }
+.skills-heading .orbital-eyebrow span { color: #d7ff00; }
+.skills-heading h2 {
+  margin: 30px 0 0;
+  color: #f7f8f2;
+  font: 400 clamp(58px,10vw,138px)/.86 var(--display);
+  letter-spacing: -.04em;
+}
+.skills-heading h2 span { color: #d7ff00; }
+.skills-intro {
+  max-width: 390px;
+  justify-self: end;
+  margin: 0 0 7px;
+  color: #b9beb2;
+  font-size: 14px;
+  line-height: 1.85;
+}
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  border-top: 1px solid rgba(255,255,255,.2);
+  border-left: 1px solid rgba(255,255,255,.2);
+}
+.skills-card {
+  min-width: 0;
+  min-height: 390px;
+  padding: clamp(24px,3.2vw,44px);
+  border-right: 1px solid rgba(255,255,255,.2);
+  border-bottom: 1px solid rgba(255,255,255,.2);
+  background: linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.008));
+  transition: background .25s ease;
+}
+.skills-card:hover { background: linear-gradient(145deg,rgba(215,255,0,.07),rgba(255,255,255,.012)); }
+.skills-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #aeb3a5;
+  font: 9px var(--mono);
+  letter-spacing: .13em;
+}
+.skills-card-top svg { color: #d7ff00; }
+.skills-card h3 {
+  margin: 40px 0 0;
+  color: #f7f8f2;
+  font: 400 clamp(29px,3.5vw,44px)/.98 var(--display);
+  letter-spacing: -.02em;
+}
+.skills-card-description {
+  max-width: 490px;
+  min-height: 48px;
+  margin: 14px 0 0;
+  color: #aeb3a5;
+  font-size: 12px;
+  line-height: 1.75;
+}
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin: 27px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.skill-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 104px;
+  padding: 11px 12px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.025);
+}
+.skill-chip span {
+  color: #e8ebe2;
+  font-size: 11px;
+  font-weight: 600;
+}
+.skill-chip small {
+  color: #aeb3a5;
+  font: 8px var(--mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.skill-chip-highlight { border-color: rgba(215,255,0,.4); background: rgba(215,255,0,.055); }
+.skill-chip-highlight span { color: #eaff9b; }
+.skill-chip-highlight small { color: #c3d77b; }
+.skills-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding-top: 25px;
+  color: #aeb3a5;
+  font: 8px var(--mono);
+  letter-spacing: .13em;
+}
+.skills-foot a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #f7f8f2;
+  text-decoration: none;
+  font-weight: 700;
+}
+.skills-foot a:hover { color: #d7ff00; }
+@media(max-width:700px) {
+  .skills-heading { grid-template-columns: 1fr; gap: 24px; }
+  .skills-intro { justify-self: start; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .skills-card { min-height: 0; padding: 27px 23px 30px; }
+  .skills-card h3 { margin-top: 30px; }
+  .skills-card-description { min-height: 0; }
+}
+@media(max-width:560px) {
+  .skills-heading h2 { font-size: clamp(56px,14vw,82px); }
+  .skills-foot { align-items: flex-start; flex-direction: column; }
+  .skill-chip { min-width: calc(50% - 5px); flex: 1 1 calc(50% - 5px); }
+}
+@media(prefers-reduced-motion:reduce) {
+  .skills-card { transition: none; }
+}
