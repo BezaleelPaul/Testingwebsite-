@@ -870,3 +870,34 @@ html.lenis.lenis-stopped { overflow: clip; }
 .preloader-monogram { animation: preloader-rise 950ms cubic-bezier(.22,1,.36,1) 100ms both; }
 .preloader-statement { animation: preloader-rise 850ms cubic-bezier(.22,1,.36,1) 260ms both; }
 .preloader-bottom { animation: preloader-rise 750ms cubic-bezier(.22,1,.36,1) 360ms both; }
+
+
+.preloader-enter-button {
+  display: inline-flex;
+  min-height: 3.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.75rem;
+  align-self: flex-start;
+  margin-top: .35rem;
+  padding: 0 1.35rem;
+  border: 1px solid var(--signal);
+  border-radius: 999px;
+  background: var(--signal);
+  color: var(--ink);
+  font: 700 9px 'JetBrains Mono', monospace;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: background 220ms ease, color 220ms ease, transform 220ms ease, opacity 220ms ease;
+  animation: preloader-rise 750ms cubic-bezier(.22,1,.36,1) 480ms both;
+}
+.preloader-enter-button:disabled {
+  cursor: wait;
+  opacity: .42;
+}
+.preloader-enter-button:not(:disabled):hover {
+  transform: translateY(-3px);
+  background: transparent;
+  color: var(--signal);
+}
+.preloader-enter-arrow { font-size: 17px; line-height: 1; }
