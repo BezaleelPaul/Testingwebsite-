@@ -4,6 +4,7 @@ import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ArrowUpRight, Github, Search } from 'lucide-react';
 import { INITIAL_PROJECTS } from '@/data/profileData';
+import githubRepositoryData from '@/data/github-repositories.json';
 import { ProjectCategory } from '@/types/portfolio';
 import { Navbar } from '@/components/layout/Navbar';
 
@@ -33,6 +34,21 @@ export default function ProjectsPage() {
       return matchesCategory && matchesSearch;
     });
   }, [activeCategory, searchQuery]);
+
+  const filteredRepositories = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) return githubRepositoryData.repositories;
+    return githubRepositoryData.repositories.filter((repository) => {
+      const searchable = [
+        repository.name,
+        repository.full_name,
+        repository.description ?? '',
+        repository.language ?? '',
+        ...(repository.topics ?? []),
+      ].join(' ').toLowerCase();
+      return searchable.includes(query);
+    });
+  }, [searchQuery]);
 
   const resetFilters = () => {
     setActiveCategory('All');
@@ -223,6 +239,76 @@ export default function ProjectsPage() {
               </button>
             </div>
           )}
+
+          <section className="mt-20 border-t border-ink/15 pt-10" aria-labelledby="public-repositories-heading">
+            <div className="flex flex-col gap-4 border-b border-ink/15 pb-7 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="eyebrow text-ink/40">GitHub // Live index</p>
+                <h2 id="public-repositories-heading" className="serif-display mt-3 text-4xl text-ink sm:text-6xl">
+                  Public repositories.
+                </h2>
+                <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink/55">
+                  Every public repository owned by <span className="font-mono text-ink">@BezaleelPaul</span>, including forks and archived projects. New public repositories are discovered automatically.
+                </p>
+              </div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-ink/40 sm:text-right">
+                <span className="block text-2xl text-ink">{githubRepositoryData.count}</span>
+                Public repositories
+                <span className="mt-1 block normal-case tracking-normal">
+                  {githubRepositoryData.generatedAt
+                    ? `Synced ${githubRepositoryData.generatedAt.slice(0, 10)}`
+                    : 'Awaiting first sync'}
+                </span>
+              </div>
+            </div>
+
+            {filteredRepositories.length > 0 ? (
+              <div className="grid gap-x-8 md:grid-cols-2 lg:grid-cols-3">
+                {filteredRepositories.map((repository) => (
+                  <article key={repository.id} className="flex min-w-0 flex-col border-b border-ink/15 py-7">
+                    <div className="flex items-start justify-between gap-3">
+                      <span className="eyebrow min-w-0 break-all text-ink/40">{repository.full_name}</span>
+                      <Github className="h-4 w-4 shrink-0 text-ink/35" />
+                    </div>
+                    <h3 className="mt-4 break-words font-display text-2xl leading-tight text-ink">
+                      {repository.name}
+                    </h3>
+                    <p className="mt-3 min-h-12 text-xs leading-relaxed text-ink/55">
+                      {repository.description || 'No description provided on GitHub.'}
+                    </p>
+                    <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 font-mono text-[9px] uppercase tracking-[0.08em] text-ink/40">
+                      {repository.language && <span>{repository.language}</span>}
+                      <span>★ {repository.stargazers_count}</span>
+                      <span>⑂ {repository.forks_count}</span>
+                      {repository.fork && <span>Fork</span>}
+                      {repository.archived && <span>Archived</span>}
+                    </div>
+                    {repository.topics.length > 0 && (
+                      <div className="mt-4 flex flex-wrap gap-1.5">
+                        {repository.topics.slice(0, 5).map((topic) => (
+                          <span key={topic} className="rounded-full border border-ink/15 px-2 py-1 font-mono text-[8px] text-ink/45">
+                            {topic}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    <a
+                      href={repository.html_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-6 inline-flex items-center gap-2 border-t border-ink/10 pt-4 font-mono text-[9px] font-semibold uppercase tracking-[0.1em] text-ink/55 transition hover:text-ink"
+                    >
+                      View repository <ArrowUpRight className="h-3.5 w-3.5" />
+                    </a>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <p className="py-12 text-sm text-ink/50">
+                No public repositories match “{searchQuery}”. Clear the search to see the full index.
+              </p>
+            )}
+          </section>
         </div>
       </main>
     </div>
