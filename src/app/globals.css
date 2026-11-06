@@ -1256,3 +1256,105 @@ html.lenis.lenis-stopped { overflow:hidden; }
  .experience-entry { opacity:1 !important; transform:none !important; }
  .experience-entry::before { transition:none; }
 }
+
+
+/* === READABILITY + EXPERIENCE VISUAL PASS === */
+/* Selected Work: the project detail panel is light, so all of its text must be dark. */
+.selected-work-card { background: #f7f7f1; }
+.selected-work-detail { color: #171a14; background: #f7f7f1; }
+.selected-work-detail h3 { color: #171a14; }
+.selected-work-meta { color: #51564c; }
+.selected-work-tagline { color: #4f554b; }
+.selected-work-outcome .orbital-eyebrow { color: #59604f; }
+.selected-work-outcome .orbital-eyebrow span { color: #667d00; }
+.selected-work-outcome p { color: #343a30; }
+.selected-work-stack span { color: #50564b; }
+.selected-work-links a,
+.selected-work-footer a { color: #171a14; }
+.selected-work-links a:hover,
+.selected-work-footer a:hover { color: #526600; }
+.selected-work-footer { color: #555b50; }
+.work-visual-index,.work-visual-label,.work-visual-caption { color: rgba(255,255,255,.76); }
+.work-vitals span,.work-vitals small { color: rgba(255,255,255,.72); }
+.work-mise-mark small { color: rgba(255,255,255,.72); }
+
+/* Experience: turn the text-only list into a deliberate, legible timeline. */
+.experience-section { background: #0a0a0f; color: #f7f8f2; }
+.experience-rail { min-width: 0; }
+.experience-rail .orbital-eyebrow,
+.experience-rail-copy,
+.experience-rail-bottom { color: #aeb3a5; }
+.experience-rail .orbital-eyebrow span,
+.experience-rail h2 span { color: #d7ff00; }
+.experience-rail h2 { color: #f7f8f2; }
+.experience-list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  border: 0;
+}
+.experience-list::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 9px;
+  width: 1px;
+  background: linear-gradient(to bottom, rgba(215,255,0,.85), rgba(255,255,255,.12));
+}
+.experience-entry {
+  margin-left: 32px;
+  padding: 25px 28px 20px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: linear-gradient(145deg, #14141b, #101016 72%);
+  box-shadow: 0 16px 44px rgba(0,0,0,.18);
+  transition: border-color .25s ease, transform .25s ease, background .25s ease;
+}
+.experience-entry::after {
+  content: "";
+  position: absolute;
+  top: 31px;
+  left: -29px;
+  width: 9px;
+  height: 9px;
+  border: 2px solid #0a0a0f;
+  border-radius: 50%;
+  background: #d7ff00;
+  box-shadow: 0 0 0 1px rgba(215,255,0,.6), 0 0 16px rgba(215,255,0,.25);
+}
+.experience-entry:hover {
+  border-color: rgba(215,255,0,.42);
+  transform: translateY(-2px);
+  background: linear-gradient(145deg, #191a20, #111117 72%);
+}
+.experience-entry::before { top: 0; left: 0; }
+.experience-entry-top,
+.experience-entry-bottom { color: #aeb3a5; }
+.experience-number,
+.experience-type { color: #d7ff00; }
+.experience-period { color: #c2c7b9; }
+.experience-entry h3 { color: #f7f8f2; }
+.experience-organization { color: #e4e8dc; }
+.experience-location { color: #aeb3a5; }
+.experience-summary { color: #c1c6ba; }
+.experience-focus span {
+  border-color: rgba(255,255,255,.2);
+  color: #d7dbd0;
+  background: rgba(255,255,255,.025);
+}
+.experience-entry-bottom { border-top-color: rgba(255,255,255,.16); }
+.experience-entry-bottom a { color: #f7f8f2; }
+.experience-entry-bottom a:hover { color: #d7ff00; }
+@media(max-width:900px) {
+  .experience-layout { gap: 42px; }
+  .experience-list { gap: 18px; }
+  .experience-entry { margin-left: 26px; padding: 22px 20px 18px; }
+  .experience-entry::after { left: -24px; }
+}
+@media(max-width:560px) {
+  .experience-list::before { left: 6px; }
+  .experience-entry { margin-left: 20px; padding: 20px 16px 16px; }
+  .experience-entry::after { left: -20px; }
+  .experience-entry-top,.experience-entry-bottom { gap: 10px; }
+}
