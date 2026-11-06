@@ -1,15 +1,18 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface HorizontalScrollExperienceProps {
   children: React.ReactNode;
 }
 
 /**
- * Desktop: vertical page scroll drives a pinned horizontal project sequence.
- * Touch/small screens and reduced-motion users retain a normal vertical list.
- * Native page scrolling remains in control; no wheel events are hijacked.
+ * Desktop: vertical scroll pins the chapter while the work panels travel
+ * horizontally. Mobile and reduced-motion users retain native vertical flow.
  */
 export function HorizontalScrollExperience({ children }: HorizontalScrollExperienceProps) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -21,62 +24,44 @@ export function HorizontalScrollExperience({ children }: HorizontalScrollExperie
     const track = trackRef.current;
     if (!section || !track) return;
 
-    const desktop = window.matchMedia('(min-width: 1024px)');
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let frame = 0;
-    let distance = 0;
-    let active = false;
+    const media = gsap.matchMedia();
+    media.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+      const context = gsap.context(() => {
+        const getDistance = () => Math.max(0, track.scrollWidth - window.innerWidth);
+        gsap.to(track, {
+          x: () => -getDistance(),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: () => `+=${getDistance()}`,
+            pin: true,
+            scrub: 1,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              if (progressRef.current) {
+                progressRef.current.style.transform = `scaleX(${self.progress})`;
+              }
+              section.dataset.progress = self.progress.toFixed(3);
+            },
+            onRefresh: (self) => {
+              if (progressRef.current) {
+                progressRef.current.style.transform = `scaleX(${self.progress})`;
+              }
+            },
+          },
+        });
+      }, section);
 
-    const measure = () => {
-      active = desktop.matches && !reduced.matches;
-      section.classList.toggle('horizontal-work-enabled', active);
-      track.style.transform = '';
-      section.style.height = '';
-      distance = active ? Math.max(0, track.scrollWidth - window.innerWidth) : 0;
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+      return () => {
+        context.revert();
+        delete section.dataset.progress;
+      };
+    });
 
-      if (active && distance > 0) {
-        section.style.height = `${window.innerHeight + distance}px`;
-        update();
-      } else {
-        track.style.transform = 'none';
-        if (progressRef.current) progressRef.current.style.transform = 'scaleX(0)';
-      }
-    };
-
-    const update = () => {
-      frame = 0;
-      if (!active || distance <= 0) return;
-      const rect = section.getBoundingClientRect();
-      const progress = Math.max(0, Math.min(1, -rect.top / distance));
-      track.style.transform = `translate3d(${-progress * distance}px, 0, 0)`;
-      if (progressRef.current) progressRef.current.style.transform = `scaleX(${progress})`;
-      section.dataset.progress = progress.toFixed(3);
-    };
-
-    const requestUpdate = () => {
-      if (!frame) frame = window.requestAnimationFrame(update);
-    };
-
-    measure();
-    window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', measure);
-    desktop.addEventListener('change', measure);
-    reduced.addEventListener('change', measure);
-
-    const resizeObserver = new ResizeObserver(measure);
-    resizeObserver.observe(track);
-
-    return () => {
-      window.removeEventListener('scroll', requestUpdate);
-      window.removeEventListener('resize', measure);
-      desktop.removeEventListener('change', measure);
-      reduced.removeEventListener('change', measure);
-      resizeObserver.disconnect();
-      if (frame) window.cancelAnimationFrame(frame);
-      section.style.height = '';
-      track.style.transform = '';
-      delete section.dataset.progress;
-    };
+    return () => media.revert();
   }, []);
 
   return (
