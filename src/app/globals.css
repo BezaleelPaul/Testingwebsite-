@@ -1632,3 +1632,225 @@ html.lenis.lenis-stopped { overflow:hidden; }
 @media(prefers-reduced-motion:reduce) {
   .skills-card { transition: none; }
 }
+
+
+/* === ORBITAL STEP 07: CONTACT / FINAL TRANSMISSION === */
+.contact-section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(88px,11vw,150px) 0 0;
+  background: #0a0a0f;
+  color: #f7f8f2;
+}
+.contact-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(255,255,255,.2);
+}
+.contact-topline .orbital-eyebrow { color: #aeb3a5; }
+.contact-topline .orbital-eyebrow span { color: #d7ff00; }
+.contact-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #c6cbbb;
+  font: 8px var(--mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.contact-status i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d7ff00;
+  box-shadow: 0 0 13px rgba(215,255,0,.6);
+}
+.contact-main {
+  display: grid;
+  grid-template-columns: minmax(0,1.2fr) minmax(260px,.8fr);
+  align-items: center;
+  gap: 45px;
+  padding: clamp(55px,8vw,105px) 0 clamp(65px,8vw,105px);
+}
+.contact-copy { position: relative; z-index: 1; }
+.contact-kicker {
+  margin: 0;
+  color: #d7ff00;
+  font: 9px var(--mono);
+  letter-spacing: .17em;
+}
+.contact-copy h2 {
+  margin: 27px 0 0;
+  color: #f7f8f2;
+  font: 400 clamp(66px,11vw,150px)/.82 var(--display);
+  letter-spacing: -.045em;
+}
+.contact-copy h2 span { color: #d7ff00; }
+.contact-description {
+  max-width: 480px;
+  margin: 32px 0 0;
+  color: #b9beb2;
+  font-size: 14px;
+  line-height: 1.9;
+}
+.contact-email {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 32px;
+  padding: 15px 18px;
+  border: 1px solid rgba(215,255,0,.55);
+  color: #f7f8f2;
+  background: rgba(215,255,0,.055);
+  font: 600 11px var(--mono);
+  text-decoration: none;
+  transition: color .2s ease, background .2s ease, border-color .2s ease;
+}
+.contact-email svg:first-child { color: #d7ff00; }
+.contact-email svg:last-child { margin-left: 9px; color: #d7ff00; }
+.contact-email:hover { color: #0a0a0f; background: #d7ff00; border-color: #d7ff00; }
+.contact-email:hover svg { color: #0a0a0f; }
+.contact-orbit {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(100%,420px);
+  aspect-ratio: 1;
+  justify-self: center;
+  border-radius: 50%;
+  background: radial-gradient(circle,rgba(215,255,0,.07),rgba(10,10,15,0) 62%);
+}
+.contact-orbit-ring {
+  position: absolute;
+  inset: 13%;
+  border: 1px solid rgba(215,255,0,.35);
+  border-radius: 50%;
+}
+.contact-orbit-ring-one { transform: rotate(-24deg) scaleY(.54); }
+.contact-orbit-ring-two { transform: rotate(54deg) scaleY(.54); border-color: rgba(255,255,255,.24); }
+.contact-orbit::before {
+  content: "";
+  position: absolute;
+  inset: 25%;
+  border: 1px dashed rgba(255,255,255,.2);
+  border-radius: 50%;
+}
+.contact-orbit-core {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  border: 1px solid rgba(215,255,0,.55);
+  border-radius: 50%;
+  color: #d7ff00;
+  background: #11120f;
+  box-shadow: 0 0 50px rgba(215,255,0,.12), inset 0 0 25px rgba(215,255,0,.08);
+}
+.contact-orbit-label {
+  position: absolute;
+  color: #aeb3a5;
+  font: 8px var(--mono);
+  letter-spacing: .15em;
+}
+.contact-orbit-label-top { top: 11%; right: 9%; }
+.contact-orbit-label-bottom { bottom: 12%; left: 7%; }
+.contact-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  padding: 23px 0;
+  border-top: 1px solid rgba(255,255,255,.2);
+  border-bottom: 1px solid rgba(255,255,255,.2);
+}
+.contact-links-label {
+  color: #aeb3a5;
+  font: 8px var(--mono);
+  letter-spacing: .14em;
+}
+.contact-links > div { display: flex; flex-wrap: wrap; gap: 12px 27px; }
+.contact-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #e4e8dc;
+  font: 9px var(--mono);
+  letter-spacing: .08em;
+  text-decoration: none;
+  transition: color .2s ease;
+}
+.contact-links a:hover { color: #d7ff00; }
+.contact-transmission {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 35px 0 40px;
+}
+.contact-transmission span {
+  color: #d7ff00;
+  font: 8px var(--mono);
+  letter-spacing: .16em;
+}
+.contact-transmission p {
+  margin: 0;
+  color: #dfe3d8;
+  font: 400 clamp(12px,1.5vw,17px) var(--display);
+  letter-spacing: .08em;
+  text-align: right;
+}
+.contact-transmission > svg { flex: 0 0 auto; color: #d7ff00; }
+.site-footer {
+  padding: 20px 0;
+  border-top: 1px solid rgba(255,255,255,.12);
+  background: #08080c;
+  color: #9da394;
+}
+.site-footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+.footer-mark {
+  color: #f7f8f2;
+  font: 700 21px var(--display);
+  text-decoration: none;
+}
+.footer-mark span { color: #d7ff00; }
+.site-footer-inner > span,
+.footer-top-link {
+  color: #9da394;
+  font: 8px var(--mono);
+  letter-spacing: .12em;
+}
+.footer-top-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #e4e8dc;
+  text-decoration: none;
+}
+.footer-top-link:hover { color: #d7ff00; }
+@media(max-width:760px) {
+  .contact-main { grid-template-columns: 1fr; gap: 32px; }
+  .contact-orbit { width: min(75vw,330px); }
+  .contact-links { align-items: flex-start; flex-direction: column; }
+}
+@media(max-width:560px) {
+  .contact-topline { align-items: flex-start; flex-direction: column; }
+  .contact-copy h2 { font-size: clamp(62px,15vw,92px); }
+  .contact-description { font-size: 13px; }
+  .contact-email { max-width: 100%; font-size: 10px; }
+  .contact-links > div { gap: 13px 18px; }
+  .contact-transmission { align-items: flex-start; flex-wrap: wrap; }
+  .contact-transmission p { flex: 1 1 calc(100% - 40px); order: 2; text-align: left; }
+  .contact-transmission > svg { order: 3; }
+  .site-footer-inner { flex-wrap: wrap; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .contact-email,.contact-links a { transition: none; }
+}
