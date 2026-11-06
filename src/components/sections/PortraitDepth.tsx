@@ -309,7 +309,6 @@ export function PortraitDepth({ className = '' }: PortraitDepthProps) {
 
     // Load texture image
     const textureImg = new Image();
-    textureImg.crossOrigin = 'anonymous';
     textureImg.src = portraitSrc;
 
     const uploadTexture = () => {
@@ -476,7 +475,6 @@ export function PortraitDepth({ className = '' }: PortraitDepthProps) {
         if (texture) gl.deleteTexture(texture);
         if (quadBuffer) gl.deleteBuffer(quadBuffer);
         if (program) gl.deleteProgram(program);
-        gl.getExtension('WEBGL_lose_context')?.loseContext();
       }
     };
   }, [portraitSrc, handlePointerUp]);
@@ -514,15 +512,13 @@ export function PortraitDepth({ className = '' }: PortraitDepthProps) {
         alt="Bezaleel Paul"
         fetchPriority="high"
         loading="eager"
-        crossOrigin="anonymous"
         style={{
           width: '100%',
           height: '100%',
           objectFit: 'contain',
           objectPosition: 'bottom center',
           filter: 'contrast(1.06) brightness(1.02)',
-          opacity: glReady ? 0 : 1,
-          transition: 'opacity 0.35s ease',
+          opacity: 1,
           pointerEvents: 'none',
         }}
       />

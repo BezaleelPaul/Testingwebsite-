@@ -77,7 +77,7 @@ function getEndNumber(el: HTMLElement): number | null {
 
 // ─── Cursor follower ─────────────────────────────────────────────────────────
 
-function initCursor(ctx: gsap.Context) {
+function initCursor(registerCleanup: (fn: () => void) => void) {
   const cursor = document.getElementById('orbital-cursor');
   const dot = document.getElementById('orbital-cursor-dot');
   if (!cursor || !dot) return;
@@ -136,16 +136,13 @@ function initCursor(ctx: gsap.Context) {
   document.addEventListener('mouseover', onMouseOver);
   document.addEventListener('mouseout', onMouseOut);
 
-  // Register cleanup
-  ctx.add(() => {
-    return () => {
-      document.removeEventListener('mousemove', onMove);
-      document.removeEventListener('mouseover', onMouseOver);
-      document.removeEventListener('mouseout', onMouseOut);
-      cancelAnimationFrame(rafId);
-      cursor.classList.remove('cursor-active', 'cursor-hover', 'cursor-portrait');
-      dot.classList.remove('cursor-active');
-    };
+  registerCleanup(() => {
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseover', onMouseOver);
+    document.removeEventListener('mouseout', onMouseOut);
+    cancelAnimationFrame(rafId);
+    cursor.classList.remove('cursor-active', 'cursor-hover', 'cursor-portrait');
+    dot.classList.remove('cursor-active');
   });
 }
 
@@ -153,6 +150,8 @@ function initCursor(ctx: gsap.Context) {
 
 export function ScrollAnimations() {
   useLayoutEffect(() => {
+    // Cursor cleanup is managed separately since it must run after ctx is initialized
+    const cursorCleanups: Array<() => void> = [];
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
@@ -432,19 +431,25 @@ export function ScrollAnimations() {
         }
 
         // ── N. Hero stats counter animation (fires on page load after delay) ─
+        // ── N. Hero stats counter animation ─────────────────────────────────
         const heroStats = document.querySelectorAll<HTMLElement>('.hero-stat strong');
         heroStats.forEach((el) => {
           const endVal = getEndNumber(el);
           if (endVal === null) return;
-          el.textContent = '0';
           const counter = { val: 0 };
           gsap.to(counter, {
             val: endVal,
-            duration: 1.8,
-            delay: 1.0,
+            duration: 1.6,
+            delay: 0.35,
             ease: 'power2.out',
+            onStart: () => {
+              el.textContent = '0';
+            },
             onUpdate: () => {
               el.textContent = String(Math.round(counter.val));
+            },
+            onComplete: () => {
+              el.textContent = String(endVal);
             },
           });
         });
@@ -475,11 +480,6 @@ export function ScrollAnimations() {
 
       }); // end (prefers-reduced-motion: no-preference)
 
-      // ── Desktop-only: cursor ──────────────────────────────────────────────
-      mm.add('(hover: hover) and (pointer: fine)', () => {
-        initCursor(ctx);
-      });
-
       // ── F. Work cards mobile stagger ─────────────────────────────────────
       mm.add('(max-width: 900px)', () => {
         const workCards = document.querySelectorAll<HTMLElement>('.selected-work-card');
@@ -505,6 +505,12 @@ export function ScrollAnimations() {
 
     });
 
+    // ── Desktop-only: cursor — initialized after ctx is finalized ───────────
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (finePointer) {
+      initCursor((fn) => { cursorCleanups.push(fn); });
+    }
+
     return () => {
       // Revert word splits on cleanup
       const headingSelectors = [
@@ -519,6 +525,7 @@ export function ScrollAnimations() {
       headingSelectors.forEach((sel) => {
         document.querySelectorAll<HTMLElement>(sel).forEach(revertWordSplit);
       });
+      cursorCleanups.forEach((fn) => fn());
       ctx.revert();
     };
   }, []);
