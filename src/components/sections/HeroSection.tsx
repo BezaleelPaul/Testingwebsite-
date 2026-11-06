@@ -45,7 +45,7 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="hero-portrait-wrap" aria-hidden="true">
+        <div className="hero-portrait-wrap" role="region" aria-label="Interactive pilot portrait: move pointer to tilt, click to emit signal shockwave">
           <PortraitDepth />
         </div>
         <span className="hero-index">ORBITAL PROFILE / EARTH SECTOR</span>
