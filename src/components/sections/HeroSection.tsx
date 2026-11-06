@@ -1,5 +1,7 @@
 'use client';
 
+import { PortraitDepth } from '@/components/sections/PortraitDepth';
+
 const basePath = process.env.NEXT_PUBLIC_SITE_BASE_PATH ?? '';
 
 export function HeroSection() {
@@ -44,7 +46,7 @@ export function HeroSection() {
         </div>
 
         <div className="hero-portrait-wrap" aria-hidden="true">
-          <img className="hero-portrait" src={`${basePath}/assets/portrait-processed.webp`} alt="" fetchPriority="high" />
+          <PortraitDepth />
         </div>
         <span className="hero-index">ORBITAL PROFILE / EARTH SECTOR</span>
       </div>
