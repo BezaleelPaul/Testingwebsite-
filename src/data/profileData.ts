@@ -11,14 +11,14 @@ import {
 export const INITIAL_PROFILE: PilotProfile = {
   name: "Bezaleel Paul N",
   callsign: "BezForge",
-  headline: "Software Developer · Flutter · Full-Stack · AI/ML",
-  subheadline: "B.Tech CSE @ CMR University ('25–'29) · BS in Data Science @ IIT Madras ('26–Present) · IEEE EXCOM Member & Webmaster ('25–'26). Building practical apps, fast mobile experiences, and exploring machine learning.",
+  headline: "Software Developer | Flutter, Full-Stack & Applied AI",
+  subheadline: "B.Tech Computer Science at CMR University · BS in Data Science at IIT Madras · Former IEEE Student Branch EXCOM member and Webmaster. Building cross-platform products and practical applied-AI systems.",
   location: "Bangalore, India",
   status: "Open to SWE Internships & Collaborations",
   bio: [
-    "Hey! I'm Bezaleel Paul (friends call me Bez). I'm a developer and CS undergraduate based in Bangalore, pursuing my B.Tech at CMR University alongside a BS in Data Science from IIT Madras.",
-    "I love building software that people actually use — from fast, responsive Flutter mobile apps to predictive machine learning prototypes and everyday civic utilities. When I run into an annoying problem (like messy folders with hundreds of unsorted downloads or convoluted utility bills), my immediate instinct is to write a tool for it.",
-    "When I'm not writing code or solving LeetCode problems (135+ solved and counting!), you'll find me reading about space science and orbital mechanics, tinkering with Linux setups, or exploring filter coffee spots around Bangalore."
+    "I am Bezaleel Paul N, a software developer and computer science undergraduate based in Bengaluru, India. I am pursuing a B.Tech in Computer Science and Engineering at CMR University alongside the BS in Data Science programme at IIT Madras.",
+    "My work spans cross-platform Flutter development, full-stack web applications, developer tools, and applied machine learning. I focus on translating practical requirements into reliable products, with attention to performance, maintainability, and the experience of the people using them.",
+    "I also contribute to the developer community through open-source work and technical events. I previously served as a Webmaster and EXCOM volunteer with the IEEE CMR University Student Branch. I am particularly interested in engineering fundamentals, thoughtful product design, and continuous learning."
   ],
   education: [
     {

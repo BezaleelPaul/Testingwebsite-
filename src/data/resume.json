@@ -133,13 +133,33 @@
   "summary": "Computer Science undergraduate with hands-on experience building cross-platform Flutter mobile apps and full-stack web applications. Skilled in Dart, Python, JavaScript, and AI tool integration. Seeking a Software Development / Mobile App Development Internship to contribute to real-world engineering projects and grow as a developer.",
   "experience": [
     {
+      "role": "Software Development Intern",
+      "org": "Eazy Walkers Digital",
+      "place": "Bengaluru, India · Sep 2026 – Present",
+      "bullets": [
+        "Contributing to cross-platform mobile and web software development in a production engineering team.",
+        "Engineering maintainable, reactive client interfaces with Flutter, Dart, and modern state architecture.",
+        "Collaborating with senior engineers on component reliability, performance profiling, and agile release cycles."
+      ]
+    },
+    {
       "role": "EXCOM Member & Webmaster",
       "org": "IEEE CMR University Student Branch",
-      "place": "CMR University, Bengaluru, India",
+      "place": "CMR University, Bengaluru, India · Dec 2025 – Sep 2026",
       "bullets": [
         "Engineered and maintained responsive web platforms for IEEE CMR Student Branch using Next.js and modern web tooling.",
         "Organized technical workshops, hackathons, and webinars reaching 500+ student attendees across campus.",
         "Mentored 60+ junior peers on Git, open-source development workflows, and cross-platform Flutter fundamentals."
+      ]
+    },
+    {
+      "role": "Project Lead · Drishti-AI",
+      "org": "Explainable AI for Diabetic Retinopathy Screening",
+      "place": "Smart India Hackathon Software Prototype · 2026",
+      "bullets": [
+        "Led multidisciplinary development of an explainable, offline-first screening prototype designed for rural clinical workflows.",
+        "Implemented image-quality validation, clinician review checkpoints, and visual interpretability.",
+        "Presented system architecture, clinical validation pipelines, and field usability to evaluation panels."
       ]
     }
   ],
