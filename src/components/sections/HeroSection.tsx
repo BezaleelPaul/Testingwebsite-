@@ -94,7 +94,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
   };
 
   return (
-    <section className="dark-surface relative isolate flex min-h-[92svh] flex-col justify-between overflow-hidden bg-ink px-0 pb-8 pt-28 text-paper sm:min-h-screen sm:pb-10 sm:pt-32">
+    <section className="dark-surface relative isolate flex min-h-[92svh] flex-col justify-between overflow-hidden bg-ink px-0 pb-8 pt-28 text-paper sm:min-h-screen sm:pb-10 sm:pt-32" data-hero-scroll>
       {/* Lightweight signal visual on load; the full 3D system mounts only inside the user-opened journey. */}
       <HeroSignalVisual />
 
@@ -139,7 +139,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, stats, cp }) 
       </div>
 
       <div className="section-shell relative z-10 grid flex-1 items-center gap-12 py-14 lg:grid-cols-12 lg:py-18 pointer-events-none">
-        <div className="lg:col-span-7 pointer-events-auto">
+        <div className="lg:col-span-7 pointer-events-auto" data-hero-copy>
           <p className="eyebrow mb-6 text-signal" data-reveal data-reveal-delay="90">
             SOFTWARE ENGINEER / FLUTTER / FULL-STACK / AI
           </p>
