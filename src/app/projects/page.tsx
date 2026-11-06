@@ -5,6 +5,22 @@ import Link from 'next/link';
 import { ArrowLeft, ArrowUpRight, Github, Search } from 'lucide-react';
 import { INITIAL_PROJECTS } from '@/data/profileData';
 import githubRepositoryData from '@/data/github-repositories.json';
+
+type PublicRepository = {
+  id: number;
+  name: string;
+  full_name: string;
+  description: string | null;
+  html_url: string;
+  language: string | null;
+  stargazers_count: number;
+  forks_count: number;
+  topics: string[];
+  fork: boolean;
+  archived: boolean;
+};
+
+const publicRepositories = githubRepositoryData.repositories as PublicRepository[];
 import { ProjectCategory } from '@/types/portfolio';
 import { Navbar } from '@/components/layout/Navbar';
 
@@ -37,8 +53,8 @@ export default function ProjectsPage() {
 
   const filteredRepositories = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
-    if (!query) return githubRepositoryData.repositories;
-    return githubRepositoryData.repositories.filter((repository) => {
+    if (!query) return publicRepositories;
+    return publicRepositories.filter((repository) => {
       const searchable = [
         repository.name,
         repository.full_name,
