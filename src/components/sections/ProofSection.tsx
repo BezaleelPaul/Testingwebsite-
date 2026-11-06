@@ -8,7 +8,7 @@ const proofItems = [
     type: 'PROBLEM SOLVING',
     title: 'Practice measured in problems, not claims.',
     detail: 'A visible competitive-programming trail across LeetCode and Codeforces.',
-    metric: '135+',
+    metric: '135',
     metricLabel: 'LeetCode problems solved',
     extra: '116 Easy · 17 Medium · 2 Hard',
     href: 'https://leetcode.com/u/BezaleelPaulN/',
