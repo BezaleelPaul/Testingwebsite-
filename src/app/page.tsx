@@ -5,6 +5,7 @@ import { OrbitalAbout } from '@/components/sections/OrbitalAbout';
 import { SelectedWork } from '@/components/sections/SelectedWork';
 import { ExperienceTimeline } from '@/components/sections/ExperienceTimeline';
 import { ProofSection } from '@/components/sections/ProofSection';
+import { SkillsSection } from '@/components/sections/SkillsSection';
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         <SelectedWork />
         <ExperienceTimeline />
         <ProofSection />
+        <SkillsSection />
       </main>
     </>
   );
