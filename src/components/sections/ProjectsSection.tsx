@@ -15,7 +15,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
   useEffect(() => {
     const section = sectionRef.current;
     const track = trackRef.current;
-    if (!section || !track) return;
+    const viewport = section?.querySelector<HTMLElement>('.projects-scroll-viewport');
+    if (!section || !track || !viewport) return;
     const media = window.matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)');
     let frame = 0, distance = 0, start = 0, end = 0;
     const update = () => {
@@ -26,9 +27,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
     };
     const measure = () => {
       distance = Math.max(0, track.scrollWidth - window.innerWidth);
-      start = section.getBoundingClientRect().top + window.scrollY;
+      start = viewport.getBoundingClientRect().top + window.scrollY;
       end = start + distance;
-      section.style.height = media.matches ? (window.innerHeight + distance) + 'px' : '';
+      section.style.height = media.matches ? (section.offsetHeight + distance) + 'px' : '';
       update();
     };
     const onScroll = () => { if (!frame) frame = window.requestAnimationFrame(update); };
