@@ -142,7 +142,7 @@ export function SpacekitUniverse() {
       </div>
       <div className="spacekit-caption">
         <span>PLANETARY PRESETS / ORBITAL MOTION / STARFIELD</span>
-        <span>{status === 'ready' ? 'DRIFT ENABLED' : 'STATIC PREVIEW'}</span>
+        <span>{status === 'ready' ? 'DRIFT ENABLED' : 'CSS ORBIT PREVIEW'}</span>
       </div>
     </div>
   );
