@@ -8,6 +8,7 @@ import { ProofSection } from '@/components/sections/ProofSection';
 import { SkillsSection } from '@/components/sections/SkillsSection';
 import { ContactSection } from '@/components/sections/ContactSection';
 import { OrbitalTransition } from '@/components/motion/OrbitalTransition';
+import { CosmicScrollScenes } from '@/components/motion/CosmicScrollScenes';
 import { INITIAL_PROFILE, INITIAL_SKILLS } from '@/data/profileData';
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
     <>
       <a className="skip-link" href="#main-content">Skip to content</a>
       <Navbar />
+      <CosmicScrollScenes />
       <main id="main-content">
         <HeroSection />
         <OrbitalTransition />
