@@ -2622,3 +2622,20 @@ html.nav-transitioning::after { animation: nav-warp-sweep .58s cubic-bezier(.2,.
   .orbital-project-card,.orbital-project-detail .selected-work-stack span { transition:none !important; }
   .orbital-project-card:hover { transform:none; }
 }
+
+
+/* Portrait vignette: soften the photo into the deep-space hero without dimming the face. */
+.portrait-depth {
+  box-shadow: inset 0 0 0 1px rgba(215, 255, 0, 0.12);
+}
+.portrait-depth::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  content: '';
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse at 48% 40%, transparent 42%, rgba(10, 10, 15, 0.10) 61%, rgba(10, 10, 15, 0.58) 100%),
+    linear-gradient(180deg, rgba(10, 10, 15, 0.04) 52%, rgba(10, 10, 15, 0.30) 100%);
+}
