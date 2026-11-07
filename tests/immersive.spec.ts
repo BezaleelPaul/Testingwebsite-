@@ -20,4 +20,5 @@ test('planet dossiers select destinations and record mission waypoints', async (
   await expect(page.locator('.planet-dossier-content h3')).toContainText('Mars');
   await page.getByRole('button', { name: /log this waypoint/i }).click();
   await expect(page.getByRole('button', { name: /waypoint logged/i })).toBeVisible();
-  await expect(page.locator('.planet-deck-progress strong')).toCo¶»§q«^
+  await expect(page.locator('.planet-deck-progress strong')).toContainText('01');
+});

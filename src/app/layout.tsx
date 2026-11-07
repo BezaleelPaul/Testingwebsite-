@@ -4,6 +4,7 @@ import { SmoothScroll } from '@/components/motion/SmoothScroll';
 import { ScrollAnimations } from '@/components/motion/ScrollAnimations';
 import { SiteMotion } from '@/components/motion/SiteMotion';
 import './globals.css';
+import './immersive-experiences.css';
 
 export const metadata: Metadata = {
   title: 'Bezaleel Paul — Software Developer',
