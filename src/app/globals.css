@@ -2404,8 +2404,9 @@ html.lenis.lenis-stopped { overflow:hidden; }
 /* === INTERACTIVE ARMOR / VISOR REVEAL === */
 .hero-portrait-frame { isolation: isolate; overflow: hidden; }
 .hero-helmet-shell {
-  position: absolute; z-index: 4; inset: 3% 7% 1%; pointer-events: none;
-  opacity: .98; transition: opacity .48s ease, transform .65s cubic-bezier(.2,.8,.2,1);
+  position: absolute; z-index: 4; top: 1.5%; left: 8%; width: 84%; height: 57%;
+  pointer-events: none; opacity: .98;
+  transition: opacity .48s ease, transform .65s cubic-bezier(.2,.8,.2,1);
   filter: drop-shadow(0 14px 28px rgba(0,0,0,.58));
 }
 .hero-helmet-shell::before {
@@ -2439,8 +2440,8 @@ html.lenis.lenis-stopped { overflow:hidden; }
 .hero-portrait-frame.helmet-open .hero-helmet-shell { opacity:.84; }
 .hero-portrait-frame.helmet-open .hero-helmet-crown { transform:translateY(-8%); }
 @media(max-width:700px) {
-  .hero-helmet-shell { inset:5% 4% 1%; }
-  .hero-helmet-visor { top:18%; }
+  .hero-helmet-shell { top: 2%; left: 5%; width: 90%; height: 57%; }
+  .hero-helmet-visor { top: 18%; }
 }
 @media(prefers-reduced-motion:reduce) {
   .hero-helmet-shell,.hero-helmet-visor,.hero-helmet-crown { transition:none; }
