@@ -51,13 +51,13 @@ export function SpacekitUniverse() {
     };
 
     const initialise = () => {
-      if (disposed || !containerRef.current || !window.Spacekit) {
+      const Spacekit = window.Spacekit;
+      if (disposed || !containerRef.current || !Spacekit) {
         fail();
         return;
       }
 
       try {
-        const Spacekit = window.Spacekit;
         const simulation = new Spacekit.Simulation(containerRef.current, {
           basePath: 'https://typpo.github.io/spacekit',
           camera: { initialPosition: [0, -34, 17], enableDrift: true },
