@@ -15,7 +15,12 @@ test('robotics lab exposes accessible joint controls', async ({ page }) => {
   await expect(page.getByRole('slider', { name: 'Shoulder joint angle' })).toBeVisible();
   await expect(page.getByRole('slider', { name: 'Elbow joint angle' })).toBeVisible();
   await expect(page.getByRole('slider', { name: 'Wrist joint angle' })).toBeVisible();
-  await page.getByRole('slider', { name: 'Shoulder joint angle' }).fill('35');
+  await page.getByRole('slider', { name: 'Shoulder joint angle' }).evaluate((element) => {
+    const slider = element as HTMLInputElement;
+    slider.value = '35';
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
+    slider.dispatchEvent(new Event('change', { bubbles: true }));
+  });
   await expect(page.getByText('35°', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'RESET' }).click();
   await expect(page.getByText('18°', { exact: true })).toBeVisible();
