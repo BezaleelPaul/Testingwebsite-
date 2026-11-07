@@ -51,7 +51,24 @@ export function SmoothScroll() {
         });
       }
 
-      // Scroll progress bar
+      // The ambient starfield keeps drifting at rest; scroll adds a separate,
+      // restrained camera-depth shift rather than pausing the scene.
+      const ambientDepth = document.querySelector<HTMLElement>('.ambient-universe__depth');
+      if (ambientDepth) {
+        gsap.to(ambientDepth, {
+          yPercent: -12,
+          rotation: 1.2,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: document.body,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 1.1,
+            invalidateOnRefresh: true,
+          },
+        });
+      }
+
       const progressBar = document.getElementById('scroll-progress');
       if (progressBar) {
         gsap.to(progressBar, {
@@ -65,7 +82,6 @@ export function SmoothScroll() {
         });
       }
 
-      // Nav scroll state
       const nav = document.querySelector('.site-nav');
       if (nav) {
         ScrollTrigger.create({
