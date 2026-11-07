@@ -271,7 +271,7 @@ Spacekit requires WebGL 2 and loads some of its assets/data from its hosted asse
 
 ### Motion and accessibility
 
-- The ambient star and nebula layers animate independently of scroll.
+- The ambient starfield, nebula, and distant spacecraft animate independently of scroll.
 - ScrollTrigger adds background depth movement without pinning the page.
 - The new robot scene is isolated to `/lab`; it does not add another WebGL canvas to the homepage.
 - The robot idle rotation and decorative CSS loops respect `prefers-reduced-motion`.
