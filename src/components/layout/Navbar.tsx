@@ -13,7 +13,16 @@ const links = [
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const headerRef = useRef<HTMLElement>(null);\n\n  const handleSectionNavigation = () => {\n    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;\n    document.documentElement.classList.remove('nav-transitioning');\n    // Restart the short warp flash even when users quickly choose another section.\n    void document.documentElement.offsetWidth;\n    document.documentElement.classList.add('nav-transitioning');\n    window.setTimeout(() => document.documentElement.classList.remove('nav-transitioning'), 620);\n  };
+  const headerRef = useRef<HTMLElement>(null);
+
+  const handleSectionNavigation = () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.documentElement.classList.remove('nav-transitioning');
+    // Restart the short warp flash even when users quickly choose another section.
+    void document.documentElement.offsetWidth;
+    document.documentElement.classList.add('nav-transitioning');
+    window.setTimeout(() => document.documentElement.classList.remove('nav-transitioning'), 620);
+  };
 
   useEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
