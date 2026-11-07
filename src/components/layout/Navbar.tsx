@@ -59,7 +59,7 @@ export function Navbar() {
         </Link>
         <nav className="nav-links" aria-label="Main navigation">
           {links.map((link) => (
-            <a key={link.label} href={resolveHref(link.href)} className="nav-link">{link.label}</a>
+            <Link key={link.label} href={resolveHref(link.href)} className="nav-link">{link.label}</Link>
           ))}
         </nav>
         <button
@@ -83,14 +83,14 @@ export function Navbar() {
           aria-hidden={!menuOpen}
         >
           {links.map((link) => (
-            <a
+            <Link
               key={link.label}
               href={resolveHref(link.href)}
               tabIndex={menuOpen ? 0 : -1}
               onClick={() => setMenuOpen(false)}
             >
               {link.label}<span aria-hidden="true">↗</span>
-            </a>
+            </Link>
           ))}
         </nav>
       </div>
