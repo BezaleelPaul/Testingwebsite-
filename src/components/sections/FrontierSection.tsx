@@ -1,15 +1,13 @@
-
-
 import React from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, Orbit, Sparkles } from 'lucide-react';
 import { AnimatedWords } from '@/components/motion/AnimatedWords';
 
 const destinations = [
-  { number: '01', title: 'Build for people', detail: 'Flutter, mobile and full-stack products', href: '#projects', orbit: 'orbit-a' },
+  { number: '01', title: 'Build for people', detail: 'Flutter, mobile and full-stack products', href: '#work', orbit: 'orbit-a' },
   { number: '02', title: 'Explore intelligence', detail: 'Machine learning, data and computer vision', href: '#skills', orbit: 'orbit-b' },
-  { number: '03', title: 'Map the unknown', detail: '3D systems, simulations and experiments', href: '/observatory', orbit: 'orbit-c' },
-  { number: '04', title: 'Leave a signal', detail: 'Open source, GitHub and collaboration', href: '/atlas', orbit: 'orbit-d' },
+  { number: '03', title: 'Map the unknown', detail: '3D systems, simulations and experiments', href: '/universe/', orbit: 'orbit-c' },
+  { number: '04', title: 'Move the machine', detail: 'Robotics, kinematics and interactive engineering', href: '/lab/', orbit: 'orbit-d' },
 ];
 
 export const FrontierSection: React.FC = () => (
@@ -18,7 +16,7 @@ export const FrontierSection: React.FC = () => (
     <div className="section-shell relative z-10">
       <header className="grid gap-8 lg:grid-cols-12 lg:items-end" data-reveal>
         <div className="lg:col-span-8">
-          <p className="eyebrow text-signal">03 / The frontier</p>
+          <p className="eyebrow text-signal">09 / The frontier</p>
           <h2 className="serif-display mt-6 max-w-4xl text-5xl leading-[0.92] sm:text-7xl" data-word-group>
             <AnimatedWords text="Every project is a" />{' '}
             <span className="italic text-signal"><AnimatedWords text="new world." accentWords={['world.']} /></span>
@@ -53,7 +51,7 @@ export const FrontierSection: React.FC = () => (
             useful evidence: what the constraints were, which trade-offs mattered, and what
             I would test next. The project case notes are where those decisions belong.
           </p>
-          <Link href="/projects" className="mt-7 inline-flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-signal hover:text-paper">
+          <Link href="/projects/" className="mt-7 inline-flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-signal hover:text-paper">
             Read the engineering case notes <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
         </div>
@@ -80,7 +78,7 @@ export const FrontierSection: React.FC = () => (
               This is a snapshot, not a finish line. There are more systems to understand,
               better questions to ask, and things I have not learned how to build yet.
             </p>
-            <Link href="/atlas" className="group mt-8 inline-flex items-center gap-3 rounded-full border border-paper/25 px-5 py-3 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-paper transition-colors hover:border-signal hover:text-signal">
+            <Link href="/atlas/" className="group mt-8 inline-flex items-center gap-3 rounded-full border border-paper/25 px-5 py-3 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-paper transition-colors hover:border-signal hover:text-signal">
               <Orbit className="h-4 w-4" /> Continue the journey <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
           </div>
