@@ -2410,7 +2410,7 @@ body > .ambient-universe {
   pointer-events: none;
   opacity: .58;
 }
-body > :not(.ambient-universe) {
+.site-content-layer {
   position: relative;
   z-index: 1;
 }
