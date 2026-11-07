@@ -1,4 +1,4 @@
-name: Deploy portfolio preview to GitHub Pages
+name: Build portfolio and deploy main to GitHub Pages
 
 on:
   push:
@@ -40,6 +40,7 @@ jobs:
           path: ./out
 
   deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
