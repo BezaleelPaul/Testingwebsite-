@@ -263,7 +263,7 @@ The homepage now includes a continuously animated ambient starfield, a moving ti
 
 `src/components/space/SpacekitUniverse.tsx` loads the official Spacekit browser build only on the dedicated `/universe` route. It creates the skybox, star field, and Sun-to-Neptune preset objects. The route remains independent from the portfolio's React Three Fiber renderer to avoid coupling Spacekit's Three.js r186 runtime to the app's Three.js r187 dependency.
 
-Spacekit requires WebGL 2 and loads some of its assets/data from its hosted asset directory. If the engine or its external assets fail to load, the page switches to a CSS orbital preview after a bounded timeout. The rest of the portfolio does not depend on Spacekit.
+Spacekit requires WebGL 2 and loads some of its assets/data from its hosted asset directory. If the browser build fails to load, initialization throws, or the script load exceeds the bounded timeout, the page switches to a CSS orbital preview. Asynchronous asset failures after initialization are not currently monitored. The rest of the portfolio does not depend on Spacekit.
 
 ### Robotics lab
 
