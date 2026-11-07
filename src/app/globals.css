@@ -2834,3 +2834,45 @@ body > .ambient-universe {
   .spacekit-fallback-orbit { animation: none !important; }
   .engineering-lab-card { transition: none; }
 }
+
+.ambient-universe__ship {
+  position: absolute;
+  top: 19%;
+  left: 0;
+  width: 42px;
+  height: 11px;
+  display: block;
+  opacity: 0;
+  filter: drop-shadow(0 0 8px rgba(215,255,0,.3));
+  animation: ambient-ship-flight 64s linear -21s infinite;
+}
+.ambient-universe__ship::before {
+  position: absolute;
+  inset: 0;
+  content: '';
+  clip-path: polygon(0 50%, 62% 0, 100% 50%, 62% 100%, 20% 66%);
+  background: linear-gradient(90deg, rgba(215,255,0,.24), rgba(220,232,255,.9) 58%, rgba(215,255,0,.55));
+}
+.ambient-universe__ship::after {
+  position: absolute;
+  top: 4px;
+  left: -24px;
+  width: 28px;
+  height: 3px;
+  content: '';
+  background: linear-gradient(90deg, transparent, rgba(215,255,0,.48));
+  filter: blur(3px);
+}
+@keyframes ambient-ship-flight {
+  0% { transform: translate3d(-12vw, 0, 0) rotate(-10deg) scale(.62); opacity: 0; }
+  10% { opacity: .42; }
+  48% { transform: translate3d(48vw, -7vh, 0) rotate(-1deg) scale(.82); opacity: .34; }
+  88% { opacity: .38; }
+  100% { transform: translate3d(118vw, 8vh, 0) rotate(8deg) scale(1.04); opacity: 0; }
+}
+@media (max-width: 640px) {
+  .ambient-universe__ship { top: 13%; opacity: .2; animation-duration: 82s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ambient-universe__ship { animation: none !important; display: none; }
+}
