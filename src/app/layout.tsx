@@ -41,7 +41,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <SmoothScroll />
         <ScrollAnimations />
         <SiteMotion />
-        {children}
+        <div className="site-content-layer">{children}</div>
       </body>
     </html>
   );
