@@ -2399,3 +2399,78 @@ html.lenis.lenis-stopped { overflow:hidden; }
   display: inline-block;
   will-change: transform, opacity;
 }
+
+
+/* === ORBITAL CHAPTER TRANSITIONS === */
+.orbital-transition {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  width: 100%;
+  height: clamp(42px, 6vw, 76px);
+  place-items: center;
+  overflow: hidden;
+  pointer-events: none;
+  isolation: isolate;
+  background: var(--bg);
+}
+.orbital-transition-line {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  opacity: .42;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.13) 18%, rgba(215,255,0,.5) 50%, rgba(255,255,255,.13) 82%, transparent);
+  transform: scaleX(.12);
+  transform-origin: center;
+  transition: transform 1050ms cubic-bezier(.2,.8,.2,1), opacity 700ms ease;
+}
+.orbital-transition-signal {
+  position: absolute;
+  left: 8%;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  border: 1px solid rgba(215,255,0,.9);
+  border-radius: 50%;
+  background: #d7ff00;
+  box-shadow: 0 0 10px rgba(215,255,0,.75), 0 0 26px rgba(215,255,0,.32);
+  opacity: 0;
+  transform: translate3d(0,-50%,0) scale(.4);
+}
+.orbital-transition-signal-two {
+  width: 3px;
+  height: 3px;
+  box-shadow: 0 0 8px rgba(215,255,0,.65);
+}
+.orbital-transition.is-active .orbital-transition-line {
+  opacity: 1;
+  transform: scaleX(1);
+}
+.orbital-transition.is-active .orbital-transition-signal {
+  animation: orbital-signal-cross 1350ms cubic-bezier(.2,.8,.2,1) both;
+}
+.orbital-transition.is-active .orbital-transition-signal-two {
+  animation: orbital-signal-cross 1350ms 180ms cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes orbital-signal-cross {
+  0% { left: 8%; opacity: 0; transform: translate3d(0,-50%,0) scale(.35); }
+  12% { opacity: 1; }
+  82% { opacity: .9; }
+  100% { left: 92%; opacity: 0; transform: translate3d(-100%,-50%,0) scale(1); }
+}
+@media (max-width: 640px) {
+  .orbital-transition { height: 38px; }
+  .orbital-transition-line { left: 6%; right: 6%; }
+  .orbital-transition-signal { left: 6%; }
+  @keyframes orbital-signal-cross {
+    0% { left: 6%; opacity: 0; transform: translate3d(0,-50%,0) scale(.35); }
+    12% { opacity: 1; }
+    82% { opacity: .9; }
+    100% { left: 94%; opacity: 0; transform: translate3d(-100%,-50%,0) scale(1); }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .orbital-transition-line { opacity: 1; transform: none; transition: none; }
+  .orbital-transition-signal { display: none; animation: none !important; }
+}
