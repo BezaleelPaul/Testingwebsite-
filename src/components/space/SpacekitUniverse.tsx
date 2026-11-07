@@ -43,8 +43,10 @@ export function SpacekitUniverse() {
   useEffect(() => {
     let disposed = false;
     let script: HTMLScriptElement | null = null;
+    let fallbackTimer: number | undefined;
 
     const fail = () => {
+      if (fallbackTimer !== undefined) window.clearTimeout(fallbackTimer);
       if (!disposed) setStatus('fallback');
     };
 
@@ -84,12 +86,14 @@ export function SpacekitUniverse() {
         });
 
         simulationRef.current = simulation;
+        if (fallbackTimer !== undefined) window.clearTimeout(fallbackTimer);
         setStatus('ready');
       } catch {
         fail();
       }
     };
 
+    fallbackTimer = window.setTimeout(fail, 12000);
     if (window.Spacekit) {
       initialise();
     } else {
@@ -108,6 +112,7 @@ export function SpacekitUniverse() {
 
     return () => {
       disposed = true;
+      if (fallbackTimer !== undefined) window.clearTimeout(fallbackTimer);
       script?.removeEventListener('load', initialise);
       script?.removeEventListener('error', fail);
       const renderer = simulationRef.current?.getRenderer?.();
