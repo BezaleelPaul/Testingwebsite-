@@ -2474,3 +2474,70 @@ html.lenis.lenis-stopped { overflow:hidden; }
   .orbital-transition-line { opacity: 1; transform: none; transition: none; }
   .orbital-transition-signal { display: none; animation: none !important; }
 }
+
+
+/* Cinematic BP identity reveal: the mark assembles before the curtain opens. */
+.portfolio-preloader {
+  position: fixed; inset: 0; z-index: 10000; display: grid; place-items: center;
+  overflow: hidden; isolation: isolate; color: var(--text); background: #07080b;
+  clip-path: inset(0 0 0 0); pointer-events: all;
+}
+.intro-starfield {
+  position: absolute; inset: -20%; opacity: .55;
+  background-image: radial-gradient(1px 1px at 12% 22%,#fff 60%,transparent),radial-gradient(1px 1px at 74% 31%,#d7ff00 60%,transparent),radial-gradient(1px 1px at 43% 77%,#fff 60%,transparent),radial-gradient(2px 2px at 88% 68%,#fff 60%,transparent);
+  background-size: 190px 180px,270px 230px,330px 290px,410px 370px;
+  animation: intro-stars-drift 16s linear infinite;
+}
+.preloader-content { position: relative; z-index: 2; text-align: center; }
+.preloader-mark {
+  display: flex; justify-content: center; align-items: baseline; overflow: hidden;
+  color: var(--accent); font: clamp(88px,16vw,172px)/.82 var(--display);
+  letter-spacing: -.105em; text-shadow: 0 0 34px rgba(215,255,0,.16);
+}
+.preloader-mark span { display: inline-block; }
+.mark-b { animation: bp-mark-in .82s cubic-bezier(.16,1,.3,1) both; }
+.mark-p { animation: bp-mark-in .82s .12s cubic-bezier(.16,1,.3,1) both; }
+.mark-dot { color: var(--text); animation: bp-dot-pulse .9s .5s both; }
+.preloader-caption {
+  margin: 24px 0 0; color: rgba(247,248,242,.62); font: 9px var(--mono);
+  letter-spacing: .22em; text-transform: uppercase; animation: intro-caption-in .65s .42s both;
+}
+.preloader-line { position: relative; width: 150px; height: 1px; margin: 28px auto 0; overflow: hidden; background: rgba(255,255,255,.16); }
+.preloader-line span { display: block; width: 100%; height: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; animation: intro-progress 1.12s .12s cubic-bezier(.7,0,.2,1) forwards; box-shadow: 0 0 12px var(--accent); }
+.intro-orbit { position: absolute; z-index: 1; left: 50%; top: 50%; width: min(58vw,520px); aspect-ratio: 1; border: 1px solid rgba(215,255,0,.16); border-radius: 50%; transform: translate(-50%,-50%) rotate(-24deg) scale(.72); }
+.intro-orbit::after { content:''; position:absolute; width:6px; height:6px; top:12%; left:18%; border-radius:50%; background:var(--accent); box-shadow:0 0 18px 5px rgba(215,255,0,.28); }
+.intro-orbit-one { animation: intro-orbit-in 1.4s ease both, intro-orbit-spin 18s linear infinite; }
+.intro-orbit-two { width:min(76vw,690px); border-color:rgba(247,248,242,.08); transform:translate(-50%,-50%) rotate(62deg) scale(.82,.44); animation:intro-orbit-two-in 1.3s .1s ease both; }
+.intro-coordinate { position:absolute; bottom:28px; color:rgba(247,248,242,.42); font:8px var(--mono); letter-spacing:.16em; }
+.intro-coordinate-left { left:clamp(20px,5vw,64px); }
+.intro-coordinate-right { right:clamp(20px,5vw,64px); }
+.intro-phase-exit { animation: intro-curtain-exit .56s cubic-bezier(.76,0,.24,1) forwards; pointer-events:none; }
+.intro-phase-exit .preloader-content { animation: intro-mark-exit .42s ease both; }
+@keyframes bp-mark-in { from { opacity:0; transform:translateY(48px) scale(.88); filter:blur(12px); } to { opacity:1; transform:translateY(0) scale(1); filter:blur(0); } }
+@keyframes bp-dot-pulse { 0% { opacity:0; transform:scale(0); } 70% { opacity:1; transform:scale(1.3); } 100% { opacity:1; transform:scale(1); } }
+@keyframes intro-caption-in { from { opacity:0; letter-spacing:.42em; } to { opacity:1; letter-spacing:.22em; } }
+@keyframes intro-progress { to { transform:scaleX(1); } }
+@keyframes intro-orbit-in { from { opacity:0; } to { opacity:1; } }
+@keyframes intro-orbit-two-in { from { opacity:0; } to { opacity:1; } }
+@keyframes intro-orbit-spin { to { rotate:336deg; } }
+@keyframes intro-stars-drift { to { transform:translate3d(3%, -2%, 0); } }
+@keyframes intro-curtain-exit { 0% { opacity:1; clip-path:inset(0); } 55% { opacity:1; clip-path:inset(0 0 48%); } 100% { opacity:0; clip-path:inset(0 0 100%); visibility:hidden; } }
+@keyframes intro-mark-exit { to { opacity:0; transform:translateY(-22px) scale(.94); filter:blur(8px); } }
+
+/* Navbar clicks get a very short orbital signal sweep, without delaying anchor navigation. */
+html::after {
+  content:''; position:fixed; z-index:9990; inset:0; pointer-events:none; opacity:0;
+  background:linear-gradient(115deg,transparent 35%,rgba(215,255,0,.08) 48%,rgba(247,248,242,.12) 50%,rgba(215,255,0,.06) 52%,transparent 65%);
+  transform:translateX(-110%); 
+}
+html.nav-transitioning::after { animation: nav-warp-sweep .58s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes nav-warp-sweep { 0% { opacity:0; transform:translateX(-110%); } 18% { opacity:1; } 100% { opacity:0; transform:translateX(110%); } }
+@media (max-width:640px) {
+  .intro-orbit { width:78vw; }
+  .intro-orbit-two { width:94vw; }
+  .intro-coordinate { bottom:18px; font-size:7px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .portfolio-preloader { display:none !important; }
+  html.nav-transitioning::after { animation:none !important; }
+}
