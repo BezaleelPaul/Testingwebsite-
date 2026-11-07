@@ -2639,3 +2639,480 @@ html.nav-transitioning::after { animation: nav-warp-sweep .58s cubic-bezier(.2,.
     radial-gradient(ellipse at 48% 40%, transparent 42%, rgba(10, 10, 15, 0.10) 61%, rgba(10, 10, 15, 0.58) 100%),
     linear-gradient(180deg, rgba(10, 10, 15, 0.04) 52%, rgba(10, 10, 15, 0.30) 100%);
 }
+
+
+/* Always-on orbital ambience: continuous at rest, independent of scroll position. */
+body > .ambient-universe {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: .58;
+}
+.site-content-layer {
+  position: relative;
+  z-index: 1;
+}
+.ambient-universe__depth,
+.ambient-universe__nebula {
+  position: absolute;
+  inset: -18%;
+  display: block;
+  will-change: transform, background-position;
+}
+.ambient-universe__depth {
+  opacity: .42;
+  background-image:
+    radial-gradient(1px 1px at 8% 14%, rgba(255,255,255,.8) 55%, transparent 100%),
+    radial-gradient(1px 1px at 23% 76%, rgba(215,255,0,.7) 55%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 48% 31%, rgba(255,255,255,.8) 55%, transparent 100%),
+    radial-gradient(1px 1px at 72% 64%, rgba(255,255,255,.65) 55%, transparent 100%),
+    radial-gradient(1px 1px at 91% 21%, rgba(215,255,0,.6) 55%, transparent 100%);
+  background-size: 280px 240px, 370px 310px, 420px 350px, 320px 280px, 510px 420px;
+  animation: ambient-star-drift 72s linear infinite;
+}
+.ambient-universe__nebula {
+  opacity: .28;
+  background:
+    radial-gradient(ellipse at 18% 38%, rgba(47,74,130,.24), transparent 38%),
+    radial-gradient(ellipse at 78% 62%, rgba(75,38,120,.18), transparent 36%),
+    radial-gradient(ellipse at 55% 8%, rgba(215,255,0,.07), transparent 28%);
+  filter: blur(34px);
+  animation: ambient-nebula-drift 48s ease-in-out infinite alternate;
+}
+@keyframes ambient-star-drift {
+  from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+  to { background-position: -280px 240px, 370px -310px, -420px 350px, 320px -280px, -510px 420px; }
+}
+@keyframes ambient-nebula-drift {
+  from { transform: translate3d(-1.5%, 1%, 0) scale(1); }
+  to { transform: translate3d(1.5%, -1%, 0) scale(1.06); }
+}
+
+/* Interactive engineering destinations. */
+.engineering-lab-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(5rem, 10vw, 9rem) 0;
+  color: var(--text);
+  background: linear-gradient(180deg, rgba(8,10,16,.94), rgba(10,10,15,.98));
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+.engineering-lab-section::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: '';
+  opacity: .18;
+  background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+  background-size: 58px 58px;
+  mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+}
+.engineering-lab-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(240px, .6fr);
+  align-items: end;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+.engineering-lab-heading h2 {
+  margin-top: 1.2rem;
+  font-family: var(--display);
+  font-size: clamp(2.8rem, 6vw, 5.8rem);
+  line-height: .88;
+  letter-spacing: -.035em;
+}
+.engineering-lab-heading h2 span { color: var(--accent); }
+.engineering-lab-heading > p {
+  max-width: 26rem;
+  margin-left: auto;
+  color: rgba(247,248,242,.56);
+  font-size: .95rem;
+  line-height: 1.8;
+}
+.engineering-lab-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+.engineering-lab-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.13);
+  background: linear-gradient(145deg, rgba(255,255,255,.055), rgba(255,255,255,.012));
+  transition: border-color 260ms ease, transform 260ms ease, background 260ms ease;
+}
+.engineering-lab-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(215,255,0,.48);
+  background: linear-gradient(145deg, rgba(215,255,0,.075), rgba(255,255,255,.015));
+}
+.engineering-lab-card-link { display: flex; height: 100%; flex-direction: column; color: inherit; text-decoration: none; }
+.engineering-lab-visual {
+  position: relative;
+  display: grid;
+  min-height: 230px;
+  overflow: hidden;
+  place-items: center;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  background: radial-gradient(ellipse at center, rgba(31,47,79,.55), rgba(7,10,17,.95) 68%);
+}
+.engineering-lab-index,
+.engineering-lab-eyebrow {
+  font: 600 9px/1.4 var(--mono);
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: rgba(247,248,242,.42);
+}
+.engineering-lab-index { position: absolute; top: 1rem; left: 1rem; }
+.engineering-lab-visual-orbit {
+  position: absolute;
+  width: 158px;
+  height: 158px;
+  border: 1px solid rgba(215,255,0,.34);
+  border-radius: 50%;
+  transform: rotate(-25deg) scaleY(.46);
+  animation: engineering-orbit-spin 18s linear infinite;
+}
+.engineering-orbit-two {
+  width: 218px;
+  height: 218px;
+  border-color: rgba(147,174,255,.22);
+  animation-duration: 26s;
+  animation-direction: reverse;
+}
+.engineering-lab-visual-core {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 72px;
+  height: 72px;
+  place-items: center;
+  border: 1px solid rgba(215,255,0,.48);
+  border-radius: 50%;
+  color: var(--accent);
+  background: rgba(10,14,20,.85);
+  box-shadow: 0 0 40px rgba(215,255,0,.14), inset 0 0 20px rgba(215,255,0,.08);
+  animation: engineering-core-float 5s ease-in-out infinite;
+}
+.engineering-lab-visual-signal {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 18px rgba(215,255,0,.9);
+  animation: engineering-signal-orbit 8s linear infinite;
+}
+.engineering-visual-robot .engineering-lab-visual-core {
+  border-radius: 18px;
+  transform: rotate(45deg);
+}
+.engineering-visual-robot .engineering-lab-visual-core svg { transform: rotate(-45deg); }
+.engineering-visual-observatory { background: radial-gradient(ellipse at 50% 70%, rgba(21,67,85,.42), rgba(7,10,17,.96) 70%); }
+.engineering-lab-card-copy { display: flex; flex: 1; flex-direction: column; padding: 1.5rem; }
+.engineering-lab-card-copy h3 {
+  margin-top: .8rem;
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  letter-spacing: -.02em;
+}
+.engineering-lab-card-copy p {
+  margin-top: .7rem;
+  color: rgba(247,248,242,.56);
+  font-size: .85rem;
+  line-height: 1.75;
+}
+.engineering-lab-action {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  margin-top: 1.7rem;
+  color: var(--accent);
+  font: 600 9px/1.4 var(--mono);
+  letter-spacing: .12em;
+}
+.engineering-lab-action svg { transition: transform 220ms ease; }
+.engineering-lab-card:hover .engineering-lab-action svg { transform: translate(3px,-3px); }
+.engineering-lab-foot,
+.universe-page-footer,
+.robotics-page-footer,
+.spacekit-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  color: rgba(247,248,242,.32);
+  font: 600 9px/1.5 var(--mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+@keyframes engineering-orbit-spin { to { transform: rotate(335deg) scaleY(.46); } }
+@keyframes engineering-core-float { 0%,100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+@keyframes engineering-signal-orbit { from { transform: rotate(0deg) translateX(105px) rotate(0deg); } to { transform: rotate(360deg) translateX(105px) rotate(-360deg); } }
+
+/* Dedicated Spacekit solar-system route. */
+.universe-page,
+.robotics-page { min-height: 100vh; color: var(--text); background: #080a10; }
+.universe-page-main,
+.robotics-page-main { padding: 8.5rem 0 5rem; }
+.universe-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  color: rgba(247,248,242,.48);
+  font: 600 9px/1.5 var(--mono);
+  letter-spacing: .14em;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+.universe-back-link:hover { color: var(--accent); }
+.universe-page-heading,
+.robotics-page-heading {
+  max-width: 56rem;
+  margin: 2.5rem 0 2rem;
+}
+.universe-page-heading h1,
+.robotics-page-heading h1 {
+  margin-top: 1rem;
+  font-family: var(--display);
+  font-size: clamp(3.2rem, 9vw, 7.6rem);
+  line-height: .84;
+  letter-spacing: -.035em;
+}
+.universe-page-heading h1 span,
+.robotics-page-heading h1 span { color: var(--accent); }
+.universe-page-heading > p:last-child,
+.robotics-page-heading > p:last-child {
+  max-width: 42rem;
+  margin-top: 1.2rem;
+  color: rgba(247,248,242,.56);
+  font-size: .95rem;
+  line-height: 1.8;
+}
+.spacekit-experience {
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.15);
+  background: #03060d;
+  box-shadow: 0 24px 90px rgba(0,0,0,.32);
+}
+.spacekit-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .9rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  color: rgba(247,248,242,.46);
+  font: 600 9px/1.5 var(--mono);
+  letter-spacing: .12em;
+}
+.spacekit-toolbar span { display: inline-flex; align-items: center; gap: .5rem; }
+.spacekit-toolbar i,
+.robot-lab-viewport-meta i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #8992a3;
+}
+.spacekit-toolbar i.spacekit-status-live,
+.robot-lab-viewport-meta i { background: var(--accent); box-shadow: 0 0 12px rgba(215,255,0,.7); }
+.spacekit-viewport { position: relative; width: 100%; height: min(68vh, 700px); min-height: 420px; overflow: hidden; }
+.spacekit-viewport canvas { display: block; width: 100% !important; height: 100% !important; }
+.spacekit-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  overflow: hidden;
+  place-items: center;
+  background: radial-gradient(ellipse at center, rgba(26,45,79,.38), #03060d 70%);
+}
+.spacekit-fallback-sun {
+  position: absolute;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff6bd, #e9a53b 65%, #9c4518);
+  box-shadow: 0 0 38px rgba(255,173,63,.8), 0 0 120px rgba(255,139,44,.25);
+}
+.spacekit-fallback-orbit {
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 50%;
+  transform: scaleY(.45) rotate(-18deg);
+  animation: engineering-orbit-spin 22s linear infinite;
+}
+.spacekit-fallback-orbit i {
+  position: absolute;
+  top: 50%;
+  left: -4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #b8c7f3;
+  box-shadow: 0 0 14px rgba(184,199,243,.8);
+}
+.orbit-earth { width: 320px; height: 320px; animation-duration: 31s; border-color: rgba(80,160,255,.32); }
+.orbit-earth i { background: #5da5ff; }
+.orbit-jupiter { width: 470px; height: 470px; animation-duration: 43s; border-color: rgba(221,191,140,.25); }
+.orbit-jupiter i { background: #d6b78a; width: 13px; height: 13px; }
+.spacekit-fallback p {
+  position: absolute;
+  bottom: 1.25rem;
+  z-index: 3;
+  max-width: calc(100% - 2rem);
+  color: rgba(247,248,242,.42);
+  font: 500 10px/1.6 var(--mono);
+  text-align: center;
+}
+.spacekit-caption { padding: .8rem 1rem; margin: 0; border-top: 1px solid rgba(255,255,255,.1); }
+
+/* Browser robotics workbench. */
+.robot-lab-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, .55fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+.robot-lab-viewport {
+  position: relative;
+  min-height: 540px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.14);
+  background: #080b11;
+}
+.robot-lab-viewport canvas { display: block; }
+.robot-lab-viewport-meta {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  left: 1rem;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  pointer-events: none;
+  color: rgba(247,248,242,.42);
+  font: 600 9px/1.5 var(--mono);
+  letter-spacing: .12em;
+}
+.robot-lab-viewport-meta span { display: inline-flex; align-items: center; gap: .5rem; }
+.robot-lab-hint {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  color: rgba(247,248,242,.34);
+  font: 600 9px/1.5 var(--mono);
+  letter-spacing: .12em;
+  pointer-events: none;
+}
+.robot-lab-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.025);
+}
+.robot-lab-controls-heading { display: flex; justify-content: space-between; gap: 1rem; align-items: start; }
+.robot-lab-controls-heading h2 { margin-top: .6rem; font: 2rem/1 var(--display); }
+.robot-lab-controls-heading button {
+  padding: .5rem .65rem;
+  border: 1px solid rgba(215,255,0,.38);
+  color: var(--accent);
+  background: rgba(215,255,0,.06);
+  font: 600 9px var(--mono);
+  letter-spacing: .1em;
+}
+.robot-joint-control { display: grid; gap: .7rem; }
+.robot-joint-control > span:first-child { display: flex; justify-content: space-between; gap: 1rem; color: rgba(247,248,242,.74); font-size: .82rem; }
+.robot-joint-control output { color: var(--accent); font-family: var(--mono); }
+.robot-joint-control input { width: 100%; accent-color: var(--accent); cursor: ew-resize; }
+.robot-joint-range { display: flex; justify-content: space-between; color: rgba(247,248,242,.28); font: 9px var(--mono); }
+.robot-lab-readout { margin-top: auto; padding: 1rem; border: 1px solid rgba(215,255,0,.2); background: rgba(215,255,0,.035); }
+.robot-lab-readout > span { color: var(--accent); font: 600 9px var(--mono); letter-spacing: .12em; }
+.robot-lab-readout strong { display: block; margin-top: .6rem; font: 1.5rem var(--display); }
+.robot-lab-readout p,
+.robot-lab-disclaimer { color: rgba(247,248,242,.43); font-size: .75rem; line-height: 1.7; }
+.robot-lab-readout p { margin-top: .5rem; }
+.robot-lab-disclaimer { margin-top: auto; }
+
+@media (max-width: 900px) {
+  .engineering-lab-grid { grid-template-columns: 1fr 1fr; }
+  .engineering-lab-card:last-child { grid-column: 1 / -1; }
+  .robot-lab-workspace { grid-template-columns: 1fr; }
+  .robot-lab-controls { display: grid; grid-template-columns: 1fr 1fr; }
+  .robot-lab-controls-heading, .robot-lab-readout, .robot-lab-disclaimer { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  body > .ambient-universe { opacity: .34; }
+  .engineering-lab-heading { grid-template-columns: 1fr; gap: 1rem; }
+  .engineering-lab-heading > p { margin-left: 0; }
+  .engineering-lab-grid { grid-template-columns: 1fr; }
+  .engineering-lab-card:last-child { grid-column: auto; }
+  .engineering-lab-visual { min-height: 190px; }
+  .engineering-lab-foot,
+  .universe-page-footer,
+  .robotics-page-footer,
+  .spacekit-caption { flex-direction: column; }
+  .spacekit-viewport { min-height: 340px; height: 58vh; }
+  .spacekit-toolbar { font-size: 8px; }
+  .robot-lab-viewport { min-height: 400px; }
+  .robot-lab-controls { display: flex; }
+  .robot-lab-viewport-meta { font-size: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ambient-universe__depth,
+  .ambient-universe__nebula,
+  .engineering-lab-visual-orbit,
+  .engineering-lab-visual-core,
+  .engineering-lab-visual-signal,
+  .spacekit-fallback-orbit { animation: none !important; }
+  .engineering-lab-card { transition: none; }
+}
+
+.ambient-universe__ship {
+  position: absolute;
+  top: 19%;
+  left: 0;
+  width: 42px;
+  height: 11px;
+  display: block;
+  opacity: 0;
+  filter: drop-shadow(0 0 8px rgba(215,255,0,.3));
+  animation: ambient-ship-flight 64s linear -21s infinite;
+}
+.ambient-universe__ship::before {
+  position: absolute;
+  inset: 0;
+  content: '';
+  clip-path: polygon(0 50%, 62% 0, 100% 50%, 62% 100%, 20% 66%);
+  background: linear-gradient(90deg, rgba(215,255,0,.24), rgba(220,232,255,.9) 58%, rgba(215,255,0,.55));
+}
+.ambient-universe__ship::after {
+  position: absolute;
+  top: 4px;
+  left: -24px;
+  width: 28px;
+  height: 3px;
+  content: '';
+  background: linear-gradient(90deg, transparent, rgba(215,255,0,.48));
+  filter: blur(3px);
+}
+@keyframes ambient-ship-flight {
+  0% { transform: translate3d(-12vw, 0, 0) rotate(-10deg) scale(.62); opacity: 0; }
+  10% { opacity: .42; }
+  48% { transform: translate3d(48vw, -7vh, 0) rotate(-1deg) scale(.82); opacity: .34; }
+  88% { opacity: .38; }
+  100% { transform: translate3d(118vw, 8vh, 0) rotate(8deg) scale(1.04); opacity: 0; }
+}
+@media (max-width: 640px) {
+  .ambient-universe__ship { top: 13%; opacity: .2; animation-duration: 82s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ambient-universe__ship { animation: none !important; display: none; }
+}

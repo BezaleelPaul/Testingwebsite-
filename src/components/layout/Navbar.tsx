@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
@@ -8,17 +9,23 @@ const links = [
   { label: 'Profile', href: '#top' },
   { label: 'Work', href: '#work' },
   { label: 'Experience', href: '#experience' },
+  { label: 'Universe', href: '/universe/' },
+  { label: 'Robotics', href: '/lab/' },
   { label: 'Contact', href: '#contact' },
 ];
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+  const pathname = usePathname();
 
-  const handleSectionNavigation = () => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const resolveHref = (href: string) => (
+    href.startsWith('#') && pathname !== '/' ? `/${href}` : href
+  );
+
+  const handleSectionNavigation = (href: string) => {
+    if (!href.startsWith('#') || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     document.documentElement.classList.remove('nav-transitioning');
-    // Restart the short warp flash even when users quickly choose another section.
     void document.documentElement.offsetWidth;
     document.documentElement.classList.add('nav-transitioning');
     window.setTimeout(() => document.documentElement.classList.remove('nav-transitioning'), 620);
@@ -31,23 +38,13 @@ export function Navbar() {
     const brand = headerRef.current.querySelector('.nav-brand');
     const navLinks = headerRef.current.querySelectorAll('.nav-links .nav-link');
     const resumeBtn = headerRef.current.querySelector('.resume-button');
-
     const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
-    if (brand) {
-      tl.fromTo(brand, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.6 }, 0.2);
-    }
+    if (brand) tl.fromTo(brand, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.6 }, 0.2);
     if (navLinks.length) {
-      tl.fromTo(
-        navLinks,
-        { opacity: 0, y: -16 },
-        { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 },
-        0.35
-      );
+      tl.fromTo(navLinks, { opacity: 0, y: -16 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 }, 0.35);
     }
-    if (resumeBtn) {
-      tl.fromTo(resumeBtn, { opacity: 0, y: -16 }, { opacity: 1, y: 0, duration: 0.5 }, 0.55);
-    }
+    if (resumeBtn) tl.fromTo(resumeBtn, { opacity: 0, y: -16 }, { opacity: 1, y: 0, duration: 0.5 }, 0.55);
 
     return () => { tl.kill(); };
   }, []);
@@ -60,7 +57,7 @@ export function Navbar() {
         </Link>
         <nav className="nav-links" aria-label="Main navigation">
           {links.map((link) => (
-            <a key={link.label} href={link.href} className="nav-link" onClick={handleSectionNavigation}>{link.label}</a>
+            <Link key={link.label} href={resolveHref(link.href)} className="nav-link" onClick={() => handleSectionNavigation(link.href)}>{link.label}</Link>
           ))}
         </nav>
         <button
@@ -84,14 +81,14 @@ export function Navbar() {
           aria-hidden={!menuOpen}
         >
           {links.map((link) => (
-            <a
+            <Link
               key={link.label}
-              href={link.href}
+              href={resolveHref(link.href)}
               tabIndex={menuOpen ? 0 : -1}
-              onClick={() => { setMenuOpen(false); handleSectionNavigation(); }}
+              onClick={() => { setMenuOpen(false); handleSectionNavigation(link.href); }}
             >
               {link.label}<span aria-hidden="true">↗</span>
-            </a>
+            </Link>
           ))}
         </nav>
       </div>
