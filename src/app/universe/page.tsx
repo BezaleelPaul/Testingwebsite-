@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
 import { SpacekitUniverse } from '@/components/space/SpacekitUniverse';
+import { PlanetMissionDeck } from '@/components/space/PlanetMissionDeck';
 
 export default function UniversePage() {
   return (
@@ -16,6 +17,7 @@ export default function UniversePage() {
             <p>Explore a live solar-system visualization powered by Spacekit.js. The planets keep moving while you pause, inspect, and navigate the scene.</p>
           </header>
           <SpacekitUniverse />
+          <PlanetMissionDeck />
           <div className="universe-page-footer">
             <span>AN EXPERIMENT IN ORBITAL VISUALIZATION</span>
             <Link href="/observatory/">OPEN THE FULL OBSERVATORY <ArrowUpRight size={14} /></Link>

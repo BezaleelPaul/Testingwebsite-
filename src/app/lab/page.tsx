@@ -13,11 +13,11 @@ export default function RoboticsLabPage() {
           <header className="robotics-page-heading">
             <p className="orbital-eyebrow"><span>02</span> / INTERACTIVE ENGINEERING LAB</p>
             <h1>MECHANICS<br /><span>IN MOTION.</span></h1>
-            <p>A small browser-based robotics workbench. Adjust the shoulder, elbow, and wrist to see how joint angles change an articulated arm.</p>
+            <p>Meet ATLAS-01: an original transformable robotics prototype. Switch between bipedal mech and rover configurations, power the reactor, and tune its three-axis manipulator.</p>
           </header>
           <RobotArmLab />
           <div className="robotics-page-footer">
-            <span>THREE.JS / REACT THREE FIBER / JOINT-CHAIN DEMO</span>
+            <span>THREE.JS / REACT THREE FIBER / TRANSFORMABLE MECH</span>
             <Link href="/universe/">EXPLORE THE UNIVERSE <ArrowUpRight size={14} /></Link>
           </div>
         </div>
