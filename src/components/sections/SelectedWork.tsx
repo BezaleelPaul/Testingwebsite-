@@ -66,19 +66,24 @@ export function SelectedWork() {
       <div ref={stageRef} className="selected-work-stage">
         <div ref={trackRef} className="selected-work-track">
           {featured.map((project, index) => (
-            <article className="selected-work-card" key={project.id}>
-              <div className={`selected-work-visual ${visualClasses[index]}`} aria-hidden="true">
+            <article className={`selected-work-card orbital-project-card orbital-project-card-${index + 1}`} key={project.id}>
+              <div className={`selected-work-visual orbital-project-art ${visualClasses[index]}`} aria-hidden="true">
+                <div className="project-art-topline">
+                  <span>FIELD NOTE / 0{index + 1}</span>
+                  <span className="project-art-live"><i /> {project.status.toUpperCase()}</span>
+                </div>
                 <span className="work-visual-index">0{index + 1} / 03</span>
                 <span className="work-visual-label">{visualLabels[index]}</span>
                 {index === 0 && <div className="work-planet-system"><i /><i /><i /><b /></div>}
                 {index === 1 && <div className="work-vitals"><span>HR</span><strong>↗</strong><svg viewBox="0 0 520 150" role="presentation"><path d="M0 92 H82 L105 92 L128 34 L154 127 L180 70 L203 92 H286 L309 92 L330 51 L351 110 L372 78 L395 92 H520" /></svg><small>MODEL / RECOVERY RESPONSE</small></div>}
                 {index === 2 && <div className="work-mise-mark"><span>MISE</span><i /><i /><i /><small>LOCAL-FIRST · CROSS-PLATFORM</small></div>}
-                <span className="work-visual-caption">CONCEPTUAL PROJECT VISUAL · NOT A PRODUCT SCREENSHOT</span>
+                <span className="work-visual-caption">SYSTEM STUDY · PROJECT VISUAL</span>
+                <div className="project-art-coordinate">BP / ORBITAL ARCHIVE</div>
               </div>
 
-              <div className="selected-work-detail">
+              <div className="selected-work-detail orbital-project-detail">
                 <div className="selected-work-meta">
-                  <span>0{index + 1} / 03</span>
+                  <span>MISSION 0{index + 1}</span>
                   <span>{project.category}</span>
                   <span className="work-status"><i /> {project.status}</span>
                 </div>
@@ -97,6 +102,8 @@ export function SelectedWork() {
                   <a href={project.repoUrl + '#readme'} target="_blank" rel="noopener noreferrer">CASE NOTES <ArrowUpRight size={13} /></a>
                 </div>
               </div>
+              <span className="project-card-corner project-card-corner-one" aria-hidden="true" />
+              <span className="project-card-corner project-card-corner-two" aria-hidden="true" />
             </article>
           ))}
         </div>

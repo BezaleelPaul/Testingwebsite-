@@ -15,6 +15,15 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
 
+  const handleSectionNavigation = () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.documentElement.classList.remove('nav-transitioning');
+    // Restart the short warp flash even when users quickly choose another section.
+    void document.documentElement.offsetWidth;
+    document.documentElement.classList.add('nav-transitioning');
+    window.setTimeout(() => document.documentElement.classList.remove('nav-transitioning'), 620);
+  };
+
   useEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reducedMotion || !headerRef.current) return;
@@ -51,7 +60,7 @@ export function Navbar() {
         </Link>
         <nav className="nav-links" aria-label="Main navigation">
           {links.map((link) => (
-            <a key={link.label} href={link.href} className="nav-link">{link.label}</a>
+            <a key={link.label} href={link.href} className="nav-link" onClick={handleSectionNavigation}>{link.label}</a>
           ))}
         </nav>
         <button
@@ -79,7 +88,7 @@ export function Navbar() {
               key={link.label}
               href={link.href}
               tabIndex={menuOpen ? 0 : -1}
-              onClick={() => setMenuOpen(false)}
+              onClick={() => { setMenuOpen(false); handleSectionNavigation(); }}
             >
               {link.label}<span aria-hidden="true">↗</span>
             </a>
