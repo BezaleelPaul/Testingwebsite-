@@ -7,6 +7,7 @@ import { ExperienceTimeline } from '@/components/sections/ExperienceTimeline';
 import { ProofSection } from '@/components/sections/ProofSection';
 import { SkillsSection } from '@/components/sections/SkillsSection';
 import { ContactSection } from '@/components/sections/ContactSection';
+import { OrbitalTransition } from '@/components/motion/OrbitalTransition';
 import { INITIAL_PROFILE, INITIAL_SKILLS } from '@/data/profileData';
 
 export default function Home() {
@@ -16,12 +17,19 @@ export default function Home() {
       <Navbar />
       <main id="main-content">
         <HeroSection />
+        <OrbitalTransition />
         <OrbitalMarquee />
+        <OrbitalTransition />
         <OrbitalAbout />
+        <OrbitalTransition />
         <SelectedWork />
+        <OrbitalTransition />
         <ExperienceTimeline />
+        <OrbitalTransition />
         <ProofSection />
+        <OrbitalTransition />
         <SkillsSection skills={INITIAL_SKILLS} />
+        <OrbitalTransition />
         <ContactSection profile={INITIAL_PROFILE} />
       </main>
     </>
