@@ -33,6 +33,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <div className="ambient-universe" aria-hidden="true">
           <span className="ambient-universe__depth" />
           <span className="ambient-universe__nebula" />
+          <span className="ambient-universe__ship" />
         </div>
         <div id="scroll-progress" aria-hidden="true" />
         <div id="orbital-cursor" aria-hidden="true" />
