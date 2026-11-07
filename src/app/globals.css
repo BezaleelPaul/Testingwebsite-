@@ -326,30 +326,6 @@ details summary::marker {
   }
 }
 @media print {
-  .resume-dossier {
-    background: #ffffff !important;
-    color: #111111 !important;
-    border: none !important;
-    box-shadow: none !important;
-    max-width: 100% !important;
-  }
-  .resume-dossier * {
-    color: #111111 !important;
-    border-color: rgba(0, 0, 0, 0.15) !important;
-    background: transparent !important;
-    text-shadow: none !important;
-    box-shadow: none !important;
-  }
-  .resume-dossier-topline {
-    border-bottom: 1px solid #ddd !important;
-  }
-  .resume-dossier-aside {
-    border-right: 1px solid #ddd !important;
-    background: #fbfbfa !important;
-  }
-}
-
-@media print {
   @page {
     size: A4;
     margin: 0;
@@ -2398,4 +2374,232 @@ html.lenis.lenis-stopped { overflow:hidden; }
 [data-split-word] > span {
   display: inline-block;
   will-change: transform, opacity;
+}
+
+
+/* Resume export: print the actual dossier component, not the legacy static PDF.
+   A4 is 210 × 297 mm (793.70 × 1122.52 CSS px at 96 dpi). */
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
+@media print {
+  :root { color-scheme: dark; }
+
+  html,
+  body {
+    width: 210mm !important;
+    min-width: 210mm !important;
+    min-height: 297mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #0a0a0f !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body,
+  body * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .resume-dossier {
+    width: 210mm !important;
+    min-width: 210mm !important;
+    max-width: 210mm !important;
+    height: 297mm !important;
+    max-height: 297mm !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(215, 255, 0, 0.35) !important;
+    border-radius: 0 !important;
+    background: #0a0a0f !important;
+    color: #f1efe7 !important;
+    box-shadow: none !important;
+    page-break-after: avoid !important;
+    break-after: avoid-page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid-page !important;
+  }
+
+  .resume-dossier-grid {
+    display: grid !important;
+    grid-template-columns: 66mm minmax(0, 1fr) !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    align-items: stretch !important;
+  }
+
+  .resume-dossier-aside {
+    min-width: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    padding: 5mm 4mm !important;
+    gap: 2.6mm !important;
+    border-right: 1px solid rgba(215, 255, 0, 0.2) !important;
+    border-bottom: 0 !important;
+    background: #101016 !important;
+    color: #f1efe7 !important;
+    font-size: 8px !important;
+    line-height: 1.25 !important;
+  }
+
+  .resume-dossier-aside > div:first-child {
+    gap: 3mm !important;
+    padding-bottom: 3mm !important;
+  }
+
+  .resume-dossier-aside > div:first-child > div:first-child {
+    width: 13mm !important;
+    height: 13mm !important;
+    flex: 0 0 13mm !important;
+  }
+
+  .resume-dossier-aside section {
+    min-width: 0 !important;
+    break-inside: avoid !important;
+  }
+
+  /* Coursework is the lowest-priority block; the project QR retains the long-form path. */
+  .resume-dossier-aside section:last-child {
+    display: none !important;
+  }
+
+  .resume-dossier-aside section > div {
+    gap: 1.2mm !important;
+  }
+
+  .resume-dossier-aside h3 {
+    margin-bottom: 1.5mm !important;
+    padding-bottom: 1mm !important;
+    font-size: 7px !important;
+    letter-spacing: 0.1em !important;
+  }
+
+  .resume-dossier-aside a {
+    overflow-wrap: anywhere !important;
+    font-size: 7.3px !important;
+    line-height: 1.2 !important;
+  }
+
+  .resume-dossier-aside .font-mono,
+  .resume-dossier-aside .text-\[8px\],
+  .resume-dossier-aside .text-\[8\.5px\],
+  .resume-dossier-aside .text-\[9px\] {
+    font-size: 7px !important;
+  }
+
+  .resume-dossier-aside .rounded { border-radius: 2px !important; }
+
+  .resume-dossier-main {
+    min-width: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    padding: 5.5mm 6mm 4mm !important;
+    gap: 3mm !important;
+    background: #0a0a0f !important;
+    color: #f1efe7 !important;
+  }
+
+  .resume-dossier-main > header {
+    padding-bottom: 2.5mm !important;
+    break-inside: avoid !important;
+  }
+
+  .resume-dossier-main > header h2 {
+    margin-top: 1.5mm !important;
+    font-size: 19px !important;
+    line-height: 1.05 !important;
+  }
+
+  .resume-dossier-main section {
+    min-width: 0 !important;
+    break-inside: avoid !important;
+  }
+
+  .resume-dossier-main section > div:first-child {
+    margin-bottom: 1.5mm !important;
+    padding-bottom: 1mm !important;
+  }
+
+  .resume-dossier-main section h3 {
+    font-size: 7.5px !important;
+    letter-spacing: 0.1em !important;
+  }
+
+  .resume-dossier-main p {
+    font-size: 8px !important;
+    line-height: 1.35 !important;
+  }
+
+  .resume-dossier-main .mt-3 { margin-top: 1.5mm !important; }
+
+  .resume-dossier-main .space-y-5 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 2mm !important;
+  }
+
+  .resume-dossier-main .rounded.border {
+    padding: 2.2mm !important;
+    border-radius: 2px !important;
+  }
+
+  .resume-dossier-main ul { margin-top: 1mm !important; }
+
+  .resume-dossier-main li {
+    font-size: 7.6px !important;
+    line-height: 1.28 !important;
+  }
+
+  .resume-dossier-main .grid { gap: 1.5mm !important; }
+
+  .resume-dossier-main .grid a { padding: 1.8mm !important; }
+
+  .resume-dossier-main .grid strong {
+    margin-top: 0.5mm !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+  }
+
+  .resume-dossier-main .grid span { font-size: 6.5px !important; }
+
+  .resume-dossier-main footer {
+    margin-top: auto !important;
+    padding-top: 2mm !important;
+    font-size: 6.5px !important;
+    line-height: 1.2 !important;
+  }
+
+  .resume-dossier-main a,
+  .resume-dossier-aside a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+
+  .resume-dossier * { text-shadow: none !important; }
+
+  .resume-dossier-topline,
+  .site-shell,
+  nav,
+  button,
+  [role='dialog'] {
+    display: none !important;
+  }
+
+  #resume-canvas,
+  #resume-canvas * { visibility: visible !important; }
+
+  #resume-canvas {
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+  }
+
+  main:has(> .site-shell) {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
 }

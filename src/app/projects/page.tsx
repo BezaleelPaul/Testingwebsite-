@@ -272,7 +272,7 @@ export default function ProjectsPage() {
                 Public repositories
                 <span className="mt-1 block normal-case tracking-normal">
                   {githubRepositoryData.generatedAt
-                    ? `Synced ${githubRepositoryData.generatedAt.slice(0, 10)}`
+                    ? `Synced ${String(githubRepositoryData.generatedAt ?? '').slice(0, 10)}`
                     : 'Awaiting first sync'}
                 </span>
               </div>

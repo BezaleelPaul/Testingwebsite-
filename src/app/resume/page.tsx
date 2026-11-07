@@ -7,7 +7,6 @@ import {
   ArrowUpRight,
   Check,
   Copy,
-  Download,
   FileCode2,
   FolderGit2,
   Printer,
@@ -97,8 +96,14 @@ export default function ResumePage() {
     };
   }, [showJsonModal]);
 
-  const handlePrint = () => {
-    window.print();
+  const handlePrint = async () => {
+    try {
+      await document.fonts.ready;
+      const images = Array.from(document.querySelectorAll<HTMLImageElement>('#resume-canvas img'));
+      await Promise.all(images.map((image) => image.decode().catch(() => undefined)));
+    } finally {
+      window.requestAnimationFrame(() => window.print());
+    }
   };
 
   const handleCopyJson = async () => {
@@ -153,21 +158,14 @@ export default function ResumePage() {
 
             {/* Action Toolbar */}
             <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1 lg:col-span-4">
-              <a
-                href="/Bezaleel_Paul_Resume.pdf"
-                download="Bezaleel_Paul_Resume.pdf"
-                className="action-button primary w-full !justify-between"
-              >
-                <span>DOWNLOAD PDF</span>
-                <Download className="h-4 w-4" />
-              </a>
               <button
                 type="button"
                 onClick={handlePrint}
-                className="action-button secondary w-full !justify-between text-[var(--text)]"
+                className="action-button primary w-full !justify-between"
+                aria-label="Export the current website resume as an A4 PDF"
               >
-                <span>PRINT / SAVE PDF</span>
-                <Printer className="h-4 w-4 text-[var(--accent)]" />
+                <span>EXPORT A4 PDF</span>
+                <Printer className="h-4 w-4" />
               </button>
               <button
                 type="button"
@@ -185,6 +183,9 @@ export default function ResumePage() {
                 <FolderGit2 className="h-4 w-4 text-[var(--accent)]" />
               </Link>
             </div>
+            <p className="mt-2 font-mono text-[8px] uppercase tracking-[0.08em] text-[var(--muted)]">
+              PDF settings: A4 · Background graphics on · Margins none
+            </p>
           </header>
         </div>
 
