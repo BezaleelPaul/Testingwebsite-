@@ -121,6 +121,7 @@ export function PortraitDepth({ className = '' }: PortraitDepthProps) {
   const imgRef = useRef<HTMLImageElement>(null);
 
   const [glReady, setGlReady] = useState(false);
+  const [isHelmetOpen, setIsHelmetOpen] = useState(false);
   const [isPressing, setIsPressing] = useState(false);
   const [hudRadiusPx, setHudRadiusPx] = useState(0);
   const [hudPressPoint, setHudPressPoint] = useState<{ x: number; y: number } | null>(null);
@@ -482,8 +483,10 @@ export function PortraitDepth({ className = '' }: PortraitDepthProps) {
   return (
     <div
       ref={frameRef}
-      className={`hero-portrait-frame ${className}`}
-      onPointerDown={handlePointerDown}
+      className={`hero-portrait-frame ${isHelmetOpen ? 'helmet-open' : ''} ${className}`}
+      onPointerEnter={(event) => { if (event.pointerType === 'mouse') setIsHelmetOpen(true); }}
+      onPointerLeave={(event) => { if (event.pointerType === 'mouse') setIsHelmetOpen(false); }}
+      onPointerDown={(event) => { if (event.pointerType !== 'mouse') setIsHelmetOpen((open) => !open); handlePointerDown(event); }}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
@@ -498,7 +501,7 @@ export function PortraitDepth({ className = '' }: PortraitDepthProps) {
         cursor: isPressing ? 'grabbing' : 'crosshair',
         touchAction: 'none', // Allows fluid touch gestures and radar pulse without unwanted scrolling
       }}
-      aria-label="Interactive pilot portrait: move to tilt, press and hold to expand orbital signal shockwave"
+      aria-label="Interactive armored portrait. Hover to open the helmet visor, or tap to toggle it. Press and hold for the orbital signal effect."
     >
       {/* 
         High-Res Static Portrait Base:
@@ -543,6 +546,15 @@ export function PortraitDepth({ className = '' }: PortraitDepthProps) {
           transition: 'opacity 0.35s ease',
         }}
       />
+
+      <div className="hero-helmet-shell" aria-hidden="true">
+        <span className="hero-helmet-side hero-helmet-side-left" />
+        <span className="hero-helmet-side hero-helmet-side-right" />
+        <span className="hero-helmet-crown" />
+        <span className="hero-helmet-visor"><i /><b /></span>
+        <span className="hero-helmet-chin" />
+        <span className="hero-helmet-emblem">BP</span>
+      </div>
 
       {/* 
         Interactive HUD Press Radar Ring ("press like a size of radius"):
