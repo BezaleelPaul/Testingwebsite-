@@ -103,7 +103,7 @@ export class MechLab {
 
     const root = new THREE.Group();
     // The lowest point of the neutral feet is exactly on the world ground plane (Y = 0).
-    root.position.y = 2.17;
+    root.position.y = 0.62;
     scene.add(root);
 
     this.box(root, [1.2, 1.45, 0.68], [0, 1.8, 0], '#344457');
