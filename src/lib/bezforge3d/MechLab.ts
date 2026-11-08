@@ -98,7 +98,8 @@ export class MechLab {
     scene.add(fill);
 
     const floor = new THREE.GridHelper(16, 32, '#596778', '#202c3b');
-    floor.position.y = 0;
+    // Keep the grid a little below the contact plane to prevent z-fighting with the feet/plinth.
+    floor.position.y = -0.02;
     scene.add(floor);
 
     const root = new THREE.Group();
