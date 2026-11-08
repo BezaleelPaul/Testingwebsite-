@@ -14,7 +14,7 @@ export default function UniversePage() {
           <header className="universe-page-heading">
             <p className="orbital-eyebrow"><span>01</span> / CELESTIAL NAVIGATION</p>
             <h1>THE UNIVERSE<br /><span>IS STILL MOVING.</span></h1>
-            <p>Explore a live solar-system visualization powered by Spacekit.js. The planets keep moving while you pause, inspect, and navigate the scene.</p>
+            <p>Explore a live, procedurally generated solar system built with our own Three.js engine. Pause orbital motion, adjust simulation speed, inspect planets, and navigate the scene.</p>
           </header>
           <SpacekitUniverse />
           <PlanetMissionDeck />
