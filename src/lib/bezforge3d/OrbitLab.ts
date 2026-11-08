@@ -23,6 +23,7 @@ export type OrbitLabOptions = { speed?: number; onSelect?: (body: OrbitBody | nu
 // Bodies without a suitable global map retain their physically-inspired base color.
 const NASA_JPL_TEXTURES: Record<string, string> = {
   mercury: 'https://space.jpl.nasa.gov/tmaps/pix/mer0muu2.jpg',
+  venus: 'https://space.jpl.nasa.gov/tmaps/pix/ven0aaa2.jpg',
   earth: 'https://space.jpl.nasa.gov/tmaps/pix/ear0xuu2.jpg',
   mars: 'https://space.jpl.nasa.gov/tmaps/pix/mar0kuu2.jpg',
   jupiter: 'https://space.jpl.nasa.gov/tmaps/pix/jup0vss1.jpg',
