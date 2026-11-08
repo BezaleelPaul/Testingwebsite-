@@ -16,7 +16,7 @@ type SpacekitSimulation = {
 
 type SpacekitApi = {
   Simulation: new (
-    container: HTMLElement,
+    canvas: HTMLCanvasElement,
     options: {
       basePath: string;
       camera: { initialPosition: number[]; enableDrift: boolean };
@@ -129,7 +129,7 @@ export function SpacekitUniverse() {
   return (
     <div className="spacekit-experience">
       <div className="spacekit-toolbar">
-        <span><i className={status === 'ready' ? 'spacekit-status-live' : ''} /> {status === 'ready' ? 'SIMULATION ONLINE' : status === 'fallback' ? 'FALLBACK MODE' : 'LOADING CELESTIAL DATA'}</span>
+        <span><i className={status === 'ready' ? 'spacekit-status-live' : ''} /> {status === 'ready' ? 'ENGINE INITIALIZED' : status === 'fallback' ? 'FALLBACK MODE' : 'LOADING CELESTIAL DATA'}</span>
         <span>SPACEKIT.JS / WEBGL 2</span>
       </div>
       <div className="spacekit-viewport" aria-label="Interactive Spacekit solar system visualization">\n        <canvas ref={containerRef} className="spacekit-canvas" aria-label="Interactive 3D solar system" />
