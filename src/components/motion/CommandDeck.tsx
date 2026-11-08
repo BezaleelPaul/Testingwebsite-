@@ -161,6 +161,7 @@ export function CommandDeck() {
               <Search size={17} aria-hidden="true" />
               <input
                 ref={inputRef}
+                type="search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 onKeyDown={onInputKeyDown}
