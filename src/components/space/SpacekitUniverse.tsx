@@ -39,6 +39,7 @@ export function SpacekitUniverse() {
   const containerRef = useRef<HTMLDivElement>(null);
   const simulationRef = useRef<SpacekitSimulation | null>(null);
   const [status, setStatus] = useState<SceneStatus>('loading');
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
     let disposed = false;
@@ -58,9 +59,11 @@ export function SpacekitUniverse() {
       }
 
       try {
+        const shouldReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        setReducedMotion(shouldReduceMotion);
         const simulation = new Spacekit.Simulation(containerRef.current, {
           basePath: 'https://typpo.github.io/spacekit',
-          camera: { initialPosition: [0, -34, 17], enableDrift: true },
+          camera: { initialPosition: [0, -34, 17], enableDrift: !shouldReduceMotion },
           debug: { showAxes: false, showGrid: false, showStats: false },
         });
 
@@ -142,7 +145,7 @@ export function SpacekitUniverse() {
       </div>
       <div className="spacekit-caption">
         <span>PLANETARY PRESETS / ORBITAL MOTION / STARFIELD</span>
-        <span>{status === 'ready' ? 'DRIFT ENABLED' : 'CSS ORBIT PREVIEW'}</span>
+        <span>{status === 'ready' ? (reducedMotion ? 'DRIFT DISABLED' : 'DRIFT ENABLED') : 'CSS ORBIT PREVIEW'}</span>
       </div>
     </div>
   );
