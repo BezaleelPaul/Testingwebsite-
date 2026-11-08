@@ -36,7 +36,7 @@ declare global {
 type SceneStatus = 'loading' | 'ready' | 'fallback';
 
 export function SpacekitUniverse() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLCanvasElement>(null);
   const simulationRef = useRef<SpacekitSimulation | null>(null);
   const [status, setStatus] = useState<SceneStatus>('loading');
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -132,7 +132,7 @@ export function SpacekitUniverse() {
         <span><i className={status === 'ready' ? 'spacekit-status-live' : ''} /> {status === 'ready' ? 'SIMULATION ONLINE' : status === 'fallback' ? 'FALLBACK MODE' : 'LOADING CELESTIAL DATA'}</span>
         <span>SPACEKIT.JS / WEBGL 2</span>
       </div>
-      <div className="spacekit-viewport" ref={containerRef} aria-label="Interactive Spacekit solar system visualization">
+      <div className="spacekit-viewport" aria-label="Interactive Spacekit solar system visualization">\n        <canvas ref={containerRef} className="spacekit-canvas" aria-label="Interactive 3D solar system" />
         {status !== 'ready' && (
           <div className="spacekit-fallback" role="status">
             <div className="spacekit-fallback-sun" />
