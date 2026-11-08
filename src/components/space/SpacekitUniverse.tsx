@@ -135,7 +135,8 @@ export function SpacekitUniverse() {
         <span><i className={status === 'ready' ? 'spacekit-status-live' : ''} /> {status === 'ready' ? 'ENGINE INITIALIZED' : status === 'fallback' ? 'FALLBACK MODE' : 'LOADING CELESTIAL DATA'}</span>
         <span>SPACEKIT.JS / WEBGL 2</span>
       </div>
-      <div className="spacekit-viewport" aria-label="Interactive Spacekit solar system visualization">\n        <canvas ref={containerRef} className="spacekit-canvas" aria-label="Interactive 3D solar system" />
+      <div className="spacekit-viewport" aria-label="Interactive Spacekit solar system visualization">
+        <canvas ref={containerRef} className="spacekit-canvas" aria-label="Interactive 3D solar system" />
         {status !== 'ready' && (
           <div className="spacekit-fallback" role="status">
             <div className="spacekit-fallback-sun" />
