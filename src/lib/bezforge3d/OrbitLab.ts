@@ -93,7 +93,9 @@ export class OrbitLab {
       pivot.add(body);
       this.bodies.set(data.id, pivot);
       pivot.userData.orbitData = { ...data, body };
-      pivot.rotation.y = index * 0.7;
+      const phase = index * 0.7;
+      pivot.userData.phase = phase;
+      body.position.set(data.orbitRadius * Math.cos(phase), 0, data.orbitRadius * Math.sin(phase));
     });
   }
 
@@ -101,9 +103,15 @@ export class OrbitLab {
     if (this.paused) return;
     this.bodies.forEach((pivot) => {
       const data = pivot.userData.orbitData as OrbitBody & { body: THREE.Group };
-      const angle = (pivot.rotation.y + delta * this.speed * (0.18 / Math.sqrt(data.period))) % (Math.PI * 2);
-      pivot.rotation.y = angle;
-      data.body.position.set(data.orbitRadius * (1 - (data.eccentricity ?? 0)) * Math.cos(angle), Math.sin(angle * 0.7) * (data.tilt ?? 0) * 0.012, data.orbitRadius * Math.sin(angle));
+      const phase = ((pivot.userData.phase as number) + delta * this.speed * (0.32 / Math.sqrt(data.period))) % (Math.PI * 2);
+      pivot.userData.phase = phase;
+      // Move the planet itself around the star. Rotating both the pivot and its offset
+      // would apply the orbital angle twice and distort the intended orbit.
+      data.body.position.set(
+        data.orbitRadius * (1 - (data.eccentricity ?? 0)) * Math.cos(phase),
+        Math.sin(phase * 0.7) * (data.tilt ?? 0) * 0.012,
+        data.orbitRadius * Math.sin(phase),
+      );
       data.body.traverse((object) => { if (object instanceof THREE.Mesh) object.userData.bodyId = data.id; });
     });
   }
