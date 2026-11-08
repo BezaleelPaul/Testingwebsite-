@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import { Preloader } from '@/components/motion/Preloader';
+import { CommandDeck } from '@/components/motion/CommandDeck';
 import { SmoothScroll } from '@/components/motion/SmoothScroll';
 import { ScrollAnimations } from '@/components/motion/ScrollAnimations';
 import { SiteMotion } from '@/components/motion/SiteMotion';
 import './globals.css';
+import './immersive-experiences.css';
 
 export const metadata: Metadata = {
   title: 'Bezaleel Paul — Software Developer',
@@ -30,14 +32,20 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <meta name="theme-color" content="#0A0A0F" />
       </head>
       <body>
+        <div className="ambient-universe" aria-hidden="true">
+          <span className="ambient-universe__depth" />
+          <span className="ambient-universe__nebula" />
+          <span className="ambient-universe__ship" />
+        </div>
         <div id="scroll-progress" aria-hidden="true" />
         <div id="orbital-cursor" aria-hidden="true" />
         <div id="orbital-cursor-dot" aria-hidden="true" />
         <Preloader />
+        <CommandDeck />
         <SmoothScroll />
         <ScrollAnimations />
         <SiteMotion />
-        {children}
+        <div className="site-content-layer">{children}</div>
       </body>
     </html>
   );
