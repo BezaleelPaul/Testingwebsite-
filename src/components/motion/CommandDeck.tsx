@@ -97,7 +97,7 @@ export function CommandDeck() {
         behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
         block: 'start',
       });
-      window.history.replaceState(null, '', href);
+      window.history.replaceState(window.history.state, '', href);
       return;
     }
     router.push(href);
