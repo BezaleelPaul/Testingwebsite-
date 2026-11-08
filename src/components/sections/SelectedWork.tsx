@@ -1,116 +1,58 @@
 'use client';
 
-import { useLayoutEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowDownRight, ArrowUpRight, Github } from 'lucide-react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ArrowUpRight, Github } from 'lucide-react';
 import { INITIAL_PROJECTS } from '@/data/profileData';
 
 const featured = INITIAL_PROJECTS.filter((project) => project.featured).slice(0, 3);
-const visualClasses = ['work-visual-observatory', 'work-visual-nadicare', 'work-visual-mise'];
-const visualLabels = ['ORBITAL MECHANICS / 01', 'PHYSIOLOGICAL MODEL / 02', 'LOCAL-FIRST SYSTEM / 03'];
+const visuals = ['orbit', 'signal', 'mise'];
 
 export function SelectedWork() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    if (!sectionRef.current || !stageRef.current || !trackRef.current) return;
-    gsap.registerPlugin(ScrollTrigger);
-    const mm = gsap.matchMedia();
-    mm.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', () => {
-      const stage = stageRef.current;
-      const track = trackRef.current;
-      if (!stage || !track) return;
-      const distance = () => Math.max(0, track.scrollWidth - stage.clientWidth);
-      const tween = gsap.to(track, {
-        x: () => -distance(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: stage,
-          start: 'top top+=82',
-          end: () => '+=' + distance(),
-          pin: true,
-          scrub: 0.8,
-          invalidateOnRefresh: true,
-          anticipatePin: 1,
-        },
-      });
-      return () => {
-        tween.scrollTrigger?.kill();
-        tween.kill();
-      };
-    });
-    return () => mm.revert();
-  }, []);
-
   return (
-    <section ref={sectionRef} id="work" className="selected-work" aria-labelledby="selected-work-title">
+    <section id="work" className="portfolio-work" aria-labelledby="portfolio-work-title">
       <div className="site-shell">
-        <header className="selected-work-heading">
+        <header className="portfolio-section-heading">
           <div>
-            <p className="orbital-eyebrow"><span>02</span> / SELECTED WORK</p>
-            <h2 id="selected-work-title" className="selected-work-title">
-              BUILT TO <span>MOVE</span><br />IDEAS FORWARD.
-            </h2>
+            <p className="portfolio-eyebrow">01 / SELECTED WORK</p>
+            <h2 id="portfolio-work-title">THOUGHTFULLY<br /><span>BUILT.</span></h2>
           </div>
-          <div className="selected-work-intro">
-            <p>Three projects. Three different problem spaces. A shared focus on making useful systems work well.</p>
-            <span className="selected-work-hint"><ArrowDownRight size={15} /> SCROLL TO EXPLORE</span>
-          </div>
+          <p>Three projects across different problem spaces. Focused on useful ideas, considered engineering, and software that works beyond the demo.</p>
         </header>
-      </div>
 
-      <div ref={stageRef} className="selected-work-stage">
-        <div ref={trackRef} className="selected-work-track">
+        <div className="portfolio-project-grid">
           {featured.map((project, index) => (
-            <article className={`selected-work-card orbital-project-card orbital-project-card-${index + 1}`} key={project.id}>
-              <div className={`selected-work-visual orbital-project-art ${visualClasses[index]}`} aria-hidden="true">
-                <div className="project-art-topline">
-                  <span>FIELD NOTE / 0{index + 1}</span>
-                  <span className="project-art-live"><i /> {project.status.toUpperCase()}</span>
-                </div>
-                <span className="work-visual-index">0{index + 1} / 03</span>
-                <span className="work-visual-label">{visualLabels[index]}</span>
-                {index === 0 && <div className="work-planet-system"><i /><i /><i /><b /></div>}
-                {index === 1 && <div className="work-vitals"><span>HR</span><strong>↗</strong><svg viewBox="0 0 520 150" role="presentation"><path d="M0 92 H82 L105 92 L128 34 L154 127 L180 70 L203 92 H286 L309 92 L330 51 L351 110 L372 78 L395 92 H520" /></svg><small>MODEL / RECOVERY RESPONSE</small></div>}
-                {index === 2 && <div className="work-mise-mark"><span>MISE</span><i /><i /><i /><small>LOCAL-FIRST · CROSS-PLATFORM</small></div>}
-                <span className="work-visual-caption">SYSTEM STUDY · PROJECT VISUAL</span>
-                <div className="project-art-coordinate">BP / ORBITAL ARCHIVE</div>
+            <article className="portfolio-project" key={project.id}>
+              <div className={`portfolio-project-visual portfolio-project-visual-${visuals[index]}`} aria-hidden="true">
+                <span className="portfolio-project-visual-label">PROJECT / 0{index + 1}</span>
+                {index === 0 && <div className="portfolio-orbit-art"><i /><i /><i /><b /></div>}
+                {index === 1 && <div className="portfolio-signal-art"><span>HR</span><strong>↗</strong><svg viewBox="0 0 420 110"><path d="M0 65 H62 L84 65 L105 20 L128 91 L151 48 L174 65 H235 L257 65 L278 34 L300 83 L321 54 L343 65 H420" /></svg><small>PHYSIOLOGICAL MODEL</small></div>}
+                {index === 2 && <div className="portfolio-mise-art"><strong>MISE</strong><span>LOCAL-FIRST / CROSS-PLATFORM</span></div>}
+                <span className="portfolio-project-visual-index">0{index + 1} / 03</span>
               </div>
 
-              <div className="selected-work-detail orbital-project-detail">
-                <div className="selected-work-meta">
-                  <span>MISSION 0{index + 1}</span>
+              <div className="portfolio-project-content">
+                <div className="portfolio-project-meta">
                   <span>{project.category}</span>
-                  <span className="work-status"><i /> {project.status}</span>
+                  <span>{project.status}</span>
                 </div>
                 <h3>{project.title}</h3>
-                <p className="selected-work-tagline">{project.tagline}</p>
-                <div className="selected-work-outcome">
-                  <span className="orbital-eyebrow">ENGINEERING FOCUS</span>
-                  <p>{project.metrics || project.description}</p>
+                <p className="portfolio-project-summary">{project.tagline}</p>
+                <div className="portfolio-project-stack">
+                  {project.stack.slice(0, 5).map((technology) => <span key={technology}>{technology}</span>)}
                 </div>
-                <div className="selected-work-stack">
-                  {project.stack.slice(0, 7).map((tech) => <span key={tech}>{tech}</span>)}
-                </div>
-                <div className="selected-work-links">
-                  <a href={project.repoUrl} target="_blank" rel="noopener noreferrer"><Github size={15} /> SOURCE CODE <ArrowUpRight size={13} /></a>
-                  {project.demoUrl && <Link href={project.demoUrl}>LIVE EXPERIENCE <ArrowUpRight size={13} /></Link>}
-                  <a href={project.repoUrl + '#readme'} target="_blank" rel="noopener noreferrer">CASE NOTES <ArrowUpRight size={13} /></a>
+                <div className="portfolio-project-links">
+                  <a href={project.repoUrl} target="_blank" rel="noopener noreferrer"><Github size={15} /> SOURCE <ArrowUpRight size={13} /></a>
+                  {project.demoUrl && <Link href={project.demoUrl}>LIVE PROJECT <ArrowUpRight size={13} /></Link>}
                 </div>
               </div>
-              <span className="project-card-corner project-card-corner-one" aria-hidden="true" />
-              <span className="project-card-corner project-card-corner-two" aria-hidden="true" />
             </article>
           ))}
         </div>
-      </div>
-      <div className="site-shell selected-work-footer">
-        <span>SCROLL / DRAG THROUGH THE PROJECTS</span>
-        <Link href="/projects">EXPLORE THE PROJECT ARCHIVE <ArrowUpRight size={14} /></Link>
+
+        <div className="portfolio-work-footer">
+          <span>SELECTED PROJECTS / 03</span>
+          <Link href="/projects">VIEW PROJECT ARCHIVE <ArrowUpRight size={14} /></Link>
+        </div>
       </div>
     </section>
   );
