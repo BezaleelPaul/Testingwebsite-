@@ -328,24 +328,3 @@
   .command-deck-item:hover,
   .command-deck-item.is-active { transform: none; }
 }
-
-
-/* Keep the mobile command launcher useful without covering reading content. */
-@media (max-width: 640px) {
-  .command-deck-trigger {
-    right: 12px;
-    bottom: calc(14px + env(safe-area-inset-bottom));
-    width: 42px;
-    min-height: 42px;
-    height: 42px;
-    justify-content: center;
-    gap: 0;
-    padding: 0;
-    border-radius: 50%;
-    background: rgba(10,10,15,.72);
-    backdrop-filter: blur(10px);
-  }
-  .command-deck-trigger-label,
-  .command-deck-trigger kbd { display: none; }
-  .command-deck-trigger-icon svg { width: 17px; height: 17px; }
-}
