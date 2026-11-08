@@ -8,6 +8,7 @@ type SpacekitRenderer = {
 };
 
 type SpacekitSimulation = {
+  start: () => void;
   createSkybox: (preset: unknown) => unknown;
   createStars?: (options?: { minSize?: number }) => unknown;
   createObject: (name: string, preset: unknown) => unknown;
@@ -88,6 +89,8 @@ export function SpacekitUniverse() {
           if (objectPreset) simulation.createObject(name, objectPreset);
         });
 
+        // Explicitly start the animation loop; do not equate constructor success with a running scene.
+        simulation.start();
         simulationRef.current = simulation;
         if (fallbackTimer !== undefined) window.clearTimeout(fallbackTimer);
         setStatus('ready');
