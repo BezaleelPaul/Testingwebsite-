@@ -127,3 +127,204 @@
 @media (prefers-reduced-motion: reduce) {
   .planet-destination-card, .planet-deck-progress i, .planet-log-button { transition: none; }
 }
+
+
+/* Cinematic command deck — a fast, keyboard-first navigation layer. */
+.command-deck-trigger {
+  position: fixed;
+  right: clamp(14px, 2.2vw, 30px);
+  bottom: clamp(14px, 2.2vw, 28px);
+  z-index: 70;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 13px;
+  border: 1px solid rgba(215,255,0,.34);
+  color: rgba(247,248,242,.84);
+  background: rgba(10,10,15,.82);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.28);
+  cursor: pointer;
+  font: 600 9px/1 var(--mono);
+  letter-spacing: .12em;
+  transition: border-color 220ms ease, color 220ms ease, transform 220ms ease, background 220ms ease;
+}
+.command-deck-trigger:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(15,19,12,.94);
+  transform: translateY(-3px);
+}
+.command-deck-trigger-icon { display: grid; place-items: center; color: var(--accent); }
+.command-deck-trigger kbd,
+.command-deck-search kbd,
+.command-deck-footer kbd {
+  padding: 4px 6px;
+  border: 1px solid rgba(255,255,255,.16);
+  color: rgba(247,248,242,.48);
+  background: rgba(255,255,255,.035);
+  font: 600 9px/1 var(--mono);
+}
+.command-deck-backdrop {
+  position: fixed;
+  z-index: 120;
+  inset: 0;
+  display: grid;
+  place-items: start center;
+  overflow-y: auto;
+  padding: min(16vh, 130px) 18px 30px;
+  background: rgba(2,4,8,.78);
+  backdrop-filter: blur(14px) saturate(.72);
+  animation: command-deck-backdrop-in 220ms ease both;
+}
+.command-deck-dialog {
+  width: min(100%, 620px);
+  overflow: hidden;
+  border: 1px solid rgba(215,255,0,.24);
+  background: #0c0e13;
+  box-shadow: 0 34px 120px rgba(0,0,0,.62), 0 0 90px rgba(215,255,0,.055);
+  animation: command-deck-dialog-in 360ms cubic-bezier(.16,1,.3,1) both;
+}
+.command-deck-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 25px 26px 21px;
+  border-bottom: 1px solid rgba(255,255,255,.09);
+}
+.command-deck-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(247,248,242,.4);
+  font: 600 8px/1.5 var(--mono);
+  letter-spacing: .15em;
+}
+.command-deck-eyebrow span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(215,255,0,.8);
+}
+.command-deck-header h2 {
+  margin-top: 12px;
+  color: var(--text);
+  font: 400 clamp(32px,6vw,48px)/.95 var(--display);
+  letter-spacing: -.025em;
+}
+.command-deck-header h2 em { color: var(--accent); font-style: normal; }
+.command-deck-close {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(247,248,242,.58);
+  background: transparent;
+  cursor: pointer;
+  transition: color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+.command-deck-close:hover { color: var(--accent); border-color: var(--accent); transform: rotate(90deg); }
+.command-deck-search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 20px 12px;
+  padding: 0 13px;
+  min-height: 52px;
+  border: 1px solid rgba(255,255,255,.13);
+  color: rgba(247,248,242,.4);
+  background: rgba(255,255,255,.035);
+}
+.command-deck-search:focus-within { border-color: rgba(215,255,0,.62); box-shadow: 0 0 0 3px rgba(215,255,0,.07); }
+.command-deck-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  color: var(--text);
+  background: transparent;
+  font: 13px/1.5 var(--body);
+}
+.command-deck-search input::placeholder { color: rgba(247,248,242,.32); }
+.command-deck-results { max-height: min(48vh, 430px); overflow-y: auto; padding: 4px 12px 12px; }
+.command-deck-item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 13px;
+  padding: 12px 12px;
+  border: 1px solid transparent;
+  color: var(--text);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+.command-deck-item + .command-deck-item { margin-top: 3px; }
+.command-deck-item:hover,
+.command-deck-item.is-active {
+  border-color: rgba(215,255,0,.22);
+  background: rgba(215,255,0,.055);
+  transform: translateX(3px);
+}
+.command-deck-item-icon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.1);
+  color: var(--accent);
+  background: rgba(255,255,255,.025);
+}
+.command-deck-item-copy { display: grid; gap: 4px; min-width: 0; }
+.command-deck-item-copy strong { font-size: 12px; font-weight: 600; }
+.command-deck-item-copy small { overflow: hidden; color: rgba(247,248,242,.42); font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.command-deck-item-arrow { margin-left: auto; color: rgba(247,248,242,.3); }
+.command-deck-item.is-active .command-deck-item-arrow { color: var(--accent); }
+.command-deck-empty {
+  padding: 35px 14px;
+  color: rgba(247,248,242,.42);
+  font: 600 9px/1.6 var(--mono);
+  letter-spacing: .12em;
+  text-align: center;
+}
+.command-deck-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 13px 22px;
+  border-top: 1px solid rgba(255,255,255,.09);
+  color: rgba(247,248,242,.34);
+  background: rgba(255,255,255,.018);
+  font: 600 8px/1.5 var(--mono);
+  letter-spacing: .08em;
+}
+.command-deck-footer span { display: inline-flex; align-items: center; gap: 5px; }
+@keyframes command-deck-backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes command-deck-dialog-in { from { opacity: 0; transform: translateY(18px) scale(.975); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@media (max-width: 640px) {
+  .command-deck-trigger { min-height: 42px; padding-inline: 11px; }
+  .command-deck-trigger-label { display: none; }
+  .command-deck-backdrop { place-items: start center; padding: 8vh 10px 20px; }
+  .command-deck-header { padding: 20px 18px 17px; }
+  .command-deck-search { margin-inline: 12px; }
+  .command-deck-results { max-height: 54vh; padding-inline: 8px; }
+  .command-deck-footer { padding-inline: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .command-deck-backdrop,
+  .command-deck-dialog { animation: none !important; }
+  .command-deck-trigger,
+  .command-deck-item,
+  .command-deck-close { transition: none !important; }
+  .command-deck-trigger:hover,
+  .command-deck-item:hover,
+  .command-deck-item.is-active { transform: none; }
+}
