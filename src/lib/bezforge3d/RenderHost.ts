@@ -56,7 +56,9 @@ export class RenderHost {
     const down = (event: PointerEvent) => {
       this.pointer = { down: true, x: event.clientX, y: event.clientY, moved: false };
       this.drag = { x: event.clientX, y: event.clientY };
-      this.canvas.setPointerCapture?.(event.pointerId);
+      // Let touch gestures remain browser-scrollable on mobile. Mouse drags stay captured
+      // so orbit controls continue working if the pointer briefly leaves the canvas.
+      if (event.pointerType === 'mouse') this.canvas.setPointerCapture?.(event.pointerId);
     };
     const move = (event: PointerEvent) => {
       if (!this.pointer.down) return;
