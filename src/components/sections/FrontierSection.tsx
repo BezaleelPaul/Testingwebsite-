@@ -6,7 +6,7 @@ import { ArrowUpRight, Orbit, Sparkles } from 'lucide-react';
 import { AnimatedWords } from '@/components/motion/AnimatedWords';
 
 const destinations = [
-  { number: '01', title: 'Build for people', detail: 'Flutter, mobile and full-stack products', href: '#projects', orbit: 'orbit-a' },
+  { number: '01', title: 'Build for people', detail: 'Flutter, mobile and full-stack products', href: '#work', orbit: 'orbit-a' },
   { number: '02', title: 'Explore intelligence', detail: 'Machine learning, data and computer vision', href: '#skills', orbit: 'orbit-b' },
   { number: '03', title: 'Map the unknown', detail: '3D systems, simulations and experiments', href: '/observatory', orbit: 'orbit-c' },
   { number: '04', title: 'Leave a signal', detail: 'Open source, GitHub and collaboration', href: '/atlas', orbit: 'orbit-d' },
