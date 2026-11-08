@@ -6,40 +6,55 @@ const basePath = process.env.NEXT_PUBLIC_SITE_BASE_PATH ?? '';
 
 export function HeroSection() {
   return (
-    <section id="top" className="portfolio-hero" aria-labelledby="hero-title">
-      <div className="site-shell portfolio-hero-topline">
-        <span>COMPUTER SCIENCE / 02</span>
-        <a href="mailto:bezaleel321@gmail.com">BEZALEEL321@GMAIL.COM ↗</a>
+    <section id="top" className="hero space-texture" data-hero-scroll aria-labelledby="hero-title">
+      <div className="site-shell hero-topline">
+        <span>01 / Independent software developer</span>
+        <a className="hero-contact" href="mailto:bezaleel321@gmail.com">BEZALEEL321@GMAIL.COM ↗</a>
       </div>
 
-      <div className="site-shell portfolio-hero-grid">
-        <div className="portfolio-hero-copy">
-          <p className="portfolio-eyebrow"><i /> SECOND-YEAR COMPUTER SCIENCE STUDENT</p>
-          <h1 id="hero-title" className="portfolio-hero-title">
-            BEZALEEL<br /><span>PAUL.</span>
+      <div className="site-shell hero-main">
+        <div className="hero-orbit" aria-hidden="true"><span className="hero-orbit-dot" /></div>
+
+        <div className="hero-copy" data-hero-copy>
+          <p className="hero-kicker hero-reveal">Software Developer / Flutter / Full-Stack / AI &amp; ML</p>
+          <h1 id="hero-title" className="display hero-title hero-reveal">
+            <span>BEZALEEL</span>
+            <span className="second-line outline-text">PAUL.</span>
           </h1>
-          <p className="portfolio-hero-role">Software engineering · Applied AI · Product development</p>
-          <p className="portfolio-hero-intro">
-            I build useful software across mobile, web, and applied AI — combining a B.Tech in Computer Science at CMR University with the IIT Madras BS in Data Science programme.
+          <p className="hero-subtitle hero-reveal">
+            I build software across mobile, web, and applied AI. Studying Computer Science at CMR University and Data Science through the IIT Madras BS programme.
           </p>
-          <div className="portfolio-hero-actions">
-            <a className="portfolio-button portfolio-button-primary" href="#work">Explore my work <span>↗</span></a>
-            <a className="portfolio-button portfolio-button-secondary" href={`${basePath}/resume.pdf`} download>Download résumé <span>↓</span></a>
+          <div className="hero-actions hero-reveal">
+            <a className="action-button primary" href="https://github.com/BezaleelPaul" target="_blank" rel="noreferrer">
+              View Work <span aria-hidden="true">↗</span>
+            </a>
+            <a className="action-button secondary" href={`${basePath}/resume.pdf`} download>
+              Download Résumé <span aria-hidden="true">↓</span>
+            </a>
           </div>
-          <div className="portfolio-hero-footnote">
-            <span>BASED IN BENGALURU, INDIA</span>
-            <span>BUILD WITH INTENT.</span>
+          <div className="hero-stats hero-reveal" aria-label="Developer statistics">
+            <a className="hero-stat" href="https://github.com/BezaleelPaul" target="_blank" rel="noreferrer">
+              <strong>34</strong><span>GitHub repositories</span>
+            </a>
+            <a className="hero-stat" href="https://leetcode.com/u/BezaleelPaulN/" target="_blank" rel="noreferrer">
+              <strong>135</strong><span>LeetCode solved</span>
+            </a>
+            <a className="hero-stat" href="https://codeforces.com/profile/BezaleelPaulN" target="_blank" rel="noreferrer">
+              <strong>959</strong><span>Codeforces rating</span>
+            </a>
           </div>
         </div>
 
-        <div className="portfolio-hero-visual" aria-label="Portrait">
-          <div className="portfolio-visual-index">BP / 001</div>
+        <div className="hero-portrait-wrap" role="region" aria-label="Interactive pilot portrait: move pointer to tilt, click to emit signal shockwave">
           <PortraitDepth />
-          <span className="portfolio-visual-caption">SOFTWARE / SYSTEMS / IDEAS</span>
         </div>
+        <span className="hero-index">ORBITAL PROFILE / EARTH SECTOR</span>
       </div>
 
-      <a className="portfolio-scroll-cue" href="#work"><span /> SCROLL TO EXPLORE</a>
+      <div className="site-shell hero-bottomline">
+        <span>BUILD WITH INTENT</span>
+        <span>SCROLL TO EXPLORE ↓</span>
+      </div>
     </section>
   );
 }
