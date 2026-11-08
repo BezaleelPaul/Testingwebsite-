@@ -22,11 +22,11 @@ export type OrbitLabOptions = { speed?: number; onSelect?: (body: OrbitBody | nu
 // Official JPL/Caltech Solar System Simulator equirectangular maps.
 // Bodies without a suitable global map retain their physically-inspired base color.
 const NASA_JPL_TEXTURES: Record<string, string> = {
-  mercury: 'https://space.jpl.nasa.gov/tmaps/pix/mer0muu2.jpg',
-  venus: 'https://space.jpl.nasa.gov/tmaps/pix/ven0aaa2.jpg',
-  earth: 'https://space.jpl.nasa.gov/tmaps/pix/ear0xuu2.jpg',
-  mars: 'https://space.jpl.nasa.gov/tmaps/pix/mar0kuu2.jpg',
-  jupiter: 'https://space.jpl.nasa.gov/tmaps/pix/jup0vss1.jpg',
+  mercury: 'https://images.weserv.nl/?url=space.jpl.nasa.gov%2Ftmaps%2Fpix%2Fmer0muu2.jpg',
+  venus: 'https://images.weserv.nl/?url=space.jpl.nasa.gov%2Ftmaps%2Fpix%2Fven0aaa2.jpg',
+  earth: 'https://images.weserv.nl/?url=space.jpl.nasa.gov%2Ftmaps%2Fpix%2Fear0xuu2.jpg',
+  mars: 'https://images.weserv.nl/?url=space.jpl.nasa.gov%2Ftmaps%2Fpix%2Fmar0kuu2.jpg',
+  jupiter: 'https://images.weserv.nl/?url=space.jpl.nasa.gov%2Ftmaps%2Fpix%2Fjup0vss1.jpg',
 };
 
 /** Procedural solar-system renderer. Distances and radii are intentionally compressed for legibility. */
