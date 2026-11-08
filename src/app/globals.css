@@ -3259,3 +3259,72 @@ body > .ambient-universe {
   .portfolio-project,.portfolio-button { transition:none; }
   .portfolio-project:hover,.portfolio-button-primary:hover { transform:none; }
 }
+
+
+/* Mobile typography and spacing pass: preserve the visual language, improve breathing room. */
+.portfolio-hero-title {
+  line-height: .94;
+  letter-spacing: -.065em;
+  margin-top: 1.55rem;
+}
+.portfolio-hero-title span { display: block; padding-bottom: .08em; }
+.portfolio-hero-role { margin-top: 2.35rem; line-height: 1.8; }
+.portfolio-hero-intro { margin-top: 1.35rem; line-height: 1.95; }
+.portfolio-hero-actions { margin-top: 2.35rem; gap: .9rem; }
+.portfolio-hero-visual { margin-top: 1rem; }
+.portfolio-section-heading { margin-bottom: 3.6rem; }
+.portfolio-section-heading h2,.portfolio-about-heading h2 {
+  line-height: .98;
+  letter-spacing: -.055em;
+}
+.portfolio-section-heading > p { line-height: 1.95; }
+.portfolio-project-content { padding: 1.6rem; }
+.portfolio-project-content h3 { margin-top: 1.45rem; line-height: 1.18; }
+.portfolio-project-summary { margin-top: 1rem; line-height: 1.95; }
+.portfolio-project-stack { gap: .6rem; margin-top: 1.35rem; }
+.portfolio-project-stack span { padding: .48rem .62rem; line-height: 1.4; }
+.portfolio-project-links { gap: 1.25rem; margin-top: 1.65rem; padding-top: 1.25rem; }
+.portfolio-about-copy { padding-top: 2.5rem; }
+.portfolio-about-copy p { line-height: 2; }
+.portfolio-about-copy .portfolio-about-lead { line-height: 1.65; }
+.portfolio-education { margin-top: 3rem; }
+.portfolio-education > div { padding: 1.35rem 0; }
+@media (max-width: 640px) {
+  .portfolio-hero { padding: 1rem 0 2rem; }
+  .portfolio-hero-grid { gap: 2.8rem; padding-block: 3.6rem 2.3rem; }
+  .portfolio-hero-title {
+    font-size: clamp(4.15rem, 17.2vw, 6.8rem);
+    line-height: .96;
+    letter-spacing: -.07em;
+    overflow-wrap: normal;
+  }
+  .portfolio-hero-title span { margin-top: .08em; }
+  .portfolio-hero-role { margin-top: 2.1rem; line-height: 1.9; }
+  .portfolio-hero-intro { margin-top: 1.25rem; font-size: 1rem; line-height: 1.95; }
+  .portfolio-hero-actions { margin-top: 2rem; gap: .8rem; }
+  .portfolio-button { min-height: 52px; padding: .95rem 1rem; line-height: 1.5; }
+  .portfolio-hero-visual { margin-top: .8rem; min-height: 290px; }
+  .portfolio-work,.portfolio-about { padding-block: 5.5rem; }
+  .portfolio-section-heading { gap: 1.8rem; margin-bottom: 2.8rem; }
+  .portfolio-section-heading h2,.portfolio-about-heading h2 {
+    font-size: clamp(3.2rem, 13.5vw, 5.3rem);
+    line-height: 1.02;
+    letter-spacing: -.06em;
+  }
+  .portfolio-section-heading > p { font-size: .94rem; line-height: 1.95; }
+  .portfolio-project-grid { gap: 1.35rem; }
+  .portfolio-project-visual { min-height: 215px; }
+  .portfolio-project-content { padding: 1.45rem 1.3rem 1.55rem; }
+  .portfolio-project-meta { line-height: 1.7; }
+  .portfolio-project-content h3 { margin-top: 1.35rem; font-size: 1.55rem; line-height: 1.2; }
+  .portfolio-project-summary { margin-top: .95rem; font-size: .9rem; line-height: 1.95; }
+  .portfolio-project-stack { margin-top: 1.25rem; gap: .55rem; }
+  .portfolio-project-stack span { font-size: 9px; padding: .48rem .58rem; }
+  .portfolio-project-links { margin-top: 1.5rem; padding-top: 1.2rem; gap: 1.1rem; }
+  .portfolio-about-grid { gap: 1.6rem; }
+  .portfolio-about-copy { padding-top: .2rem; }
+  .portfolio-about-copy p { font-size: .92rem; line-height: 2; }
+  .portfolio-about-copy .portfolio-about-lead { font-size: 1.3rem; line-height: 1.65; }
+  .portfolio-education { margin-top: 2.4rem; }
+  .portfolio-education > div { padding: 1.25rem 0; row-gap: .65rem; }
+}
