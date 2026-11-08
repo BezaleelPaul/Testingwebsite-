@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
@@ -8,12 +9,19 @@ const links = [
   { label: 'Profile', href: '#top' },
   { label: 'Work', href: '#work' },
   { label: 'Experience', href: '#experience' },
+  { label: 'Universe', href: '/universe/' },
+  { label: 'Robotics', href: '/lab/' },
   { label: 'Contact', href: '#contact' },
 ];
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+  const pathname = usePathname();
+
+  const resolveHref = (href: string) => (
+    href.startsWith('#') && pathname !== '/' ? `/${href}` : href
+  );
 
   useEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -51,7 +59,7 @@ export function Navbar() {
         </Link>
         <nav className="nav-links" aria-label="Main navigation">
           {links.map((link) => (
-            <a key={link.label} href={link.href} className="nav-link">{link.label}</a>
+            <Link key={link.label} href={resolveHref(link.href)} className="nav-link">{link.label}</Link>
           ))}
         </nav>
         <button
@@ -75,14 +83,14 @@ export function Navbar() {
           aria-hidden={!menuOpen}
         >
           {links.map((link) => (
-            <a
+            <Link
               key={link.label}
-              href={link.href}
+              href={resolveHref(link.href)}
               tabIndex={menuOpen ? 0 : -1}
               onClick={() => setMenuOpen(false)}
             >
               {link.label}<span aria-hidden="true">↗</span>
-            </a>
+            </Link>
           ))}
         </nav>
       </div>

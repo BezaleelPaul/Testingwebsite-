@@ -244,3 +244,40 @@ For stable production verification, serve `out/` on port 3000 before Playwright.
 5. Publish `out/` through GitHub Pages.
 
 No server-side environment variables are required. Do not commit API tokens; the data generator uses unauthenticated public GitHub endpoints.
+
+
+---
+
+## 10. Interactive Universe and Robotics Lab
+
+The homepage now includes a continuously animated ambient starfield, a moving ticker, an engineering-destinations section, and a final transmission sequence. The ambience has its own CSS animation loop, so it continues drifting when scrolling stops. GSAP/ScrollTrigger adds a separate, restrained depth shift while the user scrolls. Lenis remains the smooth-scroll controller; it does not take over native navigation or input.
+
+### New routes
+
+| Route | Rendering | Purpose |
+| :--- | :--- | :--- |
+| `/universe` | Static page + client scene | Spacekit.js solar-system experiment with NASA Tycho skybox, star data, and planetary presets |
+| `/lab` | Static page + React Three Fiber | Interactive three-joint robot arm with manual shoulder, elbow, and wrist controls |
+
+### Spacekit integration
+
+`src/components/space/SpacekitUniverse.tsx` loads the official Spacekit browser build only on the dedicated `/universe` route. It creates the skybox, star field, and Sun-to-Neptune preset objects. The route remains independent from the portfolio's React Three Fiber renderer to avoid coupling Spacekit's Three.js r186 runtime to the app's Three.js r187 dependency.
+
+Spacekit requires WebGL 2 and loads some of its assets/data from its hosted asset directory. If the browser build fails to load, initialization throws, or the script load exceeds the bounded timeout, the page switches to a CSS orbital preview. Asynchronous asset failures after initialization are not currently monitored. The rest of the portfolio does not depend on Spacekit.
+
+### Robotics lab
+
+`src/components/robotics/RobotArmLab.tsx` renders a lightweight articulated arm using the existing React Three Fiber stack. Three range controls update the shoulder, elbow, and wrist joint angles. The base has a slow idle rotation when reduced motion is not requested. This is an educational forward-kinematics chain, not a physics-accurate industrial simulator or a hardware controller.
+
+### Motion and accessibility
+
+- The ambient starfield, nebula, and distant spacecraft animate independently of scroll.
+- ScrollTrigger adds background depth movement without pinning the page.
+- The new robot scene is isolated to `/lab`; it does not add another WebGL canvas to the homepage.
+- The robot idle rotation and decorative CSS loops respect `prefers-reduced-motion`.
+- The Spacekit route has a local visual fallback when its remote engine is unavailable.
+- The new routes are linked from the global navigation and the homepage engineering destinations.
+
+### Additional verification
+
+The Playwright coverage in `tests/space-experience.spec.ts` checks the homepage destinations and final transmission, accessible robot joint controls, and the Spacekit fallback path.
