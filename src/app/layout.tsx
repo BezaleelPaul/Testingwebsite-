@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Preloader } from '@/components/motion/Preloader';
+import { CommandDeck } from '@/components/motion/CommandDeck';
 import { SmoothScroll } from '@/components/motion/SmoothScroll';
 import { ScrollAnimations } from '@/components/motion/ScrollAnimations';
 import { SiteMotion } from '@/components/motion/SiteMotion';
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <div id="orbital-cursor" aria-hidden="true" />
         <div id="orbital-cursor-dot" aria-hidden="true" />
         <Preloader />
+        <CommandDeck />
         <SmoothScroll />
         <ScrollAnimations />
         <SiteMotion />
