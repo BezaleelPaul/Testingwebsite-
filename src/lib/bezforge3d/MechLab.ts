@@ -98,11 +98,12 @@ export class MechLab {
     scene.add(fill);
 
     const floor = new THREE.GridHelper(16, 32, '#596778', '#202c3b');
-    floor.position.y = -0.05;
+    floor.position.y = 0;
     scene.add(floor);
 
     const root = new THREE.Group();
-    root.position.y = -1.55;
+    // The lowest point of the neutral feet is exactly on the world ground plane (Y = 0).
+    root.position.y = 2.17;
     scene.add(root);
 
     this.box(root, [1.2, 1.45, 0.68], [0, 1.8, 0], '#344457');
@@ -141,7 +142,8 @@ export class MechLab {
       new THREE.CylinderGeometry(0.95, 1.05, 0.22, 48),
       this.material('#202b39'),
     );
-    base.position.y = -0.02;
+    // Keep the service plinth below the ground plane; its top face is at Y = 0.
+    base.position.y = -0.11;
     scene.add(base);
   }
 
