@@ -20,6 +20,8 @@ export class RenderHost {
   private disposed = false;
   private pointer = { down: false, x: 0, y: 0, moved: false };
   private drag = { x: 0, y: 0 };
+  private readonly minZoom = 3.5;
+  private readonly maxZoom = 260;
   private spherical = new THREE.Spherical();
   private target = new THREE.Vector3();
   private readonly onFrame?: RenderHostOptions['onFrame'];
@@ -73,7 +75,9 @@ export class RenderHost {
     const wheel = (event: WheelEvent) => {
       event.preventDefault();
       const offset = this.camera.position.clone().sub(this.target);
-      offset.multiplyScalar(THREE.MathUtils.clamp(1 + event.deltaY * 0.001, 0.82, 1.18));
+      const distance = offset.length();
+      const nextDistance = THREE.MathUtils.clamp(distance * (1 + event.deltaY * 0.001), this.minZoom, this.maxZoom);
+      offset.setLength(nextDistance);
       this.camera.position.copy(this.target).add(offset);
     };
     this.canvas.addEventListener('pointerdown', down);
@@ -116,7 +120,12 @@ export class RenderHost {
       if (mesh.geometry) mesh.geometry.dispose();
       if (mesh.material) {
         const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
-        materials.forEach((material) => material.dispose());
+        materials.forEach((material) => {
+          for (const value of Object.values(material)) {
+            if (value instanceof THREE.Texture) value.dispose();
+          }
+          material.dispose();
+        });
       }
     });
     this.renderer.dispose();
