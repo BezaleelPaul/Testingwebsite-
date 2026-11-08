@@ -2919,7 +2919,7 @@ body > .ambient-universe {
 .spacekit-toolbar i.spacekit-status-live,
 .robot-lab-viewport-meta i { background: var(--accent); box-shadow: 0 0 12px rgba(215,255,0,.7); }
 .spacekit-viewport { position: relative; width: 100%; height: min(68vh, 700px); min-height: 420px; overflow: hidden; }
-.spacekit-viewport canvas { display: block; width: 100% !important; height: 100% !important; }
+.spacekit-viewport canvas { display: block; width: 100% !important; height: 100% !important; touch-action: pan-y pinch-zoom; }
 .spacekit-fallback {
   position: absolute;
   inset: 0;
