@@ -28,7 +28,15 @@ export class OrbitLab {
   private paused = false;
   private raycaster = new THREE.Raycaster();
   private pointer = new THREE.Vector2();
-  private clickHandler: (event: PointerEvent) => void;
+  private clickHandler: (event: MouseEvent) => void;
+  private pointerStart: { x: number; y: number } | null = null;
+  private dragged = false;
+  private readonly pointerDownHandler = (event: PointerEvent) => { this.pointerStart = { x: event.clientX, y: event.clientY }; this.dragged = false; };
+  private readonly pointerUpHandler = (event: PointerEvent) => {
+    if (!this.pointerStart) return;
+    this.dragged = Math.hypot(event.clientX - this.pointerStart.x, event.clientY - this.pointerStart.y) > 5;
+    this.pointerStart = null;
+  };
 
   constructor(canvas: HTMLCanvasElement, options: OrbitLabOptions = {}) {
     this.orbitData = DEFAULT_ORBIT_BODIES;
@@ -36,6 +44,7 @@ export class OrbitLab {
     this.host = new RenderHost(canvas, { cameraPosition: [0, 38, 78], maxPixelRatio: 1.35, onFrame: (delta) => this.update(delta) });
     this.build();
     this.clickHandler = (event) => {
+      if (this.dragged) { this.dragged = false; return; }
       const rect = canvas.getBoundingClientRect();
       this.pointer.set(((event.clientX - rect.left) / rect.width) * 2 - 1, -((event.clientY - rect.top) / rect.height) * 2 + 1);
       this.raycaster.setFromCamera(this.pointer, this.host.camera);
@@ -43,6 +52,9 @@ export class OrbitLab {
       const id = hits[0]?.object.userData.bodyId as string | undefined;
       options.onSelect?.(this.orbitData.find((body) => body.id === id) ?? null);
     };
+    canvas.addEventListener('pointerdown', this.pointerDownHandler);
+    canvas.addEventListener('pointerup', this.pointerUpHandler);
+    canvas.addEventListener('pointercancel', this.pointerUpHandler);
     canvas.addEventListener('click', this.clickHandler);
   }
 
@@ -100,5 +112,11 @@ export class OrbitLab {
   pause() { this.paused = true; }
   play() { this.paused = false; }
   toggle() { this.paused = !this.paused; return this.paused; }
-  dispose() { this.host.canvas.removeEventListener('click', this.clickHandler); this.host.dispose(); }
+  dispose() {
+    this.host.canvas.removeEventListener('pointerdown', this.pointerDownHandler);
+    this.host.canvas.removeEventListener('pointerup', this.pointerUpHandler);
+    this.host.canvas.removeEventListener('pointercancel', this.pointerUpHandler);
+    this.host.canvas.removeEventListener('click', this.clickHandler);
+    this.host.dispose();
+  }
 }
