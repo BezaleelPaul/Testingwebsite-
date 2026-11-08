@@ -19,6 +19,15 @@ export const DEFAULT_ORBIT_BODIES: OrbitBody[] = [
 
 export type OrbitLabOptions = { speed?: number; onSelect?: (body: OrbitBody | null) => void };
 
+// Official JPL/Caltech Solar System Simulator equirectangular maps.
+// Bodies without a suitable global map retain their physically-inspired base color.
+const NASA_JPL_TEXTURES: Record<string, string> = {
+  mercury: 'https://space.jpl.nasa.gov/tmaps/pix/mer0muu2.jpg',
+  earth: 'https://space.jpl.nasa.gov/tmaps/pix/ear0xuu2.jpg',
+  mars: 'https://space.jpl.nasa.gov/tmaps/pix/mar0kuu2.jpg',
+  jupiter: 'https://space.jpl.nasa.gov/tmaps/pix/jup0vss1.jpg',
+};
+
 /** Procedural solar-system renderer. Distances and radii are intentionally compressed for legibility. */
 export class OrbitLab {
   readonly host: RenderHost;
@@ -27,6 +36,7 @@ export class OrbitLab {
   private speed: number;
   private paused = false;
   private raycaster = new THREE.Raycaster();
+  private textureLoader = new THREE.TextureLoader();
   private pointer = new THREE.Vector2();
   private clickHandler: (event: MouseEvent) => void;
   private pointerStart: { x: number; y: number } | null = null;
@@ -81,7 +91,25 @@ export class OrbitLab {
       const pivot = new THREE.Group();
       scene.add(pivot);
       const body = new THREE.Group();
-      const material = new THREE.MeshStandardMaterial({ color: data.color, roughness: 0.82, metalness: 0.05 });
+      const material = new THREE.MeshStandardMaterial({ color: data.color, roughness: 0.82, metalness: 0.02 });
+      const textureUrl = NASA_JPL_TEXTURES[data.id];
+      if (textureUrl) {
+        this.textureLoader.setCrossOrigin('anonymous');
+        this.textureLoader.load(
+          textureUrl,
+          (texture) => {
+            texture.colorSpace = THREE.SRGBColorSpace;
+            texture.anisotropy = Math.min(4, this.host.renderer.capabilities.getMaxAnisotropy());
+            material.map = texture;
+            material.color.set('#ffffff');
+            material.needsUpdate = true;
+          },
+          undefined,
+          () => {
+            // Keep the body visible with its fallback color if the remote map is unavailable.
+          },
+        );
+      }
       const sphere = new THREE.Mesh(new THREE.SphereGeometry(data.radius, 32, 24), material);
       sphere.userData.bodyId = data.id;
       body.add(sphere);
