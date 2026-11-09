@@ -3401,7 +3401,6 @@ body > .ambient-universe {
   pointer-events:none;
 }
 .selected-work-card:hover .project-art-image { transform:scale(1.045); opacity:1; }
-.selected-work-visual > :not(.project-art-image):not(.project-art-image-shade) { position:relative; z-index:1; }
 @media(prefers-reduced-motion:reduce) {
   .project-art-image { transition:none; }
 }
