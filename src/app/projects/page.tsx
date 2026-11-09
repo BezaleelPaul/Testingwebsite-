@@ -62,11 +62,17 @@ export default function ProjectsPage() {
                       <img
                         src={repo.image}
                         alt={`GitHub preview for ${repo.name}`}
-                        loading="lazy"
+                        loading={index < 6 ? 'eager' : 'lazy'}
+                        fetchPriority={index < 6 ? 'high' : 'auto'}
                         decoding="async"
                         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
                         onError={(event) => {
-                          event.currentTarget.src = `https://opengraph.githubassets.com/1/BezaleelPaul/${repo.name}`;
+                          const image = event.currentTarget;
+                          if (image.dataset.fallbackApplied === 'true') return;
+                          image.dataset.fallbackApplied = 'true';
+                          const safeName = repo.name.replace(/[<>&"']/g, '').slice(0, 28);
+                          const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600"><rect width="960" height="600" fill="#0A0A0F"/><path d="M0 480H960M720 0V600" stroke="#D7FF00" stroke-opacity=".22" stroke-width="2"/><circle cx="720" cy="300" r="190" fill="none" stroke="#D7FF00" stroke-opacity=".35" stroke-width="2"/><circle cx="720" cy="300" r="130" fill="none" stroke="#D7FF00" stroke-opacity=".2" stroke-width="2"/><text x="64" y="110" fill="#D7FF00" font-family="monospace" font-size="22" letter-spacing="5">PUBLIC REPOSITORY</text><text x="64" y="330" fill="#FFFFFF" font-family="Arial,sans-serif" font-size="54" font-weight="700">${safeName}</text><text x="64" y="390" fill="#FFFFFF" fill-opacity=".5" font-family="monospace" font-size="18">GITHUB / BEZALEELPAUL</text></svg>`;
+                          image.src = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
                         }}
                       />
                       <span className="absolute left-3 top-3 bg-paper/90 px-2.5 py-1 font-mono text-[8px] uppercase tracking-[0.1em] text-ink/65">Public repository</span>
