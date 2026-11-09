@@ -21,16 +21,10 @@ export default function Home() {
         <MotionTicker />
         <OrbitalMarquee />
         <OrbitalAbout />
-        <OrbitalTransition />
         <SelectedWork />
-        <OrbitalTransition />
         <ExperienceTimeline />
-        <OrbitalTransition />
         <ProofSection />
-        <OrbitalTransition />
         <SkillsSection skills={INITIAL_SKILLS} />
-        <OrbitalTransition />
-        <OrbitalTransition />
         <ContactSection profile={INITIAL_PROFILE} />
         <FrontierSection />
       </main>
