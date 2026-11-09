@@ -67,9 +67,9 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
     description: "An interactive digital planetarium simulating planetary orbits, orbital inclination, axial tilt, and near-Earth object context with procedurally generated planetary data.",
     stack: ["Three.js", "React Three Fiber", "NASA Open API", "Keplerian Physics", "GLSL Shaders", "Next.js", "TypeScript"],
     featured: true,
-    repoUrl: "https://github.com/BezaleelPaul/bezaleelpaul.github.io",
-    imageUrl: "https://opengraph.githubassets.com/1/BezaleelPaul/bezaleelpaul.github.io",
-    demoUrl: "/observatory",
+    repoUrl: "https://github.com/BezaleelPaul/Orbital-Observatory",
+    imageUrl: "https://opengraph.githubassets.com/1/BezaleelPaul/Orbital-Observatory",
+    demoUrl: "https://bezaleelpaul.github.io/Orbital-Observatory/",
     status: "Production",
     metrics: "Interactive 3D orbital model with a lightweight background rendering mode.",
     highlights: [
