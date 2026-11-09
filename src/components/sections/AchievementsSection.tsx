@@ -56,7 +56,22 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({ achiev
                   {item.metrics}
                 </p>
               )}
-              {item.link && (
+              {item.evidenceLinks?.length ? (
+                <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
+                  {item.evidenceLinks.map((evidence) => (
+                    <a
+                      key={evidence.url}
+                      href={evidence.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.1em] text-paper/55 transition-colors hover:text-paper"
+                    >
+                      {evidence.label}
+                      <ArrowUpRight className="h-3 w-3" />
+                    </a>
+                  ))}
+                </div>
+              ) : item.link ? (
                 <a
                   href={item.link}
                   target="_blank"
@@ -66,7 +81,7 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({ achiev
                   Verify
                   <ArrowUpRight className="h-3 w-3" />
                 </a>
-              )}
+              ) : null}
             </article>
           ))}
         </div>
