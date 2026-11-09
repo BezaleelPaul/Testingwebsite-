@@ -83,6 +83,20 @@ export function SelectedWork() {
           {featured.map((project, index) => (
             <article className={`selected-work-card orbital-project-card orbital-project-card-${index + 1}`} key={project.id}>
               <div className={`selected-work-visual orbital-project-art ${visualClasses[index]}`} aria-hidden="true">
+                <img
+                  className="project-art-image"
+                  src={project.imageUrl || `https://opengraph.githubassets.com/1/BezaleelPaul/${project.repoUrl.split('/').pop()}`}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  onError={(event) => {
+                    const image = event.currentTarget;
+                    const fallback = `https://opengraph.githubassets.com/1/BezaleelPaul/${project.repoUrl.split('/').pop()}`;
+                    if (image.src !== fallback) image.src = fallback;
+                    else image.style.display = 'none';
+                  }}
+                />
+                <div className="project-art-image-shade" />
                 <div className="project-art-topline">
                   <span>FIELD NOTE / 0{index + 1}</span>
                   <span className="project-art-live"><i /> {project.status.toUpperCase()}</span>
