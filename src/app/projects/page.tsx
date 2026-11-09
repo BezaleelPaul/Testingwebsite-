@@ -66,7 +66,7 @@ export default function ProjectsPage() {
                         decoding="async"
                         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
                         onError={(event) => {
-                          event.currentTarget.src = `https://github.com/BezaleelPaul/${repo.name}.png`;
+                          event.currentTarget.src = `https://opengraph.githubassets.com/1/BezaleelPaul/${repo.name}`;
                         }}
                       />
                       <span className="absolute left-3 top-3 bg-paper/90 px-2.5 py-1 font-mono text-[8px] uppercase tracking-[0.1em] text-ink/65">Public repository</span>
