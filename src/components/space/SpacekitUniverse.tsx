@@ -1,155 +1,56 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-
-type SpacekitRenderer = {
-  setAnimationLoop?: (callback: null) => void;
-  dispose?: () => void;
-};
-
-type SpacekitSimulation = {
-  start: () => void;
-  createSkybox: (preset: unknown) => unknown;
-  createStars?: (options?: { minSize?: number }) => unknown;
-  createObject: (name: string, preset: unknown) => unknown;
-  getRenderer?: () => SpacekitRenderer;
-};
-
-type SpacekitApi = {
-  Simulation: new (
-    canvas: HTMLCanvasElement,
-    options: {
-      basePath: string;
-      camera: { initialPosition: number[]; enableDrift: boolean };
-      debug: { showAxes: boolean; showGrid: boolean; showStats: boolean };
-    }
-  ) => SpacekitSimulation;
-  SkyboxPresets: { NASA_TYCHO: unknown };
-  SpaceObjectPresets: Record<string, unknown>;
-};
-
-declare global {
-  interface Window {
-    Spacekit?: SpacekitApi;
-  }
-}
-
-type SceneStatus = 'loading' | 'ready' | 'fallback';
+import { OrbitLab, type OrbitBody } from '@/lib/bezforge3d';
 
 export function SpacekitUniverse() {
-  const containerRef = useRef<HTMLCanvasElement>(null);
-  const simulationRef = useRef<SpacekitSimulation | null>(null);
-  const [status, setStatus] = useState<SceneStatus>('loading');
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const labRef = useRef<OrbitLab | null>(null);
+  const [paused, setPaused] = useState(false);
+  const [speed, setSpeed] = useState(1);
+  const [selected, setSelected] = useState<OrbitBody | null>(null);
+  const [status, setStatus] = useState<'loading' | 'ready' | 'fallback'>('loading');
 
   useEffect(() => {
-    let disposed = false;
-    let script: HTMLScriptElement | null = null;
-    let fallbackTimer: number | undefined;
-
-    const fail = () => {
-      if (fallbackTimer !== undefined) window.clearTimeout(fallbackTimer);
-      if (!disposed) setStatus('fallback');
-    };
-
-    const initialise = () => {
-      const Spacekit = window.Spacekit;
-      if (disposed || !containerRef.current || !Spacekit) {
-        fail();
-        return;
-      }
-
-      try {
-        const shouldReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        setReducedMotion(shouldReduceMotion);
-        const simulation = new Spacekit.Simulation(containerRef.current, {
-          basePath: 'https://typpo.github.io/spacekit',
-          camera: { initialPosition: [0, -34, 17], enableDrift: !shouldReduceMotion },
-          debug: { showAxes: false, showGrid: false, showStats: false },
-        });
-
-        simulation.createSkybox(Spacekit.SkyboxPresets.NASA_TYCHO);
-        simulation.createStars?.({ minSize: 0.7 });
-
-        const presets = Spacekit.SpaceObjectPresets;
-        const bodies = [
-          ['sun', 'SUN'],
-          ['mercury', 'MERCURY'],
-          ['venus', 'VENUS'],
-          ['earth', 'EARTH'],
-          ['mars', 'MARS'],
-          ['jupiter', 'JUPITER'],
-          ['saturn', 'SATURN'],
-          ['uranus', 'URANUS'],
-          ['neptune', 'NEPTUNE'],
-        ] as const;
-
-        bodies.forEach(([name, preset]) => {
-          const objectPreset = presets[preset];
-          if (objectPreset) simulation.createObject(name, objectPreset);
-        });
-
-        // Explicitly start the animation loop; do not equate constructor success with a running scene.
-        simulation.start();
-        simulationRef.current = simulation;
-        if (fallbackTimer !== undefined) window.clearTimeout(fallbackTimer);
-        setStatus('ready');
-      } catch {
-        fail();
-      }
-    };
-
-    fallbackTimer = window.setTimeout(fail, 12000);
-    if (window.Spacekit) {
-      initialise();
-    } else {
-      script = document.querySelector<HTMLScriptElement>('script[data-spacekit-engine]');
-      if (!script) {
-        script = document.createElement('script');
-        script.src = 'https://typpo.github.io/spacekit/build/spacekit.js';
-        script.async = true;
-        script.dataset.spacekitEngine = 'true';
-      }
-
-      script.addEventListener('load', initialise);
-      script.addEventListener('error', fail);
-      if (!script.isConnected) document.head.appendChild(script);
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    try {
+      const lab = new OrbitLab(canvas, { onSelect: setSelected });
+      labRef.current = lab;
+      setStatus('ready');
+      return () => { lab.dispose(); labRef.current = null; };
+    } catch (error) {
+      console.error('BezForge OrbitLab failed to initialise:', error);
+      setStatus('fallback');
     }
-
-    return () => {
-      disposed = true;
-      if (fallbackTimer !== undefined) window.clearTimeout(fallbackTimer);
-      script?.removeEventListener('load', initialise);
-      script?.removeEventListener('error', fail);
-      const renderer = simulationRef.current?.getRenderer?.();
-      renderer?.setAnimationLoop?.(null);
-      renderer?.dispose?.();
-      simulationRef.current = null;
-      containerRef.current?.replaceChildren();
-    };
   }, []);
+
+  const togglePlayback = () => {
+    const next = !paused;
+    setPaused(next);
+    if (next) labRef.current?.pause(); else labRef.current?.play();
+  };
 
   return (
     <div className="spacekit-experience">
       <div className="spacekit-toolbar">
-        <span><i className={status === 'ready' ? 'spacekit-status-live' : ''} /> {status === 'ready' ? 'ENGINE INITIALIZED' : status === 'fallback' ? 'FALLBACK MODE' : 'LOADING CELESTIAL DATA'}</span>
-        <span>SPACEKIT.JS / WEBGL 2</span>
+        <span><i className={status === 'ready' ? 'spacekit-status-live' : ''} /> {status === 'ready' ? 'BEZFORGE ORBITLAB / ONLINE' : status === 'fallback' ? 'WEBGL UNAVAILABLE' : 'INITIALISING ORBITLAB'}</span>
+        <span>PROCEDURAL THREE.JS / LOCAL ENGINE</span>
       </div>
-      <div className="spacekit-viewport" aria-label="Interactive Spacekit solar system visualization">
-        <canvas ref={containerRef} className="spacekit-canvas" aria-label="Interactive 3D solar system" />
-        {status !== 'ready' && (
-          <div className="spacekit-fallback" role="status">
-            <div className="spacekit-fallback-sun" />
-            <div className="spacekit-fallback-orbit orbit-mercury"><i /></div>
-            <div className="spacekit-fallback-orbit orbit-earth"><i /></div>
-            <div className="spacekit-fallback-orbit orbit-jupiter"><i /></div>
-            <p>{status === 'fallback' ? 'The external astronomy engine could not load. The orbital preview remains available.' : 'Initialising the solar system…'}</p>
+      <div className="spacekit-viewport" aria-label="Interactive custom solar system visualization">
+        <canvas ref={canvasRef} className="spacekit-canvas" aria-label="Custom interactive 3D solar system. Drag to orbit and scroll to zoom." />
+        {status === 'fallback' && <div className="spacekit-fallback" role="status"><p>WebGL could not start on this device. Try enabling hardware acceleration or using a supported browser.</p></div>}
+        {status === 'ready' && (
+          <div className="orbitlab-overlay">
+            <button type="button" onClick={togglePlayback}>{paused ? 'RESUME ORBITS' : 'PAUSE ORBITS'}</button>
+            <label>SPEED <input aria-label="Orbital simulation speed" type="range" min="0" max="5" step="0.25" value={speed} onChange={(event) => { const value = Number(event.target.value); setSpeed(value); labRef.current?.setSpeed(value); }} /> {speed.toFixed(2)}×</label>
+            {selected && <span>{selected.name.toUpperCase()} / ORBIT {selected.orbitRadius} AU-SCALE</span>}
           </div>
         )}
       </div>
       <div className="spacekit-caption">
-        <span>PLANETARY PRESETS / ORBITAL MOTION / STARFIELD</span>
-        <span>{status === 'ready' ? (reducedMotion ? 'DRIFT DISABLED' : 'DRIFT ENABLED') : 'CSS ORBIT PREVIEW'}</span>
+        <span>PROCEDURAL PLANETS / KEPLER-INSPIRED ORBITS / STARFIELD</span>
+        <span>{status === 'ready' ? 'DRAG TO ORBIT · SCROLL TO ZOOM' : 'LOCAL ENGINE'}</span>
       </div>
     </div>
   );

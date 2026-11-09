@@ -9,8 +9,6 @@ const links = [
   { label: 'Profile', href: '#top' },
   { label: 'Work', href: '#work' },
   { label: 'Experience', href: '#experience' },
-  { label: 'Universe', href: '/universe/' },
-  { label: 'Robotics', href: '/lab/' },
   { label: 'Contact', href: '#contact' },
 ];
 

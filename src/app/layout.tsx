@@ -7,7 +7,10 @@ import { SiteMotion } from '@/components/motion/SiteMotion';
 import './globals.css';
 import './immersive-experiences.css';
 
+const siteUrl = 'https://bezaleelpaul.github.io/Testingwebsite-/';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: 'Bezaleel Paul — Software Developer',
   description: 'Software developer building mobile, full-stack, and applied AI products. B.Tech Computer Science at CMR University and BS Data Science at IIT Madras.',
   keywords: ['Bezaleel Paul', 'Flutter Developer', 'Software Developer', 'Full-Stack Developer', 'AI ML', 'CMR University', 'IIT Madras'],
@@ -15,9 +18,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Bezaleel Paul — Software Developer',
     description: 'Flutter · Full-Stack · AI/ML · Computer Science · Data Science',
-    url: 'https://bezaleelpaul.github.io/',
+    url: siteUrl,
     siteName: 'Bezaleel Paul',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bezaleel Paul — Software Developer',
+    description: 'Flutter · Full-Stack · AI/ML · Computer Science · Data Science',
   },
   robots: { index: true, follow: true },
 };
@@ -32,11 +40,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <meta name="theme-color" content="#0A0A0F" />
       </head>
       <body>
-        <div className="ambient-universe" aria-hidden="true">
-          <span className="ambient-universe__depth" />
-          <span className="ambient-universe__nebula" />
-          <span className="ambient-universe__ship" />
-        </div>
         <div id="scroll-progress" aria-hidden="true" />
         <div id="orbital-cursor" aria-hidden="true" />
         <div id="orbital-cursor-dot" aria-hidden="true" />

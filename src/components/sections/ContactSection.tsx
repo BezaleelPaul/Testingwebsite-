@@ -7,7 +7,7 @@ interface ContactSectionProps {
 
 export function ContactSection({ profile }: ContactSectionProps) {
   const email = profile.socials.find((social) => social.name === 'Email');
-  const publicLinks = profile.socials.filter((social) => social.primary && social.name !== 'Email');
+  const publicLinks = profile.socials.filter((social) => social.name !== 'Email' && social.url.trim());
 
   return (
     <>

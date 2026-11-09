@@ -67,8 +67,9 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
     description: "An interactive digital planetarium simulating planetary orbits, orbital inclination, axial tilt, and near-Earth object context with procedurally generated planetary data.",
     stack: ["Three.js", "React Three Fiber", "NASA Open API", "Keplerian Physics", "GLSL Shaders", "Next.js", "TypeScript"],
     featured: true,
-    repoUrl: "https://github.com/BezaleelPaul/bezaleelpaul.github.io",
-    demoUrl: "/observatory",
+    repoUrl: "https://github.com/BezaleelPaul/Orbital-Observatory",
+    imageUrl: "https://opengraph.githubassets.com/1/BezaleelPaul/Orbital-Observatory",
+    demoUrl: "https://bezaleelpaul.github.io/Orbital-Observatory/",
     status: "Production",
     metrics: "Interactive 3D orbital model with a lightweight background rendering mode.",
     highlights: [
@@ -88,6 +89,7 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
     stack: ["Python", "Streamlit", "XGBoost", "Plotly", "NumPy", "Scikit-Learn"],
     featured: true,
     repoUrl: "https://github.com/BezaleelPaul/bnmit-nadicare-health",
+    imageUrl: "https://raw.githubusercontent.com/BezaleelPaul/bnmit-nadicare-health/main/screenshots/screencapture-localhost-8501-2026-03-16-19_31_57.png",
     demoUrl: null,
     status: "Active",
     metrics: "Simulates continuous physiological load curves with dynamic recovery prediction.",
@@ -108,6 +110,7 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
     stack: ["Flutter", "Dart", "Python", "CLI", "Cross-Platform", "Desktop & Mobile"],
     featured: true,
     repoUrl: "https://github.com/BezaleelPaul/file_organizer_flutter",
+    imageUrl: "https://raw.githubusercontent.com/BezaleelPaul/file_organizer_flutter/main/assets/banner.png",
     demoUrl: null,
     status: "Production",
     metrics: "Sub-second filesystem classification with transactional safety undo logs.",
@@ -168,6 +171,7 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
     stack: ["Python", "OpenCV", "TensorFlow", "Deep Learning"],
     featured: false,
     repoUrl: "https://github.com/BezaleelPaul/Drishti-AI",
+    imageUrl: "https://raw.githubusercontent.com/BezaleelPaul/Drishti-AI/master/presentation/screenshots/01_phc_dashboard_online.png",
     demoUrl: null,
     status: "Prototype",
     highlights: [
@@ -342,6 +346,21 @@ export const INITIAL_ACHIEVEMENTS: AchievementItem[] = [
     category: "Hackathon",
     summary: "Built and maintained 34 repositories across utility tools, AI models, calculus visualizers, and Flutter apps with scheduled GitHub Actions pipelines.",
     metrics: "34 public repositories"
+  },
+  {
+    id: "campus-voting-2000",
+    title: "Campus Voting System — 2,000+ Student Voters",
+    issuer: "AC School, Jalahalli, Bengaluru",
+    date: "2026",
+    category: "Technical Operations",
+    summary: "Supported the execution of a campus voting system at AC School, Jalahalli, Bengaluru, used by approximately 2,000 students in a single day across 10 laptops, with no reported operational disruptions.",
+    metrics: "≈2,000 student voters · 10 laptops · 1 day",
+    link: "https://youtu.be/iDmTlF8fJuQ?t=78",
+    evidenceLinks: [
+      { label: "YouTube video (1:18)", url: "https://youtu.be/iDmTlF8fJuQ?t=78" },
+      { label: "Instagram reel 1", url: "https://www.instagram.com/reel/C75p8xvp1qS/?igsh=cXJyZDdidThrZDM0" },
+      { label: "Instagram reel 2", url: "https://www.instagram.com/reel/C75noSOpJ2F/?igsh=eHhmdXJleW1zeXR5" }
+    ]
   }
 ];
 
