@@ -99,12 +99,13 @@ export class MechLab {
 
     const floor = new THREE.GridHelper(16, 32, '#596778', '#202c3b');
     // Keep the grid a little below the contact plane to prevent z-fighting with the feet/plinth.
-    floor.position.y = -0.02;
+    floor.position.y = -0.04;
     scene.add(floor);
 
     const root = new THREE.Group();
-    // The lowest point of the neutral feet is exactly on the world ground plane (Y = 0).
-    root.position.y = 0.62;
+    // Raise the mech slightly so the foot soles sit visibly on (not coplanar with) the plinth top.
+    // The neutral sole bottom is rootY + 1.12 - 0.82 - 0.92 = 0.015.
+    root.position.y = 0.635;
     scene.add(root);
 
     this.box(root, [1.2, 1.45, 0.68], [0, 1.8, 0], '#344457');
@@ -143,7 +144,7 @@ export class MechLab {
       new THREE.CylinderGeometry(0.95, 1.05, 0.22, 48),
       this.material('#202b39'),
     );
-    // Keep the service plinth below the ground plane; its top face is at Y = 0.
+    // The service plinth top face is Y = 0; the mech soles sit 0.015 units above it.
     base.position.y = -0.11;
     scene.add(base);
   }
