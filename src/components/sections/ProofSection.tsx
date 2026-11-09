@@ -51,6 +51,23 @@ const proofItems = [
     link: 'ABOUT IEEE',
     icon: GitBranch,
   },
+  {
+    number: '05',
+    type: 'TECHNICAL OPERATIONS',
+    title: 'Campus voting system for approximately 2,000 students.',
+    detail: 'Supported a campus voting event at AC School, Jalahalli, Bengaluru, serving approximately 2,000 students in one day across 10 laptops, with no reported operational disruptions.',
+    metric: '2,000+',
+    metricLabel: 'student voters in one day',
+    extra: '10 laptops · AC School, Jalahalli, Bengaluru',
+    href: null,
+    link: null,
+    icon: GitBranch,
+    evidence: [
+      { label: 'YouTube video (1:18)', href: 'https://youtu.be/iDmTlF8fJuQ?t=78' },
+      { label: 'Instagram reel 1', href: 'https://www.instagram.com/reel/C75p8xvp1qS/?igsh=cXJyZDdidThrZDM0' },
+      { label: 'Instagram reel 2', href: 'https://www.instagram.com/reel/C75noSOpJ2F/?igsh=eHhmdXJleW1zeXR5' },
+    ],
+  },
 ];
 
 export function ProofSection() {
@@ -86,6 +103,21 @@ export function ProofSection() {
                   <a className="proof-link" href={item.href} target="_blank" rel="noopener noreferrer">
                     {item.link} <ArrowUpRight size={13} />
                   </a>
+                )}
+                {'evidence' in item && item.evidence && (
+                  <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
+                    {item.evidence.map((evidence) => (
+                      <a
+                        className="proof-link"
+                        key={evidence.href}
+                        href={evidence.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {evidence.label} <ArrowUpRight size={13} />
+                      </a>
+                    ))}
+                  </div>
                 )}
               </article>
             );
