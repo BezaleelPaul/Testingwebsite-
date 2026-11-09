@@ -346,6 +346,16 @@ export const INITIAL_ACHIEVEMENTS: AchievementItem[] = [
     category: "Hackathon",
     summary: "Built and maintained 34 repositories across utility tools, AI models, calculus visualizers, and Flutter apps with scheduled GitHub Actions pipelines.",
     metrics: "34 public repositories"
+  },
+  {
+    id: "campus-voting-2000",
+    title: "Campus Voting System — 2,000+ Student Voters",
+    issuer: "Campus Event",
+    date: "2026",
+    category: "Technical Operations",
+    summary: "Supported the execution of a campus voting system used by approximately 2,000 students in a single day, operated across 10 laptops, with no reported operational disruptions.",
+    metrics: "≈2,000 student voters · 10 laptops · 1 day",
+    link: "https://youtu.be/iDmTlF8fJuQ?t=78"
   }
 ];
 
