@@ -1,6 +1,6 @@
 'use client';
 
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowDownRight, ArrowUpRight, Github } from 'lucide-react';
 import gsap from 'gsap';
@@ -12,9 +12,24 @@ const visualClasses = ['work-visual-observatory', 'work-visual-nadicare', 'work-
 const visualLabels = ['ORBITAL MECHANICS / 01', 'PHYSIOLOGICAL MODEL / 02', 'LOCAL-FIRST SYSTEM / 03'];
 
 export function SelectedWork() {
+  const [activeProject, setActiveProject] = useState<(typeof featured)[number] | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!activeProject) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setActiveProject(null);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [activeProject]);
 
   useLayoutEffect(() => {
     if (!sectionRef.current || !stageRef.current || !trackRef.current) return;
@@ -99,7 +114,7 @@ export function SelectedWork() {
                 <div className="selected-work-links">
                   <a href={project.repoUrl} target="_blank" rel="noopener noreferrer"><Github size={15} /> SOURCE CODE <ArrowUpRight size={13} /></a>
                   {project.demoUrl && <Link href={project.demoUrl}>LIVE EXPERIENCE <ArrowUpRight size={13} /></Link>}
-                  <a href={project.repoUrl + '#readme'} target="_blank" rel="noopener noreferrer">CASE NOTES <ArrowUpRight size={13} /></a>
+                  <button type="button" onClick={() => setActiveProject(project)} aria-label={'Open ' + project.title + ' case study'}>EXPAND CASE STUDY <ArrowUpRight size={13} /></button>
                 </div>
               </div>
               <span className="project-card-corner project-card-corner-one" aria-hidden="true" />
@@ -112,6 +127,36 @@ export function SelectedWork() {
         <span>SCROLL / DRAG THROUGH THE PROJECTS</span>
         <Link href="/projects">EXPLORE THE PROJECT ARCHIVE <ArrowUpRight size={14} /></Link>
       </div>
+      {activeProject && (
+        <div className="case-study-backdrop" role="presentation" onMouseDown={(event) => {
+          if (event.target === event.currentTarget) setActiveProject(null);
+        }}>
+          <section className="case-study-expanded" role="dialog" aria-modal="true" aria-labelledby="case-study-title">
+            <div className="case-study-expanded-top">
+              <span>PROJECT CASE STUDY / {activeProject.category.toUpperCase()}</span>
+              <button type="button" onClick={() => setActiveProject(null)} aria-label="Close case study">CLOSE <span aria-hidden="true">×</span></button>
+            </div>
+            <div className="case-study-expanded-body">
+              <p className="orbital-eyebrow">THE ENGINEERING / {activeProject.status.toUpperCase()}</p>
+              <h2 id="case-study-title">{activeProject.title}</h2>
+              <p className="case-study-expanded-tagline">{activeProject.tagline}</p>
+              <div className="case-study-columns">
+                <div><span>THE PROBLEM</span><p>{activeProject.problem}</p></div>
+                <div><span>THE APPROACH</span><p>{activeProject.solution}</p></div>
+              </div>
+              <div className="case-study-highlights">
+                <span>IMPLEMENTATION NOTES</span>
+                <ul>{activeProject.highlights.map((item) => <li key={item}>{item}</li>)}</ul>
+              </div>
+              <div className="case-study-tech">{activeProject.stack.map((item) => <span key={item}>{item}</span>)}</div>
+              <div className="case-study-actions">
+                <a href={activeProject.repoUrl} target="_blank" rel="noopener noreferrer"><Github size={15} /> VIEW SOURCE <ArrowUpRight size={13} /></a>
+                {activeProject.demoUrl && <Link href={activeProject.demoUrl}>OPEN LIVE PROJECT <ArrowUpRight size={13} /></Link>}
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
     </section>
   );
 }
