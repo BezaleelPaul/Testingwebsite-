@@ -132,6 +132,15 @@ export default function ProjectsPage() {
                     </span>
                   </div>
 
+                  <div className="relative mt-5 aspect-[16/9] overflow-hidden bg-ink/5">
+                    <img
+                      src={project.imageUrl || `https://opengraph.githubassets.com/1/BezaleelPaul/${project.repoUrl.split('/').pop()}`}
+                      alt={`${project.title} project preview`}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
                   <h2 className="mt-5 font-display text-3xl leading-[0.98] tracking-tight text-ink sm:text-4xl">
                     {project.title}
                   </h2>
