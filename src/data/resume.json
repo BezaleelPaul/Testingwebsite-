@@ -6,28 +6,15 @@
   "photo": "photo.jpg",
   "terminal": [
     "$ whoami",
-    "> Flutter & Full-Stack Dev",
+    "> Applied AI & Software Engineering",
     "$ status",
     "> open to internships"
   ],
   "contact": [
-    [
-    [
-      "Email",
-      "bezaleel321@gmail.com"
-    ],
-    [
-      "LinkedIn",
-      "linkedin.com/in/bezaleel-pauln"
-    ],
-    [
-      "Portfolio",
-      "bezaleelpaul.github.io/Testingwebsite-/"
-    ],
-    [
-      "GitHub",
-      "github.com/BezaleelPaul"
-    ]
+    ["Email", "bezaleel321@gmail.com"],
+    ["LinkedIn", "linkedin.com/in/bezaleel-pauln"],
+    ["Portfolio", "bezaleelpaul.github.io/Testingwebsite-/"],
+    ["GitHub", "github.com/BezaleelPaul"]
   ],
   "skills": [
     [
