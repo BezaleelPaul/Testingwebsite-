@@ -8,11 +8,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { INITIAL_PROJECTS } from '@/data/profileData';
 
 const featured = INITIAL_PROJECTS.filter((project) => project.featured).sort((a, b) => {
-  const priority = ['drishti-ai', 'celestial-observatory-3d', 'file-organizer-ecosystem'];
+  const priority = ['drishti-ai', 'celestial-observatory-3d', 'nadicare-twin-engine', 'file-organizer-ecosystem'];
   return priority.indexOf(a.id) - priority.indexOf(b.id);
-}).slice(0, 3);
-const visualClasses = ['work-visual-drishti', 'work-visual-observatory', 'work-visual-mise'];
-const visualLabels = ['EXPLAINABLE AI / 01', 'ORBITAL MECHANICS / 02', 'LOCAL-FIRST SYSTEM / 03'];
+}).slice(0, 4);
+const visualClasses = ['work-visual-drishti', 'work-visual-observatory', 'work-visual-nadicare', 'work-visual-mise'];
+const visualLabels = ['EXPLAINABLE AI / 01', 'ORBITAL MECHANICS / 02', 'PHYSIOLOGICAL MODEL / 03', 'LOCAL-FIRST SYSTEM / 04'];
 
 export function SelectedWork() {
   const [activeProject, setActiveProject] = useState<(typeof featured)[number] | null>(null);
@@ -75,7 +75,7 @@ export function SelectedWork() {
             </h2>
           </div>
           <div className="selected-work-intro">
-            <p>Three projects. Three different problem spaces. A shared focus on making useful systems work well.</p>
+            <p>Four projects. Four different problem spaces. A shared focus on making useful systems work well.</p>
             <span className="selected-work-hint"><ArrowDownRight size={15} /> SCROLL TO EXPLORE</span>
           </div>
         </header>
@@ -104,11 +104,11 @@ export function SelectedWork() {
                   <span>FIELD NOTE / 0{index + 1}</span>
                   <span className="project-art-live"><i /> {project.status.toUpperCase()}</span>
                 </div>
-                <span className="work-visual-index">0{index + 1} / 03</span>
+                <span className="work-visual-index">0{index + 1} / 04</span>
                 <span className="work-visual-label">{visualLabels[index]}</span>
                 {index === 1 && <div className="work-planet-system"><i /><i /><i /><b /></div>}
-                {index === 0 && <div className="work-vitals"><span>HR</span><strong>↗</strong><svg viewBox="0 0 520 150" role="presentation"><path d="M0 92 H82 L105 92 L128 34 L154 127 L180 70 L203 92 H286 L309 92 L330 51 L351 110 L372 78 L395 92 H520" /></svg><small>MODEL / RECOVERY RESPONSE</small></div>}
-                {index === 2 && <div className="work-mise-mark"><span>MISE</span><i /><i /><i /><small>LOCAL-FIRST · CROSS-PLATFORM</small></div>}
+                {index === 2 && <div className="work-vitals"><span>HR</span><strong>↗</strong><svg viewBox="0 0 520 150" role="presentation"><path d="M0 92 H82 L105 92 L128 34 L154 127 L180 70 L203 92 H286 L309 92 L330 51 L351 110 L372 78 L395 92 H520" /></svg><small>MODEL / RECOVERY RESPONSE</small></div>}
+                {index === 3 && <div className="work-mise-mark"><span>MISE</span><i /><i /><i /><small>LOCAL-FIRST · CROSS-PLATFORM</small></div>}
                 <span className="work-visual-caption">SYSTEM STUDY · PROJECT VISUAL</span>
                 <div className="project-art-coordinate">BP / ORBITAL ARCHIVE</div>
               </div>
