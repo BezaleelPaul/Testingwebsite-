@@ -6,14 +6,14 @@ import { SiteMotion } from '@/components/motion/SiteMotion';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Bezaleel Paul — Software Developer',
-  description: 'Software developer building mobile, full-stack, and applied AI products. B.Tech Computer Science at CMR University and BS Data Science at IIT Madras.',
-  keywords: ['Bezaleel Paul', 'Flutter Developer', 'Software Developer', 'Full-Stack Developer', 'AI ML', 'CMR University', 'IIT Madras'],
+  title: 'Bezaleel Paul — Applied AI & Software Engineering',
+  description: 'Second-year Computer Science student building practical software and applied-AI projects. B.Tech at CMR University and BS Data Science at IIT Madras.',
+  keywords: ['Bezaleel Paul', 'Applied AI', 'Software Engineering', 'Computer Science', 'Machine Learning', 'CMR University', 'IIT Madras'],
   authors: [{ name: 'Bezaleel Paul N', url: 'https://github.com/BezaleelPaul' }],
   openGraph: {
-    title: 'Bezaleel Paul — Software Developer',
-    description: 'Flutter · Full-Stack · AI/ML · Computer Science · Data Science',
-    url: 'https://bezaleelpaul.github.io/',
+    title: 'Bezaleel Paul — Applied AI & Software Engineering',
+    description: 'Applied AI · Software Engineering · Computer Science · Data Science',
+    url: 'https://bezaleelpaul.github.io/Testingwebsite-/',
     siteName: 'Bezaleel Paul',
     type: 'website',
   },
