@@ -2,11 +2,13 @@
 
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import gsap from 'gsap';
 
 const links = [
   { label: 'Profile', href: '#top' },
   { label: 'Work', href: '#work' },
+  { label: 'Studio', href: '/music-studio/' },
   { label: 'Experience', href: '#experience' },
   { label: 'Contact', href: '#contact' },
 ];
@@ -14,6 +16,9 @@ const links = [
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+  const pathname = usePathname();
+
+  const resolveHref = (href: string) => href.startsWith('#') && pathname !== '/' ? `/${href}` : href;
 
   useEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -51,7 +56,7 @@ export function Navbar() {
         </Link>
         <nav className="nav-links" aria-label="Main navigation">
           {links.map((link) => (
-            <a key={link.label} href={link.href} className="nav-link">{link.label}</a>
+            <Link key={link.label} href={resolveHref(link.href)} className="nav-link">{link.label}</Link>
           ))}
         </nav>
         <button
