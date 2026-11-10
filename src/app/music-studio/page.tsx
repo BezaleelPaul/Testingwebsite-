@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, AudioLines, Guitar, Headphones, Music2, SlidersHorizontal, Upload, Waves } from 'lucide-react';
 import Link from 'next/link';
-import './music-studio.css';
 
 export default function MusicStudioPage() {
   const [audioUrl, setAudioUrl] = useState('');
