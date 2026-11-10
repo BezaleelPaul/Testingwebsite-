@@ -346,6 +346,21 @@ export const INITIAL_ACHIEVEMENTS: AchievementItem[] = [
     category: "Hackathon",
     summary: "Public work spanning developer utilities, AI experiments, mathematical visualizations, and Flutter applications.",
     metrics: "GitHub: BezaleelPaul"
+  },
+  {
+    id: "campus-voting-2000",
+    title: "Campus Voting System — 2,000+ Student Voters",
+    issuer: "AC School, Jalahalli, Bengaluru",
+    date: "2026",
+    category: "Technical Operations",
+    summary: "Supported the execution of a campus voting system at AC School, Jalahalli, Bengaluru, used by approximately 2,000 students in a single day across 10 laptops, with no reported operational disruptions.",
+    metrics: "≈2,000 student voters · 10 laptops · 1 day",
+    link: "https://youtu.be/iDmTlF8fJuQ?t=78",
+    evidenceLinks: [
+      { label: "YouTube video (1:18)", url: "https://youtu.be/iDmTlF8fJuQ?t=78" },
+      { label: "Instagram reel 1", url: "https://www.instagram.com/reel/C75p8xvp1qS/?igsh=cXJyZDdidThrZDM0" },
+      { label: "Instagram reel 2", url: "https://www.instagram.com/reel/C75noSOpJ2F/?igsh=eHhmdXJleW1zeXR5" }
+    ]
   }
 ];
 
