@@ -47,6 +47,46 @@ export default function MusicStudioPage() {
         <div className="studio-rule"><span>LISTEN CLOSELY</span><span>01 — 04</span></div>
       </section>
 
+      <section className="studio-releases" aria-labelledby="studio-releases-title">
+        <div className="studio-section-head studio-releases-head">
+          <div><p className="studio-kicker">MELODIC SANCTUM / THE CHANNEL</p><h2 id="studio-releases-title">The most-played frequencies.</h2></div>
+          <a className="studio-channel-link" href="https://youtube.com/@melodicsanctum" target="_blank" rel="noreferrer">VISIT THE CHANNEL ↗</a>
+        </div>
+        <p className="studio-releases-intro">A selection of the channel’s five most-viewed releases, ranked by lifetime views. Tap any cover to listen on YouTube.</p>
+        <div className="studio-featured-release">
+          <a className="studio-featured-art" href="https://www.youtube.com/watch?v=XH3-JvBUtcE" target="_blank" rel="noreferrer" aria-label="Listen to 10,000 Reasons metal cover on YouTube">
+            <img src="https://i.ytimg.com/vi/XH3-JvBUtcE/hqdefault.jpg" alt="10,000 Reasons metal cover video thumbnail" loading="lazy" />
+            <span className="studio-play-mark">▶</span>
+          </a>
+          <div className="studio-featured-copy">
+            <span className="studio-featured-rank">01 / MOST VIEWED RELEASE</span>
+            <h3>10,000 Reasons</h3>
+            <p>Metal Cover of Bless the Lord, Oh My Soul</p>
+            <div className="studio-release-metrics"><span>556 VIEWS</span><span>8H 20M WATCH TIME</span><span>0:54 AVG. VIEW</span></div>
+            <a href="https://www.youtube.com/watch?v=XH3-JvBUtcE" target="_blank" rel="noreferrer" className="studio-listen-link">LISTEN TO THE RELEASE ↗</a>
+          </div>
+        </div>
+        <div className="studio-release-grid">
+          <article className="studio-release-card">
+            <a href="https://www.youtube.com/watch?v=TgFkFfM2Fpc" target="_blank" rel="noreferrer" aria-label="Listen to Echoes of the Wild West on YouTube"><img src="https://i.ytimg.com/vi/TgFkFfM2Fpc/hqdefault.jpg" alt="Echoes of the Wild West video thumbnail" loading="lazy" /><span>02</span></a>
+            <h3>Echoes of the Wild West</h3><p>144 views · 1h 02m watch time</p>
+          </article>
+          <article className="studio-release-card">
+            <a href="https://www.youtube.com/watch?v=nGXxcG_KQow" target="_blank" rel="noreferrer" aria-label="Listen to LoFi Worship: Peace in Jerusalem on YouTube"><img src="https://i.ytimg.com/vi/nGXxcG_KQow/hqdefault.jpg" alt="LoFi Worship Peace in Jerusalem video thumbnail" loading="lazy" /><span>03</span></a>
+            <h3>LoFi Worship — Peace in Jerusalem</h3><p>124 views · 55m watch time</p>
+          </article>
+          <article className="studio-release-card">
+            <a href="https://www.youtube.com/watch?v=C5tUH-B8Bwo" target="_blank" rel="noreferrer" aria-label="Listen to Neon Eclipse on YouTube"><img src="https://i.ytimg.com/vi/C5tUH-B8Bwo/hqdefault.jpg" alt="Neon Eclipse video thumbnail" loading="lazy" /><span>04</span></a>
+            <h3>Neon Eclipse</h3><p>118 views · 1h 22m watch time</p>
+          </article>
+          <article className="studio-release-card">
+            <a href="https://www.youtube.com/watch?v=Bm0WmvoHzGE" target="_blank" rel="noreferrer" aria-label="Listen to Echoes of the Storm on YouTube"><img src="https://i.ytimg.com/vi/Bm0WmvoHzGE/hqdefault.jpg" alt="Echoes of the Storm video thumbnail" loading="lazy" /><span>05</span></a>
+            <h3>Echoes of the Storm</h3><p>106 views · 1h 17m watch time</p>
+          </article>
+        </div>
+        <p className="studio-metrics-note">Channel analytics supplied by the creator · lifetime views · snapshot provided November 2026</p>
+      </section>
+
       <section className="studio-player" aria-labelledby="studio-player-title">
         <div className="studio-player-heading">
           <div><p className="studio-kicker">LISTENING DECK / LOCAL PREVIEW</p><h2 id="studio-player-title">Your listening session</h2></div>
