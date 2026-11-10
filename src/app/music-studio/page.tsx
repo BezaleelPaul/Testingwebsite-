@@ -120,7 +120,7 @@ export default function MusicStudioPage() {
       </section>
 
       <section className="studio-process" aria-labelledby="studio-process-title">
-        <div><p className="studio-kicker">BEHIND THE SOUND / THE WORKFLOW</p><h2 id="studio-process-title">Physical roots.<br />Digital finish.</h2></div>
+        <div><p className="studio-kicker">THE WORKFLOW / 05</p><h2 id="studio-process-title">Behind the<br /><span className="studio-process-accent">Sound.</span></h2><p className="studio-process-subtitle">Physical roots. Digital finish.</p></div>
         <p>The sound starts in the physical world: playing electric and acoustic guitar, shaping performances and capturing real instruments. Then it moves into the digital studio for arranging, editing, tone design, mixing and final processing. It is a hands-on and in-the-box workflow — not one or the other.</p>
       </section>
 
