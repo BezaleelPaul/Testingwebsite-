@@ -426,5 +426,5 @@ export const INITIAL_ADMIN_SETTINGS: AdminSettings = {
   resumeDownloadUrl: "/resume.pdf",
   showAiAssistant: true,
   hiddenProjectIds: [],
-  featuredProjectIds: ["nadicare-twin-engine", "file-organizer-ecosystem"]
+  featuredProjectIds: ["celestial-observatory-3d", "file-organizer-ecosystem", "drishti-ai"]
 };
