@@ -119,9 +119,27 @@ export default function MusicStudioPage() {
         </div>
       </section>
 
-      <section className="studio-process">
-        <div><p className="studio-kicker">BEHIND THE SOUND</p><h2>From first take<br />to final mix.</h2></div>
-        <p>Recording setup, instruments, DAW sessions and processing decisions belong here too — not just the finished track. Each release can include a raw take, a processed version and notes on what changed.</p>
+      <section className="studio-process" aria-labelledby="studio-process-title">
+        <div><p className="studio-kicker">BEHIND THE SOUND / THE WORKFLOW</p><h2 id="studio-process-title">Physical roots.<br />Digital finish.</h2></div>
+        <p>The sound starts in the physical world: playing electric and acoustic guitar, shaping performances and capturing real instruments. Then it moves into the digital studio for arranging, editing, tone design, mixing and final processing. It is a hands-on and in-the-box workflow — not one or the other.</p>
+      </section>
+
+      <section className="studio-workflow" aria-label="Physical and digital music workflow">
+        <article className="studio-workflow-card">
+          <span className="studio-workflow-number">01 / THE PHYSICAL SIDE</span>
+          <h3>Play. Capture. Perform.</h3>
+          <p>Guitars, hands-on playing, recorded takes and the small details of performance that give a track its character.</p>
+          <div className="studio-workflow-tags"><span>Electric guitar</span><span>Acoustic guitar</span><span>Recorded performances</span></div>
+        </article>
+        <article className="studio-workflow-card studio-workflow-digital">
+          <span className="studio-workflow-number">02 / THE DIGITAL SIDE</span>
+          <h3>Arrange. Shape. Refine.</h3>
+          <p>Digital audio workstations and VST plugins bring the recordings together — from virtual instruments and amp tones to effects, mixing and post-production.</p>
+          <div className="studio-daw-list" aria-label="Digital audio workstations used">
+            <span>LMMS</span><span>Tracktion Waveform</span><span>REAPER</span>
+          </div>
+          <p className="studio-vst-note">VST PLUGINS / INSTRUMENTS · EFFECTS · TONE DESIGN · MIXING</p>
+        </article>
       </section>
 
       <footer className="studio-footer"><span>BP / SOUND ROOM</span><Link href="/">RETURN TO ORBIT <span aria-hidden="true">↗</span></Link><span>MADE BETWEEN TAKES.</span></footer>
