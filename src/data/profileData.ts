@@ -150,7 +150,7 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
     description: "An educational mathematics software tool designed to visualize series convergence, error bounds, and function behavior across arbitrary degrees.",
     stack: ["JavaScript", "HTML5 Canvas", "Calculus Algorithms", "LaTeX Math"],
     featured: false,
-    repoUrl: "https://github.com/BezaleelPaul",
+    repoUrl: "https://github.com/BezaleelPaul/Maclaurin-Visualizer",
     demoUrl: null,
     status: "Active",
     metrics: "60 FPS dynamic polynomial curve evaluation.",
