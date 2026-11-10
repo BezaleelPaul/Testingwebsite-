@@ -159,11 +159,10 @@ export default function ResumePage() {
             {/* Action Toolbar */}
             <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1 lg:col-span-4">
               <a
-                href="/Bezaleel_Paul_Resume.pdf"
-                download="Bezaleel_Paul_Resume.pdf"
+                href="/resume/"
                 className="action-button primary w-full !justify-between"
               >
-                <span>DOWNLOAD PDF</span>
+                <span>OPEN PRINTABLE RÉSUMÉ</span>
                 <Download className="h-4 w-4" />
               </a>
               <button
