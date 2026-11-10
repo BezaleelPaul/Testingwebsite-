@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ArrowUpRight, Github, Search } from 'lucide-react';
 import { INITIAL_PROJECTS } from '@/data/profileData';
-import { ProjectCategory } from '@/types/portfolio';
+import { ProjectCategory, ProjectItem } from '@/types/portfolio';
 import { Navbar } from '@/components/layout/Navbar';
 
 
