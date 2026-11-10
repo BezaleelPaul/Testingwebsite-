@@ -6,6 +6,7 @@ import { ScrollAnimations } from '@/components/motion/ScrollAnimations';
 import { SiteMotion } from '@/components/motion/SiteMotion';
 import './globals.css';
 import './immersive-experiences.css';
+import './music-studio/music-studio.css';
 
 const siteUrl = 'https://bezaleelpaul.github.io/Testingwebsite-/';
 
