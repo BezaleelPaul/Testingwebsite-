@@ -11,13 +11,13 @@ import {
 export const INITIAL_PROFILE: PilotProfile = {
   name: "Bezaleel Paul N",
   callsign: "BezForge",
-  headline: "Software Developer | Flutter, Full-Stack & Applied AI",
-  subheadline: "B.Tech Computer Science at CMR University · BS in Data Science at IIT Madras · Former IEEE Student Branch EXCOM member and Webmaster. Building cross-platform products and practical applied-AI systems.",
+  headline: "Applied AI & Software Engineering",
+  subheadline: "B.Tech Computer Science at CMR University · BS in Data Science at IIT Madras · Building practical software and applied-AI systems.",
   location: "Bangalore, India",
   status: "Open to SWE Internships & Collaborations",
   bio: [
     "I am Bezaleel Paul N, a software developer and computer science undergraduate based in Bengaluru, India. I am pursuing a B.Tech in Computer Science and Engineering at CMR University alongside the BS in Data Science programme at IIT Madras.",
-    "My work spans cross-platform Flutter development, full-stack web applications, developer tools, and applied machine learning. I focus on translating practical requirements into reliable products, with attention to performance, maintainability, and the experience of the people using them.",
+    "My primary interests are applied AI and software engineering: turning real requirements into usable systems, evaluating models carefully, and building dependable applications. I also work with Flutter and modern web technologies when they fit the problem.",
     "I also contribute to the developer community through open-source work and technical events. I previously served as a Webmaster and EXCOM volunteer with the IEEE CMR University Student Branch. I am particularly interested in engineering fundamentals, thoughtful product design, and continuous learning."
   ],
   education: [
@@ -67,10 +67,10 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
     description: "An interactive digital planetarium simulating planetary orbits, orbital inclination, axial tilt, and near-Earth object context with procedurally generated planetary data.",
     stack: ["Three.js", "React Three Fiber", "NASA Open API", "Keplerian Physics", "GLSL Shaders", "Next.js", "TypeScript"],
     featured: true,
-    repoUrl: "https://github.com/BezaleelPaul/bezaleelpaul.github.io",
+    repoUrl: "https://github.com/BezaleelPaul/Orbital-Observatory",
     demoUrl: "/observatory",
     status: "Production",
-    metrics: "Interactive 3D orbital model with a lightweight background rendering mode.",
+    metrics: "Custom Keplerian solver, interactive orbital modes, and optional NASA data context.",
     highlights: [
       "Custom Keplerian orbital solver computing true anomaly via Newton-Raphson approximation",
       "NASA Open API context for daily astronomy imagery and near-Earth asteroid data",
@@ -86,7 +86,7 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
     solution: "Engineered a predictive digital twin combining machine learning algorithms with interactive telemetry to forecast heart rate response windows and recovery dynamics.",
     description: "An advanced biomedical engineering concept integrating XGBoost regression models with Streamlit and Plotly visualization pipelines to simulate real-time physiological response to exertion.",
     stack: ["Python", "Streamlit", "XGBoost", "Plotly", "NumPy", "Scikit-Learn"],
-    featured: true,
+    featured: false,
     repoUrl: "https://github.com/BezaleelPaul/bnmit-nadicare-health",
     demoUrl: null,
     status: "Active",
@@ -159,14 +159,14 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
   },
   {
     id: "drishti-ai",
-    title: "Drishti-AI Vision System",
-    tagline: "Computer vision and visual intelligence research repository.",
+    title: "Drishti-AI: Explainable Retinal Screening",
+    tagline: "A Smart India Hackathon software prototype exploring explainable AI for diabetic-retinopathy screening in resource-constrained settings.",
     category: "AI / ML",
-    problem: "Real-time edge computer vision workflows often require streamlined pipeline integration.",
-    solution: "Implemented modular computer vision pipelines for feature extraction and object detection.",
-    description: "An ongoing AI research repository focusing on computer vision experiments, deep learning models, and real-time visual inferencing.",
-    stack: ["Python", "OpenCV", "TensorFlow", "Deep Learning"],
-    featured: false,
+    problem: "Retinal image screening workflows need clear image-quality checks, interpretable model evidence, and a clinician review path—especially where connectivity and specialist access are limited.",
+    solution: "Leading a multidisciplinary prototype that explores fundus-image quality assessment, DR grading, explainability outputs, and a clinician-in-the-loop review workflow.",
+    description: "An ongoing applied-AI project focused on responsible model evaluation and a practical screening workflow. Offline operation and deployment performance remain validation goals, not claimed production results.",
+    stack: ["Python", "TensorFlow", "Flutter", "Computer Vision", "Explainable AI", "MATLAB"],
+    featured: true,
     repoUrl: "https://github.com/BezaleelPaul/Drishti-AI",
     demoUrl: null,
     status: "Prototype",
@@ -207,7 +207,7 @@ export const INITIAL_EXPERIENCE: ExperienceItem[] = [
     responsibilities: [
       "Engineered the NADICARE Twin Engine for physiological stress forecasting using XGBoost and dynamic Plotly dashboards.",
       "Developed cross-platform mobile and desktop utilities using Flutter, Dart, and Python.",
-      "Maintained 34 public repositories with automated GitHub Actions CI/CD workflows."
+      "Worked across personal and collaborative repositories using Git-based development workflows."
     ],
     skills: ["Python", "Flutter", "Machine Learning", "Full-Stack Web", "Git CI/CD"]
   },
@@ -235,7 +235,7 @@ export const INITIAL_EXPERIENCE: ExperienceItem[] = [
     type: "Leadership",
     summary: "Rigorous daily practice in computational complexity, dynamic programming, and data structure design.",
     responsibilities: [
-      "Solved 135+ complex algorithmic challenges on LeetCode across Arrays, Trees, Graphs, and DP.",
+      "Practised algorithmic problem solving across data structures, trees, graphs, and dynamic programming on LeetCode and Codeforces.",
       "Maintained an active rated profile on Codeforces with continuous performance evaluation.",
       "Consistently achieved structured solutions with optimal asymptotic time and space bounds."
     ],
@@ -267,7 +267,7 @@ export const INITIAL_SKILLS: SkillCategoryGroup[] = [
     skills: [
       { name: "Flutter", category: "Mobile", highlight: true },
       { name: "React.js", category: "Web", highlight: true },
-      { name: "Next.js 14", category: "Full-Stack", highlight: true },
+      { name: "Next.js", category: "Full-Stack", highlight: true },
       { name: "Tailwind CSS", category: "Styling", highlight: true },
       { name: "Three.js / WebGL", category: "3D Graphics" },
       { name: "Tkinter", category: "Desktop" }
@@ -307,17 +307,17 @@ export const INITIAL_SKILLS: SkillCategoryGroup[] = [
 export const INITIAL_ACHIEVEMENTS: AchievementItem[] = [
   {
     id: "leetcode-135",
-    title: "135+ Algorithmic Challenges Solved",
+    title: "Competitive Programming Practice",
     issuer: "LeetCode",
     date: "2025 — Present",
     category: "Competitive Programming",
-    summary: "Consistent practice across dynamic programming, graphs, trees, and array problems, with 116 Easy, 17 Medium, and 2 Hard challenges completed.",
+    summary: "Ongoing practice across data structures, dynamic programming, graphs, trees, and timed contests.",
     metrics: "LeetCode handle: BezaleelPaulN",
     link: "https://leetcode.com/u/BezaleelPaulN/"
   },
   {
     id: "codeforces-rating",
-    title: "Rated Competitor (959 Peak)",
+    title: "Codeforces Problem-Solving Profile",
     issuer: "Codeforces",
     date: "2025 — Present",
     category: "Competitive Programming",
@@ -336,12 +336,12 @@ export const INITIAL_ACHIEVEMENTS: AchievementItem[] = [
   },
   {
     id: "open-source-repos",
-    title: "34 Public Repositories & Continuous CI Automation",
+    title: "Open-Source Development",
     issuer: "GitHub",
     date: "2025 — Present",
     category: "Hackathon",
-    summary: "Built and maintained 34 repositories across utility tools, AI models, calculus visualizers, and Flutter apps with scheduled GitHub Actions pipelines.",
-    metrics: "34 public repositories"
+    summary: "Public work spanning developer utilities, AI experiments, mathematical visualizations, and Flutter applications.",
+    metrics: "GitHub: BezaleelPaul"
   }
 ];
 
