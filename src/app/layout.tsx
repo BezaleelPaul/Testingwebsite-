@@ -3,6 +3,7 @@ import { Preloader } from '@/components/motion/Preloader';
 import { SmoothScroll } from '@/components/motion/SmoothScroll';
 import { ScrollAnimations } from '@/components/motion/ScrollAnimations';
 import { SiteMotion } from '@/components/motion/SiteMotion';
+import { CosmicScrollScenes } from '@/components/motion/CosmicScrollScenes';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <ScrollAnimations />
         <SiteMotion />
         {children}
+        <CosmicScrollScenes />
       </body>
     </html>
   );
