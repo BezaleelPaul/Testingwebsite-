@@ -7,7 +7,10 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { INITIAL_PROJECTS } from '@/data/profileData';
 
-const featured = INITIAL_PROJECTS.filter((project) => project.featured).sort((a, b) => {\n  const priority = ['drishti-ai', 'celestial-observatory-3d', 'file-organizer-ecosystem'];\n  return priority.indexOf(a.id) - priority.indexOf(b.id);\n}).slice(0, 3);
+const featured = INITIAL_PROJECTS.filter((project) => project.featured).sort((a, b) => {
+  const priority = ['drishti-ai', 'celestial-observatory-3d', 'file-organizer-ecosystem'];
+  return priority.indexOf(a.id) - priority.indexOf(b.id);
+}).slice(0, 3);
 const visualClasses = ['work-visual-nadicare', 'work-visual-observatory', 'work-visual-mise'];
 const visualLabels = ['RETINAL AI / 01', 'ORBITAL MECHANICS / 02', 'LOCAL-FIRST SYSTEM / 03'];
 
