@@ -44,6 +44,7 @@ export interface ProjectItem {
   stack: string[];
   featured: boolean;
   repoUrl: string;
+  imageUrl?: string;
   demoUrl?: string | null;
   status: 'Production' | 'Active' | 'Prototype' | 'Open Source';
   metrics?: string;
