@@ -24,10 +24,10 @@ export function OrbitalAbout() {
           </div>
           <div className="orbital-about-copy">
             <p className="orbital-about-lead" data-reveal>
-              I&apos;m Bezaleel Paul N — a computer science undergraduate and software developer interested in building useful products across mobile, web, and applied AI.
+              I&apos;m Bezaleel Paul N — a second-year computer science undergraduate focused on applied AI and software engineering.
             </p>
             <p data-reveal data-reveal-delay="80">
-              I study Computer Science and Engineering at CMR University while pursuing the BS in Data Science programme at IIT Madras. My work moves between Flutter applications, full-stack systems, developer tools, and machine-learning experiments.
+              I study Computer Science and Engineering at CMR University while pursuing the BS in Data Science programme at IIT Madras. My project work spans computer vision, Flutter applications, full-stack systems, and interactive 3D software. I use these areas to build and evaluate practical systems, rather than treating technologies as a checklist.
             </p>
             <p data-reveal data-reveal-delay="160">
               I care about the engineering behind the interface: thoughtful architecture, responsive performance, dependable behaviour, and making complex ideas understandable to the people who use them.
