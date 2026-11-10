@@ -28,8 +28,8 @@ export function HeroSection() {
             <a className="action-button primary" href="https://github.com/BezaleelPaul" target="_blank" rel="noreferrer">
               View Work <span aria-hidden="true">↗</span>
             </a>
-            <a className="action-button secondary" href={`${basePath}/resume.pdf`} download>
-              Download Résumé <span aria-hidden="true">↓</span>
+            <a className="action-button secondary" href={`${basePath}/resume/`}>
+              View / Print Résumé <span aria-hidden="true">↗</span>
             </a>
           </div>
           <div className="hero-stats hero-reveal" aria-label="Current focus">
