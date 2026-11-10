@@ -8,7 +8,7 @@ export function HeroSection() {
   return (
     <section id="top" className="hero space-texture" data-hero-scroll aria-labelledby="hero-title">
       <div className="site-shell hero-topline">
-        <span>01 / Independent software developer</span>
+        <span>01 / Applied AI &amp; software engineering</span>
         <a className="hero-contact" href="mailto:bezaleel321@gmail.com">BEZALEEL321@GMAIL.COM ↗</a>
       </div>
 
@@ -16,13 +16,13 @@ export function HeroSection() {
         <div className="hero-orbit" aria-hidden="true"><span className="hero-orbit-dot" /></div>
 
         <div className="hero-copy" data-hero-copy>
-          <p className="hero-kicker hero-reveal">Software Developer / Flutter / Full-Stack / AI &amp; ML</p>
+          <p className="hero-kicker hero-reveal">APPLIED AI / SOFTWARE ENGINEERING</p>
           <h1 id="hero-title" className="display hero-title hero-reveal">
             <span>BEZALEEL</span>
             <span className="second-line outline-text">PAUL.</span>
           </h1>
           <p className="hero-subtitle hero-reveal">
-            I build software across mobile, web, and applied AI. Studying Computer Science at CMR University and Data Science through the IIT Madras BS programme.
+            I’m a second-year Computer Science student at CMR University and an IIT Madras BS Data Science student, building practical software with a focus on applied AI.
           </p>
           <div className="hero-actions hero-reveal">
             <a className="action-button primary" href="https://github.com/BezaleelPaul" target="_blank" rel="noreferrer">
@@ -32,16 +32,10 @@ export function HeroSection() {
               Download Résumé <span aria-hidden="true">↓</span>
             </a>
           </div>
-          <div className="hero-stats hero-reveal" aria-label="Developer statistics">
-            <a className="hero-stat" href="https://github.com/BezaleelPaul" target="_blank" rel="noreferrer">
-              <strong>34</strong><span>GitHub repositories</span>
-            </a>
-            <a className="hero-stat" href="https://leetcode.com/u/BezaleelPaulN/" target="_blank" rel="noreferrer">
-              <strong>135</strong><span>LeetCode solved</span>
-            </a>
-            <a className="hero-stat" href="https://codeforces.com/profile/BezaleelPaulN" target="_blank" rel="noreferrer">
-              <strong>959</strong><span>Codeforces rating</span>
-            </a>
+          <div className="hero-stats hero-reveal" aria-label="Current focus">
+            <div className="hero-stat"><strong>AI</strong><span>Applied research</span></div>
+            <div className="hero-stat"><strong>CS</strong><span>Engineering foundations</span></div>
+            <div className="hero-stat"><strong>Build</strong><span>Projects with evidence</span></div>
           </div>
         </div>
 
