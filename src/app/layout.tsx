@@ -13,7 +13,7 @@ const siteUrl = 'https://bezaleelpaul.github.io/Testingwebsite-/';
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: 'Bezaleel Paul — Applied AI & Software Engineering',
-  description: 'Second-year Computer Science student at CMR University and IIT Madras BS Data Science learner, building software and exploring applied AI.'
+  description: 'Second-year Computer Science student at CMR University and IIT Madras BS Data Science learner, building software and exploring applied AI.',
   keywords: ['Bezaleel Paul', 'Applied AI', 'Software Engineering', 'Computer Science', 'Data Science', 'CMR University', 'IIT Madras'],
   authors: [{ name: 'Bezaleel Paul N', url: 'https://github.com/BezaleelPaul' }],
   openGraph: {
