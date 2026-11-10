@@ -7,9 +7,12 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { INITIAL_PROJECTS } from '@/data/profileData';
 
-const featured = INITIAL_PROJECTS.filter((project) => project.featured).slice(0, 3);
-const visualClasses = ['work-visual-observatory', 'work-visual-nadicare', 'work-visual-mise'];
-const visualLabels = ['ORBITAL MECHANICS / 01', 'PHYSIOLOGICAL MODEL / 02', 'LOCAL-FIRST SYSTEM / 03'];
+const featured = INITIAL_PROJECTS.filter((project) => project.featured).sort((a, b) => {
+  const priority = ['drishti-ai', 'celestial-observatory-3d', 'file-organizer-ecosystem'];
+  return priority.indexOf(a.id) - priority.indexOf(b.id);
+}).slice(0, 3);
+const visualClasses = ['work-visual-nadicare', 'work-visual-observatory', 'work-visual-mise'];
+const visualLabels = ['RETINAL AI / 01', 'ORBITAL MECHANICS / 02', 'LOCAL-FIRST SYSTEM / 03'];
 
 export function SelectedWork() {
   const [activeProject, setActiveProject] = useState<(typeof featured)[number] | null>(null);
@@ -103,8 +106,8 @@ export function SelectedWork() {
                 </div>
                 <span className="work-visual-index">0{index + 1} / 03</span>
                 <span className="work-visual-label">{visualLabels[index]}</span>
-                {index === 0 && <div className="work-planet-system"><i /><i /><i /><b /></div>}
-                {index === 1 && <div className="work-vitals"><span>HR</span><strong>↗</strong><svg viewBox="0 0 520 150" role="presentation"><path d="M0 92 H82 L105 92 L128 34 L154 127 L180 70 L203 92 H286 L309 92 L330 51 L351 110 L372 78 L395 92 H520" /></svg><small>MODEL / RECOVERY RESPONSE</small></div>}
+                {index === 1 && <div className="work-planet-system"><i /><i /><i /><b /></div>}
+                {index === 0 && <div className="work-vitals"><span>HR</span><strong>↗</strong><svg viewBox="0 0 520 150" role="presentation"><path d="M0 92 H82 L105 92 L128 34 L154 127 L180 70 L203 92 H286 L309 92 L330 51 L351 110 L372 78 L395 92 H520" /></svg><small>MODEL / RECOVERY RESPONSE</small></div>}
                 {index === 2 && <div className="work-mise-mark"><span>MISE</span><i /><i /><i /><small>LOCAL-FIRST · CROSS-PLATFORM</small></div>}
                 <span className="work-visual-caption">SYSTEM STUDY · PROJECT VISUAL</span>
                 <div className="project-art-coordinate">BP / ORBITAL ARCHIVE</div>

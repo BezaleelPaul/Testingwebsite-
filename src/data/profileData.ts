@@ -87,7 +87,7 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
     solution: "Engineered a predictive digital twin combining machine learning algorithms with interactive telemetry to forecast heart rate response windows and recovery dynamics.",
     description: "An advanced biomedical engineering concept integrating XGBoost regression models with Streamlit and Plotly visualization pipelines to simulate real-time physiological response to exertion.",
     stack: ["Python", "Streamlit", "XGBoost", "Plotly", "NumPy", "Scikit-Learn"],
-    featured: true,
+    featured: false,
     repoUrl: "https://github.com/BezaleelPaul/bnmit-nadicare-health",
     imageUrl: "https://raw.githubusercontent.com/BezaleelPaul/bnmit-nadicare-health/main/screenshots/screencapture-localhost-8501-2026-03-16-19_31_57.png",
     demoUrl: null,
@@ -162,21 +162,23 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
   },
   {
     id: "drishti-ai",
-    title: "Drishti-AI Vision System",
-    tagline: "Computer vision and visual intelligence research repository.",
-    category: "AI / ML",
-    problem: "Real-time edge computer vision workflows often require streamlined pipeline integration.",
-    solution: "Implemented modular computer vision pipelines for feature extraction and object detection.",
-    description: "An ongoing AI research repository focusing on computer vision experiments, deep learning models, and real-time visual inferencing.",
-    stack: ["Python", "OpenCV", "TensorFlow", "Deep Learning"],
-    featured: false,
+    title: "Drishti-AI: Explainable Retinal Screening",
+    tagline: "A research prototype exploring explainable diabetic-retinopathy screening for resource-constrained clinical workflows.",
+    category: "Applied AI",
+    problem: "Retinal screening workflows need dependable image-quality assessment and clear evidence that supports, rather than replaces, clinical review.",
+    solution: "Developing a staged workflow around fundus-image quality assessment, model inference, explainability, and clinician review.",
+    description: "A Smart India Hackathon software prototype focused on explainable AI for diabetic-retinopathy screening. Model evaluation and deployment integrity remain active work.",
+    stack: ["Python", "TensorFlow", "Computer Vision", "Explainable AI", "Flutter"],
+    featured: true,
     repoUrl: "https://github.com/BezaleelPaul/Drishti-AI",
     imageUrl: "https://raw.githubusercontent.com/BezaleelPaul/Drishti-AI/master/presentation/screenshots/01_phc_dashboard_online.png",
     demoUrl: null,
     status: "Prototype",
+    metrics: "APTOS baseline: 0.7491 accuracy · 0.7444 recall · 0.8608 quadratic weighted kappa.",
     highlights: [
-      "Modular image preprocessing and bounding box evaluation",
-      "Clean API separation for vision inference engines"
+      "Exploring GOOD / BORDERLINE / REJECT fundus-image quality states before screening",
+      "Designing clinician review as part of the workflow",
+      "Evaluating model performance and explainability before deployment claims"
     ]
   },
   {

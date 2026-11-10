@@ -1,40 +1,20 @@
 {
   "name": "BEZALEEL PAUL",
   "nameAccent": "N",
-  "title": "Software Engineering Intern | Flutter & Full-Stack Developer",
-  "tagline": "Seeking SWE Internship",
+  "title": "Applied AI & Software Engineering Student",
+  "tagline": "Open to Software Engineering & Applied AI Internships",
   "photo": "photo.jpg",
   "terminal": [
     "$ whoami",
-    "> Flutter & Full-Stack Dev",
+    "> Applied AI & Software Engineering",
     "$ status",
     "> open to internships"
   ],
   "contact": [
-    [
-      "Location",
-      "Bangalore, Karnataka"
-    ],
-    [
-      "Phone",
-      "7892347356"
-    ],
-    [
-      "Email",
-      "bezaleel321@gmail.com"
-    ],
-    [
-      "LinkedIn",
-      "linkedin.com/in/bezaleel-pauln"
-    ],
-    [
-      "Portfolio",
-      "bezaleelpaul.github.io"
-    ],
-    [
-      "GitHub",
-      "github.com/BezaleelPaul"
-    ]
+    ["Email", "bezaleel321@gmail.com"],
+    ["LinkedIn", "linkedin.com/in/bezaleel-pauln"],
+    ["Portfolio", "bezaleelpaul.github.io/Testingwebsite-/"],
+    ["GitHub", "github.com/BezaleelPaul"]
   ],
   "skills": [
     [
@@ -130,7 +110,7 @@
     "RESTful API & Backend",
     "Database Management Systems"
   ],
-  "summary": "Computer Science undergraduate with hands-on experience building cross-platform Flutter mobile apps and full-stack web applications. Skilled in Dart, Python, JavaScript, and AI tool integration. Seeking a Software Development / Mobile App Development Internship to contribute to real-world engineering projects and grow as a developer.",
+  "summary": "Second-year Computer Science and Engineering undergraduate at CMR University, also pursuing the BS in Data Science and Applications at IIT Madras. Interested in applied AI and software engineering, with hands-on project work across computer vision, Flutter, web technologies, and 3D visualisation. Seeking opportunities to contribute to practical engineering teams while strengthening foundations in algorithms, machine learning, and reliable software development.",
   "experience": [
     {
       "role": "Software Development Intern",
@@ -157,18 +137,18 @@
       "org": "Explainable AI for Diabetic Retinopathy Screening",
       "place": "Smart India Hackathon Software Prototype · 2026",
       "bullets": [
-        "Led multidisciplinary development of an explainable, offline-first screening prototype designed for rural clinical workflows.",
-        "Implemented image-quality validation, clinician review checkpoints, and visual interpretability.",
-        "Presented system architecture, clinical validation pipelines, and field usability to evaluation panels."
+        "Leading a multidisciplinary software prototype exploring explainable diabetic-retinopathy screening and resource-constrained clinical workflows.",
+        "Working on image-quality assessment, clinician-review workflow design, and model explainability.",
+        "Coordinating technical direction and model-evaluation work across the project team."
       ]
     }
   ],
   "projects": [],
   "projectsQR": {
-    "url": "https://bezaleelpaul.github.io/projects/",
+    "url": "https://bezaleelpaul.github.io/Testingwebsite-/projects/",
     "label": "Scan to view all my projects",
-    "display": "bezaleelpaul.github.io/projects",
-    "note": "Flutter apps, AI/ML platforms & full-stack web apps, with source code and live demos"
+    "display": "bezaleelpaul.github.io/Testingwebsite-/projects",
+    "note": "Selected software and applied AI projects, with source code and available demos"
   },
   "footer": "Open to Software Development / Flutter Internships",
   "extra": []

@@ -35,7 +35,7 @@ const entries = [
     role: 'Project Lead · Drishti-AI',
     organization: 'Explainable AI for Diabetic Retinopathy Screening',
     location: 'Smart India Hackathon · Software Prototype',
-    summary: 'Leading a multidisciplinary team building an offline-first screening prototype, with image-quality checks, clinician review, and explainability as core design requirements.',
+    summary: 'Leading a multidisciplinary software prototype exploring explainable diabetic-retinopathy screening, with image-quality assessment and clinician review as core workflow requirements.',
     focus: ['Team coordination', 'Flutter', 'Computer vision', 'Explainable AI'],
     accent: 'white',
   },
