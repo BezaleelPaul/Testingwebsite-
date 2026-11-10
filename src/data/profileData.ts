@@ -87,7 +87,7 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
     solution: "Engineered a predictive digital twin combining machine learning algorithms with interactive telemetry to forecast heart rate response windows and recovery dynamics.",
     description: "An advanced biomedical engineering concept integrating XGBoost regression models with Streamlit and Plotly visualization pipelines to simulate real-time physiological response to exertion.",
     stack: ["Python", "Streamlit", "XGBoost", "Plotly", "NumPy", "Scikit-Learn"],
-    featured: false,
+    featured: true,
     repoUrl: "https://github.com/BezaleelPaul/bnmit-nadicare-health",
     imageUrl: "https://raw.githubusercontent.com/BezaleelPaul/bnmit-nadicare-health/main/screenshots/screencapture-localhost-8501-2026-03-16-19_31_57.png",
     demoUrl: null,
