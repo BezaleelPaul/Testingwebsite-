@@ -180,7 +180,7 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
       "Designing clinician review as part of the workflow",
       "Evaluating model performance and explainability before deployment claims"
     ]
-  }
+  },
   {
     id: "youtube-thumbnail-grabber",
     title: "Playlist Thumbnail Grabber",
