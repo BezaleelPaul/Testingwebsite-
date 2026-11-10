@@ -12,13 +12,13 @@ const siteUrl = 'https://bezaleelpaul.github.io/Testingwebsite-/';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: 'Bezaleel Paul — Software Developer',
-  description: 'Software developer building mobile, full-stack, and applied AI products. B.Tech Computer Science at CMR University and BS Data Science at IIT Madras.',
-  keywords: ['Bezaleel Paul', 'Flutter Developer', 'Software Developer', 'Full-Stack Developer', 'AI ML', 'CMR University', 'IIT Madras'],
+  title: 'Bezaleel Paul — Applied AI & Software Engineering',
+  description: 'Second-year Computer Science student at CMR University and IIT Madras BS Data Science learner, building software and exploring applied AI.'
+  keywords: ['Bezaleel Paul', 'Applied AI', 'Software Engineering', 'Computer Science', 'Data Science', 'CMR University', 'IIT Madras'],
   authors: [{ name: 'Bezaleel Paul N', url: 'https://github.com/BezaleelPaul' }],
   openGraph: {
     title: 'Bezaleel Paul — Software Developer',
-    description: 'Flutter · Full-Stack · AI/ML · Computer Science · Data Science',
+    description: 'Applied AI · Software Engineering · Computer Science · Data Science',
     url: siteUrl,
     siteName: 'Bezaleel Paul',
     type: 'website',
