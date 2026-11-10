@@ -2399,3 +2399,16 @@ html.lenis.lenis-stopped { overflow:hidden; }
   display: inline-block;
   will-change: transform, opacity;
 }
+
+
+/* Drishti-AI conceptual visual: a project illustration, not a clinical screenshot. */
+.work-visual-drishti { background: radial-gradient(ellipse at 50% 48%, #1e281b, #111410 52%, #0a0a0f 84%); }
+.work-drishti-mark { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #f3f5e9; }
+.work-drishti-mark::before, .work-drishti-mark::after { position: absolute; content: ''; width: clamp(150px, 24vw, 270px); aspect-ratio: 1; border: 1px solid rgba(215,255,0,.22); border-radius: 50%; }
+.work-drishti-mark::before { transform: scaleY(.58) rotate(-24deg); }
+.work-drishti-mark::after { transform: scaleY(.58) rotate(54deg); }
+.work-drishti-mark span { color: rgba(243,245,233,.72); font: 10px var(--mono); letter-spacing: .28em; }
+.work-drishti-mark strong { color: var(--accent); font: clamp(76px, 12vw, 142px)/.9 var(--display); letter-spacing: -.04em; }
+.work-drishti-mark i { position: absolute; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 18px rgba(215,255,0,.65); }
+.work-drishti-mark i { top: -30px; right: -54px; }
+.work-drishti-mark small { margin-top: 12px; color: rgba(243,245,233,.62); font: 8px var(--mono); letter-spacing: .13em; text-align: center; }
