@@ -80,14 +80,14 @@ export function Navbar() {
           aria-hidden={!menuOpen}
         >
           {links.map((link) => (
-            <a
+            <Link
               key={link.label}
-              href={link.href}
+              href={resolveHref(link.href)}
               tabIndex={menuOpen ? 0 : -1}
               onClick={() => setMenuOpen(false)}
             >
               {link.label}<span aria-hidden="true">↗</span>
-            </a>
+            </Link>
           ))}
         </nav>
       </div>
